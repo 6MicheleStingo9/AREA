@@ -96,7 +96,7 @@ The AREA repository is organized as follows:
 - `ui/` — Streamlit user interface:
   - `app.py`: main UI logic
   - `localization.py`: translations
-  - `ui/main.py` — Script for launching the Streamlit application
+  - `main.py` — Script for launching the Streamlit application
   - `styles.py`: custom styles
 - `utils/` — Common models and utility functions
 - `requirements.txt` — Python dependencies
