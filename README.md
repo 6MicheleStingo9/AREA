@@ -16,7 +16,7 @@ AREA is a LangGraph-based MAS platform for assessing risks associated with AI sy
 8. [Output & Results](#output--results)
 9. [Customization & Advanced Usage](#customization--advanced-usage)
 10. [License](#license)
-11. [Refernces](#references)
+11. [References](#references)
 
 ---
 
