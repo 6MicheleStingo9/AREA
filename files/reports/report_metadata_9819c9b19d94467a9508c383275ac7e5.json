@@ -1,0 +1,15 @@
+{
+  "profile": "intermediate",
+  "language": "it",
+  "timestamp": "20251223_172804",
+  "run_id": "9819c9b19d94467a9508c383275ac7e5",
+  "executive_summary_text": "L'analisi dei rischi AI ha identificato 16 rischi complessivi, portando a un punteggio di rischio globale di 69.38 e un livello di rischio complessivo elevato, indicando la necessità di attenzione prioritaria. I tre domini più critici sono \"Malicious actors\", con 2 rischi ad alta severità, in particolare relativi a \"Disinformation, surveillance, and influence at scale\" con 1 rischio elevato; segue \"Discrimination & Toxicity\" anch'esso con 2 rischi ad alta severità, e infine \"AI system safety, failures, & limitations\" con 1 rischio ad alta severità. Dei 16 rischi totali, 7 sono classificati come alti, 8 come medi e 1 come basso.\n\nSi rileva una significativa concentrazione di rischio critico, poiché il 43.75% dei rischi è ad alta severità, accompagnata da un accumulo di rischi medi che rappresentano il 50.0% del totale. I rischi elevati sono inoltre distribuiti su 5 domini diversi. Il modello dominante di rischio è caratterizzato da cause umane e non intenzionali che si manifestano prevalentemente post-deployment, con 6 fallimenti AI non intenzionali e 6 rischi dovuti a errori umani, oltre a 2 rischi di attacchi da minacce elevate e 2 rischi umani malevoli. È fortemente raccomandato un focus sulla prevenzione, dato che sono stati identificati 1 rischio AI prevenibile e 3 rischi umani prevenibili, i quali richiedono azioni mirate per mitigare il profilo di rischio complessivo.",
+  "taxonomy_versions": {
+    "domain": "v0.1",
+    "causal": "v0.1"
+  },
+  "analysis_current_step": "report_generation",
+  "analysis_next_step": null,
+  "html_report": "/home/stingom/Scrivania/Git/area/files/reports/ai_risk_report_9819c9b19d94467a9508c383275ac7e5.html",
+  "errors": []
+}
