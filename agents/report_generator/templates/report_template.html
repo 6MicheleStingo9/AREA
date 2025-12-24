@@ -1,0 +1,464 @@
+<!--
+    Jinja2 Template for AI Risk Analysis Report
+-->
+
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations.page_title }}</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+{{ css_content }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ {{ translations.page_title }}</h1>
+            <h2>{{ translations.page_subtitle }}</h2>
+            <div class="report-meta-actions">
+                <div class="report-links">
+                    <button id="download-zip-btn" class="meta-link secondary" onclick="handleDownloadClick()">{{ translations.report_download_button }}</button>
+                    <button id="view-analysis-btn" class="meta-link secondary" onclick="openAnalysisJson()">{{ translations.json_view_button }}</button>
+                    {% if metadata.analysis_source_url %}
+                    <a class="meta-link secondary" href="{{ metadata.analysis_source_url }}" target="_blank">{{ translations.view_source }}</a>
+                    {% endif %}
+                    {% set _tax = metadata.get('taxonomy_versions', {}) %}
+                    <a class="meta-link secondary" href="https://docs.google.com/presentation/d/1wxg-hZAjGvFHcsfnEp1KAJJo5xvf98MB2v50B5URXZM/edit?slide=id.g32ebda0938f_6_0#slide=id.g32ebda0938f_6_0" target="_blank" rel="noopener">{{ translations.mit_causal_taxonomy }} {{ _tax.get('causal', 'v0.1') }}</a>
+                    <a class="meta-link secondary" href="https://docs.google.com/presentation/d/1wxg-hZAjGvFHcsfnEp1KAJJo5xvf98MB2v50B5URXZM/edit?slide=id.g325f13b19c4_0_0#slide=id.g325f13b19c4_0_0" target="_blank" rel="noopener">{{ translations.mit_domain_taxonomy }} {{ _tax.get('domain', 'v0.1') }}</a>
+                </div>
+
+            </div>
+        </header>
+            <!-- Embed metadata JSON for client-side zip creation -->
+            <script id="report-metadata" type="application/json">{{ metadata|tojson }}</script>
+            <!-- Embed analysis and heuristic JSON so the report can open them in a new tab -->
+            <script id="report-analysis" type="application/json">{{ analysis|tojson }}</script>
+            <script id="report-heuristic" type="application/json">{{ heuristic|tojson }}</script>
+
+            <script>
+            function openAnalysisJson(){
+                try{
+                    const metaEl = document.getElementById('report-metadata');
+                    const analysisEl = document.getElementById('report-analysis');
+                    const heuristicEl = document.getElementById('report-heuristic');
+                    const meta = metaEl ? JSON.parse(metaEl.textContent || '{}') : {};
+                    const analysis = analysisEl ? JSON.parse(analysisEl.textContent || '{}') : {};
+                    const heuristic = heuristicEl ? JSON.parse(heuristicEl.textContent || '{}') : {};
+                    const payload = { metadata: meta, analysis: analysis, heuristic: heuristic };
+                    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    window.open(url, '_blank');
+                }catch(err){
+                    // fallback: open simple viewer
+                    const w = window.open('', '_blank');
+                    w.document.title = '{{ translations.heuristic_analysis_json_title }}';
+                    w.document.body.innerHTML = '<pre>' + (JSON.stringify({ metadata: meta, analysis: analysis, heuristic: heuristic }, null, 2) || '') + '</pre>';
+                }
+            }
+            </script>
+        
+
+        <div class="section executive-summary">
+            <h2>📝 {{ translations.executive_summary }}</h2>
+            {% if metadata.executive_summary_text %}
+                <p>{{ metadata.executive_summary_text }}</p>
+            {% else %}
+                <p style="color:#888;">{{ translations.executive_summary_unavailable }}</p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>📏 {{ translations.key_metrics }}</h2>
+            <div class="grid-3">
+                <div>
+                    <h4 style="text-align: center; margin-bottom: 10px; color: #374151; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">{{ translations.risks_identified }}</h4>
+                    {% set total_risks = heuristic.counting.total_risks %}
+                    {% set domains_count = heuristic.counting.by_domain|length %}
+                    <div class="stat-card">
+                        <div class="value">{{ total_risks }}</div>
+                        <div class="label" style="font-size: 0.75rem; opacity: 0.85;">{{ translations.distributed_across }}</div>
+                        <div class="label" style="font-size: 1.1rem; margin-bottom: 8px;">{{ domains_count }} {{ translations.domains }}</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="text-align: center; margin-bottom: 10px; color: #374151; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">{{ translations.global_risk_score }}</h4>
+                    {% set risk_score = heuristic.executive_summary.global_risk_score %}
+                    {% set risk_level = heuristic.executive_summary.overall_risk_level %}
+                    {% set alerts_triggered = [] %}
+                    {% for alert_name, alert_data in heuristic.patterns.alerts.items() %}
+                        {% if alert_data is mapping and alert_data.alert %}
+                            {% set _ = alerts_triggered.append(alert_name) %}
+                        {% endif %}
+                    {% endfor %}
+                    {% set alerts_count = alerts_triggered|length %}
+                    <div class="stat-card">
+                        <div class="value">{{ "%.1f"|format(risk_score) }}%</div>
+                        <div class="label" style="font-size: 1.1rem; margin-bottom: 8px;">
+                            {% if risk_level == 'critical' %}{{ translations.high }}
+                            {% elif risk_level == 'high' %}{{ translations.high }}
+                            {% elif risk_level == 'medium' %}{{ translations.medium }}
+                            {% else %}{{ translations.low }}
+                            {% endif %}
+                        </div>
+                        <div class="label" style="font-size: 0.75rem; opacity: 0.85;">({{ alerts_count }} {{ translations.alerts_active }})</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="text-align: center; margin-bottom: 10px; color: #374151; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">{{ translations.distribution_severity }}</h4>
+                    {% set high_count = heuristic.counting.by_severity.high %}
+                    {% set medium_count = heuristic.counting.by_severity.medium %}
+                    {% set low_count = heuristic.counting.by_severity.low %}
+                    {% set total_count = heuristic.counting.total_risks %}
+                    {% set high_pct = (high_count * 100.0 / total_count) if total_count > 0 else 0 %}
+                    <div class="stat-card">
+                        <div class="value">{{ "%.0f"|format(high_pct) }}%</div>
+                        <div class="label" style="font-size: 1.1rem; margin-bottom: 8px;">{{ translations.high }}</div>
+                        <div class="label" style="font-size: 0.75rem; opacity: 0.85;">({{ high_count }} {{ translations.high }} / {{ medium_count }} {{ translations.medium }} / {{ low_count }} {{ translations.low }})</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="text-align: center; margin-bottom: 10px; color: #374151; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">{{ translations.origin_of_risks }}</h4>
+                    {% set ai_count = heuristic.counting.by_entity.ai %}
+                    {% set human_count = heuristic.counting.by_entity.human %}
+                    {% set total_entity = ai_count + human_count %}
+                    {% set dominant_entity = translations.entity_human if human_count > ai_count else translations.entity_ai %}
+                    {% set dominant_pct = (human_count * 100.0 / total_entity) if human_count > ai_count else (ai_count * 100.0 / total_entity) %}
+                    <div class="stat-card">
+                        <div class="value">{{ "%.0f"|format(dominant_pct) }}%</div>
+                        <div class="label" style="font-size: 1.1rem; margin-bottom: 8px;">{{ dominant_entity }}</div>
+                        <div class="label" style="font-size: 0.75rem; opacity: 0.85;">({{ human_count }} {{ translations.entity_human }} / {{ ai_count }} {{ translations.entity_ai }})</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="text-align: center; margin-bottom: 10px; color: #374151; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">{{ translations.timing_phase }}</h4>
+                    {% set post_count = heuristic.counting.by_timing['post-deployment'] %}
+                    {% set pre_count = heuristic.counting.by_timing['pre-deployment'] %}
+                    {% set total_timing = post_count + pre_count %}
+                    {% set dominant_timing = translations.timing_post_deployment if post_count > pre_count else translations.timing_pre_deployment %}
+                    {% set dominant_timing_pct = (post_count * 100.0 / total_timing) if post_count > pre_count else (pre_count * 100.0 / total_timing) %}
+                    <div class="stat-card">
+                        <div class="value">{{ "%.0f"|format(dominant_timing_pct) }}%</div>
+                        <div class="label" style="font-size: 1.1rem; margin-bottom: 8px;">{{ dominant_timing }}</div>
+                        <div class="label" style="font-size: 0.75rem; opacity: 0.85;">({{ post_count }} {{ translations.timing_post_deployment }} / {{ pre_count }} {{ translations.timing_pre_deployment }})</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="text-align: center; margin-bottom: 10px; color: #374151; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">{{ translations.nature_of_risk }}</h4>
+                    {% set intent_count = heuristic.counting.by_intent.intentional %}
+                    {% set unintent_count = heuristic.counting.by_intent.unintentional %}
+                    {% set total_intent = intent_count + unintent_count %}
+                    {% set dominant_intent = translations.intent_unintentional if unintent_count > intent_count else translations.intent_intentional %}
+                    {% set dominant_intent_pct = (unintent_count * 100.0 / total_intent) if unintent_count > intent_count else (intent_count * 100.0 / total_intent) %}
+                    <div class="stat-card">
+                        <div class="value">{{ "%.0f"|format(dominant_intent_pct) }}%</div>
+                        <div class="label" style="font-size: 1.1rem; margin-bottom: 8px;">{{ dominant_intent }}</div>
+                        <div class="label" style="font-size: 0.75rem; opacity: 0.85;">({{ unintent_count }} {{ translations.intent_unintentional }} / {{ intent_count }} {{ translations.intent_intentional }})</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Visualization Section -->
+        <div class="section">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <h2 style="margin: 0;">📊 {{ translations.data_visualization }}</h2>
+                <button class="info-toggle" onclick="toggleDomainInfo()" title={{translations.domains_guide}}>
+                    ℹ️ {{ translations.domains_guide }}
+                </button>
+            </div>
+            
+            <div id="domain-info" class="domain-info-box collapsed">{{ translations.domain_info_html|safe }}</div>
+            
+            <div class="grid-2">
+                <div class="chart-container">
+                    <div class="pattern-header">
+                        <h3 style="display: inline-block; margin: 0;">🚨 {{ translations.alerts_safety }}</h3>
+                        <button class="info-toggle" onclick="toggleAlertInfo()" title={{translations.alerts_guide}}>
+                            ℹ️  {{ translations.alerts_guide }}
+                        </button>
+                    </div>
+                    <div id="alert-info" class="alert-info-box collapsed">
+                        <p>{{ translations.alerts_guide_description }}</p>
+                        
+                        <h5>🔴 {{ translations.criticality }}</h5>
+                        
+                        <div class="alert-dimension">
+                            <strong>{{ translations.risk_concentration }}</strong> {{ translations.risk_concentration_description }}
+                        </div>
+                        
+                        <div class="alert-dimension">
+                            <strong>{{ translations.operational_exposure }}</strong> {{ translations.operational_exposure_description }}
+                        </div>
+                        
+                        <div class="alert-dimension">
+                            <strong>{{ translations.threat_intensity }}</strong> {{ translations.threat_intensity_description }}
+                        </div>
+                        
+                        <div class="alert-dimension">
+                            <strong>{{ translations.prevention_deficit }}</strong> {{ translations.prevention_deficit_description }}
+                        </div>
+                        
+                        <h5>🟢 {{ translations.safety }}</h5>
+                        
+                        <div class="alert-dimension">
+                            <strong>{{ translations.impact_control }}</strong> {{ translations.impact_control_description }}
+                        </div>
+                        
+                        <div class="alert-dimension">
+                            <strong>{{ translations.preventability }}</strong> {{ translations.preventability_description }}
+                        </div>
+                        
+                        <div class="alert-dimension">
+                            <strong>{{ translations.safety_culture }}</strong> {{ translations.safety_culture_description }}
+                        </div>
+                        
+                        <div class="alert-dimension">
+                            <strong>{{ translations.human_oversight }}</strong> {{ translations.human_oversight_description }}
+                        </div>
+                    </div>
+                    <div id="alert-criticality-chart"></div>
+                </div>
+                <div class="chart-container">                    
+                <h3 style="margin: 0 0 15px 0; color: #111827;">📊 {{ translations.risk_distribution }}</h3>
+                    <div id="risk-distribution-chart"></div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="pattern-header">
+                    <h3 style="display: inline-block; margin: 0;">🔍 {{ translations.pattern_matrix }}</h3>
+                    <button class="info-toggle" onclick="togglePatternInfo()" title="{{ translations.pattern_guide_toggle }}">
+                        ℹ️ {{ translations.pattern_guide_toggle }}
+                        </button>
+                    </div>
+                    <div id="pattern-info" class="pattern-info-box collapsed">{{ translations.pattern_info_html|safe }}</div>
+                    <div id="patterns-heatmap"></div>
+            </div>
+
+            <div class="chart-container">
+                <div class="pattern-header">
+                    <h3 style="display: inline-block; margin: 0;">🔀 {{ translations.causality_flow }}</h3>
+                    <button class="info-toggle" onclick="toggleSankeyInfo()" title="{{ translations.sankey_guide_toggle }}">
+                        ℹ️ {{ translations.sankey_guide_toggle }}
+                    </button>
+                </div>
+                <div id="sankey-info" class="sankey-info-box collapsed">{{ translations.sankey_info_html|safe }}</div>
+                <div id="causality-sankey-chart"></div>
+            </div>
+        </div>
+
+        <!-- Hierarchical Risk Analysis Section -->
+        <div class="section">
+            <h2>📋 {{ translations.detailed_analysis_title }}</h2>
+            
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>{{ translations.filter_severity }}</label>
+                    <select id="severity-filter" onchange="applyFilters()">
+                        <option value="all">{{ translations.option_all }}</option>
+                        <option value="high">{{ translations.option_high }}</option>
+                        <option value="medium">{{ translations.option_medium }}</option>
+                        <option value="low">{{ translations.option_low }}</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>{{ translations.filter_entity }}</label>
+                    <select id="entity-filter" onchange="applyFilters()">
+                        <option value="all">{{ translations.option_all }}</option>
+                        <option value="ai">{{ translations.option_ai }}</option>
+                        <option value="human">{{ translations.option_human }}</option>
+                        <option value="other">{{ translations.option_other }}</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>{{ translations.filter_timing }}</label>
+                    <select id="timing-filter" onchange="applyFilters()">
+                        <option value="all">{{ translations.option_all }}</option>
+                        <option value="pre-deployment">{{ translations.option_pre_deployment }}</option>
+                        <option value="post-deployment">{{ translations.option_post_deployment }}</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>{{ translations.filter_intent }}</label>
+                    <select id="intent-filter" onchange="applyFilters()">
+                        <option value="all">{{ translations.option_all }}</option>
+                        <option value="intentional">{{ translations.option_intentional }}</option>
+                        <option value="unintentional">{{ translations.option_unintentional }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Hierarchical Tree -->
+            <div class="hierarchy-tree">
+
+
+                {% for domain_id in ['1', '2', '3', '4', '5', '6', '7'] %}
+                    {% if domain_id in domains_structure %}
+                        <div class="domain-block" data-domain="{{ domain_id }}">
+                                <div class="domain-header" onclick="toggleDomain(this)">
+                                <span class="toggle-icon">▼</span>
+                                <span>📁 {{ translations.domain_label }} {{ domain_id }}: {{ translations['d' ~ domain_id ~ '_title'] or domain_names[domain_id] }}</span>
+                                <span style="margin-left: auto; font-size: 0.9rem; opacity: 0.9;">
+                                    {{ translations.subdomains_label|replace('{{count}}', domains_structure[domain_id]|length) }}
+                                </span>
+                            </div>
+                            <div class="domain-content">
+                                {% for subdomain_id, subdomain_data in domains_structure[domain_id].items()|sort %}
+                                    <div class="subdomain-block" data-subdomain="{{ subdomain_id }}">
+                                            <div class="subdomain-header" onclick="toggleSubdomain(this)">
+                                            <span class="toggle-icon">▼</span>
+                                            <span>📂 {{ subdomain_id }}: {{ translations['d' ~ (subdomain_id|replace('.', '_')) ~ '_title'] or subdomain_names.get(subdomain_id, translations.unknown_label) }}</span>
+                                            <span style="margin-left: auto; font-size: 0.85rem; opacity: 0.8;">
+                                                {{ translations.risks_count_label|replace('{{count}}', subdomain_data.risks|length) }}
+                                            </span>
+                                        </div>
+                                        <div class="subdomain-content">
+                                            {% for risk in subdomain_data.risks %}
+                                                <div class="risk-item" 
+                                                     data-severity="{{ risk.severity }}"
+                                                     data-entity="{{ risk.causality.entity.value }}"
+                                                     data-timing="{{ risk.causality.timing.value }}"
+                                                     data-intent="{{ risk.causality.intent.value }}"
+                                                     onclick="toggleRiskDetails(this)">
+                                                    <div class="risk-header">
+                                                        <div class="risk-title">{{ risk.title }}</div>
+                                                        <div>
+                                                            <span class="badge badge-{{ risk.severity }}">{{ translations.risk_severity[risk.severity]|upper }}</span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge" style="background: {% if risk.causality.entity.value == 'ai' %}#DBEAFE{% elif risk.causality.entity.value == 'human' %}#EDE9FE{% else %}#F3F4F6{% endif %}; color: {% if risk.causality.entity.value == 'ai' %}#1E40AF{% elif risk.causality.entity.value == 'human' %}#5B21B6{% else %}#374151{% endif %};">
+                                                                {% if risk.causality.entity.value == 'ai' %}{{ translations.entity_ai }}{% elif risk.causality.entity.value == 'human' %}{{ translations.entity_human }}{% else %}{{ translations.entity_other }}{% endif %}
+                                                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge" style="background: {% if risk.causality.timing.value == 'pre-deployment' %}#CCFBF1{% else %}#FEE2E2{% endif %}; color: {% if risk.causality.timing.value == 'pre-deployment' %}#065F46{% else %}#991B1B{% endif %};">
+                                                                {% if risk.causality.timing.value == 'pre-deployment' %}{{ translations.timing_pre_deployment }}{% elif risk.causality.timing.value == 'post-deployment' %}{{ translations.timing_post_deployment }}{% else %}{{ translations.timing_other }}{% endif %}
+                                                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge" style="background: {% if risk.causality.intent.value == 'intentional' %}#FED7AA{% else %}#D9F99D{% endif %}; color: {% if risk.causality.intent.value == 'intentional' %}#9A3412{% else %}#3F6212{% endif %};">
+                                                                {% if risk.causality.intent.value == 'intentional' %}{{ translations.intent_intentional }}{% elif risk.causality.intent.value == 'unintentional' %}{{ translations.intent_unintentional }}{% else %}{{ translations.intent_other }}{% endif %}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="risk-details">
+                                                        <div class="qa-card">
+                                                            <div class="detail-section">
+                                                                <span class="detail-label">🗒️ {{ translations.question_label }}</span>
+                                                                <p class="detail-text">{{ risk.questionnaire_question or '—' }}</p>
+                                                            </div>
+                                                            <div class="detail-section">
+                                                                <span class="detail-label">✍️ {{ translations.answer_label }}</span>
+                                                                {% set ans = risk.questionnaire_answer %}
+                                                                {% if ans is mapping and ans.selected is defined %}
+                                                                    <div class="answer-chips">
+                                                                        {% for opt in ans.selected %}
+                                                                            <div class="answer-chip">{{ opt }}</div>
+                                                                        {% endfor %}
+                                                                        {% if ans.other %}
+                                                                            <div class="answer-chip"><strong>{{ translations.other_label }}</strong> {{ ans.other }}</div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                {% elif ans is sequence and ans is not string %}
+                                                                    <div class="answer-chips">
+                                                                        {% for opt in ans %}
+                                                                            <div class="answer-chip">{{ opt }}</div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                {% else %}
+                                                                    <p class="detail-text">{{ ans or '—' }}</p>
+                                                                {% endif %}
+                                                            </div>
+                                                            {% if risk.questionnaire_followups_struct %}
+                                                            <div class="detail-section">
+                                                            <span class="detail-label">🔄 {{ translations.followup_label }}</span>
+                                                                <div class="followups">
+                                                                    {% for fu in risk.questionnaire_followups_struct %}
+                                                                        <div class="followup-item">
+                                                                            <div class="followup-q"><strong>{{ translations.followup_q_label }}</strong> {{ fu.question }}</div>
+                                                                            <div class="followup-a"><strong>{{ translations.followup_a_label }}</strong> {{ fu.answer }}</div>
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="detail-section">
+                                                            <span class="detail-label">📝 {{ translations.explanation_label }}</span>
+                                                            <p class="detail-text">{{ risk.explanation }}</p>
+                                                        </div>
+                                                        <div class="detail-section">
+                                                            <span class="detail-label">💡 {{ translations.severity_rationale_label }}</span>
+                                                            <p class="detail-text">{{ risk.severity_rationale }}</p>
+                                                        </div>
+                                                        <div class="detail-section">
+                                                            <span class="detail-label">🛡️ {{ translations.mitigation_label }}</span>
+                                                            <p class="detail-text">{{ risk.mitigation }}</p>
+                                                        </div>
+                                                        <div class="detail-section">
+                                                            <span class="detail-label">🔍 {{ translations.causality_analysis_label }}</span>
+                                                            <div class="causality-grid">
+                                                                <div class="causality-box entity">
+                                                                    <div class="causality-box-label">{{ translations.causality_entity_label }}</div>
+                                                                    <div class="causality-box-text">{{ risk.causality.entity.rationale }}</div>
+                                                                </div>
+                                                                <div class="causality-box timing">
+                                                                    <div class="causality-box-label">{{ translations.causality_timing_label }}</div>
+                                                                    <div class="causality-box-text">{{ risk.causality.timing.rationale }}</div>
+                                                                </div>
+                                                                <div class="causality-box intent">
+                                                                    <div class="causality-box-label">{{ translations.causality_intent_label }}</div>
+                                                                    <div class="causality-box-text">{{ risk.causality.intent.rationale }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <footer>
+            <p>{{ translations.footer_generated_by }}</p>
+            <p>© {{ metadata.timestamp[:4] }} | {{ translations.footer_confidential }}</p>
+        </footer>
+    </div>
+
+    <script>
+        const chartData = {{ chart_data|tojson }};
+    const translations = {{ translations|tojson }};
+{{ js_content }}
+    </script>
+    <script>
+        function handleDownloadClick() {
+            if (typeof window.createReportZip === 'function') {
+                try {
+                    window.createReportZip();
+                } catch (e) {
+                    console.error('{{ translations.zip_error_console }}', e);
+                    alert('{{ translations.zip_error_alert }}');
+                }
+            } else {
+                alert('{{ translations.download_offline_alert }}');
+            }
+        }
+    </script>
+    <script src="scripts/report_download.js"></script>
+</body>
+</html>

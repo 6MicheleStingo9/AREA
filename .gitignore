@@ -1,0 +1,23 @@
+# Python virtual environment
+.venv/
+
+# VS Code
+.vscode/
+
+# Local configuration files
+.env
+langgraph.json
+
+# Langgraph checkpoints and configuration
+.checkpoints/
+.langgraph_api
+
+# cache files
+agents/__pycache__
+agents/causality_analyzer/__pycache__
+agents/domain_analyzer/__pycache__
+agents/heuristic_analyzer/__pycache__
+agents/questionnaire_generator/__pycache__
+agents/report_generator/__pycache__
+ui/__pycache__
+utils/__pycache__

@@ -1,0 +1,642 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "language": "it",
+    "description": "Questionario per la valutazione dei rischi AI"
+  },
+  "questions": [
+    {
+      "id": "1.1",
+      "domain": "Discrimination & Toxicity",
+      "subdomain": "unfair_discrimination_misrepresentation",
+      "question": "Quali dati o attributi relativi agli utenti vengono raccolti oppure utilizzati dal sistema per fornire servizi, prendere decisioni o generare risultati?",
+      "help_text": "Ad esempio: età, genere, localizzazione, ruolo, preferenze, lingua, ecc.",
+      "type": "free_text",
+      "required": true,
+      "multiline": true,
+      "placeholder": "Elenca i dati raccolti dal sistema...",
+      "validation": {
+        "min_length": 10,
+        "max_length": 1000
+      },
+      "follow_ups": [
+        {
+          "text": "Descrivi se e come tali dati/attributi influenzano i risultati prodotti dal sistema.",
+          "type": "free_text",
+          "multiline": true,
+          "required": false,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "domain": "Discrimination & Toxicity",
+      "subdomain": "exposure_to_toxic_content",
+      "question": "Che tipo di contenuti può generare, mostrare o suggerire il sistema agli utenti?",
+      "help_text": "Seleziona tutti i tipi applicabili",
+      "type": "checkbox",
+      "required": true,
+      "min_selections": 1,
+      "options": [
+        "Testo",
+        "Immagini",
+        "Audio",
+        "Video",
+        "Consigli/Raccomandazioni",
+        "Link o riferimenti esterni",
+        "Codice",
+        "Dati strutturati"
+      ],
+      "allow_other": true,
+      "other_label": "Altro",
+      "follow_ups": [
+        {
+          "text": "Specificare se esistono controlli o filtri contro contenuti dannosi, inappropriati o illegali.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "1.3",
+      "domain": "Discrimination & Toxicity",
+      "subdomain": "unequal_performance_across_groups",
+      "question": "Esiste la possibilità che il sistema abbia differenze di prestazione o accuratezza tra gruppi di utenti?",
+      "help_text": "Es. per lingua, età, provenienza, livello di istruzione ecc.",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, ci potrebbero essere differenze tra gruppi",
+        "No, funziona uguale per tutti",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Specifica per quali gruppi o in quali condizioni si manifestano queste differenze.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "2.1",
+      "domain": "Privacy & Security",
+      "subdomain": "privacy_compromise",
+      "question": "Quali tipi di dati personali, sensibili o confidenziali sono raccolti, trattati, analizzati o conservati dal sistema?",
+      "type": "checkbox",
+      "required": true,
+      "min_selections": 1,
+      "options": [
+        "Nessun dato personale",
+        "Nome o identificativo",
+        "Email o contatti",
+        "Dati sanitari",
+        "Dati finanziari",
+        "Dati di localizzazione"
+      ],
+      "allow_other": true,
+      "other_label": "Altro",
+      "follow_ups": []
+    },
+    {
+      "id": "2.2",
+      "domain": "Privacy & Security",
+      "subdomain": "system_security_vulnerabilities",
+      "question": "Quali misure di sicurezza sono adottate per proteggere dati, accessi e funzionamento del sistema?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Audit di sicurezza esterni",
+        "Controlli di base (es. autenticazione, cifratura)",
+        "Nessun controllo specifico",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Spiega, se rilevante, eventuali problematiche riscontrate o azioni di mitigazione adottate.",
+          "type": "free_text",
+          "multiline": true,
+          "required": false,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "3.1",
+      "domain": "Misinformation",
+      "subdomain": "false_or_misleading_information",
+      "question": "Il sistema produce o suggerisce informazioni agli utenti?",
+      "help_text": "Ad esempio risposte automatiche, sintesi, consigli, notizie, contenuti informativi",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, informazioni rivolte al pubblico o a gruppi ampi",
+        "Sì, solo a utenti individuali",
+        "No, non produce queste informazioni",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Esistono controlli per limitarne errori, ambiguità o contenuti fuorvianti?",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index_in",
+            "value": [0, 1]
+          }
+        }
+      ]
+    },
+    {
+      "id": "3.2",
+      "domain": "Misinformation",
+      "subdomain": "pollution_of_information_ecosystem",
+      "question": "Il sistema personalizza l'output o filtra i contenuti mostrati agli utenti in base al loro profilo/interazioni?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, la personalizzazione influenza l'output",
+        "Sì, ma in modo trascurabile",
+        "No, l'output è uguale per tutti",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Descrivi che tipo di filtri o logiche vengono applicati.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "4.1",
+      "domain": "Malicious actors",
+      "subdomain": "disinformation_surveillance_influence",
+      "question": "Il sistema potrebbe, per le sue caratteristiche, essere sfruttato per disinformazione, raccolta massiva di dati su utenti o influenzare gruppi su larga scala?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì",
+        "No",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Spiega come potrebbe essere utilizzato in questo modo oppure descrivi possibili scenari di abuso.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "4.2",
+      "domain": "Malicious actors",
+      "subdomain": "cyberattacks_weapon_development_mass_harm",
+      "question": "Il sistema può essere vulnerabile o adattabile per attacchi informatici, sviluppo di armi autonome, software malevoli o causar danni su larga scala?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì",
+        "No",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Indica i tipi di attacco o danno più probabili.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        },
+        {
+          "text": "Descrivi eventuali controlli o protezioni implementate.",
+          "type": "free_text",
+          "multiline": true,
+          "required": false,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "4.3",
+      "domain": "Malicious actors",
+      "subdomain": "fraud_scams_targeted_manipulation",
+      "question": "Potrebbe essere usato per truffe, manipolazione mirata, ricatti o attività fraudolente verso singoli o gruppi di utenti?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì",
+        "No",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Fornisci esempi concreti o possibili casi di rischio.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "5.1",
+      "domain": "Human-Computer Interaction",
+      "subdomain": "overreliance_and_unsafe_use",
+      "question": "In quali ambiti o situazioni tipicamente si utilizza il sistema?",
+      "help_text": "Sono previsti casi d'uso critici o delicati (es. salute, emergenze, finanza, politica)?",
+      "type": "free_text",
+      "required": true,
+      "multiline": true,
+      "placeholder": "Descrivi gli ambiti di utilizzo...",
+      "validation": {
+        "min_length": 10,
+        "max_length": 1000
+      },
+      "follow_ups": [
+        {
+          "text": "Descrivi eventuali rischi di affidarsi eccessivamente ai risultati del sistema.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "5.2",
+      "domain": "Human-Computer Interaction",
+      "subdomain": "loss_of_human_agency_and_autonomy",
+      "question": "Il sistema prende decisioni automatiche che possono ridurre il controllo umano oppure influenza direttamente le scelte degli utenti?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Solo suggerisce, nessuna decisione vincolante",
+        "Alcune azioni sono automatizzate senza conferma umana",
+        "Decide completamente in autonomia",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Fornisci esempi o casi particolari dove l'autonomia della persona potrebbe essere compromessa.",
+          "type": "free_text",
+          "multiline": true,
+          "required": false,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "6.1",
+      "domain": "Socioeconomic & Environmental",
+      "subdomain": "power_centralization_unfair_distribution",
+      "question": "Chi trae principali benefici o vantaggi dall'adozione del sistema?",
+      "help_text": "Possono verificarsi effetti di concentrazione di risorse, informazioni o potere?",
+      "type": "free_text",
+      "required": true,
+      "multiline": true,
+      "placeholder": "Descrivi chi beneficia del sistema...",
+      "validation": {
+        "min_length": 10,
+        "max_length": 1000
+      },
+      "follow_ups": [
+        {
+          "text": "Indica, se rilevato, quali enti, utenti o aziende traggono vantaggi e chi potrebbe restare escluso.",
+          "type": "free_text",
+          "multiline": true,
+          "required": false,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "6.2",
+      "domain": "Socioeconomic & Environmental",
+      "subdomain": "increased_inequality_employment_quality",
+      "question": "L'adozione del sistema può causare riduzione di posti di lavoro, cambiamenti nella qualità del lavoro o allargare le disuguaglianze?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, può ridurre occupazione",
+        "Sì, può peggiorare la qualità del lavoro",
+        "No, nessun effetto rilevante",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Specifica settori, attività o gruppi sociali coinvolti.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index_in",
+            "value": [0, 1]
+          }
+        }
+      ]
+    },
+    {
+      "id": "6.3",
+      "domain": "Socioeconomic & Environmental",
+      "subdomain": "economic_cultural_devaluation_of_human_effort",
+      "question": "Il sistema sostituisce attività creative, culturali o professionali svolte da persone oppure omologa fortemente l'output rispetto alle capacità umane?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, sostituisce attività umane",
+        "No, è solo di supporto",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Indica quali attività o settori sono più impattati.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "6.4",
+      "domain": "Socioeconomic & Environmental",
+      "subdomain": "competitive_dynamics",
+      "question": "Il sistema è stato implementato o rilasciato rapidamente per pressioni di mercato o concorrenza, senza attente valutazioni di rischio?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, priorità a velocità e concorrenza",
+        "No, sviluppo valutato attentamente",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Descrivi le ragioni della fretta e i rischi non analizzati.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "6.5",
+      "domain": "Socioeconomic & Environmental",
+      "subdomain": "governance_failure",
+      "question": "Esistono regole, strutture organizzative o sistemi di controllo (governance) a cui è sottoposto lo sviluppo e funzionamento del sistema?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, governance formalizzata",
+        "Solo regole informali/procedure interne",
+        "Nessuna governance",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Descrivi molto sinteticamente il modello adottato.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "6.6",
+      "domain": "Socioeconomic & Environmental",
+      "subdomain": "environmental_harm",
+      "question": "Quali risorse computazionali o energetiche richiede il sistema?",
+      "help_text": "Ad esempio cloud, server dedicati, hardware specializzato. Sono stati valutati impatti ambientali?",
+      "type": "free_text",
+      "required": true,
+      "multiline": true,
+      "placeholder": "Descrivi le risorse utilizzate...",
+      "validation": {
+        "min_length": 10,
+        "max_length": 1000
+      },
+      "follow_ups": [
+        {
+          "text": "Se noto, specifica quantità di risorse usate o presenza di politiche di compensazione ambientale.",
+          "type": "free_text",
+          "multiline": true,
+          "required": false,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "7.1",
+      "domain": "AI system safety, failures, & limitations",
+      "subdomain": "goal_misalignment",
+      "question": "Come vengono determinati gli obiettivi o i criteri di successo del sistema e quali misure sono presenti per evitare che operi in modo imprevisto o contrario a quanto desiderato?",
+      "type": "free_text",
+      "required": true,
+      "multiline": true,
+      "placeholder": "Descrivi gli obiettivi e le misure di controllo...",
+      "validation": {
+        "min_length": 10,
+        "max_length": 1000
+      },
+      "follow_ups": [
+        {
+          "text": "Indica se sono stati previsti controlli sull'allineamento tra risultati desiderati e reali.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "7.2",
+      "domain": "AI system safety, failures, & limitations",
+      "subdomain": "dangerous_capabilities",
+      "question": "Il sistema è dotato di capacità avanzate che, se non adeguatamente controllate, potrebbero teoricamente essere pericolose?",
+      "help_text": "Es. manipolazione, automazione, possibilità di interagire con altre infrastrutture",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, alcune capacità sono rischiose",
+        "No, nessuna capacità di questo tipo",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Descrivi quali capacità e quali controlli o limitazioni sono stati implementati.",
+          "type": "free_text",
+          "multiline": true,
+          "required": false,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    },
+    {
+      "id": "7.3",
+      "domain": "AI system safety, failures, & limitations",
+      "subdomain": "lack_of_capability_or_robustness",
+      "question": "Sono stati svolti test approfonditi di robustezza e affidabilità? Sono noti i limiti del sistema in condizioni nuove o non usuali?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, con test estesi e limiti noti",
+        "Solo test di base",
+        "Non sono stati testati casi limite",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Descrivile brevemente.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index_in",
+            "value": [0, 1]
+          }
+        }
+      ]
+    },
+    {
+      "id": "7.4",
+      "domain": "AI system safety, failures, & limitations",
+      "subdomain": "lack_of_transparency_interpretability",
+      "question": "Gli utenti oppure chi amministra il sistema sono in grado di comprendere come vengono prese le decisioni? Esistono spiegazioni o documentazione sulle logiche adottate?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, decisioni sempre spiegabili",
+        "Solo alcune decisioni sono spiegabili",
+        "No, logiche opache/non spiegabili",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Indica dove o perché non lo sono.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index_in",
+            "value": [1, 2]
+          }
+        }
+      ]
+    },
+    {
+      "id": "7.5",
+      "domain": "AI system safety, failures, & limitations",
+      "subdomain": "ai_welfare_and_rights",
+      "question": "Sono state analizzate o considerate implicazioni etiche, possibili diritti, tutela o benessere dell'AI, specialmente in caso di alta autonomia o complessità?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, sono state valutate queste implicazioni",
+        "No, non si è ritenuto necessario",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Descrivi brevemente le principali considerazioni o policy adottate.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "7.6",
+      "domain": "AI system safety, failures, & limitations",
+      "subdomain": "multi_agent_risks",
+      "question": "Il sistema interagisce o si coordina con altri sistemi AI, agenti autonomi o piattaforme automatiche?",
+      "type": "multiple_choice",
+      "required": true,
+      "options": [
+        "Sì, interagisce con altri sistemi o agenti",
+        "No, opera in modo isolato",
+        "Non so"
+      ],
+      "follow_ups": [
+        {
+          "text": "Descrivi il tipo di interazione o coordinamento.",
+          "type": "free_text",
+          "multiline": true,
+          "required": true,
+          "condition": {
+            "type": "option_index",
+            "value": 0
+          }
+        },
+        {
+          "text": "Indica eventuali misure di controllo, gestione o mitigazione dei rischi dovuti alle interazioni tra sistemi.",
+          "type": "free_text",
+          "multiline": true,
+          "required": false,
+          "condition": {
+            "type": "always"
+          }
+        }
+      ]
+    }
+  ]
+}
