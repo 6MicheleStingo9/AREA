@@ -54,4 +54,12 @@ TRANSLATIONS = {
     },
     "analysis_error": {"en": "Error during analysis", "it": "Errore durante l'analisi"},
     "restart_button": {"en": "🔄 Restart", "it": "🔄 Ricomincia"},
+    "min_length_validation": {
+        "en": "The answer must contain at least {min_length} characters",
+        "it": "La risposta deve contenere almeno {min_length} caratteri",
+    },
+    "copy_html_path_info": {
+        "en": "If the link does not open, copy and paste this path into your browser: {html_path}",
+        "it": "Se il link non si apre, copia e incolla questo percorso nel browser: {html_path}",
+    },
 }

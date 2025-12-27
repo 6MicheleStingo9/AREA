@@ -1,0 +1,16 @@
+{
+  "timestamp": "20251227_160656",
+  "language": "en",
+  "total_questions": 24,
+  "answered_questions": 24,
+  "run_id": "23d095a19c9c45c89af5c66b5ffcea63",
+  "executive_summary_text": "An in-depth AI risk analysis reveals a global risk score of 61.47, indicating a high overall risk level for the system, primarily driven by active threats that necessitate immediate mitigation actions. The most critical risk area is \"Malicious actors\" (Domain 4), accounting for 4 high-severity risks, particularly within \"Cyberattacks, weapon development or use, and mass harm\" (Subdomain 4.2) with 2 high risks. Following this are \"AI system safety, failures, & limitations\" (Domain 7) with 2 high risks, and \"Socioeconomic & Environmental\" (Domain 6) with 1 high risk.\n\nOut of 34 total risks identified, 11 are classified as high severity, 19 as medium, and 4 as low. Analysis of risk patterns reveals 11 intentional threats and a substantial 91.18% of risks categorized as operational. Notably, 10 malicious human risks and 18 unintended AI failures contribute significantly to the risk profile. An alert indicates 0.0% preventable risks, underscoring the need for robust controls. Furthermore, 55.88% of risks accumulate at a medium level, while high risks are fragmented across 7 distinct domains, suggesting broad exposure. Given these findings, immediate mitigation is recommended to address the identified high-severity risks and systemic vulnerabilities.",
+  "taxonomy_versions": {
+    "domain": "v0.1",
+    "causal": "v0.1"
+  },
+  "analysis_current_step": "report_generation",
+  "analysis_next_step": null,
+  "html_report": "/home/stingom/Scrivania/Git/area/files/reports/ai_risk_report_23d095a19c9c45c89af5c66b5ffcea63.html",
+  "errors": []
+}

@@ -1,6 +1,5 @@
 """
-Modulo UI per il questionario di valutazione rischi AI.
-Implementazione Web con Streamlit.
+UI module for the Streamlit-based questionnaire application.
 """
 
 from .app import StreamlitQuestionnaireApp

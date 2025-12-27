@@ -71,7 +71,7 @@ AREA is built as a modular, multi-agent system orchestrated via [LangGraph](http
 
 **Architecture Diagram:**
 
-![Architecture Diagram](files/img/architecture.png)
+![Architecture Diagram](files/img/architecture.svg)
 
 **Key points:**
 

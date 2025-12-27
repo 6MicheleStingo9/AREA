@@ -1,3 +1,7 @@
+# Suppress DEBUG logs from watchdog's inotify_buffer
+import logging
+
+logging.getLogger("watchdog.observers.inotify_buffer").setLevel(logging.WARNING)
 import json
 import streamlit as st
 from pathlib import Path
@@ -8,6 +12,9 @@ import time
 import importlib.util
 import sys
 from pathlib import Path
+import os
+
+os.environ["STREAMLIT_LOG_LEVEL"] = "warning"
 
 # Ensure project root is on sys.path so absolute UI imports work when running from any directory
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -249,6 +256,10 @@ class StreamlitQuestionnaireApp:
         followups_shown = st.session_state.followups_shown.get(question_id, False)
 
         for idx, followup in enumerate(question["follow_ups"]):
+            # Inject parent options for condition checks (multiple_choice, checkbox)
+            if question["type"] in ("multiple_choice", "checkbox"):
+                followup["_parent_options"] = question.get("options", [])
+
             # Show the follow-up only if: condition met AND shown flag = True
             if (
                 self.should_show_followup(followup, main_answer, question["type"])
@@ -313,6 +324,17 @@ class StreamlitQuestionnaireApp:
             if question_type == "checkbox" and isinstance(answer, dict):
                 selected = answer.get("selected", [])
                 return any(idx in values for idx in range(len(selected)))
+            elif question_type == "multiple_choice":
+                options = followup.get("_parent_options", [])
+                # answer può essere una stringa (opzione selezionata) o lista (se mai supportato)
+                if options:
+                    if isinstance(answer, str):
+                        idx = options.index(answer) if answer in options else -1
+                        return idx in values
+                    elif isinstance(answer, list):
+                        idxs = [options.index(a) for a in answer if a in options]
+                        return any(idx in values for idx in idxs)
+                return False
 
         elif condition_type == "has_other":
             if isinstance(answer, dict):
@@ -336,7 +358,7 @@ class StreamlitQuestionnaireApp:
                 if len(answer) < min_length:
                     return (
                         False,
-                        f"The answer must contain at least {min_length} characters",
+                        self.t("min_length_validation").format(min_length=min_length),
                     )
 
             elif question["type"] == "checkbox":
@@ -355,7 +377,9 @@ class StreamlitQuestionnaireApp:
     def save_answers(self) -> Path:
         """Salva le risposte in un file JSON."""
         output_path = (
-            Path("files/answers")
+            Path(__file__).resolve().parent.parent
+            / "files"
+            / "answers"
             / f"answers_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         )
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -367,7 +391,7 @@ class StreamlitQuestionnaireApp:
                 "total_questions": len(self.questions),
                 "answered_questions": len(st.session_state.answers),
             },
-            "answers": st.session_state.answers,
+            "responses": st.session_state.answers,
         }
 
         with open(output_path, "w", encoding="utf-8") as f:
@@ -428,23 +452,20 @@ class StreamlitQuestionnaireApp:
                     st.rerun()
 
         with col2:
+            is_valid, error_msg = self.validate_answer(
+                question, answer, followup_answers
+            )
+            # Se non siamo all'ultima domanda, mostra solo Avanti
             if current_idx < len(self.questions) - 1:
-                is_valid, error_msg = self.validate_answer(
-                    question, answer, followup_answers
-                )
                 if st.button(
                     self.t("next_button"), use_container_width=True, type="primary"
                 ):
                     if is_valid:
-                        # If there are visible follow-ups that have not yet been shown
                         if has_visible_followups and not followups_already_shown:
-                            # First click: mark as shown and rerun to render them
                             st.session_state.followups_shown[question_id] = True
                             st.rerun()
                         else:
-                            # Second click (or no follow-up): advance to the next question
                             st.session_state.current_question += 1
-                            # Reset the flag for the next question
                             if current_idx + 1 < len(self.questions):
                                 next_question_id = self.questions[current_idx + 1]["id"]
                                 st.session_state.followups_shown[next_question_id] = (
@@ -453,13 +474,28 @@ class StreamlitQuestionnaireApp:
                             st.rerun()
                     else:
                         st.error(error_msg)
+            # If last question, show Complete button
             else:
-                is_valid, error_msg = self.validate_answer(
-                    question, answer, followup_answers
+                avanti_clicked = st.button(
+                    self.t("next_button"), use_container_width=True, type="primary"
                 )
-                if st.button(
-                    self.t("complete_button"), use_container_width=True, type="primary"
-                ):
+                completa_disabled = (
+                    has_visible_followups and not followups_already_shown
+                )
+                completa_clicked = st.button(
+                    self.t("complete_button"),
+                    use_container_width=True,
+                    type="primary",
+                    disabled=completa_disabled,
+                )
+                if avanti_clicked:
+                    if is_valid:
+                        if has_visible_followups and not followups_already_shown:
+                            st.session_state.followups_shown[question_id] = True
+                            st.rerun()
+                    else:
+                        st.error(error_msg)
+                if completa_clicked:
                     if is_valid:
                         path = self.save_answers()
                         st.session_state.completed = True
@@ -488,7 +524,12 @@ class StreamlitQuestionnaireApp:
                     html_path = final_state.get("report_state", {}).get("html_path")
                     if html_path and Path(html_path).exists():
                         st.success(self.t("analysis_complete"))
-                        st.markdown(f"[{self.t('open_html_report')}]({html_path})")
+                        st.markdown(
+                            f"[{self.t('open_html_report')}]('file://{html_path}')"
+                        )
+                        st.info(
+                            self.t("copy_html_path_info").format(html_path=html_path)
+                        )
                     else:
                         st.error(self.t("report_not_found"))
                 except Exception as e:
