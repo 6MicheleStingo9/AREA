@@ -8,7 +8,7 @@
   "responses": {
     "1.1": {
       "question": "What user data or attributes are collected or used by the system to provide services, make decisions, or generate outputs?",
-      "answer": "he system collects anonymized user interaction logs, including query parameters, response times, and user feedback signals (e.g., upvotes/downvotes). For specialized applications, it may also ingest domain-specific metadata such as technical specifications, project requirements, or code snippets. No personally identifiable information (PII) is directly collected or stored. User roles (e.g., 'developer', 'researcher', 'manager') are inferred or explicitly provided to tailor output relevance and complexity.",
+      "answer": "The system collects anonymized user interaction logs, including query parameters, response times, and user feedback signals (e.g., upvotes/downvotes). For specialized applications, it may also ingest domain-specific metadata such as technical specifications, project requirements, or code snippets. No personally identifiable information (PII) is directly collected or stored. User roles (e.g., 'developer', 'researcher', 'manager') are inferred or explicitly provided to tailor output relevance and complexity.",
       "followups": {
         "0": "User roles directly influence the level of technical detail and the assumed prior knowledge in generated responses. For instance, a 'developer' role might receive code examples and API references, while a 'researcher' might get more theoretical explanations and citations. Feedback signals are used to fine-tune the underlying models, prioritizing outputs that have been positively received by users in similar contexts."
       }
