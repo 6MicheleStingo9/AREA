@@ -75,6 +75,8 @@ def create_logger(name: str) -> structlog.stdlib.BoundLogger:
 # Shared resilience policy for LLM calls: exponential backoff + jitter on
 # transient errors (rate limits, 5xx). Applied via apply_retry() as the
 # OUTERMOST layer so it does not hide model methods like with_structured_output.
+# It is the only retry layer: get_llm_instance() turns off the SDK's own retries,
+# which would otherwise run inside every attempt (5 x 6 HTTP calls per request).
 _LLM_RETRY_KWARGS = dict(stop_after_attempt=5, wait_exponential_jitter=True)
 
 
@@ -99,6 +101,7 @@ def get_llm_instance(t: float = 0.0) -> ChatGoogleGenerativeAI:
         model=model_name,
         temperature=t,
         google_api_key=google_api_key,
+        max_retries=0,  # retries come from apply_retry() only
     )
 
 

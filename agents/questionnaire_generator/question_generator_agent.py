@@ -11,7 +11,7 @@ from langchain_core.messages import AIMessage, BaseMessage
 from langchain_core.prompts.chat import ChatPromptTemplate, SystemMessagePromptTemplate
 
 from . import prompts as qprompt
-from utils.utils import get_llm_instance, create_logger
+from utils.utils import apply_retry, get_llm_instance, create_logger
 
 DEFAULT_PROFILE_TEMPS: Dict[str, float] = {
     "expert": 0.2,
@@ -151,7 +151,7 @@ def generate_responses(
     temp = DEFAULT_PROFILE_TEMPS.get(profile, 0.5)
     llm = get_llm_instance(t=temp)
 
-    agent = create_agent(model=llm)
+    agent = apply_retry(create_agent(model=llm))
     messages = build_chat_messages(questions, profile, language)
 
     # Invoke and directly return the agent's response
