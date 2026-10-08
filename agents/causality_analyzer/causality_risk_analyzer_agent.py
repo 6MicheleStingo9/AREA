@@ -3,9 +3,8 @@ import json
 import os
 import sys
 import time
-from operator import add
 from pathlib import Path
-from typing import Annotated, Any, Dict, List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 
 from langchain.messages import AnyMessage
 from langgraph.graph import StateGraph
@@ -33,8 +32,10 @@ class CausalAnalysisState(TypedDict, total=False):
     metadata: Dict[str, Any]
     questionnaire: Dict[str, Any]
     analysis: Dict[str, Any]
-    messages: Annotated[List[AnyMessage], add]
-    errors: Annotated[List[str], add]
+    # Plain lists, no `add` reducer: nodes update and return the whole state, so a
+    # reducer would append each list to itself and duplicate every entry.
+    messages: List[AnyMessage]
+    errors: List[str]
 
 
 # ================================
