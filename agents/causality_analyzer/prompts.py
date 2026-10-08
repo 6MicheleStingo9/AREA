@@ -40,6 +40,7 @@ Where {{domain_analysis_json}} is a JSON object with keys in the format 'x.y' (e
         "title": "string",
         "explanation": "string",
         "severity": "low | medium | high",
+        "severity_rationale": "string",
         "mitigation": "string"
       },
       ...
@@ -60,6 +61,7 @@ For each domain/subdomain and for each element in the 'risks' list, return ONLY 
         "title": "string",
         "explanation": "string",
         "severity": "low | medium | high",
+        "severity_rationale": "string",
         "mitigation": "string",
         "entity": "ai | human | other",
         "entity_rationale": "string",
@@ -81,7 +83,7 @@ Requirements:
   - causality_entity ∈ {ai, human, other}
   - causality_intent ∈ {intentional, unintentional, other}
   - causality_timing ∈ {pre-deployment, post-deployment, other}
-- Rationales: '*_rationale' fields are mandatory, brief, and specific; grounded on the 'title', 'explanation', 'severity', and 'mitigation' of the corresponding risk.
+- Rationales: 'entity_rationale', 'intent_rationale' and 'timing_rationale' are mandatory, brief, and specific; grounded on the 'title', 'explanation', 'severity', and 'mitigation' of the corresponding risk. Copy 'severity_rationale' unchanged from the input.
 - Consistency: do not add, remove, or rename existing fields except for adding 'causality' as per schema; do not insert extra text.
 - Output: respond ONLY with valid JSON conforming to the above structure, without additional text or delimiters (no ```). If information is indeterminable, use 'other' and briefly justify.
 """

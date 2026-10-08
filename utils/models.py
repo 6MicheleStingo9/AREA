@@ -13,15 +13,19 @@ class RiskItem(BaseModel):
         title (str): The title of the risk.
         explanation (str): Explanation of the risk.
         severity (Literal["low", "medium", "high"]): Severity level of the risk.
+        severity_rationale (str): Rationale for the severity, written together with it.
         mitigation (str): Suggested mitigation for the risk.
     """
 
     title: str
     explanation: str
     severity: Literal["low", "medium", "high"]
+    severity_rationale: str
     mitigation: str
 
-    @field_validator("title", "explanation", "severity", "mitigation", mode="before")
+    @field_validator(
+        "title", "explanation", "severity", "severity_rationale", "mitigation", mode="before"
+    )
     def _non_empty(cls, v: str) -> str:
         if not isinstance(v, str) or not v.strip():
             raise ValueError("Il campo non può essere vuoto")
