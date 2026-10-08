@@ -130,6 +130,9 @@ GEMINI_MODEL=gemini-2.5-flash
 
 - Replace `your_api_key_here` with your API key from [Google AI Studio](https://aistudio.google.com/).
 - You can set `GEMINI_MODEL` to the specific Gemini model you want to use (e.g., `gemini-2.5-flash`).
+- Each assessment makes 3 LLM requests (domain, causality, report). The Gemini API free tier has a
+  daily request quota per model (20 for `gemini-2.5-flash` as of October 2026), so it allows only a
+  few assessments a day; past the quota, requests fail with `429 RESOURCE_EXHAUSTED` until it resets.
 
 > Get your API key and see available models at: https://aistudio.google.com/
 
