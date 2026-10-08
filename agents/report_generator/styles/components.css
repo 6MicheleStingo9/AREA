@@ -665,7 +665,7 @@
 }
 
 .subdomain-id {
-    background: #3B82F6;
+    background: #2563EB; /* white text: 5.2:1 (AA) */
     color: white;
     font-weight: 700;
     font-size: 0.75rem;
