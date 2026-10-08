@@ -44,7 +44,16 @@ TRANSLATIONS = {
         "en": "Run Risk Analysis and Generate Report",
         "it": "Avvia analisi rischi e genera report",
     },
+    "question_label": {"en": "Question", "it": "Domanda"},
     "analysis_running": {"en": "Running analysis...", "it": "Analisi in corso..."},
+    "pipeline_running_hint": {
+        "en": "The pipeline is running. This usually takes 1–3 minutes.",
+        "it": "La pipeline è in esecuzione. Di solito servono 1–3 minuti.",
+    },
+    "job_not_found": {
+        "en": "Analysis job not found (the server may have restarted). Please start a new analysis.",
+        "it": "Analisi non trovata (il server potrebbe essere stato riavviato). Avvia una nuova analisi.",
+    },
     "analysis_complete": {
         "en": "Analysis complete! Report generated.",
         "it": "Analisi completata! Report generato.",
