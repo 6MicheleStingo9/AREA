@@ -231,6 +231,15 @@ Each agent can be run individually from the terminal for testing or advanced ana
   Input and output files are located in their respective folders under `files/`.  
   For more details on available parameters, see the agent source code in `agents/`.
 
+### Tests
+
+Unit tests (no LLM calls) run with pytest from the project root:
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
 ---
 
 ## Analysis Workflow
