@@ -38,8 +38,11 @@ def should_show_followup(followup: Dict, answer: Any, question_type: str) -> boo
     elif ctype == "option_index_in":
         values = condition.get("value", [])
         if question_type == "checkbox" and isinstance(answer, dict):
+            # Compare the option indices of the selected options (not their
+            # positions in the selection list).
+            options = followup.get("_parent_options", [])
             selected = answer.get("selected", [])
-            return any(idx in values for idx in range(len(selected)))
+            return any(options.index(s) in values for s in selected if s in options)
         elif question_type == "multiple_choice":
             options = followup.get("_parent_options", [])
             if options:
