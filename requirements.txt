@@ -4,6 +4,8 @@ langchain==1.2.0
 langchain_core==1.2.5
 langchain_google_genai==4.1.2
 langgraph==1.0.5
+# langgraph-prebuilt >= 1.0.9 needs a newer langgraph (breaks langchain.agents.create_agent)
+langgraph-prebuilt==1.0.8
 pydantic==2.12.5
 pyswip==0.3.3
 python-dotenv==1.2.1
