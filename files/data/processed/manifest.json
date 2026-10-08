@@ -1,0 +1,152 @@
+{
+  "source": {
+    "file": "mit_ai_risk_repository_v4.xlsx",
+    "sheet": "AI Risk Database v4",
+    "sha256": "4b98a0823227c1a03217c156c52cda38542f6e5941e589660eaa7c83e4661797"
+  },
+  "script": {
+    "file": "data_prep/extract_dataset.py",
+    "sha256": "1e20ec92095c44793999e242c1d9072db4828e81499edad391314c40c71a2851"
+  },
+  "split": {
+    "key": "paper.category (first two parts of Ev_ID)",
+    "hash": "sha1",
+    "eval_frac": 0.15
+  },
+  "outputs": {
+    "full": {
+      "rows": 1617
+    },
+    "domain_clf.train": {
+      "rows": 1270,
+      "groups": 431,
+      "labels": {
+        "domain_id": {
+          "7": 351,
+          "6": 244,
+          "4": 203,
+          "2": 171,
+          "1": 149,
+          "5": 82,
+          "3": 70
+        },
+        "subdomain_id": {
+          "2.2": 101,
+          "7.3": 95,
+          "7.1": 93,
+          "1.1": 68,
+          "2.1": 64,
+          "7.2": 64,
+          "4.2": 63,
+          "4.1": 63,
+          "1.2": 59,
+          "4.3": 58,
+          "7.6": 52,
+          "6.5": 48,
+          "6.2": 46,
+          "5.1": 45,
+          "6.6": 44,
+          "6.1": 44,
+          "3.1": 43,
+          "5.2": 37,
+          "6.3": 28,
+          "7.4": 27,
+          "3.2": 22,
+          "4.0": 18,
+          "6.0": 18,
+          "1.3": 17,
+          "6.4": 16,
+          "7.0": 16,
+          "2.0": 6,
+          "3.0": 5,
+          "1.0": 5,
+          "7.5": 3,
+          "null": 2
+        }
+      }
+    },
+    "domain_clf.eval": {
+      "rows": 159,
+      "groups": 71,
+      "labels": {
+        "domain_id": {
+          "7": 50,
+          "4": 34,
+          "6": 25,
+          "2": 19,
+          "1": 14,
+          "5": 12,
+          "3": 5
+        },
+        "subdomain_id": {
+          "7.3": 19,
+          "7.4": 14,
+          "2.1": 12,
+          "7.2": 12,
+          "4.1": 11,
+          "4.2": 9,
+          "1.1": 9,
+          "4.3": 8,
+          "5.1": 8,
+          "6.5": 8,
+          "2.2": 7,
+          "4.0": 6,
+          "6.6": 5,
+          "3.1": 5,
+          "6.2": 5,
+          "1.2": 4,
+          "7.1": 4,
+          "5.2": 4,
+          "6.4": 2,
+          "6.3": 2,
+          "6.1": 2,
+          "6.0": 1,
+          "1.0": 1,
+          "7.0": 1
+        }
+      }
+    },
+    "causal_clf.train": {
+      "rows": 1313,
+      "groups": 434,
+      "labels": {
+        "entity": {
+          "ai": 560,
+          "human": 484,
+          "other": 269
+        },
+        "intent": {
+          "unintentional": 458,
+          "intentional": 448,
+          "other": 407
+        },
+        "timing": {
+          "post-deployment": 798,
+          "other": 354,
+          "pre-deployment": 161
+        }
+      }
+    },
+    "causal_clf.eval": {
+      "rows": 160,
+      "groups": 69,
+      "labels": {
+        "entity": {
+          "human": 66,
+          "ai": 62,
+          "other": 32
+        },
+        "intent": {
+          "unintentional": 65,
+          "intentional": 57,
+          "other": 38
+        },
+        "timing": {
+          "post-deployment": 104,
+          "other": 38,
+          "pre-deployment": 18
+        }
+      }
+    }
+  }
+}
