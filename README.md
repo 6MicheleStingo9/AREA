@@ -183,13 +183,13 @@ Open `http://localhost:8000` in your browser.
 
 ### Standalone Execution of Agents
 
-Each agent can be run individually from the terminal for testing or advanced analysis. Here are some example commands:
+Each agent can be run individually from the terminal for testing or advanced analysis. Run the commands as modules from the project root (`python -m ...`), so that the `agents` and `utils` packages are importable. Here are some example commands:
 
 - **Generate sample questionnaire answers**  
    You can generate simulated answers for a questionnaire (useful for tests or demos) with the questionnaire_generator agent:
 
   ```bash
-  python agents/questionnaire_generator/question_generator_agent.py questions_en.json --profile expert
+  python -m agents.questionnaire_generator.question_generator_agent questions_en.json --profile expert
   ```
 
   The agent simulates a user filling out the questionnaire, using the selected profile to generate realistic answers. The profile can be `expert`, `intermediate`, or `beginner`.
@@ -198,34 +198,34 @@ Each agent can be run individually from the terminal for testing or advanced ana
    Analyze an answers file (for example, generated in the previous step):
 
   ```bash
-  python agents/domain_analyzer/domain_risk_analyzer_agent.py --run_id <run_id>
+  python -m agents.domain_analyzer.domain_risk_analyzer_agent --run_id <run_id>
   ```
 
   or
 
   ```bash
-  python agents/domain_analyzer/domain_risk_analyzer_agent.py answers_12345.json
+  python -m agents.domain_analyzer.domain_risk_analyzer_agent answers_12345.json
   ```
 
 - **Causality Analysis (Causality Analyzer)**  
    Analyze a domain analysis file:
 
   ```bash
-  python agents/causality_analyzer/causality_risk_analyzer_agent.py domain_analysis_12345.json
+  python -m agents.causality_analyzer.causality_risk_analyzer_agent domain_analysis_12345.json
   ```
 
 - **Heuristic Analysis (Heuristic Analyzer)**  
    Analyze a causality analysis file:
 
   ```bash
-  python agents/heuristic_analyzer/heuristic_risk_analyzer_agent.py causality_analysis_12345.json
+  python -m agents.heuristic_analyzer.heuristic_risk_analyzer_agent causality_analysis_12345.json
   ```
 
 - **Final Report Generation (Report Generator)**  
    Generate the HTML report from a heuristic analysis file:
 
   ```bash
-  python agents/report_generator/report_generator_agent.py heuristic_analysis_12345.json
+  python -m agents.report_generator.report_generator_agent heuristic_analysis_12345.json
   ```
 
   Input and output files are located in their respective folders under `files/`.  
