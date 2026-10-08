@@ -1,0 +1,113 @@
+<div class="card quiz" id="quiz-card">
+
+  {# Progress #}
+  <div class="progress-bar">
+    <div class="progress-fill" style="width: {{ ((step + 1) / total * 100) | int }}%"></div>
+  </div>
+  <p class="progress-label">{{ step + 1 }} / {{ total }}</p>
+
+  {% if error %}
+    <div class="alert alert-error" role="alert">{{ error }}</div>
+  {% endif %}
+
+  {#
+    hx-post: submit via htmx → server returns next quiz_card fragment
+    hx-target: swap #quiz-wrap content
+    hx-swap: replace inner HTML (keeps the wrapper div for subsequent swaps)
+    method/action: fallback for no-JS
+  #}
+  <form method="post"
+        action="/quiz/{{ session_id }}/{{ step }}"
+        hx-post="/quiz/{{ session_id }}/{{ step }}"
+        hx-target="#quiz-wrap"
+        hx-swap="innerHTML"
+        hx-indicator="#submit-btn">
+
+    <h2 class="question-text">{{ question.question }}</h2>
+
+    {% if question.get('help_text') %}
+      <p class="help-text">{{ question.help_text }}</p>
+    {% endif %}
+
+    {# ---- Answer area: change events here trigger follow-up checks ---- #}
+    <div id="answer-area">
+
+      {% if question.type == 'free_text' %}
+        {% if question.get('multiline') %}
+          <textarea name="q_{{ question.id }}" rows="5"
+            placeholder="{{ question.get('placeholder', '') }}"
+            class="input-text">{{ saved.get('answer', '') }}</textarea>
+        {% else %}
+          <input type="text" name="q_{{ question.id }}"
+            value="{{ saved.get('answer', '') }}"
+            placeholder="{{ question.get('placeholder', '') }}"
+            class="input-text">
+        {% endif %}
+
+      {% elif question.type == 'multiple_choice' %}
+        {% for opt in question.options %}
+          <label class="radio-label">
+            <input type="radio" name="q_{{ question.id }}" value="{{ opt }}"
+              {% if saved.get('answer') == opt %}checked{% endif %}>
+            {{ opt }}
+          </label>
+        {% endfor %}
+
+      {% elif question.type == 'checkbox' %}
+        {% set saved_selected = saved.get('answer', {}).get('selected', []) if saved.get('answer') else [] %}
+        {% for opt in question.options %}
+          <label class="checkbox-label">
+            <input type="checkbox" name="q_{{ question.id }}" value="{{ opt }}"
+              {% if opt in saved_selected %}checked{% endif %}>
+            {{ opt }}
+          </label>
+        {% endfor %}
+        {% if question.get('allow_other') %}
+          {% set other_on = saved.get('answer', {}).get('other_checked') or saved.get('answer', {}).get('other') %}
+          <label class="checkbox-label" id="other-label-{{ question.id }}">
+            <input type="checkbox" name="q_{{ question.id }}_other_check" id="other-check-{{ question.id }}"
+              onchange="var i=document.getElementById('other-input-{{ question.id }}'); i.style.display=this.checked?'block':'none'; if(!this.checked){i.value='';}"
+              {% if other_on %}checked{% endif %}>
+            {{ t('other_specify') }}
+          </label>
+          <input type="text" name="q_{{ question.id }}_other"
+            id="other-input-{{ question.id }}"
+            value="{{ saved.get('answer', {}).get('other', '') or '' }}"
+            placeholder="{{ t('specify_other') }}"
+            class="input-text"
+            style="display:{% if other_on %}block{% else %}none{% endif %}">
+        {% endif %}
+      {% endif %}
+
+    </div>{# /answer-area #}
+
+    {# ---- Follow-up area: refreshed via htmx when answer changes ---- #}
+    <div id="followups-area"
+         hx-post="/quiz/{{ session_id }}/{{ step }}/followups"
+         hx-trigger="change from:#answer-area"
+         hx-include="#answer-area, #followups-area"
+         hx-target="this"
+         hx-swap="innerHTML">
+      {% set answer = saved.get('answer') %}
+      {% include "followups_fragment.html" %}
+    </div>
+
+    {# ---- Navigation ---- #}
+    <div class="nav-buttons">
+      {% if step > 0 %}
+        <a href="/quiz/{{ session_id }}/{{ step - 1 }}"
+           hx-get="/quiz/{{ session_id }}/{{ step - 1 }}"
+           hx-target="#quiz-wrap"
+           hx-swap="innerHTML"
+           class="btn btn-secondary">{{ t('back_button') }}</a>
+      {% else %}
+        <span></span>
+      {% endif %}
+
+      <button type="submit" id="submit-btn" class="btn btn-primary">
+        {% if step == total - 1 %}{{ t('complete_button') }}{% else %}{{ t('next_button') }}{% endif %}
+      </button>
+    </div>
+
+  </form>
+</div>

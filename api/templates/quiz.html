@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Question {{ step + 1 }} / {{ total }} — AREA{% endblock %}
+
+{% block content %}
+<div id="quiz-wrap">
+  {% include "quiz_card.html" %}
+</div>
+{% endblock %}

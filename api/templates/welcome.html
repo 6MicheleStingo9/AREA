@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}AREA — AI Risk Assessment{% endblock %}
+
+{% block content %}
+<div class="card welcome">
+  <h1>🛡️ AI Risk Assessment</h1>
+  <p class="lead">
+    Answer 24 questions to assess the AI-related risks of your system.<br>
+    The analysis covers discrimination, privacy, security, disinformation, and more.
+  </p>
+  <form action="/quiz/start" method="post" class="lang-form">
+    <label class="lang-label">
+      <input type="radio" name="lang" value="en" checked> English
+    </label>
+    <label class="lang-label">
+      <input type="radio" name="lang" value="it"> Italiano
+    </label>
+    <button type="submit" class="btn btn-primary">Start →</button>
+  </form>
+</div>
+{% endblock %}
