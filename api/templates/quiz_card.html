@@ -82,6 +82,8 @@
             placeholder="{{ t('specify_other') }}"
             class="input-text"
             style="display:{% if other_on %}block{% else %}none{% endif %}">
+          {# No-JS: the onchange above cannot reveal the field, so always show it #}
+          <noscript><style>[id="other-input-{{ question.id }}"] { display: block !important; }</style></noscript>
         {% endif %}
       {% endif %}
 
@@ -97,6 +99,20 @@
       {% set answer = saved.get('answer') %}
       {% include "followups_fragment.html" %}
     </div>
+
+    {# ---- No-JS fallback: without htmx the follow-ups cannot appear when the
+         answer changes, so list the remaining ones; the server keeps only those
+         pertinent to the submitted answer. Inert when JS is enabled. ---- #}
+    {% set ns = namespace(rest=0) %}
+    {% for fu in question.get('follow_ups', []) %}
+      {% if not should_show_followup(fu, answer, question.type) %}{% set ns.rest = ns.rest + 1 %}{% endif %}
+    {% endfor %}
+    {% if ns.rest %}
+    <noscript>
+      <p class="help-text">{{ t('followups_nojs_hint') }}</p>
+      {% with nojs_rest = true %}{% include "followups_fragment.html" %}{% endwith %}
+    </noscript>
+    {% endif %}
 
     {# ---- Navigation ---- #}
     <div class="nav-buttons">

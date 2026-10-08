@@ -1,6 +1,8 @@
+{# nojs_rest: render the follow-ups NOT pertinent to the current answer instead
+   (no-JS fallback in quiz_card.html, where they cannot appear on change) #}
 {% for fu in question.get('follow_ups', []) %}
   {% set idx = loop.index0 %}
-  {% if should_show_followup(fu, answer, question.type) %}
+  {% if should_show_followup(fu, answer, question.type) != (nojs_rest | default(false)) %}
     <div class="followup">
       <p class="followup-text">➥ {{ fu.text }}</p>
       {% if fu.get('help_text') %}

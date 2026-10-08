@@ -200,8 +200,9 @@ async def quiz_step_post(request: Request, session_id: str, step: int):
     is_valid, err_msg = validate_answer(question, answer, lang)
 
     if not is_valid:
-        # Re-render with error; preserve the submitted answer so user doesn't lose input
-        saved = {"answer": answer, "followups": {}}
+        # Re-render with error; preserve the submitted answer and follow-ups so the
+        # user doesn't lose input
+        saved = {"answer": answer, "followups": parse_followup_answers(question, answer, form)}
         ctx = _quiz_ctx(request, session_id, step, session, saved, error=err_msg)
         if _is_htmx(request):
             return templates.TemplateResponse(request, "quiz_card.html", ctx, status_code=422)

@@ -21,6 +21,10 @@ TRANSLATIONS = {
         "it": "Specifica un valore per 'Altro'",
     },
     "followup_answer": {"en": "Follow-up answer", "it": "Risposta di follow-up"},
+    "followups_nojs_hint": {
+        "en": "Answer the follow-up questions below only if they apply to your answer.",
+        "it": "Rispondi alle domande di approfondimento qui sotto solo se pertinenti alla tua risposta.",
+    },
     "questionnaire_title": {
         "en": "AI Risk Assessment Questionnaire",
         "it": "Questionario di Valutazione Rischi AI",
