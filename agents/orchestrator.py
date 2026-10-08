@@ -210,8 +210,10 @@ def _standaloneExecution():
     args = parser.parse_args()
 
     filename = args.filename
-    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-    base_input_dir = os.path.join(repo_root, "area", "files", "answers")
+    # Resolve paths relative to this file (orchestrator.py lives in area/agents/),
+    # so it does not depend on the project folder being named "area".
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    base_input_dir = os.path.join(project_root, "files", "answers")
     input_file = (
         filename if os.path.isabs(filename) else os.path.join(base_input_dir, filename)
     )

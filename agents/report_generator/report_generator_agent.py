@@ -14,7 +14,7 @@ from agents.report_generator.prompts import (
     EXECUTIVE_SUMMARY_SYSTEM_PROMPT,
     EXECUTIVE_SUMMARY_USER_PROMPT,
 )
-from utils.utils import create_logger, get_llm_instance
+from utils.utils import apply_retry, create_logger, get_llm_instance
 
 
 # ================================
@@ -57,7 +57,7 @@ def generate_executive_summary_text(heuristic, analysis, language) -> str:
     Returns:
         str: The generated executive summary text.
     """
-    llm = get_llm_instance(t=0.2)
+    llm = apply_retry(get_llm_instance(t=0.2))
     messages = _build_messages(heuristic, analysis, language)
     try:
         response = llm.invoke(messages)
@@ -215,6 +215,10 @@ def node_generate_html_report(state: ReportGenerationState) -> ReportGenerationS
         _logger.error(
             "Failed to generate HTML report", step="generate_html", exc_info=e
         )
+        err_msg = f"HTML report generation failed: {str(e)}"
+        errs = state.setdefault("errors", [])
+        if err_msg not in errs:
+            errs.append(err_msg)
 
     return state
 
