@@ -12,14 +12,21 @@ Lo script produce un dataset pulito e normalizzato sullo schema del progetto
 classificazione causale), con split deterministico train/eval. È pensato come base
 comune sia per il RAG sia per il fine-tuning (vedi PIANO_RAG_FINETUNING.md).
 
-NOTA: questo script NON è ancora stato eseguito. Vedi la sezione "Esecuzione" nel
-file PIANO_RAG_FINETUNING.md per requisiti e comando.
+Lo split è per gruppo "paper.categoria" (prime due parti dell'Ev_ID): una categoria e
+le sue sottocategorie finiscono sempre nello stesso bucket. Splittando per singolo
+rischio, l'83% delle righe di eval aveva sottocategorie sorelle in train, spesso con
+le stesse etichette: un modello addestrato avrebbe potuto imparare la categoria invece
+del compito. I gruppi hanno dimensioni diverse, quindi --eval-frac (default 0.15) è la
+frazione dei gruppi: in righe l'eval è circa l'11%.
+
+Oltre ai .jsonl scrive manifest.json: checksum della sorgente e dello script,
+parametri, conteggi e distribuzioni delle etichette per split.
 
 Uso:
     python data_prep/extract_dataset.py \
         --xlsx files/data/mit_ai_risk_repository_v4.xlsx \
         --out-dir files/data/processed \
-        --eval-frac 0.1
+        --eval-frac 0.15
 """
 
 from __future__ import annotations
@@ -28,6 +35,7 @@ import argparse
 import hashlib
 import json
 import re
+from collections import Counter
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -101,6 +109,17 @@ def _parse_subdomain(raw: Optional[str]) -> Optional[Dict[str, str]]:
             return {"id": m2.group(1), "name": ""}
         return None
     return {"id": m.group(1), "name": m.group(2)}
+
+
+def _group_key(r: Dict[str, Any]) -> str:
+    """
+    Chiave di split 'paper.categoria': '02.04.01' -> '02.04', così una categoria e le
+    sue sottocategorie non finiscono metà in train e metà in eval.
+    Fallback (Ev_ID assente): inizio della descrizione.
+    """
+    if r["ev_id"]:
+        return ".".join(r["ev_id"].split(".")[:2])
+    return r["description"][:120]
 
 
 def _split_bucket(key: str, eval_frac: float) -> str:
@@ -196,12 +215,14 @@ def build_outputs(rows: List[Dict[str, Any]], out_dir: Path, eval_frac: float) -
       - full.jsonl                  : tutte le righe pulite (base per il RAG)
       - domain_clf.{train,eval}.jsonl : description -> {domain_id/name, subdomain_id/name}
       - causal_clf.{train,eval}.jsonl : description -> {entity, intent, timing}
-    Split deterministico per ev_id (fallback: description).
+    Ogni esempio ha anche "title" (sottocategoria, o categoria), l'analogo del titolo
+    dei rischi generati da AREA. Split deterministico per gruppo (vedi _group_key).
+    Restituisce conteggi e distribuzioni delle etichette per il manifest.
     """
-    stats: Dict[str, int] = {}
+    stats: Dict[str, Any] = {}
 
     write_jsonl(out_dir / "full.jsonl", rows)
-    stats["full"] = len(rows)
+    stats["full"] = {"rows": len(rows)}
 
     # Task 1 - classificazione dominio (richiede almeno domain_id)
     domain_rows = [r for r in rows if r["domain_id"]]
@@ -214,19 +235,30 @@ def build_outputs(rows: List[Dict[str, Any]], out_dir: Path, eval_frac: float) -
     ]:
         train, ev = [], []
         for r in subset:
-            key = r["ev_id"] or r["description"][:120]
             example = {
+                "title": r["risk_subcategory"] or r["risk_category"],
                 "input": r["description"],
                 "labels": {k: r[k] for k in fields},
                 "meta": {"ev_id": r["ev_id"], "paper_id": r["paper_id"]},
             }
-            (ev if _split_bucket(key, eval_frac) == "eval" else train).append(example)
-        write_jsonl(out_dir / f"{name}.train.jsonl", train)
-        write_jsonl(out_dir / f"{name}.eval.jsonl", ev)
-        stats[f"{name}.train"] = len(train)
-        stats[f"{name}.eval"] = len(ev)
+            (ev if _split_bucket(_group_key(r), eval_frac) == "eval" else train).append(example)
+        for split, examples in (("train", train), ("eval", ev)):
+            write_jsonl(out_dir / f"{name}.{split}.jsonl", examples)
+            stats[f"{name}.{split}"] = {
+                "rows": len(examples),
+                "groups": len({_group_key({"ev_id": e["meta"]["ev_id"], "description": e["input"]}) for e in examples}),
+                "labels": {
+                    k: dict(Counter(e["labels"][k] for e in examples).most_common())
+                    for k in fields
+                    if not k.endswith("_name")
+                },
+            }
 
     return stats
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def main() -> None:
@@ -244,8 +276,8 @@ def main() -> None:
     parser.add_argument(
         "--eval-frac",
         type=float,
-        default=0.1,
-        help="Frazione hold-out per l'eval (default 0.1).",
+        default=0.15,
+        help="Frazione dei gruppi paper.categoria tenuta per l'eval (default 0.15, ~11%% delle righe).",
     )
     args = parser.parse_args()
 
@@ -256,9 +288,19 @@ def main() -> None:
     rows = clean(records)
     stats = build_outputs(rows, out_dir, args.eval_frac)
 
+    manifest = {
+        "source": {"file": xlsx_path.name, "sheet": SHEET_NAME, "sha256": _sha256(xlsx_path)},
+        "script": {"file": "data_prep/extract_dataset.py", "sha256": _sha256(Path(__file__))},
+        "split": {"key": "paper.category (first two parts of Ev_ID)", "hash": "sha1", "eval_frac": args.eval_frac},
+        "outputs": stats,
+    }
+    with open(out_dir / "manifest.json", "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
     print("Dataset estratto in:", out_dir)
     for k, v in stats.items():
-        print(f"  {k}: {v}")
+        print(f"  {k}: {v['rows']} righe")
 
 
 if __name__ == "__main__":
