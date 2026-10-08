@@ -6,7 +6,12 @@
 
 # Local configuration files
 .env
-langgraph.json
+
+# Dev plans
+.plan
+
+# Claude settings
+.claude
 
 # Langgraph checkpoints and configuration
 .checkpoints/
