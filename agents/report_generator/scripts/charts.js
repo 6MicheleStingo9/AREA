@@ -1,5 +1,28 @@
 // Charts Configuration - Plotly visualizations
 
+// Dark mode: charts follow the page theme (transparent backgrounds, light text,
+// dim grid lines). In light mode the layouts below are used unchanged.
+const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+function themed(layout) {
+    if (!prefersDark) return layout;
+    const grid = '#374151';
+    layout.paper_bgcolor = 'rgba(0,0,0,0)';
+    layout.plot_bgcolor = 'rgba(0,0,0,0)';
+    layout.font = Object.assign({}, layout.font, {color: '#E5E7EB'});
+    ['xaxis', 'yaxis'].forEach(ax => {
+        if (layout[ax]) Object.assign(layout[ax], {gridcolor: grid, linecolor: grid, zerolinecolor: grid});
+    });
+    if (layout.polar) {
+        layout.polar.bgcolor = 'rgba(0,0,0,0)';
+        ['radialaxis', 'angularaxis'].forEach(ax => {
+            if (layout.polar[ax]) Object.assign(layout.polar[ax], {gridcolor: grid, linecolor: grid});
+        });
+    }
+    if (layout.legend) Object.assign(layout.legend, {bgcolor: 'rgba(31, 41, 55, 0.8)', bordercolor: grid});
+    return layout;
+}
+
 // 1. Risk Distribution by Domain (Stacked Bar Chart)
 // Map domain acronyms (D1..D7) to localized full names using translations (d1_title..d7_title)
 const mappedDomainNames = chartData.risk_distribution.domains.map((d, i) => {
@@ -53,7 +76,7 @@ const riskDistLayout = {
     showlegend: false
 };
 
-Plotly.newPlot('risk-distribution-chart', riskDistData, riskDistLayout, {responsive: true});
+Plotly.newPlot('risk-distribution-chart', riskDistData, themed(riskDistLayout), {responsive: true});
 
 // 2. Alert Criticality Radar Chart (Dual Profile: Criticality + Safety)
 // Convert categorical labels to numeric theta (degrees), build a common axis set
@@ -151,7 +174,7 @@ const alertRadarLayout = {
     margin: {l: 80, r: 80, t: 40, b: 100}
 };
 
-Plotly.newPlot('alert-criticality-chart', alertRadarData, alertRadarLayout, {responsive: true});
+Plotly.newPlot('alert-criticality-chart', alertRadarData, themed(alertRadarLayout), {responsive: true});
 
 // 4. Causality Flow Sankey Diagram
 const sankeyData = [{
@@ -161,7 +184,7 @@ const sankeyData = [{
         pad: 15,
         thickness: 20,
         line: {
-            color: 'white',
+            color: prefersDark ? '#1F2937' : 'white',
             width: 1
         },
         label: chartData.causality_sankey.nodes.map(n => {
@@ -194,7 +217,7 @@ const sankeyData = [{
         source: chartData.causality_sankey.sources,
         target: chartData.causality_sankey.targets,
         value: chartData.causality_sankey.values.map(v => Math.round(v)),
-        color: 'rgba(0,0,0,0.2)',
+        color: prefersDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
         hovertemplate: '%{source.label} → %{target.label}<br>' + (translations.chart_risks_label || 'Risks') + ': %{value:d}<extra></extra>'
     }
 }];
@@ -206,7 +229,7 @@ const sankeyLayout = {
     margin: {l: 10, r: 10, t: 10, b: 10}
 };
 
-Plotly.newPlot('causality-sankey-chart', sankeyData, sankeyLayout, {responsive: true});
+Plotly.newPlot('causality-sankey-chart', sankeyData, themed(sankeyLayout), {responsive: true});
 
 // 3. Patterns Heatmap
 const heatmapData = [{
@@ -214,7 +237,13 @@ const heatmapData = [{
     x: chartData.patterns_heatmap.patterns,
     y: chartData.patterns_heatmap.categories,
     type: 'heatmap',
-    colorscale: [
+    // Dark mode: zero cells blend with the page, more risks = brighter blue
+    colorscale: prefersDark ? [
+        [0, '#1F2937'],
+        [0.3, '#1E3A8A'],
+        [0.6, '#2563EB'],
+        [1, '#93C5FD']
+    ] : [
         [0, '#EFF6FF'],
         [0.3, '#BFDBFE'],
         [0.6, '#60A5FA'],
@@ -245,4 +274,4 @@ const heatmapLayout = {
     font: {family: 'inherit', size: 11}
 };
 
-Plotly.newPlot('patterns-heatmap', heatmapData, heatmapLayout, {responsive: true});
+Plotly.newPlot('patterns-heatmap', heatmapData, themed(heatmapLayout), {responsive: true});
