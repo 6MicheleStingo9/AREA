@@ -428,6 +428,44 @@
     .causality-grid {
         grid-template-columns: 1fr;
     }
+    .report-links {
+        flex-wrap: wrap;
+    }
+}
+
+/* ---- Dark mode ---- */
+@media (prefers-color-scheme: dark) {
+    .qa-card { background: #1F2937; border-color: #374151; }
+    .detail-text, .followup-a { color: #D1D5DB; }
+    .detail-label, .followup-q, .risk-title { color: #F9FAFB; }
+    .risk-details { background: #111827; border-left-color: #818CF8; }
+    .risk-item:hover { background: #1F2937; }
+    .subdomain-header { background: #1F2937; color: #E5E7EB; }
+    .subdomain-header:hover { background: #374151; }
+    .domain-content { border-top-color: #374151; }
+    .hierarchy-tree { border-color: #374151; }
+    .filters-bar { background: #1F2937; }
+    .filter-group label { color: #D1D5DB; }
+    .filter-group select { background: #374151; color: #F9FAFB; border-color: #4B5563; }
+    .answer-chip { background: #1F2937; border-color: #374151; color: #D1D5DB; }
+    .meta-link.secondary { background: #1F2937; color: #93C5FD; border-color: #374151; }
+    .causality-box { background: #1F2937; }
+    .causality-box-text { color: #D1D5DB; }
+    .executive-summary p { color: #E5E7EB; }
+    .metadata-description { background: #1F2937; border-color: #374151; }
+    .meta-desc-text { color: #D1D5DB; }
+    .meta-desc-text.small { color: #9CA3AF; }
+    .metadata-description a { color: #93C5FD; }
+    .pattern-info-box, .domain-info-box, .alert-info-box, .sankey-info-box {
+        background: #1F2937;
+        border-color: #4B5563;
+    }
+    .pattern-category, .domain-category, .alert-dimension, .sankey-dimension {
+        background: #111827;
+    }
+    .pattern-info-box p, .domain-info-box p, .alert-info-box p, .sankey-info-box p,
+    .pattern-info-box li, .domain-info-box li, .sankey-info-box li { color: #D1D5DB; }
+    .followup-item { background: #1F2937; border-color: #374151; color: #D1D5DB; }
 }
 
 /* Pattern Info Section */

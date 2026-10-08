@@ -74,3 +74,16 @@
     };
 
 })();
+
+// Global click handler wired to the download button in the report template.
+// Relies on createReportZip() defined above.
+window.handleDownloadClick = function handleDownloadClick() {
+    if (typeof window.createReportZip === 'function') {
+        window.createReportZip().catch(function (e) {
+            console.error(typeof translations !== 'undefined' ? translations.zip_error_console : 'ZIP error', e);
+            alert(typeof translations !== 'undefined' ? translations.zip_error_alert : 'Error creating ZIP');
+        });
+    } else {
+        alert(typeof translations !== 'undefined' ? translations.download_offline_alert : 'Download unavailable offline');
+    }
+};

@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ translations.page_title }}</title>
-    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    {% if plotly_content %}<script>{{ plotly_content }}</script>{% else %}<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>{% endif %}
     <style>
 {{ css_content }}
     </style>
@@ -440,25 +440,11 @@
         </footer>
     </div>
 
+    {% if jszip_content %}<script>{{ jszip_content }}</script>{% endif %}
     <script>
         const chartData = {{ chart_data|tojson }};
-    const translations = {{ translations|tojson }};
+        const translations = {{ translations|tojson }};
 {{ js_content }}
     </script>
-    <script>
-        function handleDownloadClick() {
-            if (typeof window.createReportZip === 'function') {
-                try {
-                    window.createReportZip();
-                } catch (e) {
-                    console.error('{{ translations.zip_error_console }}', e);
-                    alert('{{ translations.zip_error_alert }}');
-                }
-            } else {
-                alert('{{ translations.download_offline_alert }}');
-            }
-        }
-    </script>
-    <script src="scripts/report_download.js"></script>
 </body>
 </html>
