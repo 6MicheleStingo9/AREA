@@ -1,3 +1,5 @@
+{# htmx swaps only this fragment: a top-level <title> lets it update the tab title #}
+{% if is_fragment %}<title>{{ t('question_label') }} {{ step + 1 }} / {{ total }} — AREA</title>{% endif %}
 <div class="card quiz" id="quiz-card">
 
   {# Progress #}
@@ -14,6 +16,9 @@
     hx-post: submit via htmx → server returns next quiz_card fragment
     hx-target: swap #quiz-wrap content
     hx-swap: replace inner HTML (keeps the wrapper div for subsequent swaps)
+    hx-disinherit: keep the submit-button indicator to the form's own request;
+      otherwise the follow-up refresh (fired by the blur when clicking Next)
+      disables the button mid-click and the submit is lost
     method/action: fallback for no-JS
   #}
   <form method="post"
@@ -21,7 +26,8 @@
         hx-post="/quiz/{{ session_id }}/{{ step }}"
         hx-target="#quiz-wrap"
         hx-swap="innerHTML"
-        hx-indicator="#submit-btn">
+        hx-indicator="#submit-btn"
+        hx-disinherit="hx-indicator">
 
     <h2 class="question-text">{{ question.question }}</h2>
 

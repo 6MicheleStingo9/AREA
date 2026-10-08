@@ -6,6 +6,8 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 
+from api.jobs import get_job
+from api.routes_run import REPORT_DIR
 from api.sessions import create_session, get_session, update_session
 from quiz.logic import (
     load_questions,
@@ -51,6 +53,7 @@ def _quiz_ctx(
         "lang": lang,
         "saved": saved,
         "error": error,
+        "is_fragment": _is_htmx(request),
         "t": lambda key, **kw: t(key, lang=lang, **kw),
         "should_show_followup": should_show_followup,
     }
@@ -97,10 +100,26 @@ async def quiz_done(request: Request, session_id: str):
 
 @router.get("/quiz/{session_id}/progress/{run_id}", response_class=HTMLResponse)
 async def quiz_progress(request: Request, session_id: str, run_id: str):
+    session = get_session(session_id)
+    lang = session["lang"] if session else "en"
+    # Status is rendered server-side so the page also works without JS (the
+    # no-JS meta refresh stops once the job is finished).
+    job = get_job(run_id)
+    if job:
+        status = job["status"]
+    elif (REPORT_DIR / f"ai_risk_report_{run_id}.html").exists():
+        # Job lost on restart, but the report is on disk (served by /report).
+        status = "done"
+    else:
+        status = "not_found"
     return templates.TemplateResponse(request, "progress.html", {
         "request": request,
         "session_id": session_id,
         "run_id": run_id,
+        "lang": lang,
+        "status": status,
+        "error": job.get("error") if job else None,
+        "t": lambda key, **kw: t(key, lang=lang, **kw),
     })
 
 
