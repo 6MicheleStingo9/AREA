@@ -1,0 +1,1979 @@
+{
+  "task": "causal_clf",
+  "model": {
+    "provider": "google",
+    "env_GEMINI_MODEL": "gemini-2.5-flash",
+    "resolved": "gemini-2.5-flash",
+    "temperature": 0
+  },
+  "run": {
+    "date": "2026-10-08",
+    "batch_size": 20,
+    "calls": 16,
+    "elapsed_s": 474.1,
+    "git_commit": "079b63d"
+  },
+  "data": {
+    "file": "files/data/processed/causal_clf.eval.jsonl",
+    "sha256": "7e03a63179418e17b15c007252a5c571322e178910d94d4da50a37f1e554c89d",
+    "rows": 160,
+    "extraction_script_sha256": "1e20ec92095c44793999e242c1d9072db4828e81499edad391314c40c71a2851"
+  },
+  "prompt": {
+    "system": "agents/causality_analyzer/prompts.py:CAUSALITY_SYSTEM_PROMPT",
+    "system_sha256": "55aafb18fd96926f20105677f5f35fe67c7ce4a86d80ae8445683924f549ed52",
+    "user_template_sha256": "c93b569108e04da2284150d8d03f6c90becb9111780b78ab6fc71630e3afa4c6"
+  },
+  "majority_reference": {
+    "entity": {
+      "label": "ai",
+      "accuracy": 0.3875,
+      "macro_f1": 0.1861861861861862
+    },
+    "intent": {
+      "label": "unintentional",
+      "accuracy": 0.40625,
+      "macro_f1": 0.19259259259259257
+    },
+    "timing": {
+      "label": "post-deployment",
+      "accuracy": 0.65,
+      "macro_f1": 0.26262626262626265
+    }
+  },
+  "stability": {
+    "entity": 0.9375,
+    "intent": 0.93125,
+    "timing": 0.9
+  },
+  "runs": [
+    {
+      "calls": 8,
+      "elapsed_s": 235.2,
+      "metrics": {
+        "entity": {
+          "n": 160,
+          "missing": 0,
+          "accuracy": 0.725,
+          "accuracy_ci95": [
+            0.65,
+            0.79375
+          ],
+          "macro_f1": 0.5864549864549865,
+          "macro_f1_ci95": [
+            0.5126305067481537,
+            0.6609271593486289
+          ],
+          "per_class": {
+            "ai": {
+              "precision": 0.717948717948718,
+              "recall": 0.9032258064516129,
+              "f1": 0.8,
+              "support": 62
+            },
+            "human": {
+              "precision": 0.7402597402597403,
+              "recall": 0.8636363636363636,
+              "f1": 0.7972027972027972,
+              "support": 66
+            },
+            "other": {
+              "precision": 0.6,
+              "recall": 0.09375,
+              "f1": 0.16216216216216214,
+              "support": 32
+            }
+          },
+          "confusion": {
+            "ai": {
+              "ai": 56,
+              "human": 5,
+              "other": 1
+            },
+            "human": {
+              "ai": 8,
+              "human": 57,
+              "other": 1
+            },
+            "other": {
+              "ai": 14,
+              "human": 15,
+              "other": 3
+            }
+          }
+        },
+        "intent": {
+          "n": 160,
+          "missing": 0,
+          "accuracy": 0.625,
+          "accuracy_ci95": [
+            0.55,
+            0.7
+          ],
+          "macro_f1": 0.5240924092409242,
+          "macro_f1_ci95": [
+            0.45290833065769126,
+            0.5923826930116238
+          ],
+          "per_class": {
+            "intentional": {
+              "precision": 0.8863636363636364,
+              "recall": 0.6842105263157895,
+              "f1": 0.7722772277227723,
+              "support": 57
+            },
+            "unintentional": {
+              "precision": 0.5321100917431193,
+              "recall": 0.8923076923076924,
+              "f1": 0.6666666666666666,
+              "support": 65
+            },
+            "other": {
+              "precision": 0.42857142857142855,
+              "recall": 0.07894736842105263,
+              "f1": 0.13333333333333333,
+              "support": 38
+            }
+          },
+          "confusion": {
+            "intentional": {
+              "intentional": 39,
+              "unintentional": 18,
+              "other": 0
+            },
+            "unintentional": {
+              "intentional": 3,
+              "unintentional": 58,
+              "other": 4
+            },
+            "other": {
+              "intentional": 2,
+              "unintentional": 33,
+              "other": 3
+            }
+          }
+        },
+        "timing": {
+          "n": 160,
+          "missing": 0,
+          "accuracy": 0.71875,
+          "accuracy_ci95": [
+            0.65625,
+            0.7875
+          ],
+          "macro_f1": 0.5414374365047011,
+          "macro_f1_ci95": [
+            0.4530880573039098,
+            0.6211758844045839
+          ],
+          "per_class": {
+            "pre-deployment": {
+              "precision": 0.43243243243243246,
+              "recall": 0.8888888888888888,
+              "f1": 0.5818181818181818,
+              "support": 18
+            },
+            "post-deployment": {
+              "precision": 0.7983193277310925,
+              "recall": 0.9134615384615384,
+              "f1": 0.852017937219731,
+              "support": 104
+            },
+            "other": {
+              "precision": 1.0,
+              "recall": 0.10526315789473684,
+              "f1": 0.1904761904761905,
+              "support": 38
+            }
+          },
+          "confusion": {
+            "pre-deployment": {
+              "pre-deployment": 16,
+              "post-deployment": 2,
+              "other": 0
+            },
+            "post-deployment": {
+              "pre-deployment": 9,
+              "post-deployment": 95,
+              "other": 0
+            },
+            "other": {
+              "pre-deployment": 12,
+              "post-deployment": 22,
+              "other": 4
+            }
+          }
+        },
+        "all_three": {
+          "accuracy": 0.40625
+        }
+      },
+      "predictions": {
+        "01.04.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "01.06.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "04.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "05.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "07.02.00": {
+          "entity": "other",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "08.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "10.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "10.02.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "10.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "10.09.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "12.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "14.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.02.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.02.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.02.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.04.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.04.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.04.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.04.04": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.05.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.05.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.05.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.05.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "20.02.00": {
+          "entity": "other",
+          "intent": "other",
+          "timing": "other"
+        },
+        "20.02.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "20.02.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "20.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "20.02.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.03.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.03": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.04": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.05": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.06": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.07": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.08": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.09": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.10": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.11": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.12": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.13": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.14": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.06.00": {
+          "entity": "other",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.06.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.06.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.06.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.06.04": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "28.02.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "28.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "30.05.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "30.05.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "30.05.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "30.05.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "31.02.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.02.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.02.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "31.05.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "31.07.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.07.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.07.03": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "32.04.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "other"
+        },
+        "34.02.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "34.02.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "34.02.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "34.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "34.02.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "35.08.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "39.03.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "39.25.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "41.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "41.01.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "41.02.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "41.02.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "41.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "41.03.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "42.12.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "44.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "47.01.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.05": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "47.01.06": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        },
+        "48.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.07.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.08.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.09.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.10.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.12.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "51.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "51.12.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "52.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "52.01.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "52.01.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "52.01.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "54.05.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "56.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.05": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "57.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "57.03.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "57.03.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "59.01.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.05.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.07.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.12.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        },
+        "59.14.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.16.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.26.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.26.02": {
+          "entity": "other",
+          "intent": "unintentional",
+          "timing": "other"
+        },
+        "59.26.03": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "62.30.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "62.30.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "62.30.03": {
+          "entity": "ai",
+          "intent": "other",
+          "timing": "post-deployment"
+        },
+        "62.30.04": {
+          "entity": "other",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "62.39.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "other"
+        },
+        "65.04.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.08.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        },
+        "65.12.01": {
+          "entity": "human",
+          "intent": "other",
+          "timing": "post-deployment"
+        },
+        "65.12.02": {
+          "entity": "human",
+          "intent": "other",
+          "timing": "post-deployment"
+        },
+        "65.14.01": {
+          "entity": "human",
+          "intent": "other",
+          "timing": "post-deployment"
+        },
+        "65.14.02": {
+          "entity": "human",
+          "intent": "other",
+          "timing": "post-deployment"
+        },
+        "65.14.03": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "65.14.04": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "65.14.05": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "65.14.06": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "65.17.01": {
+          "entity": "human",
+          "intent": "other",
+          "timing": "pre-deployment"
+        },
+        "65.17.02": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.17.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "65.17.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "65.22.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.02": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.03": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.04": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.05": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.06": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.07": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "66.09.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "66.09.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.04": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "66.09.05": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.06": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.07": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "68.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "69.08.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "71.02.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        },
+        "71.02.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        },
+        "71.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "73.06.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        }
+      }
+    },
+    {
+      "calls": 8,
+      "elapsed_s": 238.9,
+      "metrics": {
+        "entity": {
+          "n": 160,
+          "missing": 0,
+          "accuracy": 0.6875,
+          "accuracy_ci95": [
+            0.6125,
+            0.75625
+          ],
+          "macro_f1": 0.510485651214128,
+          "macro_f1_ci95": [
+            0.46327457264957267,
+            0.5503432494279176
+          ],
+          "per_class": {
+            "ai": {
+              "precision": 0.6891891891891891,
+              "recall": 0.8225806451612904,
+              "f1": 0.75,
+              "support": 62
+            },
+            "human": {
+              "precision": 0.6941176470588235,
+              "recall": 0.8939393939393939,
+              "f1": 0.7814569536423842,
+              "support": 66
+            },
+            "other": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 32
+            }
+          },
+          "confusion": {
+            "ai": {
+              "ai": 51,
+              "human": 10,
+              "other": 1
+            },
+            "human": {
+              "ai": 7,
+              "human": 59,
+              "other": 0
+            },
+            "other": {
+              "ai": 16,
+              "human": 16,
+              "other": 0
+            }
+          }
+        },
+        "intent": {
+          "n": 160,
+          "missing": 0,
+          "accuracy": 0.64375,
+          "accuracy_ci95": [
+            0.56875,
+            0.7125
+          ],
+          "macro_f1": 0.49383911756793114,
+          "macro_f1_ci95": [
+            0.4465020576131688,
+            0.5333406529058703
+          ],
+          "per_class": {
+            "intentional": {
+              "precision": 0.8541666666666666,
+              "recall": 0.7192982456140351,
+              "f1": 0.7809523809523811,
+              "support": 57
+            },
+            "unintentional": {
+              "precision": 0.5535714285714286,
+              "recall": 0.9538461538461539,
+              "f1": 0.7005649717514124,
+              "support": 65
+            },
+            "other": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 38
+            }
+          },
+          "confusion": {
+            "intentional": {
+              "intentional": 41,
+              "unintentional": 16,
+              "other": 0
+            },
+            "unintentional": {
+              "intentional": 3,
+              "unintentional": 62,
+              "other": 0
+            },
+            "other": {
+              "intentional": 4,
+              "unintentional": 34,
+              "other": 0
+            }
+          }
+        },
+        "timing": {
+          "n": 160,
+          "missing": 0,
+          "accuracy": 0.74375,
+          "accuracy_ci95": [
+            0.675,
+            0.8125
+          ],
+          "macro_f1": 0.6007615982837221,
+          "macro_f1_ci95": [
+            0.5039270253555969,
+            0.6891844560955822
+          ],
+          "per_class": {
+            "pre-deployment": {
+              "precision": 0.53125,
+              "recall": 0.9444444444444444,
+              "f1": 0.6799999999999999,
+              "support": 18
+            },
+            "post-deployment": {
+              "precision": 0.7868852459016393,
+              "recall": 0.9230769230769231,
+              "f1": 0.8495575221238939,
+              "support": 104
+            },
+            "other": {
+              "precision": 1.0,
+              "recall": 0.15789473684210525,
+              "f1": 0.2727272727272727,
+              "support": 38
+            }
+          },
+          "confusion": {
+            "pre-deployment": {
+              "pre-deployment": 17,
+              "post-deployment": 1,
+              "other": 0
+            },
+            "post-deployment": {
+              "pre-deployment": 8,
+              "post-deployment": 96,
+              "other": 0
+            },
+            "other": {
+              "pre-deployment": 7,
+              "post-deployment": 25,
+              "other": 6
+            }
+          }
+        },
+        "all_three": {
+          "accuracy": 0.425
+        }
+      },
+      "predictions": {
+        "01.04.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "01.06.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "04.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "05.01.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "07.02.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "08.06.00": {
+          "entity": "ai",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "10.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "10.02.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "10.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "10.09.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "12.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "14.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "17.02.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.02.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.02.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.04.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.04.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.04.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.04.04": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.05.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.05.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "17.05.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "17.05.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "20.02.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "other"
+        },
+        "20.02.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "20.02.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "20.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "20.02.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.03.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.03": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.04": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.05": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.06": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.07": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.08": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.09": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.10": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.11": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.12": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.13": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.03.14": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "24.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.06.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.06.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.06.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "24.06.04": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "28.02.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "28.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "30.05.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "30.05.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "30.05.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "30.05.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "31.02.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.02.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.02.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.02.03": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.05.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "31.07.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.07.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "31.07.03": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "32.04.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "other"
+        },
+        "34.02.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "34.02.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "34.02.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "34.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "34.02.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "35.08.00": {
+          "entity": "ai",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "39.03.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "39.25.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "41.01.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "41.01.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "41.02.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "41.02.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "41.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "41.03.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "42.12.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "44.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "47.01.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "47.01.05": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "47.01.06": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        },
+        "48.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.07.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.08.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.09.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.10.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "48.12.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "51.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "51.12.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "52.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "52.01.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "52.01.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "52.01.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "other"
+        },
+        "54.05.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "other"
+        },
+        "56.01.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.06.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "56.19.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "56.19.05": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "57.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "57.03.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "57.03.02": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "59.01.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.05.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.07.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.12.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        },
+        "59.14.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.16.00": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.26.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "59.26.02": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "other"
+        },
+        "59.26.03": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "62.30.01": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "62.30.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "62.30.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "62.30.04": {
+          "entity": "other",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "62.39.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "other"
+        },
+        "65.04.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.08.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        },
+        "65.12.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "65.12.02": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "65.14.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "65.14.02": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "65.14.03": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "65.14.04": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "65.14.05": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "65.14.06": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "65.17.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.17.02": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.17.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "65.17.04": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "65.22.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.02": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.03": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.04": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.05": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.06": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "65.22.07": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "pre-deployment"
+        },
+        "66.09.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.01": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "66.09.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.04": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.05": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.06": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "66.09.07": {
+          "entity": "human",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "68.03.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "69.08.00": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "71.02.01": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "71.02.02": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "post-deployment"
+        },
+        "71.02.03": {
+          "entity": "ai",
+          "intent": "unintentional",
+          "timing": "post-deployment"
+        },
+        "73.06.00": {
+          "entity": "human",
+          "intent": "intentional",
+          "timing": "pre-deployment"
+        }
+      }
+    }
+  ]
+}
