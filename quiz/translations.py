@@ -1,10 +1,12 @@
+"""Centralised UI translations. Single source of truth for all language strings."""
+
 TRANSLATIONS = {
     "start_button": {
-        "en": "🚀 Start the Questionnaire",
-        "it": "🚀 Inizia il Questionario",
+        "en": "Start the Questionnaire",
+        "it": "Inizia il Questionario",
     },
-    "back_button": {"en": "⬅️ Back", "it": "⬅️ Indietro"},
-    "next_button": {"en": "Next ➡️", "it": "Avanti ➡️"},
+    "back_button": {"en": "← Back", "it": "← Indietro"},
+    "next_button": {"en": "Next →", "it": "Avanti →"},
     "complete_button": {"en": "✅ Complete", "it": "✅ Completa"},
     "answer_label": {"en": "Answer", "it": "Risposta"},
     "select_option": {"en": "Select an option", "it": "Seleziona un'opzione"},
@@ -14,6 +16,10 @@ TRANSLATIONS = {
     },
     "other_specify": {"en": "Other (specify)", "it": "Altro (specifica)"},
     "specify_other": {"en": "Specify...", "it": "Specifica..."},
+    "specify_other_required": {
+        "en": "Please specify a value for 'Other'",
+        "it": "Specifica un valore per 'Altro'",
+    },
     "followup_answer": {"en": "Follow-up answer", "it": "Risposta di follow-up"},
     "questionnaire_title": {
         "en": "AI Risk Assessment Questionnaire",
@@ -25,8 +31,8 @@ TRANSLATIONS = {
         "it": "Questa domanda è obbligatoria",
     },
     "completion_title": {
-        "en": "# ✅ Questionnaire Completed!\n\nThank you for completing the AI Risk Assessment.\n\n### Summary of your responses:",
-        "it": "# ✅ Questionario completato!\n\nGrazie per aver completato la valutazione dei rischi AI.\n\n### Riepilogo delle tue risposte:",
+        "en": "Questionnaire Completed!",
+        "it": "Questionario completato!",
     },
     "total_questions": {"en": "Total Questions", "it": "Domande totali"},
     "answers_given": {"en": "Answers Given", "it": "Risposte date"},
@@ -38,28 +44,30 @@ TRANSLATIONS = {
         "en": "Run Risk Analysis and Generate Report",
         "it": "Avvia analisi rischi e genera report",
     },
-    "analysis_launching": {
-        "en": "Launching risk analysis pipeline... This may take a few moments.",
-        "it": "Avvio della pipeline di analisi rischi... Attendere qualche istante.",
-    },
     "analysis_running": {"en": "Running analysis...", "it": "Analisi in corso..."},
     "analysis_complete": {
         "en": "Analysis complete! Report generated.",
         "it": "Analisi completata! Report generato.",
     },
-    "open_html_report": {"en": "Open HTML Report", "it": "Apri report HTML"},
+    "open_html_report": {"en": "Open Report", "it": "Apri report"},
     "report_not_found": {
         "en": "Analysis completed but report file not found.",
         "it": "Analisi completata ma file report non trovato.",
     },
     "analysis_error": {"en": "Error during analysis", "it": "Errore durante l'analisi"},
-    "restart_button": {"en": "🔄 Restart", "it": "🔄 Ricomincia"},
+    "restart_button": {"en": "Restart", "it": "Ricomincia"},
     "min_length_validation": {
         "en": "The answer must contain at least {min_length} characters",
         "it": "La risposta deve contenere almeno {min_length} caratteri",
     },
-    "copy_html_path_info": {
-        "en": "If the link does not open, copy and paste this path into your browser: {html_path}",
-        "it": "Se il link non si apre, copia e incolla questo percorso nel browser: {html_path}",
+    "min_selections_validation": {
+        "en": "Select at least {min_selections} option(s)",
+        "it": "Seleziona almeno {min_selections} opzione/i",
     },
 }
+
+
+def t(key: str, lang: str = "en", **kwargs) -> str:
+    """Translate key to the given language, interpolating any kwargs."""
+    text = TRANSLATIONS.get(key, {}).get(lang, key)
+    return text.format(**kwargs) if kwargs else text

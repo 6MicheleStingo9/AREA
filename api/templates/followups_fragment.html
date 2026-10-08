@@ -1,0 +1,21 @@
+{% for fu in question.get('follow_ups', []) %}
+  {% set idx = loop.index0 %}
+  {% if should_show_followup(fu, answer, question.type) %}
+    <div class="followup">
+      <p class="followup-text">➥ {{ fu.text }}</p>
+      {% if fu.get('help_text') %}
+        <p class="help-text">{{ fu.help_text }}</p>
+      {% endif %}
+      {% if fu.get('multiline') %}
+        <textarea name="followup_{{ question.id }}_{{ idx }}" rows="3"
+          class="input-text"
+          placeholder="{{ t('followup_answer') }}">{{ saved.get('followups', {}).get(idx|string, '') }}</textarea>
+      {% else %}
+        <input type="text" name="followup_{{ question.id }}_{{ idx }}"
+          value="{{ saved.get('followups', {}).get(idx|string, '') }}"
+          placeholder="{{ t('followup_answer') }}"
+          class="input-text">
+      {% endif %}
+    </div>
+  {% endif %}
+{% endfor %}

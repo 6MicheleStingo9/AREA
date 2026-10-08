@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis in progress — AREA{% endblock %}
+
+{% block content %}
+<div class="card progress-card" id="status-box"
+  hx-get="/api/status/{{ run_id }}"
+  hx-trigger="every 3s"
+  hx-swap="none"
+  hx-on::after-request="handleStatus(event)">
+
+  <h2>⏳ Analysis in progress…</h2>
+  <p>The pipeline is running. This usually takes 1–3 minutes.</p>
+
+  <div class="spinner"></div>
+
+  <div id="done-section" style="display:none">
+    <p class="success-msg">✅ Report ready!</p>
+    <a id="report-link" href="#" class="btn btn-primary">Open Report →</a>
+  </div>
+  <div id="error-section" style="display:none">
+    <p class="alert alert-error" id="error-msg"></p>
+  </div>
+</div>
+
+<script>
+function stopPolling() {
+  var el = document.querySelector('[hx-trigger]');
+  if (el) el.removeAttribute('hx-trigger');
+  document.querySelector('.spinner').style.display = 'none';
+}
+function showError(msg) {
+  stopPolling();
+  document.getElementById('error-section').style.display = 'block';
+  document.getElementById('error-msg').textContent = msg;
+}
+function handleStatus(ev) {
+  var xhr = ev.detail.xhr;
+  // Job unknown (e.g. server restarted and lost in-memory state): stop and inform.
+  if (xhr.status === 404) {
+    showError('Analysis job not found (the server may have restarted). Please start a new analysis.');
+    return;
+  }
+  try {
+    const data = JSON.parse(xhr.responseText);
+    if (data.status === 'done') {
+      stopPolling();
+      document.getElementById('done-section').style.display = 'block';
+      document.getElementById('report-link').href = '/report/{{ run_id }}';
+      document.querySelector('h2').textContent = 'Analysis complete!';
+    } else if (data.status === 'error') {
+      showError('Error: ' + (data.error || 'Unknown error'));
+    }
+  } catch(e) {}
+}
+</script>
+
+{# Fallback for no-JS: meta refresh to this same page; page will auto-redirect via JS when done #}
+<noscript>
+  <meta http-equiv="refresh" content="4">
+</noscript>
+{% endblock %}
