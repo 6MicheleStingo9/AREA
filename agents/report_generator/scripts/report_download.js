@@ -35,7 +35,7 @@
         if (!btn) return;
         btn.disabled = true;
         const origText = btn.innerText;
-        btn.innerText = 'Preparazione...';
+        btn.innerText = (typeof translations !== 'undefined' && translations.zip_preparing) || 'Preparing...';
         let metadata = {};
         try {
             const metaEl = document.getElementById('report-metadata');
@@ -66,7 +66,7 @@
             URL.revokeObjectURL(link.href);
         } catch (err) {
             console.error('ZIP creation failed', err);
-            alert('Error creating ZIP file: ' + err.message);
+            alert(((typeof translations !== 'undefined' && translations.zip_error_alert) || 'Error creating ZIP file.') + '\n' + err.message);
         } finally {
             btn.disabled = false;
             btn.innerText = origText;
