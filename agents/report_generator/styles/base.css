@@ -115,4 +115,36 @@ footer {
     header h1 {
         font-size: 1.8rem;
     }
+    .container {
+        padding: 12px;
+    }
+    .section {
+        padding: 18px;
+    }
+}
+
+/* Prevent wide content (tables, code) from breaking the page layout */
+.section table,
+.section pre {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+/* ---- Dark mode ---- */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #111827;
+        color: #E5E7EB;
+    }
+    .section {
+        background: #1F2937;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .section h2 { color: #F9FAFB; }
+    .section h3 { color: #D1D5DB; }
+    footer {
+        color: #9CA3AF;
+        border-top-color: #374151;
+    }
 }

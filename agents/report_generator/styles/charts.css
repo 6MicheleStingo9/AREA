@@ -15,3 +15,18 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     min-height: 500px;
 }
+
+/* Ensure Plotly charts scroll horizontally on small screens */
+.chart-container > div,
+.chart-container-large > div {
+    overflow-x: auto;
+}
+
+/* ---- Dark mode ---- */
+@media (prefers-color-scheme: dark) {
+    .chart-container,
+    .chart-container-large {
+        background: #1F2937;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+}

@@ -15,6 +15,7 @@ REPORT_DIR = Path(__file__).parent.parent.parent / "files" / "reports"
 TEMPLATE_DIR = Path(__file__).parent / "templates"
 STYLES_DIR = Path(__file__).parent / "styles"
 SCRIPTS_DIR = Path(__file__).parent / "scripts"
+STATIC_DIR = Path(__file__).parent / "static"
 
 
 def load_css() -> str:
@@ -34,19 +35,19 @@ def load_css() -> str:
 
 
 def load_js() -> str:
-    """
-    Load and concatenate all JavaScript files.
-
-    Returns:
-        str: The combined JavaScript content.
-    """
-    js_files = ["charts.js", "navigation.js", "filters.js"]
+    js_files = ["charts.js", "navigation.js", "filters.js", "report_download.js"]
     js_content = []
     for js_file in js_files:
         js_path = SCRIPTS_DIR / js_file
         if js_path.exists():
             js_content.append(js_path.read_text(encoding="utf-8"))
     return "\n".join(js_content)
+
+
+def load_vendor(filename: str) -> str:
+    """Return the content of a vendored JS file, or empty string if not found."""
+    path = STATIC_DIR / filename
+    return path.read_text(encoding="utf-8") if path.exists() else ""
 
 
 def load_translations(language: str) -> dict:
@@ -168,7 +169,9 @@ def generate_html_report(
         domains_structure=risk_table_data["domains_structure"],
         css_content=load_css(),
         js_content=load_js(),
-        language=language,  # Pass language to the template
+        plotly_content=load_vendor("plotly-2.27.0.min.js"),
+        jszip_content=load_vendor("jszip-3.10.1.min.js"),
+        language=language,
     )
 
     try:
