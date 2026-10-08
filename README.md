@@ -10,7 +10,7 @@ AREA is a LangGraph-based MAS platform for assessing risks associated with AI sy
 4. [Requirements](#requirements)
 5. [Installation & Setup](#installation--setup)
 6. [Usage](#usage)
-   - [Start the Streamlit user interface](#start-the-streamlit-user-interface)
+   - [Start the web interface (FastAPI)](#start-the-web-interface-fastapi)
    - [Standalone Execution of Agents](#standalone-execution-of-agents)
 7. [Analysis Workflow](#analysis-workflow)
 8. [Output & Results](#output--results)
@@ -93,12 +93,17 @@ The AREA repository is organized as follows:
   - `answers/`: user answers
   - `analysis/`: intermediate results (domain, causality, heuristic)
   - `reports/`: generated HTML reports and metadata
-- `ui/` — Streamlit user interface:
-  - `app.py`: main UI logic
-  - `localization.py`: translations
-  - `main.py` — Script for launching the Streamlit application
-  - `styles.py`: custom styles
+- `api/` — FastAPI web layer:
+  - `main.py`: app entry point (mounts static assets, includes routers)
+  - `routes_quiz.py`, `routes_run.py`: questionnaire and pipeline/report endpoints
+  - `jobs.py`, `sessions.py`: in-memory job and session registries
+  - `templates/`: Jinja2 templates (htmx-enhanced)
+  - `static/`: CSS and vendored htmx
+- `quiz/` — Streamlit-free questionnaire logic shared by the web layer:
+  - `logic.py`: load/validate/save answers, follow-up evaluation
+  - `translations.py`: UI translations and the `t()` helper
 - `utils/` — Common models and utility functions
+- `Dockerfile`, `docker-compose.yml`, `.dockerignore` — containerization
 - `requirements.txt` — Python dependencies
 - `README.md` — Project documentation
 - `.env` — API key and model configuration (not versioned)
@@ -118,13 +123,13 @@ The AREA repository is organized as follows:
 
 To use AREA, you need access to a Google Gemini model. Before running the application, create a `.env` file in the project root with the following content:
 
-```
-GEMINI_API_KEY=your_api_key_here
-GEMINI_MODEL_NAME=gemini-2.5-flash
+```env
+GOOGLE_API_KEY=your_api_key_here
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
 - Replace `your_api_key_here` with your API key from [Google AI Studio](https://aistudio.google.com/).
-- You can set `GEMINI_MODEL_NAME` to the specific Gemini model you want to use (e.g., `gemini-2.5-flash`).
+- You can set `GEMINI_MODEL` to the specific Gemini model you want to use (e.g., `gemini-2.5-flash`).
 
 > Get your API key and see available models at: https://aistudio.google.com/
 
@@ -140,27 +145,43 @@ pip install -r requirements.txt
 
 ---
 
-## Usage
+## Docker
 
-### Start the Streamlit user interface
+The fastest way to run AREA is via Docker (no local Python or SWI-Prolog setup needed).
 
 ```bash
-python ui/main.py
+# 1. Copy and fill in your API key
+cp .env.example .env   # or create .env manually
+
+# 2. Build and start
+docker compose up --build
 ```
 
-- You can select the desired language (English or Italian) using the `--lang` argument (e.g., `--lang it`).
-- Fill out the interactive questionnaire.
-- At the end, launch the automated analysis and download/view the HTML report directly from the interface.
+The application is available at `http://localhost:8000`.
+Answers and reports are persisted in `./files/` via a bind mount.
 
-<p align="center">
-  <img src="files/img/report1.png" alt="Screenshot report 1" width="45%" style="display:inline-block; margin-right:10px;" />
-  <img src="files/img/report2.png" alt="Screenshot report 2" width="45%" style="display:inline-block;" />
-   <img src="files/img/report3.png" alt="Screenshot report 3" width="45%" style="display:inline-block;" />
-</p>
+### Required `.env`
+
+```env
+GOOGLE_API_KEY=your_api_key_here
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+---
+
+## Usage
+
+### Start the web interface (FastAPI)
+
+```bash
+uvicorn api.main:app --reload
+```
+
+Open `http://localhost:8000` in your browser.
 
 ### Standalone Execution of Agents
 
-Each agent can be run individually from the terminal, without using the Streamlit interface. This is useful for testing, automation, or advanced analysis. Here are some example commands:
+Each agent can be run individually from the terminal for testing or advanced analysis. Here are some example commands:
 
 - **Generate sample questionnaire answers**  
    You can generate simulated answers for a questionnaire (useful for tests or demos) with the questionnaire_generator agent:
