@@ -158,7 +158,9 @@ docker compose up --build
 ```
 
 The application is available at `http://localhost:8000`.
-Answers and reports are persisted in `./files/` via a bind mount.
+Answers and reports are persisted in `./files/` via a bind mount. The container runs as
+UID/GID 1000 so the files stay editable on the host; if your user has different ids, set
+`UID` and `GID` in `.env` (e.g. `UID=1001`).
 
 ### Required `.env`
 
