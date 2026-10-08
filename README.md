@@ -240,6 +240,18 @@ pip install -r requirements-dev.txt
 pytest
 ```
 
+### Evaluation
+
+The [MIT AI Risk Repository](files/data/README.md) (CC BY 4.0) provides expert labels for both
+taxonomies. `files/data/processed/` holds the extracted datasets with a frozen train/eval split;
+the causal classification baseline measures how well the LLM assigns Entity / Intent / Timing to
+the eval risks (accuracy and macro-F1 with 95% bootstrap intervals):
+
+```bash
+python data_prep/extract_dataset.py        # rebuild files/data/processed/ (+ manifest.json)
+python -m evaluation.causal_baseline       # results in evaluation/results/ (calls the LLM)
+```
+
 ---
 
 ## Analysis Workflow
