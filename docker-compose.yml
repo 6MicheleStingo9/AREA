@@ -1,0 +1,8 @@
+services:
+  area:
+    build: .
+    env_file: .env
+    volumes:
+      - ./files:/app/files
+    ports:
+      - "8000:8000"

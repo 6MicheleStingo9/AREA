@@ -1,0 +1,11 @@
+.venv/
+.langgraph_api/
+.checkpoints/
+__pycache__/
+**/__pycache__/
+.git/
+.vscode/
+*.pyc
+*.pyo
+.env
+files/reports/*
