@@ -252,6 +252,9 @@ python data_prep/extract_dataset.py        # rebuild files/data/processed/ (+ ma
 python -m evaluation.causal_baseline       # results in evaluation/results/ (calls the LLM)
 ```
 
+Progress is saved after every LLM call: if a run stops (e.g. on the Gemini free tier daily quota),
+rerunning the same command resumes it.
+
 ---
 
 ## Analysis Workflow

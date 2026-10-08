@@ -17,6 +17,9 @@
 .checkpoints/
 .langgraph_api
 
+# Interrupted evaluation runs (resumable)
+evaluation/results/*.checkpoint.json
+
 # cache files
 __pycache__/
 *.pyc

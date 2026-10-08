@@ -6,6 +6,8 @@ definitions, agents/causality_analyzer/prompts.py) and a classification-only use
 prompt, with risks sent in batches as the pipeline does. Each risk is its title
 plus its description. Predictions, metrics (with 95% bootstrap intervals), a
 majority-class reference and provenance are written to evaluation/results/.
+Progress is checkpointed after every call: rerunning an interrupted command
+(e.g. after the daily quota is exhausted) resumes it.
 
 Usage (from the project root):
     python -m evaluation.causal_baseline [--batch-size 20] [--repeat 1] [--limit N]
@@ -20,7 +22,7 @@ import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 from agents.causality_analyzer.prompts import CAUSALITY_JSON_SCHEMA, CAUSALITY_SYSTEM_PROMPT
 from evaluation.metrics import accuracy, macro_f1, summarize
@@ -93,22 +95,42 @@ def classify_batch(llm, batch: List[Dict[str, Any]]) -> Dict[str, Dict[str, str]
     return {it["id"]: {ax: it[ax] for ax in AXES} for it in parsed.get("items", []) if it.get("id") in wanted}
 
 
-def predict(llm, examples: List[Dict[str, Any]], batch_size: int) -> Dict[str, Any]:
-    """Classify all examples in batches; risks missing from a reply are retried once."""
-    preds: Dict[str, Dict[str, str]] = {}
-    calls = 0
+def new_run_state() -> Dict[str, Any]:
+    return {"preds": {}, "calls": 0, "elapsed_s": 0.0, "done": [], "complete": False}
+
+
+def predict(llm, examples: List[Dict[str, Any]], batch_size: int, state: Dict[str, Any], save: Callable[[], None]) -> None:
+    """Classify all examples in batches, saving `state` after every call.
+
+    Batches already in state["done"] are skipped, so a run stopped by an error
+    (e.g. the daily quota) resumes where it left off. Risks missing from the
+    replies are retried once.
+    """
+    if state["complete"]:
+        return
+
+    def call(batch: List[Dict[str, Any]]) -> None:
+        t0 = time.time()
+        state["preds"].update(classify_batch(llm, batch))
+        state["calls"] += 1
+        state["elapsed_s"] += time.time() - t0
+
     batches = [examples[i : i + batch_size] for i in range(0, len(examples), batch_size)]
-    for i, batch in enumerate(batches, 1):
-        preds.update(classify_batch(llm, batch))
-        calls += 1
-        _logger.info("Batch classified", batch=f"{i}/{len(batches)}", answered=len(preds))
-    missing = [ex for ex in examples if ex["meta"]["ev_id"] not in preds]
+    for i, batch in enumerate(batches):
+        if i in state["done"]:
+            continue
+        call(batch)
+        state["done"].append(i)
+        save()
+        _logger.info("Batch classified", batch=f"{i + 1}/{len(batches)}", answered=len(state["preds"]))
+    missing = [ex for ex in examples if ex["meta"]["ev_id"] not in state["preds"]]
     if missing:
         _logger.warning("Retrying risks missing from the replies", count=len(missing))
         for i in range(0, len(missing), batch_size):
-            preds.update(classify_batch(llm, missing[i : i + batch_size]))
-            calls += 1
-    return {"preds": preds, "calls": calls}
+            call(missing[i : i + batch_size])
+            save()
+    state["complete"] = True
+    save()
 
 
 def evaluate(examples: List[Dict[str, Any]], preds: Dict[str, Dict[str, str]], seed: int) -> Dict[str, Any]:
@@ -143,7 +165,9 @@ def write_markdown(path: Path, res: Dict[str, Any]) -> None:
         f"# Causal classification — {res['model']['resolved']} baseline",
         "",
         f"Eval: `{res['data']['file']}` ({res['data']['rows']} risks, frozen split). "
-        f"Run {res['run']['date']} · batch {res['run']['batch_size']} · repeats {len(res['runs'])} · commit `{res['run']['git_commit']}`.",
+        f"Run {res['run']['date']} · batch {res['run']['batch_size']} · repeats {len(res['runs'])} · "
+        f"{res['run']['calls']} calls, {res['run']['elapsed_s'] / max(res['run']['calls'], 1):.1f} s per call · "
+        f"commit `{res['run']['git_commit']}`.",
         "",
         "| Axis | Accuracy % [95% CI] | Macro-F1 % [95% CI] | Majority class: acc / macro-F1 % |",
         "|---|---|---|---|",
@@ -182,11 +206,47 @@ def main() -> None:
     llm = apply_retry(base.with_structured_output(schema=SCHEMA, method="json_schema"))
     model_name = str(getattr(base, "model", ""))
 
-    runs, t0 = [], time.time()
-    for r in range(args.repeat):
-        _logger.info("Run start", run=r + 1, items=len(examples), model=model_name)
-        out = predict(llm, examples, args.batch_size)
-        runs.append({"calls": out["calls"], "metrics": evaluate(examples, out["preds"], args.seed), "predictions": out["preds"]})
+    data_sha256 = _sha256(eval_path.read_bytes())
+    prompt = {
+        "system": "agents/causality_analyzer/prompts.py:CAUSALITY_SYSTEM_PROMPT",
+        "system_sha256": _sha256(CAUSALITY_SYSTEM_PROMPT.encode()),
+        "user_template_sha256": _sha256(USER_PROMPT.encode()),
+    }
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    slug = model_name.split("/")[-1] or "model"
+    name = f"causal_clf__{slug}" + (f"__limit{args.limit}" if args.limit else "")
+
+    # Predictions are checkpointed after every call; a checkpoint from another
+    # setup (model, data, prompts, batching) is not reused.
+    ckpt_path = out_dir / f"{name}.checkpoint.json"
+    key = {"model": model_name, "data_sha256": data_sha256, "prompt": prompt, "batch_size": args.batch_size, "limit": args.limit}
+    ckpt = json.loads(ckpt_path.read_text(encoding="utf-8")) if ckpt_path.exists() else None
+    if ckpt is not None and ckpt["key"] != key:
+        _logger.warning("Ignoring a checkpoint from a different setup", path=str(ckpt_path))
+        ckpt = None
+    ckpt = ckpt or {"key": key, "runs": []}
+    ckpt["runs"] += [new_run_state() for _ in range(args.repeat - len(ckpt["runs"]))]
+    save = lambda: ckpt_path.write_text(json.dumps(ckpt, ensure_ascii=False), encoding="utf-8")
+    save()
+
+    try:
+        for r, state in enumerate(ckpt["runs"][: args.repeat], 1):
+            if not state["complete"]:
+                _logger.info("Run start", run=r, items=len(examples), model=model_name, batches_done=len(state["done"]))
+            predict(llm, examples, args.batch_size, state, save)
+    except Exception:
+        _logger.error("Run interrupted: progress saved, rerun the same command to resume", checkpoint=str(ckpt_path))
+        raise
+    runs = [
+        {
+            "calls": s["calls"],
+            "elapsed_s": round(s["elapsed_s"], 1),
+            "metrics": evaluate(examples, s["preds"], args.seed),
+            "predictions": s["preds"],
+        }
+        for s in ckpt["runs"][: args.repeat]
+    ]
 
     stability = None
     if len(runs) > 1:
@@ -204,29 +264,29 @@ def main() -> None:
     res = {
         "task": "causal_clf",
         "model": {"provider": "google", "env_GEMINI_MODEL": os.getenv("GEMINI_MODEL"), "resolved": model_name, "temperature": 0},
-        "run": {"date": date, "batch_size": args.batch_size, "elapsed_s": round(time.time() - t0, 1), "git_commit": _git_commit()},
+        "run": {
+            "date": date,
+            "batch_size": args.batch_size,
+            "calls": sum(r["calls"] for r in runs),
+            "elapsed_s": round(sum(r["elapsed_s"] for r in runs), 1),
+            "git_commit": _git_commit(),
+        },
         "data": {
             "file": str(eval_path.relative_to(ROOT)) if eval_path.is_relative_to(ROOT) else str(eval_path),
-            "sha256": _sha256(eval_path.read_bytes()),
+            "sha256": data_sha256,
             "rows": len(examples),
             "extraction_script_sha256": manifest.get("script", {}).get("sha256"),
         },
-        "prompt": {
-            "system": "agents/causality_analyzer/prompts.py:CAUSALITY_SYSTEM_PROMPT",
-            "system_sha256": _sha256(CAUSALITY_SYSTEM_PROMPT.encode()),
-            "user_template_sha256": _sha256(USER_PROMPT.encode()),
-        },
+        "prompt": prompt,
         "majority_reference": majority_reference(train, examples),
         "stability": stability,
         "runs": runs,
     }
 
-    out_dir = Path(args.out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    slug = model_name.split("/")[-1] or "model"
-    stem = f"causal_clf__{slug}__{date}" + (f"__limit{args.limit}" if args.limit else "")
+    stem = f"{name}__{date}"
     (out_dir / f"{stem}.json").write_text(json.dumps(res, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     write_markdown(out_dir / f"{stem}.md", res)
+    ckpt_path.unlink()
     _logger.info("Results written", path=str(out_dir / f"{stem}.json"))
     print((out_dir / f"{stem}.md").read_text(encoding="utf-8"))
 
