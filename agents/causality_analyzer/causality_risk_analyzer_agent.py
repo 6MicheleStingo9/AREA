@@ -15,7 +15,7 @@ from agents.causality_analyzer.prompts import (
     CAUSALITY_SYSTEM_PROMPT,
     CAUSALITY_USER_PROMPT,
 )
-from utils.utils import create_logger, get_llm_instance
+from utils.utils import apply_retry, create_logger, get_llm_instance
 
 _logger = create_logger("causality_analyzer")
 
@@ -219,8 +219,10 @@ def node_analyze(state: CausalAnalysisState) -> CausalAnalysisState:
     )
 
     # Prefer the same strategy as domain analyzer: structured output + TypeAdapter validation
-    structured = llm.with_structured_output(
-        schema=CAUSALITY_JSON_SCHEMA, method="json_schema"
+    structured = apply_retry(
+        llm.with_structured_output(
+            schema=CAUSALITY_JSON_SCHEMA, method="json_schema"
+        )
     )
     try:
         result = structured.invoke(messages)
@@ -352,8 +354,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Build input file path from fixed directory
-    domain_dir = "/home/stingom/Scrivania/Git/area/files/analysis/domain"
-    input_file = os.path.join(domain_dir, args.filename)
+    domain_dir = Path(__file__).parent.parent.parent / "files" / "analysis" / "domain"
+    input_file = domain_dir / args.filename
 
     # Verify that the file exists
     if not os.path.isfile(input_file):
