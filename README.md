@@ -258,6 +258,15 @@ python -m evaluation.causal_baseline       # results in evaluation/results/ (cal
 Progress is saved after every LLM call: if a run stops (e.g. on the Gemini free tier daily quota),
 rerunning the same command resumes it.
 
+A second, in-distribution test set uses risks written by AREA itself: simulated questionnaires for each
+profile and language, analyzed by the domain and causality agents. Its gold labels are added by hand,
+following [evaluation/area_testset/LABELING.md](evaluation/area_testset/LABELING.md):
+
+```bash
+python -m evaluation.area_testset generate   # questionnaires + domain/causality analyses (calls the LLM)
+python -m evaluation.area_testset collect    # one row per risk in evaluation/area_testset/risks.jsonl
+```
+
 ---
 
 ## Analysis Workflow

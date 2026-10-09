@@ -1,0 +1,145 @@
+{"id": "23d095a1-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-1.2-2", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Mixes unintended flaws with intentionally malicious constructs: intent not settled."}
+{"id": "23d095a1-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-2.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Adversaries or 'advanced analytical techniques': deliberate re-identification assumed."}
+{"id": "23d095a1-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["timing"], "note": "Data poisoning is a training-time attack; injection and inversion happen in use."}
+{"id": "23d095a1-2.2-2", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-3.1-2", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-4.1-2", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-4.2-2", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Misuse 'with harmful intent', but also systems harmful 'if not properly controlled'."}
+{"id": "23d095a1-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-4.3-2", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-5.1-2", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "The system's suggestions drive it, but the harm is the users' growing dependence."}
+{"id": "23d095a1-6.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity"], "note": "Structural effect of unequal access; no AI or human decision named."}
+{"id": "23d095a1-6.1-2", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Companies accrue the benefits; whether concentration is sought is not stated."}
+{"id": "23d095a1-6.2-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Framed on the system's automation; intent of the displacement not stated."}
+{"id": "23d095a1-6.2-2", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity"], "note": "Change in the nature of work; no actor named."}
+{"id": "23d095a1-6.3-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The system replaces human work; intent not stated."}
+{"id": "23d095a1-6.3-2", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Harm comes from people adopting the system's outputs; neither side dominant."}
+{"id": "23d095a1-6.5-1", "entity": "human", "intent": "unintentional", "timing": "other", "doubt": ["entity", "intent"], "note": "Gaps in the organization's governance; timing not stated."}
+{"id": "23d095a1-6.6-1", "entity": "ai", "intent": "other", "timing": "other", "doubt": ["entity", "intent"], "note": "Energy use of training and inference spans both phases; a side effect, intent not stated."}
+{"id": "23d095a1-7.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-7.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-7.2-2", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-7.4-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Opacity is a property of the system; intentionality not framed."}
+{"id": "23d095a1-7.4-2", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent", "timing"], "note": "Opacity hinders debugging and audits; phase not stated."}
+{"id": "23d095a1-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-7.6-2", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-2.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Cyberattacks and insider threats, but also leaks through a system vulnerability."}
+{"id": "be3c1640-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["timing"], "note": "Attacks listed include data poisoning and supply chain attacks, which may precede deployment."}
+{"id": "be3c1640-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Persuasive suggestions drive it, but users cede authority themselves."}
+{"id": "be3c1640-6.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity"], "note": "Structural effect of unequal access; no AI or human decision named."}
+{"id": "be3c1640-6.2-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The AI takes over tasks; intent of the deskilling not stated."}
+{"id": "be3c1640-6.3-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The system replaces human work; intent not stated."}
+{"id": "be3c1640-6.6-1", "entity": "ai", "intent": "other", "timing": "other", "doubt": ["entity", "intent", "timing"], "note": "Energy for training and inference; the text stresses operation."}
+{"id": "be3c1640-7.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Unconstrained capabilities cause 'unintended' harm, but malicious compromise is also named."}
+{"id": "be3c1640-7.4-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Opacity is a property of the system; intentionality not framed."}
+{"id": "be3c1640-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Discrimination by the model, but also data 'not handled and de-biased correctly' by people."}
+{"id": "40722168-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Toxic output as a side effect of broad generation; not explicitly called unintended."}
+{"id": "40722168-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-2.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Leakage or inference from extensive data collection; no actor or intent named."}
+{"id": "40722168-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["timing"], "note": "Attacks listed include data poisoning, which may precede deployment."}
+{"id": "40722168-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Pervasive suggestions drive it, but the harm is the users' eroded autonomy."}
+{"id": "40722168-6.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The company is the main beneficiary; whether concentration is sought is not stated."}
+{"id": "40722168-6.2-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Automation by the system; intent not stated."}
+{"id": "40722168-6.3-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The system replaces human work; intent not stated."}
+{"id": "40722168-6.4-1", "entity": "human", "intent": "intentional", "timing": "pre-deployment", "doubt": ["intent", "timing"], "note": "Speed deliberately prioritized over risk evaluation; insufficient testing happens before release, consequences after."}
+{"id": "40722168-6.5-1", "entity": "human", "intent": "unintentional", "timing": "other", "doubt": ["entity", "intent"], "note": "Possible failure of the organization's governance; timing not stated."}
+{"id": "40722168-6.6-1", "entity": "ai", "intent": "other", "timing": "other", "doubt": ["entity", "intent"], "note": "Energy use of training and inference spans both phases; a side effect, intent not stated."}
+{"id": "40722168-7.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-7.2-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Both abuse by malicious actors and autonomous harmful outcomes are named."}
+{"id": "40722168-7.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-7.4-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Opacity is a property of the system; intentionality not framed."}
+{"id": "40722168-7.5-1", "entity": "other", "intent": "other", "timing": "other", "doubt": ["entity"], "note": "Ethical frameworks may not keep up with future AI welfare questions; no actor, intent or phase stated."}
+{"id": "40722168-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-2.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Data 'compromised, leaked, or inferable through the LLM': no actor or intent named."}
+{"id": "f82e99a1-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["timing"], "note": "Attacks listed include model poisoning, which may precede deployment."}
+{"id": "f82e99a1-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Persuasive suggestions drive it, but the harm is the users' eroded autonomy."}
+{"id": "f82e99a1-6.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity"], "note": "Uneven access to the benefits; no AI or human decision named."}
+{"id": "f82e99a1-6.2-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The AI automates the engaging parts of jobs; intent not stated."}
+{"id": "f82e99a1-6.6-1", "entity": "ai", "intent": "other", "timing": "other", "doubt": ["entity", "intent"], "note": "Energy use of training and inference spans both phases; a side effect, intent not stated."}
+{"id": "f82e99a1-7.4-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Opacity is a property of the system; intentionality not framed."}
+{"id": "f82e99a1-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Bias in the system's representation, but caused by data 'not carefully managed' by people."}
+{"id": "18598c69-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-2.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Unauthorized access, exposure or leakage through vulnerabilities; no actor or intent named."}
+{"id": "18598c69-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["timing"], "note": "Attacks listed include data poisoning, which may precede deployment."}
+{"id": "18598c69-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Persuasive suggestions drive it, but the harm is the users' eroded autonomy."}
+{"id": "18598c69-6.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The company's focus on its own gain; whether concentration is sought is not stated."}
+{"id": "18598c69-6.5-1", "entity": "human", "intent": "unintentional", "timing": "other", "doubt": ["entity", "intent"], "note": "Informal governance chosen by the organization; timing not stated."}
+{"id": "18598c69-6.6-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Energy use of the running system, framed around the unassessed impact; intent not stated."}
+{"id": "18598c69-7.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-7.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "System failures in use, traced to basic testing by people."}
+{"id": "18598c69-7.4-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Opacity is a property of the system; intentionality not framed."}
+{"id": "83fe243b-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Discriminating recommendations by the system, from data 'not handled with care' by people."}
+{"id": "83fe243b-1.2-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Exposure through vulnerabilities, malicious inputs or weak filtering: intent mixed."}
+{"id": "83fe243b-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-2.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Compromise of the collected data; no actor or intent named."}
+{"id": "83fe243b-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["timing"], "note": "Attacks listed include data poisoning, which may precede deployment."}
+{"id": "83fe243b-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Persistent suggestions drive it, but the harm is the users' eroded autonomy."}
+{"id": "83fe243b-6.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Power concentrated in the platform operator; whether it is sought is not stated."}
+{"id": "83fe243b-6.5-1", "entity": "human", "intent": "unintentional", "timing": "other", "doubt": ["entity", "intent"], "note": "Informal governance chosen by the organization; timing not stated."}
+{"id": "83fe243b-6.6-1", "entity": "ai", "intent": "other", "timing": "other", "doubt": ["entity", "intent"], "note": "Energy for training and inference, framed around the operator not measuring it."}
+{"id": "83fe243b-7.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "The system favours sensational content, but the engagement metric was chosen by the company."}
+{"id": "83fe243b-7.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "System failures in use, traced to basic testing by people."}
+{"id": "83fe243b-7.4-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Opacity is a property of the system; intentionality not framed."}
+{"id": "83fe243b-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-2.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "A data breach of the collected PII; no actor or intent named."}
+{"id": "64a44527-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-6.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity"], "note": "Efficiency gains not shared with all stakeholders; no AI or human decision named."}
+{"id": "64a44527-6.4-1", "entity": "human", "intent": "unintentional", "timing": "pre-deployment", "doubt": ["intent", "timing"], "note": "Possible release without adequate risk evaluation; consequences called unforeseen."}
+{"id": "64a44527-6.5-1", "entity": "human", "intent": "unintentional", "timing": "other", "doubt": ["entity", "intent"], "note": "No governance framework in the organization; timing not stated."}
+{"id": "64a44527-6.6-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Energy use of the running system, framed around the company not assessing it."}
+{"id": "64a44527-7.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "System failures in use, traced to basic testing by people."}
+{"id": "64a44527-7.4-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Opacity is a property of the system; intentionality not framed."}
