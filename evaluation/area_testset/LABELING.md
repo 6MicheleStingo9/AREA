@@ -62,3 +62,16 @@ These are tendencies, not rules: the text of each risk decides.
 Labels are proposed by Claude (Opus 5.5) with these rules, blind to the pipeline labels
 (`proposals.jsonl`, with the axes in doubt and a short note), then reviewed by the author;
 `labels.jsonl` records the final values and whether each proposal was changed.
+
+After the review, groups of near-duplicate risks (same subdomain, near-identical wording) with
+mixed labels were harmonized, with the author: to the MIT training convention for that subdomain
+where it is clear, and by rule 1 where the MIT annotators are split. Each harmonized label keeps
+the reviewed value and the reason (`harmonized` in `labels.jsonl`).
+
+## Known differences from the MIT convention
+
+- **7.1 misalignment, 7.2 dangerous capabilities (intent):** the MIT annotators mostly code these
+  `intentional` (53% and 69% of the training rows), the AI pursuing its own goals; the AREA risks
+  explicitly call the outcomes unintended or unanticipated, and the gold follows the text.
+- **6.6 environmental harm (entity):** `other` here; the MIT annotators are split (ai 50%,
+  human 25%, other 25%).

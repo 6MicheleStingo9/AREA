@@ -183,6 +183,7 @@ def evaluate(seed: int = 0) -> None:
         },
         "gold_distribution": {ax: dict(Counter(gold[i][ax] for i in ids)) for ax in AXES},
         "review": {ax: sum(ax in gold[i].get("changed", []) for i in ids) / len(ids) for ax in AXES},
+        "harmonized": {ax: sum(ax in gold[i].get("harmonized", {}) for i in ids) for ax in AXES},
         "majority_reference": majority_reference(load_jsonl(DATA_DIR / "causal_clf.train.jsonl"), examples),
         "metrics": _scores(ids, risks, gold, seed),
         "subsets": {
@@ -236,7 +237,14 @@ def _write_markdown(path: Path, res: Dict[str, Any]) -> None:
     lines += ["", "| Subset | n | " + " | ".join(f"{ax} acc / macro-F1 %" for ax in AXES) + " |", "|---|---|" + "---|" * len(AXES)]
     for name, sub in res["subsets"].items():
         lines.append(f"| {name} | {sub['n']} | " + " | ".join(f"{pct(sub[ax]['accuracy'])} / {pct(sub[ax]['macro_f1'])}" for ax in AXES) + " |")
-    lines += ["", "Gold labels changed from the proposals they were reviewed from: " + ", ".join(f"{ax} {pct(v)}%" for ax, v in res["review"].items()) + "."]
+    lines += [
+        "",
+        "Gold labels that differ from the proposals they were reviewed from: "
+        + ", ".join(f"{ax} {pct(v)}%" for ax, v in res["review"].items())
+        + ". Harmonized after the review (near-duplicate risks, see LABELING.md): "
+        + ", ".join(f"{ax} {n}" for ax, n in res["harmonized"].items())
+        + ".",
+    ]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
