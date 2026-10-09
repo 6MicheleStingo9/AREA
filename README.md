@@ -268,6 +268,24 @@ python -m evaluation.area_testset collect    # one row per risk in evaluation/ar
 python -m evaluation.area_testset evaluate   # pipeline labels vs labels.jsonl, results in evaluation/results/
 ```
 
+### Training (Laya)
+
+The causal classifier is being re-engineered around [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual)
+(Apache-2.0, 322M parameters, typed decisions with calibrated probabilities), fine-tuned on the MIT training
+split. Training has its own environment:
+
+```bash
+python -m venv .venv-train
+.venv-train/bin/pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1
+.venv-train/bin/pip install -r requirements-train.txt
+.venv-train/bin/python -m training.build_laya_data     # training/data/: one row per risk, three typed questions
+.venv-train/bin/python -m training.evaluate_laya --model <checkpoint> --name <slug>   # both test sets
+```
+
+Fine-tuning needs a GPU (about 15 hours on a laptop CPU): run
+[training/kaggle_finetune.ipynb](training/kaggle_finetune.ipynb) on Kaggle (GPU, Internet on), or
+`python -m training.finetune_laya --device cuda`.
+
 ---
 
 ## Analysis Workflow

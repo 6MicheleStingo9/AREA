@@ -54,6 +54,22 @@ def bootstrap_ci(
     return [lo, hi]
 
 
+def ece(confidence: Sequence[float], correct: Sequence[bool], n_bins: int = 10) -> float:
+    """Expected calibration error of top-1 confidences, over equal-width bins."""
+    bins: List[List[int]] = [[] for _ in range(n_bins)]
+    for i, c in enumerate(confidence):
+        bins[min(int(c * n_bins), n_bins - 1)].append(i)
+    n = len(confidence)
+    return sum(
+        len(b) / n * abs(sum(correct[i] for i in b) / len(b) - sum(confidence[i] for i in b) / len(b)) for b in bins if b
+    )
+
+
+def brier(probs: Sequence[Dict[str, float]], y_true: Sequence[str], labels: Sequence[str]) -> float:
+    """Multiclass Brier score: mean squared distance between the probabilities and the one-hot label."""
+    return sum(sum((p.get(c, 0.0) - (t == c)) ** 2 for c in labels) for p, t in zip(probs, y_true)) / len(y_true)
+
+
 def summarize(
     y_true: Sequence[str],
     y_pred: Sequence[Optional[str]],
