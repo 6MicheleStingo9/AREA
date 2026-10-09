@@ -1,0 +1,287 @@
+{
+  "task": "causal_clf_area",
+  "predictions": "causal labels assigned by the AREA pipeline (causality agent)",
+  "models": {
+    "source=example": [
+      "unknown"
+    ],
+    "source=generated": [
+      "gemini-2.5-flash"
+    ]
+  },
+  "run": {
+    "date": "2026-10-09",
+    "git_commit": "bcd1cee"
+  },
+  "data": {
+    "risks": "evaluation/area_testset/risks.jsonl",
+    "risks_sha256": "fbe08cee6853c0afb25201b3f16d596c11ef94715a5dbc3ed45d8d5e979b8cc8",
+    "labels": "evaluation/area_testset/labels.jsonl",
+    "labels_sha256": "818b9bebb9ae566f39ca55909d6c027c2ce9a8baeb71216e1e3ba10cada56ccb",
+    "rows": 145
+  },
+  "gold_distribution": {
+    "entity": {
+      "ai": 79,
+      "human": 51,
+      "other": 15
+    },
+    "intent": {
+      "unintentional": 84,
+      "intentional": 33,
+      "other": 28
+    },
+    "timing": {
+      "post-deployment": 132,
+      "other": 11,
+      "pre-deployment": 2
+    }
+  },
+  "review": {
+    "entity": 0.08275862068965517,
+    "intent": 0.0896551724137931,
+    "timing": 0.0
+  },
+  "harmonized": {
+    "entity": 2,
+    "intent": 15,
+    "timing": 0
+  },
+  "majority_reference": {
+    "entity": {
+      "label": "ai",
+      "accuracy": 0.5448275862068965,
+      "macro_f1": 0.2351190476190476
+    },
+    "intent": {
+      "label": "unintentional",
+      "accuracy": 0.5793103448275863,
+      "macro_f1": 0.24454148471615722
+    },
+    "timing": {
+      "label": "post-deployment",
+      "accuracy": 0.9103448275862069,
+      "macro_f1": 0.3176895306859206
+    }
+  },
+  "metrics": {
+    "entity": {
+      "n": 145,
+      "missing": 0,
+      "accuracy": 0.8,
+      "accuracy_ci95": [
+        0.7310344827586207,
+        0.8620689655172413
+      ],
+      "macro_f1": 0.6317425622343654,
+      "macro_f1_ci95": [
+        0.5379785882779894,
+        0.7330827067669173
+      ],
+      "per_class": {
+        "ai": {
+          "precision": 0.9014084507042254,
+          "recall": 0.810126582278481,
+          "f1": 0.8533333333333334,
+          "support": 79
+        },
+        "human": {
+          "precision": 0.704225352112676,
+          "recall": 0.9803921568627451,
+          "f1": 0.8196721311475409,
+          "support": 51
+        },
+        "other": {
+          "precision": 0.6666666666666666,
+          "recall": 0.13333333333333333,
+          "f1": 0.2222222222222222,
+          "support": 15
+        }
+      },
+      "confusion": {
+        "ai": {
+          "ai": 64,
+          "human": 14,
+          "other": 1
+        },
+        "human": {
+          "ai": 1,
+          "human": 50,
+          "other": 0
+        },
+        "other": {
+          "ai": 6,
+          "human": 7,
+          "other": 2
+        }
+      }
+    },
+    "intent": {
+      "n": 145,
+      "missing": 0,
+      "accuracy": 0.7517241379310344,
+      "accuracy_ci95": [
+        0.6827586206896552,
+        0.8206896551724138
+      ],
+      "macro_f1": 0.551638837353123,
+      "macro_f1_ci95": [
+        0.5037986704653372,
+        0.5907789232531501
+      ],
+      "per_class": {
+        "intentional": {
+          "precision": 0.8181818181818182,
+          "recall": 0.8181818181818182,
+          "f1": 0.8181818181818182,
+          "support": 33
+        },
+        "unintentional": {
+          "precision": 0.7321428571428571,
+          "recall": 0.9761904761904762,
+          "f1": 0.836734693877551,
+          "support": 84
+        },
+        "other": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 28
+        }
+      },
+      "confusion": {
+        "intentional": {
+          "intentional": 27,
+          "unintentional": 6,
+          "other": 0
+        },
+        "unintentional": {
+          "intentional": 2,
+          "unintentional": 82,
+          "other": 0
+        },
+        "other": {
+          "intentional": 4,
+          "unintentional": 24,
+          "other": 0
+        }
+      }
+    },
+    "timing": {
+      "n": 145,
+      "missing": 0,
+      "accuracy": 0.8344827586206897,
+      "accuracy_ci95": [
+        0.7724137931034483,
+        0.8896551724137931
+      ],
+      "macro_f1": 0.496,
+      "macro_f1_ci95": [
+        0.35290575127973495,
+        0.6260155884216035
+      ],
+      "per_class": {
+        "pre-deployment": {
+          "precision": 0.08695652173913043,
+          "recall": 1.0,
+          "f1": 0.16,
+          "support": 2
+        },
+        "post-deployment": {
+          "precision": 0.9830508474576272,
+          "recall": 0.8787878787878788,
+          "f1": 0.9279999999999999,
+          "support": 132
+        },
+        "other": {
+          "precision": 0.75,
+          "recall": 0.2727272727272727,
+          "f1": 0.39999999999999997,
+          "support": 11
+        }
+      },
+      "confusion": {
+        "pre-deployment": {
+          "pre-deployment": 2,
+          "post-deployment": 0,
+          "other": 0
+        },
+        "post-deployment": {
+          "pre-deployment": 15,
+          "post-deployment": 116,
+          "other": 1
+        },
+        "other": {
+          "pre-deployment": 6,
+          "post-deployment": 2,
+          "other": 3
+        }
+      }
+    },
+    "all_three": {
+      "accuracy": 0.593103448275862
+    }
+  },
+  "subsets": {
+    "language=en": {
+      "n": 85,
+      "entity": {
+        "accuracy": 0.8352941176470589,
+        "macro_f1": 0.6938954765041722
+      },
+      "intent": {
+        "accuracy": 0.7647058823529411,
+        "macro_f1": 0.5825461088618984
+      },
+      "timing": {
+        "accuracy": 0.9176470588235294,
+        "macro_f1": 0.5427350427350427
+      }
+    },
+    "language=it": {
+      "n": 60,
+      "entity": {
+        "accuracy": 0.75,
+        "macro_f1": 0.5258620689655172
+      },
+      "intent": {
+        "accuracy": 0.7333333333333333,
+        "macro_f1": 0.5067750677506776
+      },
+      "timing": {
+        "accuracy": 0.7166666666666667,
+        "macro_f1": 0.3574468085106383
+      }
+    },
+    "source=example": {
+      "n": 34,
+      "entity": {
+        "accuracy": 0.9117647058823529,
+        "macro_f1": 0.7714285714285714
+      },
+      "intent": {
+        "accuracy": 0.7352941176470589,
+        "macro_f1": 0.5738705738705739
+      },
+      "timing": {
+        "accuracy": 0.9705882352941176,
+        "macro_f1": 0.5947089947089946
+      }
+    },
+    "source=generated": {
+      "n": 111,
+      "entity": {
+        "accuracy": 0.7657657657657657,
+        "macro_f1": 0.5848620697834389
+      },
+      "intent": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.5363529134229771
+      },
+      "timing": {
+        "accuracy": 0.7927927927927928,
+        "macro_f1": 0.42303030303030303
+      }
+    }
+  }
+}
