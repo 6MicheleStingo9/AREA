@@ -282,9 +282,11 @@ python -m venv .venv-train
 .venv-train/bin/python -m training.evaluate_laya --model <checkpoint> --name <slug>   # both test sets
 ```
 
-Fine-tuning needs a GPU (about 15 hours on a laptop CPU): run
-[training/kaggle_finetune.ipynb](training/kaggle_finetune.ipynb) on Kaggle (GPU, Internet on), or
-`python -m training.finetune_laya --device cuda`.
+Variants are trained on the MIT training split without its validation groups (`causal_fit.jsonl`),
+calibrated on those groups (`causal_val.jsonl`) and compared on them with `training.select_laya`; only
+the chosen one is evaluated on the test sets. Fine-tuning needs a GPU (about 15 hours on a laptop CPU):
+[training/kaggle_finetune.ipynb](training/kaggle_finetune.ipynb) runs the whole loop on Kaggle (GPU,
+Internet on), or run `python -m training.finetune_laya --device cuda` per variant.
 
 ---
 

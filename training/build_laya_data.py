@@ -6,23 +6,30 @@ three axes are typed `choice` questions whose options carry the MIT Causal Taxon
 (Slattery et al., 2025, CC BY 4.0), so the encoder reads the state once for all three. Writes
 training/data/:
 
-- causal_train.jsonl: the MIT train split with its labels (`expected`), for fine-tuning;
+- causal_train.jsonl: the MIT train split with its labels (`expected`);
+- causal_fit.jsonl and causal_val.jsonl: the same split divided by group (paper and risk
+  category, as in data_prep/extract_dataset.py), about 15% of the groups for validation: the
+  variants are trained on the first, compared and calibrated on the second;
 - mit_eval.jsonl and area_test.jsonl: the two test sets in the same format, with their gold
-  labels; they are for evaluation only, never for training or calibration.
+  labels; they are for evaluation only, never for training, selection or calibration.
 
 Usage (from the project root):
     python -m training.build_laya_data
 """
 
 import json
+import random
+from collections import Counter
 from pathlib import Path
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable, List, Tuple
 
 ROOT = Path(__file__).resolve().parent.parent
 PROCESSED = ROOT / "files" / "data" / "processed"
 AREA = ROOT / "evaluation" / "area_testset"
 OUT = ROOT / "training" / "data"
 AXES = ("entity", "intent", "timing")
+VAL_FRAC = 0.15
+VAL_SEED = 0
 
 QUESTIONS: Dict[str, Dict[str, Any]] = {
     "entity": {
@@ -63,6 +70,20 @@ def laya_row(rid: str, title: str, text: str, labels: Dict[str, str]) -> Dict[st
     return {"id": rid, "state": state(title, text), "questions": QUESTIONS, "expected": {ax: labels[ax] for ax in AXES}}
 
 
+def split_by_group(rows: List[Dict[str, Any]], frac: float, seed: int) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """(fit, val): whole groups (first two parts of the Ev_ID) go to validation until it holds `frac` of the rows."""
+    group = lambda r: ".".join(r["id"].split(".")[:2])
+    groups = sorted({group(r) for r in rows})
+    random.Random(seed).shuffle(groups)
+    val_groups, n = set(), 0
+    for g in groups:
+        if n >= frac * len(rows):
+            break
+        val_groups.add(g)
+        n += sum(group(r) == g for r in rows)
+    return [r for r in rows if group(r) not in val_groups], [r for r in rows if group(r) in val_groups]
+
+
 def _read(path: Path) -> List[Dict[str, Any]]:
     with open(path, encoding="utf-8") as f:
         return [json.loads(line) for line in f if line.strip()]
@@ -81,8 +102,13 @@ def main() -> None:
                          for ex in _read(PROCESSED / f"causal_clf.{split}.jsonl"))
     gold = {g["id"]: g for g in _read(AREA / "labels.jsonl")}
     area = (laya_row(r["id"], r["title"], r["text"], gold[r["id"]]) for r in _read(AREA / "risks.jsonl") if r["id"] in gold)
-    for name, rows in (("causal_train", mit("train")), ("mit_eval", mit("eval")), ("area_test", area)):
+    train = list(mit("train"))
+    fit, val = split_by_group(train, VAL_FRAC, VAL_SEED)
+    for name, rows in (("causal_train", train), ("causal_fit", fit), ("causal_val", val), ("mit_eval", mit("eval")), ("area_test", area)):
         print(f"{name}.jsonl: {_write(OUT / f'{name}.jsonl', rows)} rows")
+    for ax in AXES:
+        dist = lambda rows: ", ".join(f"{k} {v / len(rows):.0%}" for k, v in sorted(Counter(r["expected"][ax] for r in rows).items()))
+        print(f"  {ax}: fit [{dist(fit)}] | val [{dist(val)}]")
 
 
 if __name__ == "__main__":
