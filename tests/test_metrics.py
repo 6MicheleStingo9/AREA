@@ -2,7 +2,7 @@
 
 import pytest
 
-from evaluation.metrics import accuracy, bootstrap_ci, confusion, macro_f1, per_class, summarize
+from evaluation.metrics import accuracy, bootstrap_ci, brier, confusion, ece, macro_f1, per_class, summarize
 
 LABELS = ["a", "b", "c"]
 Y_TRUE = ["a", "a", "b", "b", "c", "c"]
@@ -34,3 +34,13 @@ def test_bootstrap_is_deterministic_and_brackets_the_estimate():
 
 def test_summarize_reports_missing():
     assert summarize(Y_TRUE, Y_PRED, LABELS, n_boot=50)["missing"] == 1
+
+
+def test_ece_is_zero_when_confidence_matches_accuracy():
+    assert ece([0.75] * 4, [True, True, True, False]) == pytest.approx(0.0)
+    assert ece([0.9, 0.9], [False, False]) == pytest.approx(0.9)
+
+
+def test_brier_of_certain_and_uniform_predictions():
+    assert brier([{"a": 1.0, "b": 0.0}], ["a"], ["a", "b"]) == 0.0
+    assert brier([{"a": 0.5, "b": 0.5}], ["a"], ["a", "b"]) == pytest.approx(0.5)

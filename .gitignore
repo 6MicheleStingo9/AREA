@@ -17,6 +17,11 @@
 .checkpoints/
 .langgraph_api
 
+# Training environment, derived data and checkpoints
+.venv-train/
+training/data/
+training/checkpoints/
+
 # Interrupted evaluation runs (resumable)
 evaluation/results/*.checkpoint.json
 
