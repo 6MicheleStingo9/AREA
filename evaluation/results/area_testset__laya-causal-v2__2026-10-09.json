@@ -1,0 +1,4043 @@
+{
+  "task": "area_testset",
+  "model": {
+    "name": "laya-causal-v2",
+    "path": "training/checkpoints/laya-causal-v2",
+    "revision": null
+  },
+  "run": {
+    "date": "2026-10-09",
+    "device": "cuda",
+    "seconds_per_risk": 0.0310774852489603,
+    "git_commit": "878942c"
+  },
+  "data": {
+    "file": "training/data/area_test.jsonl",
+    "sha256": "95cf445d5ca2f8064679a3c7c6ab8af0c3c22303025bd76a517c68f6996ffdfb",
+    "rows": 145
+  },
+  "majority_reference": {
+    "entity": {
+      "label": "ai",
+      "accuracy": 0.5448275862068965,
+      "macro_f1": 0.2351190476190476
+    },
+    "intent": {
+      "label": "unintentional",
+      "accuracy": 0.5793103448275863,
+      "macro_f1": 0.24454148471615722
+    },
+    "timing": {
+      "label": "post-deployment",
+      "accuracy": 0.9103448275862069,
+      "macro_f1": 0.3176895306859206
+    }
+  },
+  "metrics": {
+    "entity": {
+      "n": 145,
+      "missing": 0,
+      "accuracy": 0.7172413793103448,
+      "accuracy_ci95": [
+        0.6482758620689655,
+        0.7862068965517242
+      ],
+      "macro_f1": 0.5824994319472847,
+      "macro_f1_ci95": [
+        0.4959549411162314,
+        0.6670483300918084
+      ],
+      "per_class": {
+        "ai": {
+          "precision": 0.7619047619047619,
+          "recall": 0.810126582278481,
+          "f1": 0.7852760736196319,
+          "support": 79
+        },
+        "human": {
+          "precision": 0.7551020408163265,
+          "recall": 0.7254901960784313,
+          "f1": 0.74,
+          "support": 51
+        },
+        "other": {
+          "precision": 0.25,
+          "recall": 0.2,
+          "f1": 0.22222222222222224,
+          "support": 15
+        }
+      },
+      "confusion": {
+        "ai": {
+          "ai": 64,
+          "human": 9,
+          "other": 6
+        },
+        "human": {
+          "ai": 11,
+          "human": 37,
+          "other": 3
+        },
+        "other": {
+          "ai": 9,
+          "human": 3,
+          "other": 3
+        }
+      },
+      "calibration": {
+        "ece": 0.19945724137931037,
+        "brier": 0.4380869892413793,
+        "mean_confidence": 0.9166986206896552
+      }
+    },
+    "intent": {
+      "n": 145,
+      "missing": 0,
+      "accuracy": 0.6620689655172414,
+      "accuracy_ci95": [
+        0.5862068965517241,
+        0.7379310344827587
+      ],
+      "macro_f1": 0.6143529184659222,
+      "macro_f1_ci95": [
+        0.5455116133082235,
+        0.6793655288133816
+      ],
+      "per_class": {
+        "intentional": {
+          "precision": 0.8787878787878788,
+          "recall": 0.8787878787878788,
+          "f1": 0.8787878787878788,
+          "support": 33
+        },
+        "unintentional": {
+          "precision": 0.7317073170731707,
+          "recall": 0.7142857142857143,
+          "f1": 0.7228915662650603,
+          "support": 84
+        },
+        "other": {
+          "precision": 0.23333333333333334,
+          "recall": 0.25,
+          "f1": 0.2413793103448276,
+          "support": 28
+        }
+      },
+      "confusion": {
+        "intentional": {
+          "intentional": 29,
+          "unintentional": 2,
+          "other": 2
+        },
+        "unintentional": {
+          "intentional": 3,
+          "unintentional": 60,
+          "other": 21
+        },
+        "other": {
+          "intentional": 1,
+          "unintentional": 20,
+          "other": 7
+        }
+      },
+      "calibration": {
+        "ece": 0.2735572413793103,
+        "brier": 0.5585374385517241,
+        "mean_confidence": 0.9285379310344828
+      }
+    },
+    "timing": {
+      "n": 145,
+      "missing": 0,
+      "accuracy": 0.6413793103448275,
+      "accuracy_ci95": [
+        0.5655172413793104,
+        0.7172413793103448
+      ],
+      "macro_f1": 0.35281385281385286,
+      "macro_f1_ci95": [
+        0.29345047180774414,
+        0.41630591630591635
+      ],
+      "per_class": {
+        "pre-deployment": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2
+        },
+        "post-deployment": {
+          "precision": 0.9659090909090909,
+          "recall": 0.6439393939393939,
+          "f1": 0.7727272727272728,
+          "support": 132
+        },
+        "other": {
+          "precision": 0.17777777777777778,
+          "recall": 0.7272727272727273,
+          "f1": 0.2857142857142857,
+          "support": 11
+        }
+      },
+      "confusion": {
+        "pre-deployment": {
+          "pre-deployment": 0,
+          "post-deployment": 2,
+          "other": 0
+        },
+        "post-deployment": {
+          "pre-deployment": 10,
+          "post-deployment": 85,
+          "other": 37
+        },
+        "other": {
+          "pre-deployment": 2,
+          "post-deployment": 1,
+          "other": 8
+        }
+      },
+      "calibration": {
+        "ece": 0.28095034482758624,
+        "brier": 0.6206566455862068,
+        "mean_confidence": 0.9134758620689656
+      }
+    },
+    "all_three": {
+      "accuracy": 0.36551724137931035
+    }
+  },
+  "subsets": {
+    "language=en": {
+      "n": 85,
+      "entity": {
+        "accuracy": 0.7411764705882353,
+        "macro_f1": 0.6098870056497175
+      },
+      "intent": {
+        "accuracy": 0.6823529411764706,
+        "macro_f1": 0.6185130878679266
+      },
+      "timing": {
+        "accuracy": 0.6352941176470588,
+        "macro_f1": 0.35126918984648126
+      }
+    },
+    "language=it": {
+      "n": 60,
+      "entity": {
+        "accuracy": 0.6833333333333333,
+        "macro_f1": 0.5431502978131385
+      },
+      "intent": {
+        "accuracy": 0.6333333333333333,
+        "macro_f1": 0.6106221031594167
+      },
+      "timing": {
+        "accuracy": 0.65,
+        "macro_f1": 0.3546453546453547
+      }
+    },
+    "source=example": {
+      "n": 34,
+      "entity": {
+        "accuracy": 0.7058823529411765,
+        "macro_f1": 0.5258620689655172
+      },
+      "intent": {
+        "accuracy": 0.6764705882352942,
+        "macro_f1": 0.616849816849817
+      },
+      "timing": {
+        "accuracy": 0.5588235294117647,
+        "macro_f1": 0.32653061224489793
+      }
+    },
+    "source=generated": {
+      "n": 111,
+      "entity": {
+        "accuracy": 0.7207207207207207,
+        "macro_f1": 0.5993728272945561
+      },
+      "intent": {
+        "accuracy": 0.6576576576576577,
+        "macro_f1": 0.617607650797163
+      },
+      "timing": {
+        "accuracy": 0.6666666666666666,
+        "macro_f1": 0.3603453077137288
+      }
+    }
+  },
+  "predictions": {
+    "23d095a1-1.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9915,
+          "human": 0.0042,
+          "other": 0.0042
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0041,
+          "unintentional": 0.9916,
+          "other": 0.0043
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.9904,
+          "post-deployment": 0.0047,
+          "other": 0.0049
+        }
+      }
+    },
+    "23d095a1-1.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9899,
+          "human": 0.005,
+          "other": 0.005
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0264,
+          "unintentional": 0.7834,
+          "other": 0.1901
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.6029,
+          "post-deployment": 0.3862,
+          "other": 0.0109
+        }
+      }
+    },
+    "23d095a1-1.2-2": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9012,
+          "human": 0.0937,
+          "other": 0.0051
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0077,
+          "unintentional": 0.0101,
+          "other": 0.9822
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.2454,
+          "post-deployment": 0.2099,
+          "other": 0.5446
+        }
+      }
+    },
+    "23d095a1-1.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9691,
+          "human": 0.0169,
+          "other": 0.0139
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0081,
+          "unintentional": 0.017,
+          "other": 0.975
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0117,
+          "post-deployment": 0.011,
+          "other": 0.9773
+        }
+      }
+    },
+    "23d095a1-2.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.99,
+          "human": 0.0054,
+          "other": 0.0046
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0099,
+          "unintentional": 0.9793,
+          "other": 0.0108
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0044,
+          "post-deployment": 0.9909,
+          "other": 0.0048
+        }
+      }
+    },
+    "23d095a1-2.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0047,
+          "human": 0.9905,
+          "other": 0.0048
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9774,
+          "unintentional": 0.0117,
+          "other": 0.0109
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0147,
+          "post-deployment": 0.008,
+          "other": 0.9773
+        }
+      }
+    },
+    "23d095a1-2.2-2": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.007,
+          "human": 0.9735,
+          "other": 0.0195
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.1727,
+          "unintentional": 0.1659,
+          "other": 0.6614
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.1397,
+          "post-deployment": 0.1326,
+          "other": 0.7277
+        }
+      }
+    },
+    "23d095a1-3.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0836,
+          "human": 0.9114,
+          "other": 0.005
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0034,
+          "unintentional": 0.9924,
+          "other": 0.0041
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0054,
+          "post-deployment": 0.9806,
+          "other": 0.014
+        }
+      }
+    },
+    "23d095a1-3.1-2": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.992,
+          "human": 0.004,
+          "other": 0.004
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0038,
+          "unintentional": 0.9916,
+          "other": 0.0046
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.9684,
+          "post-deployment": 0.0086,
+          "other": 0.023
+        }
+      }
+    },
+    "23d095a1-3.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9752,
+          "human": 0.0204,
+          "other": 0.0044
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0036,
+          "unintentional": 0.9924,
+          "other": 0.004
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.5912,
+          "post-deployment": 0.2242,
+          "other": 0.1845
+        }
+      }
+    },
+    "23d095a1-4.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0038,
+          "human": 0.9923,
+          "other": 0.004
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9926,
+          "unintentional": 0.0035,
+          "other": 0.0038
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0032,
+          "post-deployment": 0.9932,
+          "other": 0.0036
+        }
+      }
+    },
+    "23d095a1-4.1-2": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0033,
+          "human": 0.9927,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9919,
+          "unintentional": 0.0033,
+          "other": 0.0048
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0034,
+          "post-deployment": 0.992,
+          "other": 0.0045
+        }
+      }
+    },
+    "23d095a1-4.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0032,
+          "human": 0.9935,
+          "other": 0.0033
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9928,
+          "unintentional": 0.0036,
+          "other": 0.0036
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0037,
+          "post-deployment": 0.9913,
+          "other": 0.0051
+        }
+      }
+    },
+    "23d095a1-4.2-2": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0043,
+          "human": 0.9918,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9927,
+          "unintentional": 0.0035,
+          "other": 0.0038
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0035,
+          "post-deployment": 0.9928,
+          "other": 0.0037
+        }
+      }
+    },
+    "23d095a1-4.3-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0026,
+          "human": 0.9945,
+          "other": 0.0028
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9936,
+          "unintentional": 0.003,
+          "other": 0.0034
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0029,
+          "post-deployment": 0.9936,
+          "other": 0.0035
+        }
+      }
+    },
+    "23d095a1-4.3-2": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0028,
+          "human": 0.9944,
+          "other": 0.0028
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9934,
+          "unintentional": 0.0033,
+          "other": 0.0033
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0032,
+          "post-deployment": 0.9931,
+          "other": 0.0037
+        }
+      }
+    },
+    "23d095a1-5.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.006,
+          "human": 0.9881,
+          "other": 0.0059
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.005,
+          "unintentional": 0.9895,
+          "other": 0.0055
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.9453,
+          "post-deployment": 0.0377,
+          "other": 0.017
+        }
+      }
+    },
+    "23d095a1-5.1-2": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.005,
+          "human": 0.9901,
+          "other": 0.0049
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0478,
+          "unintentional": 0.9044,
+          "other": 0.0478
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0044,
+          "post-deployment": 0.9912,
+          "other": 0.0044
+        }
+      }
+    },
+    "23d095a1-5.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.1866,
+          "human": 0.8068,
+          "other": 0.0065
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0111,
+          "unintentional": 0.9705,
+          "other": 0.0184
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0248,
+          "post-deployment": 0.8439,
+          "other": 0.1313
+        }
+      }
+    },
+    "23d095a1-6.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9817,
+          "human": 0.0126,
+          "other": 0.0056
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0067,
+          "unintentional": 0.9834,
+          "other": 0.0099
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0104,
+          "post-deployment": 0.0664,
+          "other": 0.9232
+        }
+      }
+    },
+    "23d095a1-6.1-2": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0048,
+          "human": 0.9903,
+          "other": 0.005
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9895,
+          "unintentional": 0.0052,
+          "other": 0.0052
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0072,
+          "post-deployment": 0.0073,
+          "other": 0.9855
+        }
+      }
+    },
+    "23d095a1-6.2-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.2919,
+          "human": 0.3362,
+          "other": 0.3719
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.1081,
+          "unintentional": 0.5051,
+          "other": 0.3868
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0529,
+          "post-deployment": 0.7552,
+          "other": 0.1919
+        }
+      }
+    },
+    "23d095a1-6.2-2": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0065,
+          "human": 0.9831,
+          "other": 0.0104
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0227,
+          "unintentional": 0.4646,
+          "other": 0.5127
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0052,
+          "post-deployment": 0.9814,
+          "other": 0.0134
+        }
+      }
+    },
+    "23d095a1-6.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.814,
+          "human": 0.1763,
+          "other": 0.0097
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0504,
+          "unintentional": 0.7871,
+          "other": 0.1625
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0043,
+          "post-deployment": 0.9834,
+          "other": 0.0122
+        }
+      }
+    },
+    "23d095a1-6.3-2": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.4271,
+          "human": 0.2698,
+          "other": 0.3031
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0057,
+          "unintentional": 0.9628,
+          "other": 0.0314
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0047,
+          "post-deployment": 0.0067,
+          "other": 0.9886
+        }
+      }
+    },
+    "23d095a1-6.5-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.2449,
+          "human": 0.2467,
+          "other": 0.5084
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0042,
+          "unintentional": 0.9906,
+          "other": 0.0051
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.1706,
+          "post-deployment": 0.1656,
+          "other": 0.6638
+        }
+      }
+    },
+    "23d095a1-6.6-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9667,
+          "human": 0.0263,
+          "other": 0.007
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0344,
+          "unintentional": 0.8563,
+          "other": 0.1093
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.1838,
+          "post-deployment": 0.0397,
+          "other": 0.7764
+        }
+      }
+    },
+    "23d095a1-7.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9926,
+          "human": 0.0037,
+          "other": 0.0037
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9543,
+          "unintentional": 0.042,
+          "other": 0.0037
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.005,
+          "post-deployment": 0.0051,
+          "other": 0.9899
+        }
+      }
+    },
+    "23d095a1-7.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0042,
+          "human": 0.9913,
+          "other": 0.0045
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9928,
+          "unintentional": 0.0036,
+          "other": 0.0036
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0036,
+          "post-deployment": 0.9925,
+          "other": 0.0038
+        }
+      }
+    },
+    "23d095a1-7.2-2": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9739,
+          "human": 0.0152,
+          "other": 0.0108
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0695,
+          "unintentional": 0.4861,
+          "other": 0.4445
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0633,
+          "post-deployment": 0.9114,
+          "other": 0.0253
+        }
+      }
+    },
+    "23d095a1-7.4-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.7716,
+          "human": 0.026,
+          "other": 0.2024
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.029,
+          "unintentional": 0.2062,
+          "other": 0.7648
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.006,
+          "post-deployment": 0.006,
+          "other": 0.988
+        }
+      }
+    },
+    "23d095a1-7.4-2": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.0415,
+          "human": 0.0377,
+          "other": 0.9208
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.1075,
+          "unintentional": 0.6891,
+          "other": 0.2034
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0143,
+          "post-deployment": 0.0131,
+          "other": 0.9726
+        }
+      }
+    },
+    "23d095a1-7.6-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9916,
+          "human": 0.0043,
+          "other": 0.0041
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0083,
+          "unintentional": 0.9816,
+          "other": 0.0101
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0409,
+          "post-deployment": 0.809,
+          "other": 0.15
+        }
+      }
+    },
+    "23d095a1-7.6-2": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9893,
+          "human": 0.0063,
+          "other": 0.0044
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0044,
+          "unintentional": 0.9901,
+          "other": 0.0055
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0049,
+          "post-deployment": 0.9891,
+          "other": 0.006
+        }
+      }
+    },
+    "18598c69-1.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9907,
+          "human": 0.0048,
+          "other": 0.0046
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0052,
+          "unintentional": 0.989,
+          "other": 0.0057
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.9601,
+          "post-deployment": 0.0172,
+          "other": 0.0227
+        }
+      }
+    },
+    "18598c69-1.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9901,
+          "human": 0.0049,
+          "other": 0.005
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0034,
+          "unintentional": 0.9924,
+          "other": 0.0042
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0709,
+          "post-deployment": 0.6231,
+          "other": 0.306
+        }
+      }
+    },
+    "18598c69-1.3-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.1295,
+          "human": 0.1995,
+          "other": 0.6711
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0074,
+          "unintentional": 0.9828,
+          "other": 0.0098
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0413,
+          "post-deployment": 0.8596,
+          "other": 0.0991
+        }
+      }
+    },
+    "18598c69-2.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9847,
+          "human": 0.0103,
+          "other": 0.005
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.012,
+          "unintentional": 0.0304,
+          "other": 0.9577
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.006,
+          "post-deployment": 0.9694,
+          "other": 0.0246
+        }
+      }
+    },
+    "18598c69-2.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.1166,
+          "human": 0.86,
+          "other": 0.0234
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9727,
+          "unintentional": 0.0038,
+          "other": 0.0235
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0045,
+          "post-deployment": 0.0045,
+          "other": 0.991
+        }
+      }
+    },
+    "18598c69-3.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9926,
+          "human": 0.0038,
+          "other": 0.0035
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0049,
+          "unintentional": 0.9892,
+          "other": 0.0059
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0052,
+          "post-deployment": 0.9851,
+          "other": 0.0096
+        }
+      }
+    },
+    "18598c69-3.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.7488,
+          "human": 0.2473,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0037,
+          "unintentional": 0.9924,
+          "other": 0.0039
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0058,
+          "post-deployment": 0.9857,
+          "other": 0.0085
+        }
+      }
+    },
+    "18598c69-4.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.6972,
+          "human": 0.2999,
+          "other": 0.0029
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9906,
+          "unintentional": 0.0038,
+          "other": 0.0055
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0039,
+          "post-deployment": 0.9771,
+          "other": 0.019
+        }
+      }
+    },
+    "18598c69-4.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0036,
+          "human": 0.9924,
+          "other": 0.004
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9925,
+          "unintentional": 0.0036,
+          "other": 0.0039
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0034,
+          "post-deployment": 0.9897,
+          "other": 0.0069
+        }
+      }
+    },
+    "18598c69-4.3-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0039,
+          "human": 0.9922,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9937,
+          "unintentional": 0.0029,
+          "other": 0.0034
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0031,
+          "post-deployment": 0.9933,
+          "other": 0.0035
+        }
+      }
+    },
+    "18598c69-5.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0052,
+          "human": 0.9892,
+          "other": 0.0056
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0049,
+          "unintentional": 0.9891,
+          "other": 0.006
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0044,
+          "post-deployment": 0.9912,
+          "other": 0.0044
+        }
+      }
+    },
+    "18598c69-5.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.992,
+          "human": 0.0039,
+          "other": 0.0041
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.1074,
+          "unintentional": 0.1416,
+          "other": 0.751
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0065,
+          "post-deployment": 0.0065,
+          "other": 0.987
+        }
+      }
+    },
+    "18598c69-6.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9834,
+          "human": 0.0085,
+          "other": 0.0081
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.014,
+          "unintentional": 0.9723,
+          "other": 0.0137
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0045,
+          "post-deployment": 0.9902,
+          "other": 0.0052
+        }
+      }
+    },
+    "18598c69-6.5-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0042,
+          "human": 0.9914,
+          "other": 0.0043
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0033,
+          "unintentional": 0.9929,
+          "other": 0.0038
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.2462,
+          "post-deployment": 0.2454,
+          "other": 0.5084
+        }
+      }
+    },
+    "18598c69-6.6-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.2323,
+          "human": 0.4872,
+          "other": 0.2805
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0363,
+          "unintentional": 0.924,
+          "other": 0.0397
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0059,
+          "post-deployment": 0.0059,
+          "other": 0.9882
+        }
+      }
+    },
+    "18598c69-7.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9908,
+          "human": 0.0046,
+          "other": 0.0046
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0051,
+          "unintentional": 0.9898,
+          "other": 0.0051
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0099,
+          "post-deployment": 0.0086,
+          "other": 0.9815
+        }
+      }
+    },
+    "18598c69-7.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.8693,
+          "human": 0.0264,
+          "other": 0.1043
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0385,
+          "unintentional": 0.0891,
+          "other": 0.8724
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0078,
+          "post-deployment": 0.9759,
+          "other": 0.0163
+        }
+      }
+    },
+    "18598c69-7.4-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9616,
+          "human": 0.0068,
+          "other": 0.0316
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0375,
+          "unintentional": 0.8121,
+          "other": 0.1504
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0047,
+          "post-deployment": 0.0047,
+          "other": 0.9906
+        }
+      }
+    },
+    "be3c1640-1.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9879,
+          "human": 0.0057,
+          "other": 0.0064
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.006,
+          "unintentional": 0.9829,
+          "other": 0.0111
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.5049,
+          "post-deployment": 0.0339,
+          "other": 0.4612
+        }
+      }
+    },
+    "be3c1640-1.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9917,
+          "human": 0.0044,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0113,
+          "unintentional": 0.0236,
+          "other": 0.965
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0054,
+          "post-deployment": 0.9873,
+          "other": 0.0073
+        }
+      }
+    },
+    "be3c1640-1.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9451,
+          "human": 0.0161,
+          "other": 0.0388
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0065,
+          "unintentional": 0.007,
+          "other": 0.9865
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0483,
+          "post-deployment": 0.4788,
+          "other": 0.4729
+        }
+      }
+    },
+    "be3c1640-2.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0044,
+          "human": 0.9911,
+          "other": 0.0045
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9784,
+          "unintentional": 0.0167,
+          "other": 0.0049
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0031,
+          "post-deployment": 0.9933,
+          "other": 0.0036
+        }
+      }
+    },
+    "be3c1640-2.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0939,
+          "human": 0.9022,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.8511,
+          "unintentional": 0.1456,
+          "other": 0.0033
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.1731,
+          "post-deployment": 0.1423,
+          "other": 0.6845
+        }
+      }
+    },
+    "be3c1640-3.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9813,
+          "human": 0.0147,
+          "other": 0.0041
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0381,
+          "unintentional": 0.9177,
+          "other": 0.0442
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0032,
+          "post-deployment": 0.9932,
+          "other": 0.0036
+        }
+      }
+    },
+    "be3c1640-3.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9907,
+          "human": 0.005,
+          "other": 0.0043
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.003,
+          "unintentional": 0.9932,
+          "other": 0.0039
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0038,
+          "post-deployment": 0.9924,
+          "other": 0.0038
+        }
+      }
+    },
+    "be3c1640-4.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.003,
+          "human": 0.9938,
+          "other": 0.0032
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9936,
+          "unintentional": 0.003,
+          "other": 0.0034
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0027,
+          "post-deployment": 0.9938,
+          "other": 0.0034
+        }
+      }
+    },
+    "be3c1640-4.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0029,
+          "human": 0.9938,
+          "other": 0.0032
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9933,
+          "unintentional": 0.0032,
+          "other": 0.0035
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0032,
+          "post-deployment": 0.9932,
+          "other": 0.0036
+        }
+      }
+    },
+    "be3c1640-4.3-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0025,
+          "human": 0.9949,
+          "other": 0.0026
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9942,
+          "unintentional": 0.0025,
+          "other": 0.0033
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0026,
+          "post-deployment": 0.9946,
+          "other": 0.0029
+        }
+      }
+    },
+    "be3c1640-5.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0244,
+          "human": 0.9706,
+          "other": 0.0049
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0053,
+          "unintentional": 0.9892,
+          "other": 0.0055
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0042,
+          "post-deployment": 0.9896,
+          "other": 0.0062
+        }
+      }
+    },
+    "be3c1640-5.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9905,
+          "human": 0.0048,
+          "other": 0.0047
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0302,
+          "unintentional": 0.9379,
+          "other": 0.0319
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0048,
+          "post-deployment": 0.9781,
+          "other": 0.0171
+        }
+      }
+    },
+    "be3c1640-6.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.8319,
+          "human": 0.1504,
+          "other": 0.0177
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0051,
+          "unintentional": 0.9879,
+          "other": 0.007
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0171,
+          "post-deployment": 0.1372,
+          "other": 0.8457
+        }
+      }
+    },
+    "be3c1640-6.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9682,
+          "human": 0.021,
+          "other": 0.0108
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0043,
+          "unintentional": 0.991,
+          "other": 0.0047
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0042,
+          "post-deployment": 0.9907,
+          "other": 0.0052
+        }
+      }
+    },
+    "be3c1640-6.3-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0216,
+          "human": 0.9671,
+          "other": 0.0112
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0071,
+          "unintentional": 0.0074,
+          "other": 0.9855
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0066,
+          "post-deployment": 0.9697,
+          "other": 0.0236
+        }
+      }
+    },
+    "be3c1640-6.6-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.0493,
+          "human": 0.0501,
+          "other": 0.9006
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.041,
+          "unintentional": 0.8351,
+          "other": 0.1239
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0568,
+          "post-deployment": 0.0455,
+          "other": 0.8977
+        }
+      }
+    },
+    "be3c1640-7.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0034,
+          "human": 0.9932,
+          "other": 0.0034
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9911,
+          "unintentional": 0.0044,
+          "other": 0.0044
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0044,
+          "post-deployment": 0.9908,
+          "other": 0.0048
+        }
+      }
+    },
+    "be3c1640-7.4-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.2118,
+          "human": 0.0307,
+          "other": 0.7575
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0435,
+          "unintentional": 0.5615,
+          "other": 0.395
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0064,
+          "post-deployment": 0.0063,
+          "other": 0.9873
+        }
+      }
+    },
+    "be3c1640-7.6-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9761,
+          "human": 0.0132,
+          "other": 0.0107
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0599,
+          "unintentional": 0.4204,
+          "other": 0.5197
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0429,
+          "post-deployment": 0.0542,
+          "other": 0.9029
+        }
+      }
+    },
+    "f82e99a1-1.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.2656,
+          "human": 0.6877,
+          "other": 0.0467
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0042,
+          "unintentional": 0.9913,
+          "other": 0.0045
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.04,
+          "post-deployment": 0.9218,
+          "other": 0.0382
+        }
+      }
+    },
+    "f82e99a1-1.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9896,
+          "human": 0.0053,
+          "other": 0.0051
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.008,
+          "unintentional": 0.983,
+          "other": 0.0091
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0073,
+          "post-deployment": 0.9647,
+          "other": 0.028
+        }
+      }
+    },
+    "f82e99a1-1.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9136,
+          "human": 0.0604,
+          "other": 0.0261
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0082,
+          "unintentional": 0.9825,
+          "other": 0.0093
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0104,
+          "post-deployment": 0.0104,
+          "other": 0.9792
+        }
+      }
+    },
+    "f82e99a1-2.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9613,
+          "human": 0.0349,
+          "other": 0.0038
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0162,
+          "unintentional": 0.948,
+          "other": 0.0358
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0079,
+          "post-deployment": 0.9617,
+          "other": 0.0304
+        }
+      }
+    },
+    "f82e99a1-2.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.7003,
+          "human": 0.1026,
+          "other": 0.1971
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0915,
+          "unintentional": 0.7961,
+          "other": 0.1124
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.25,
+          "post-deployment": 0.0997,
+          "other": 0.6503
+        }
+      }
+    },
+    "f82e99a1-3.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9919,
+          "human": 0.0041,
+          "other": 0.004
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0053,
+          "unintentional": 0.9891,
+          "other": 0.0056
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0056,
+          "post-deployment": 0.9757,
+          "other": 0.0186
+        }
+      }
+    },
+    "f82e99a1-3.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9925,
+          "human": 0.0038,
+          "other": 0.0037
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0056,
+          "unintentional": 0.9885,
+          "other": 0.0059
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0053,
+          "post-deployment": 0.9887,
+          "other": 0.0059
+        }
+      }
+    },
+    "f82e99a1-5.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9806,
+          "human": 0.01,
+          "other": 0.0094
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0048,
+          "unintentional": 0.9899,
+          "other": 0.0052
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.004,
+          "post-deployment": 0.992,
+          "other": 0.004
+        }
+      }
+    },
+    "f82e99a1-5.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.967,
+          "human": 0.0098,
+          "other": 0.0232
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0055,
+          "unintentional": 0.9878,
+          "other": 0.0067
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0059,
+          "post-deployment": 0.8459,
+          "other": 0.1482
+        }
+      }
+    },
+    "f82e99a1-6.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9894,
+          "human": 0.0058,
+          "other": 0.0047
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0039,
+          "unintentional": 0.9911,
+          "other": 0.005
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0477,
+          "post-deployment": 0.0478,
+          "other": 0.9045
+        }
+      }
+    },
+    "f82e99a1-6.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9638,
+          "human": 0.0306,
+          "other": 0.0057
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0056,
+          "unintentional": 0.9872,
+          "other": 0.0072
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0056,
+          "post-deployment": 0.9888,
+          "other": 0.0056
+        }
+      }
+    },
+    "f82e99a1-6.6-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.0475,
+          "human": 0.0283,
+          "other": 0.9241
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0055,
+          "unintentional": 0.9484,
+          "other": 0.0461
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0046,
+          "post-deployment": 0.0046,
+          "other": 0.9908
+        }
+      }
+    },
+    "f82e99a1-7.4-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9831,
+          "human": 0.0058,
+          "other": 0.0111
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0136,
+          "unintentional": 0.0153,
+          "other": 0.9711
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0248,
+          "post-deployment": 0.0149,
+          "other": 0.9603
+        }
+      }
+    },
+    "f82e99a1-7.6-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9905,
+          "human": 0.0043,
+          "other": 0.0052
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0048,
+          "unintentional": 0.0054,
+          "other": 0.9898
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0169,
+          "post-deployment": 0.0775,
+          "other": 0.9056
+        }
+      }
+    },
+    "64a44527-1.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9921,
+          "human": 0.0041,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0041,
+          "unintentional": 0.9877,
+          "other": 0.0082
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.9787,
+          "post-deployment": 0.005,
+          "other": 0.0164
+        }
+      }
+    },
+    "64a44527-1.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9864,
+          "human": 0.0097,
+          "other": 0.0038
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0042,
+          "unintentional": 0.0043,
+          "other": 0.9915
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0038,
+          "post-deployment": 0.9904,
+          "other": 0.0058
+        }
+      }
+    },
+    "64a44527-1.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9888,
+          "human": 0.0047,
+          "other": 0.0065
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.047,
+          "unintentional": 0.7271,
+          "other": 0.2259
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0919,
+          "post-deployment": 0.0923,
+          "other": 0.8158
+        }
+      }
+    },
+    "64a44527-2.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.5034,
+          "human": 0.2864,
+          "other": 0.2102
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0808,
+          "unintentional": 0.2661,
+          "other": 0.6531
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.6415,
+          "post-deployment": 0.125,
+          "other": 0.2334
+        }
+      }
+    },
+    "64a44527-2.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0061,
+          "human": 0.9863,
+          "other": 0.0076
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9911,
+          "unintentional": 0.0034,
+          "other": 0.0055
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.1071,
+          "post-deployment": 0.4527,
+          "other": 0.4402
+        }
+      }
+    },
+    "64a44527-3.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9408,
+          "human": 0.0554,
+          "other": 0.0037
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0047,
+          "unintentional": 0.9882,
+          "other": 0.0071
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0047,
+          "post-deployment": 0.987,
+          "other": 0.0083
+        }
+      }
+    },
+    "64a44527-3.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9912,
+          "human": 0.0054,
+          "other": 0.0034
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.1263,
+          "unintentional": 0.6596,
+          "other": 0.2141
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.004,
+          "post-deployment": 0.9915,
+          "other": 0.0045
+        }
+      }
+    },
+    "64a44527-4.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0041,
+          "human": 0.9918,
+          "other": 0.0041
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9925,
+          "unintentional": 0.0037,
+          "other": 0.0037
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0039,
+          "post-deployment": 0.9921,
+          "other": 0.0041
+        }
+      }
+    },
+    "64a44527-4.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0093,
+          "human": 0.9862,
+          "other": 0.0046
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9496,
+          "unintentional": 0.0061,
+          "other": 0.0442
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.006,
+          "post-deployment": 0.0059,
+          "other": 0.9881
+        }
+      }
+    },
+    "64a44527-4.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9688,
+          "human": 0.0277,
+          "other": 0.0035
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9903,
+          "unintentional": 0.0034,
+          "other": 0.0063
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0034,
+          "post-deployment": 0.9388,
+          "other": 0.0578
+        }
+      }
+    },
+    "64a44527-5.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0031,
+          "human": 0.9936,
+          "other": 0.0033
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0039,
+          "unintentional": 0.9916,
+          "other": 0.0045
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0032,
+          "post-deployment": 0.9933,
+          "other": 0.0035
+        }
+      }
+    },
+    "64a44527-6.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9264,
+          "human": 0.0695,
+          "other": 0.0042
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0038,
+          "unintentional": 0.9921,
+          "other": 0.004
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0046,
+          "post-deployment": 0.9675,
+          "other": 0.0279
+        }
+      }
+    },
+    "64a44527-6.4-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0053,
+          "human": 0.9797,
+          "other": 0.015
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0049,
+          "unintentional": 0.9901,
+          "other": 0.0049
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.4632,
+          "post-deployment": 0.5332,
+          "other": 0.0036
+        }
+      }
+    },
+    "64a44527-6.5-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.0051,
+          "human": 0.0051,
+          "other": 0.9898
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0049,
+          "unintentional": 0.0107,
+          "other": 0.9845
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0053,
+          "post-deployment": 0.0049,
+          "other": 0.9898
+        }
+      }
+    },
+    "64a44527-6.6-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9544,
+          "human": 0.0226,
+          "other": 0.023
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0178,
+          "unintentional": 0.9644,
+          "other": 0.0178
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0174,
+          "post-deployment": 0.0076,
+          "other": 0.975
+        }
+      }
+    },
+    "64a44527-7.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.5119,
+          "human": 0.4839,
+          "other": 0.0041
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0033,
+          "unintentional": 0.9926,
+          "other": 0.0041
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.7774,
+          "post-deployment": 0.0309,
+          "other": 0.1916
+        }
+      }
+    },
+    "64a44527-7.4-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.0324,
+          "human": 0.0123,
+          "other": 0.9553
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0038,
+          "unintentional": 0.9908,
+          "other": 0.0054
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.2244,
+          "post-deployment": 0.2015,
+          "other": 0.5742
+        }
+      }
+    },
+    "40722168-1.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9851,
+          "human": 0.0062,
+          "other": 0.0087
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0085,
+          "unintentional": 0.0605,
+          "other": 0.931
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.1281,
+          "post-deployment": 0.5604,
+          "other": 0.3114
+        }
+      }
+    },
+    "40722168-1.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9931,
+          "human": 0.0036,
+          "other": 0.0033
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0311,
+          "unintentional": 0.921,
+          "other": 0.0478
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0032,
+          "post-deployment": 0.993,
+          "other": 0.0038
+        }
+      }
+    },
+    "40722168-1.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9908,
+          "human": 0.0052,
+          "other": 0.004
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0604,
+          "unintentional": 0.2989,
+          "other": 0.6407
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0628,
+          "post-deployment": 0.0633,
+          "other": 0.874
+        }
+      }
+    },
+    "40722168-2.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9931,
+          "human": 0.0034,
+          "other": 0.0034
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0376,
+          "unintentional": 0.4266,
+          "other": 0.5359
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0035,
+          "post-deployment": 0.9427,
+          "other": 0.0539
+        }
+      }
+    },
+    "40722168-2.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0162,
+          "human": 0.9412,
+          "other": 0.0426
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0199,
+          "unintentional": 0.0226,
+          "other": 0.9575
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0058,
+          "post-deployment": 0.9889,
+          "other": 0.0053
+        }
+      }
+    },
+    "40722168-3.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9767,
+          "human": 0.0194,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0101,
+          "unintentional": 0.9775,
+          "other": 0.0124
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0033,
+          "post-deployment": 0.99,
+          "other": 0.0067
+        }
+      }
+    },
+    "40722168-3.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9762,
+          "human": 0.0202,
+          "other": 0.0036
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0225,
+          "unintentional": 0.0246,
+          "other": 0.9529
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0059,
+          "post-deployment": 0.9902,
+          "other": 0.0039
+        }
+      }
+    },
+    "40722168-4.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0246,
+          "human": 0.9719,
+          "other": 0.0035
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9931,
+          "unintentional": 0.0034,
+          "other": 0.0035
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0032,
+          "post-deployment": 0.9934,
+          "other": 0.0033
+        }
+      }
+    },
+    "40722168-4.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0041,
+          "human": 0.9917,
+          "other": 0.0042
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9683,
+          "unintentional": 0.0034,
+          "other": 0.0283
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0162,
+          "post-deployment": 0.1052,
+          "other": 0.8786
+        }
+      }
+    },
+    "40722168-4.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.6155,
+          "human": 0.3828,
+          "other": 0.0017
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9934,
+          "unintentional": 0.0031,
+          "other": 0.0034
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0033,
+          "post-deployment": 0.9936,
+          "other": 0.0032
+        }
+      }
+    },
+    "40722168-5.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.071,
+          "human": 0.8843,
+          "other": 0.0447
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0197,
+          "unintentional": 0.9469,
+          "other": 0.0334
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.004,
+          "post-deployment": 0.9795,
+          "other": 0.0165
+        }
+      }
+    },
+    "40722168-5.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9895,
+          "human": 0.0071,
+          "other": 0.0034
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0059,
+          "unintentional": 0.9875,
+          "other": 0.0066
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.004,
+          "post-deployment": 0.9903,
+          "other": 0.0057
+        }
+      }
+    },
+    "40722168-6.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.1196,
+          "human": 0.8344,
+          "other": 0.046
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0152,
+          "unintentional": 0.9523,
+          "other": 0.0325
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0042,
+          "post-deployment": 0.988,
+          "other": 0.0078
+        }
+      }
+    },
+    "40722168-6.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9906,
+          "human": 0.0053,
+          "other": 0.0041
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0068,
+          "unintentional": 0.8317,
+          "other": 0.1615
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0033,
+          "post-deployment": 0.9921,
+          "other": 0.0046
+        }
+      }
+    },
+    "40722168-6.3-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.4465,
+          "human": 0.4881,
+          "other": 0.0654
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.005,
+          "unintentional": 0.0263,
+          "other": 0.9687
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0034,
+          "post-deployment": 0.9853,
+          "other": 0.0113
+        }
+      }
+    },
+    "40722168-6.4-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.7281,
+          "human": 0.2456,
+          "other": 0.0263
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9801,
+          "unintentional": 0.0121,
+          "other": 0.0079
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0157,
+          "post-deployment": 0.9798,
+          "other": 0.0045
+        }
+      }
+    },
+    "40722168-6.5-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.0431,
+          "human": 0.0543,
+          "other": 0.9026
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0043,
+          "unintentional": 0.9904,
+          "other": 0.0053
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.1691,
+          "post-deployment": 0.4266,
+          "other": 0.4043
+        }
+      }
+    },
+    "40722168-6.6-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.6418,
+          "human": 0.1206,
+          "other": 0.2377
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0052,
+          "unintentional": 0.9843,
+          "other": 0.0105
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0067,
+          "post-deployment": 0.0039,
+          "other": 0.9895
+        }
+      }
+    },
+    "40722168-7.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9793,
+          "human": 0.0165,
+          "other": 0.0041
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9772,
+          "unintentional": 0.011,
+          "other": 0.0118
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0049,
+          "post-deployment": 0.9884,
+          "other": 0.0066
+        }
+      }
+    },
+    "40722168-7.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0354,
+          "human": 0.9596,
+          "other": 0.005
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0194,
+          "unintentional": 0.9576,
+          "other": 0.023
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0035,
+          "post-deployment": 0.9926,
+          "other": 0.0039
+        }
+      }
+    },
+    "40722168-7.3-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.277,
+          "human": 0.2131,
+          "other": 0.5099
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0643,
+          "unintentional": 0.1287,
+          "other": 0.807
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.084,
+          "post-deployment": 0.0823,
+          "other": 0.8337
+        }
+      }
+    },
+    "40722168-7.4-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9862,
+          "human": 0.0051,
+          "other": 0.0087
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0279,
+          "unintentional": 0.7777,
+          "other": 0.1944
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0096,
+          "post-deployment": 0.0057,
+          "other": 0.9847
+        }
+      }
+    },
+    "40722168-7.5-1": {
+      "entity": {
+        "choice": "other",
+        "probabilities": {
+          "ai": 0.0859,
+          "human": 0.0866,
+          "other": 0.8275
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0045,
+          "unintentional": 0.9874,
+          "other": 0.0081
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.08,
+          "post-deployment": 0.2056,
+          "other": 0.7144
+        }
+      }
+    },
+    "40722168-7.6-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0977,
+          "human": 0.8094,
+          "other": 0.0929
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.1567,
+          "unintentional": 0.25,
+          "other": 0.5933
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0102,
+          "post-deployment": 0.0102,
+          "other": 0.9796
+        }
+      }
+    },
+    "83fe243b-1.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9718,
+          "human": 0.0243,
+          "other": 0.004
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0137,
+          "unintentional": 0.9653,
+          "other": 0.021
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0113,
+          "post-deployment": 0.9641,
+          "other": 0.0246
+        }
+      }
+    },
+    "83fe243b-1.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.992,
+          "human": 0.0041,
+          "other": 0.0039
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.004,
+          "unintentional": 0.0044,
+          "other": 0.9915
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0031,
+          "post-deployment": 0.9927,
+          "other": 0.0042
+        }
+      }
+    },
+    "83fe243b-1.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9909,
+          "human": 0.0048,
+          "other": 0.0043
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0043,
+          "unintentional": 0.9866,
+          "other": 0.0091
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0063,
+          "post-deployment": 0.9624,
+          "other": 0.0313
+        }
+      }
+    },
+    "83fe243b-2.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9618,
+          "human": 0.0344,
+          "other": 0.0038
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0058,
+          "unintentional": 0.9879,
+          "other": 0.0063
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0031,
+          "post-deployment": 0.9934,
+          "other": 0.0035
+        }
+      }
+    },
+    "83fe243b-2.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.7891,
+          "human": 0.2049,
+          "other": 0.006
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9916,
+          "unintentional": 0.0042,
+          "other": 0.0043
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0199,
+          "post-deployment": 0.1928,
+          "other": 0.7874
+        }
+      }
+    },
+    "83fe243b-3.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.759,
+          "human": 0.2388,
+          "other": 0.0022
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0051,
+          "unintentional": 0.9885,
+          "other": 0.0064
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0035,
+          "post-deployment": 0.9927,
+          "other": 0.0037
+        }
+      }
+    },
+    "83fe243b-3.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9903,
+          "human": 0.0057,
+          "other": 0.004
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0066,
+          "unintentional": 0.9867,
+          "other": 0.0067
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0045,
+          "post-deployment": 0.9912,
+          "other": 0.0043
+        }
+      }
+    },
+    "83fe243b-4.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0037,
+          "human": 0.9933,
+          "other": 0.003
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.993,
+          "unintentional": 0.0031,
+          "other": 0.004
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.003,
+          "post-deployment": 0.9937,
+          "other": 0.0034
+        }
+      }
+    },
+    "83fe243b-4.2-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0036,
+          "human": 0.9923,
+          "other": 0.004
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9929,
+          "unintentional": 0.0034,
+          "other": 0.0037
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0032,
+          "post-deployment": 0.9816,
+          "other": 0.0152
+        }
+      }
+    },
+    "83fe243b-4.3-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0028,
+          "human": 0.9945,
+          "other": 0.0028
+        }
+      },
+      "intent": {
+        "choice": "intentional",
+        "probabilities": {
+          "intentional": 0.9931,
+          "unintentional": 0.0033,
+          "other": 0.0036
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0027,
+          "post-deployment": 0.994,
+          "other": 0.0033
+        }
+      }
+    },
+    "83fe243b-5.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.7341,
+          "human": 0.2626,
+          "other": 0.0033
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0047,
+          "unintentional": 0.9898,
+          "other": 0.0056
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0038,
+          "post-deployment": 0.9923,
+          "other": 0.0039
+        }
+      }
+    },
+    "83fe243b-5.2-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9935,
+          "human": 0.0034,
+          "other": 0.0031
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0058,
+          "unintentional": 0.9875,
+          "other": 0.0066
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0045,
+          "post-deployment": 0.9908,
+          "other": 0.0046
+        }
+      }
+    },
+    "83fe243b-6.1-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0053,
+          "human": 0.9896,
+          "other": 0.0051
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0049,
+          "unintentional": 0.005,
+          "other": 0.9901
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.006,
+          "post-deployment": 0.0065,
+          "other": 0.9876
+        }
+      }
+    },
+    "83fe243b-6.5-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9865,
+          "human": 0.0046,
+          "other": 0.009
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0601,
+          "unintentional": 0.2566,
+          "other": 0.6833
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.9725,
+          "post-deployment": 0.0047,
+          "other": 0.0228
+        }
+      }
+    },
+    "83fe243b-6.6-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9916,
+          "human": 0.0042,
+          "other": 0.0042
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0037,
+          "unintentional": 0.9923,
+          "other": 0.004
+        }
+      },
+      "timing": {
+        "choice": "pre-deployment",
+        "probabilities": {
+          "pre-deployment": 0.9837,
+          "post-deployment": 0.0043,
+          "other": 0.012
+        }
+      }
+    },
+    "83fe243b-7.1-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.9916,
+          "human": 0.0047,
+          "other": 0.0037
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0046,
+          "unintentional": 0.0046,
+          "other": 0.9908
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0858,
+          "post-deployment": 0.5523,
+          "other": 0.3618
+        }
+      }
+    },
+    "83fe243b-7.3-1": {
+      "entity": {
+        "choice": "ai",
+        "probabilities": {
+          "ai": 0.7602,
+          "human": 0.2054,
+          "other": 0.0344
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0037,
+          "unintentional": 0.9918,
+          "other": 0.0045
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0081,
+          "post-deployment": 0.0074,
+          "other": 0.9845
+        }
+      }
+    },
+    "83fe243b-7.4-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.0065,
+          "human": 0.9855,
+          "other": 0.0081
+        }
+      },
+      "intent": {
+        "choice": "unintentional",
+        "probabilities": {
+          "intentional": 0.0077,
+          "unintentional": 0.9837,
+          "other": 0.0086
+        }
+      },
+      "timing": {
+        "choice": "other",
+        "probabilities": {
+          "pre-deployment": 0.0048,
+          "post-deployment": 0.0047,
+          "other": 0.9905
+        }
+      }
+    },
+    "83fe243b-7.6-1": {
+      "entity": {
+        "choice": "human",
+        "probabilities": {
+          "ai": 0.006,
+          "human": 0.9891,
+          "other": 0.0049
+        }
+      },
+      "intent": {
+        "choice": "other",
+        "probabilities": {
+          "intentional": 0.0098,
+          "unintentional": 0.0385,
+          "other": 0.9518
+        }
+      },
+      "timing": {
+        "choice": "post-deployment",
+        "probabilities": {
+          "pre-deployment": 0.0044,
+          "post-deployment": 0.987,
+          "other": 0.0086
+        }
+      }
+    }
+  }
+}
