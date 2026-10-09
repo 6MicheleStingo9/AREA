@@ -77,10 +77,19 @@ def create_logger(name: str) -> structlog.stdlib.BoundLogger:
 # OUTERMOST layer so it does not hide model methods like with_structured_output.
 # It is the only retry layer: get_llm_instance() turns off the SDK's own retries,
 # which would otherwise run inside every attempt (5 x 6 HTTP calls per request).
-_LLM_RETRY_KWARGS = dict(stop_after_attempt=5, wait_exponential_jitter=True)
+# Waits of 2, 4, 8, 16 and 30 s (plus jitter) ride out about a minute of
+# "high demand" 503s, while an exhausted daily quota still fails within a minute.
+_LLM_RETRY_KWARGS = dict(
+    stop_after_attempt=6,
+    wait_exponential_jitter=True,
+    exponential_jitter_params={"initial": 2, "max": 30},
+)
+# Seconds without a reply before a request fails (and apply_retry() retries it):
+# without a timeout a stuck request hangs forever. The slowest calls take ~70 s.
+_LLM_TIMEOUT_S = 180
 
 
-def get_llm_instance(t: float = 0.0) -> ChatGoogleGenerativeAI:
+def get_llm_instance(t: float = 0.0, json_mode: bool = False) -> ChatGoogleGenerativeAI:
     """
     Configure and return the base chat model.
 
@@ -90,6 +99,8 @@ def get_llm_instance(t: float = 0.0) -> ChatGoogleGenerativeAI:
 
     Args:
         t (float, optional): Temperature setting for the model. Defaults to 0.0.
+        json_mode (bool, optional): Constrain the reply to valid JSON, for callers that
+            parse the reply text themselves. Defaults to False.
 
     Returns:
         ChatGoogleGenerativeAI: Configured base LLM instance.
@@ -102,6 +113,8 @@ def get_llm_instance(t: float = 0.0) -> ChatGoogleGenerativeAI:
         temperature=t,
         google_api_key=google_api_key,
         max_retries=0,  # retries come from apply_retry() only
+        timeout=_LLM_TIMEOUT_S,
+        response_mime_type="application/json" if json_mode else None,
     )
 
 
