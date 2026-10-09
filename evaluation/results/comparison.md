@@ -11,6 +11,7 @@ Accuracy / macro-F1 % per axis; F1 % of the `other` class and expected calibrati
 | gemini-2.5-flash, run 2 | 68.8 / 51.0 | 64.4 / 49.4 | 74.4 / 60.1 | 0.0 / 0.0 / 27.3 | – |
 | laya-multilingual-zeroshot | 31.2 / 27.7 | 45.6 / 41.7 | 26.2 / 19.5 | 29.8 / 28.1 / 34.0 | 35.0 / 20.5 / 25.7 |
 | laya-causal | 52.5 / 47.2 | 65.0 / 63.9 | 64.4 / 43.9 | 25.9 / 50.0 / 36.1 | 13.7 / 6.5 / 6.6 |
+| laya-causal-v2 | 58.8 / 50.6 | 65.0 / 63.2 | 59.4 / 46.3 | 19.6 / 46.8 / 27.0 | 32.9 / 26.7 / 32.7 |
 
 ## AREA risks (145 risks)
 
@@ -20,6 +21,7 @@ Accuracy / macro-F1 % per axis; F1 % of the `other` class and expected calibrati
 | gemini-2.5-flash, AREA pipeline labels | 80.0 / 63.2 | 75.2 / 55.2 | 83.4 / 49.6 | 22.2 / 0.0 / 40.0 | – |
 | laya-multilingual-zeroshot | 29.7 / 23.3 | 32.4 / 29.6 | 35.9 / 29.2 | 16.3 / 20.0 / 13.9 | 35.0 / 32.4 / 16.3 |
 | laya-causal | 68.3 / 58.4 | 67.6 / 60.8 | 77.2 / 48.2 | 30.3 / 23.1 / 32.6 | 6.8 / 7.0 / 17.3 |
+| laya-causal-v2 | 71.7 / 58.2 | 66.2 / 61.4 | 64.1 / 35.3 | 22.2 / 24.1 / 28.6 | 19.9 / 27.4 / 28.1 |
 
 Macro-F1 % by language (EN / IT):
 
@@ -28,3 +30,4 @@ Macro-F1 % by language (EN / IT):
 | gemini-2.5-flash, AREA pipeline labels | 69.4 / 52.6 | 58.3 / 50.7 | 54.3 / 35.7 |
 | laya-multilingual-zeroshot | 29.1 / 13.1 | 34.0 / 23.3 | 16.6 / 37.7 |
 | laya-causal | 63.9 / 49.9 | 59.0 / 62.3 | 37.2 / 56.5 |
+| laya-causal-v2 | 61.0 / 54.3 | 61.9 / 61.1 | 35.1 / 35.5 |
