@@ -265,6 +265,7 @@ following [evaluation/area_testset/LABELING.md](evaluation/area_testset/LABELING
 ```bash
 python -m evaluation.area_testset generate   # questionnaires + domain/causality analyses (calls the LLM)
 python -m evaluation.area_testset collect    # one row per risk in evaluation/area_testset/risks.jsonl
+python -m evaluation.area_testset evaluate   # pipeline labels vs labels.jsonl, results in evaluation/results/
 ```
 
 ---

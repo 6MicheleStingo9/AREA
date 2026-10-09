@@ -13,15 +13,20 @@ are assigned to the risks that the domain analyzer derives from questionnaire an
   evaluation/area_testset/risks.jsonl: one row per risk with its text (title +
   explanation) and the causal labels assigned by the pipeline (Gemini). Gold labels are
   kept apart, in labels.jsonl.
+- `evaluate` scores the pipeline labels against the gold labels (no LLM calls), overall
+  and by language and source, and writes the results to evaluation/results/.
 
 Usage (from the project root):
     python -m evaluation.area_testset generate [--languages en it] [--profiles expert intermediate beginner]
     python -m evaluation.area_testset collect
+    python -m evaluation.area_testset evaluate
 """
 
 import argparse
 import json
 import tempfile
+from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -34,7 +39,9 @@ from agents.questionnaire_generator.question_generator_agent import (
     load_questions,
     save_responses_with_metadata,
 )
-from utils.utils import create_logger
+from evaluation.causal_baseline import AXES, DATA_DIR, LABELS, _git_commit, _sha256, load_jsonl, majority_reference
+from evaluation.metrics import accuracy, macro_f1, summarize
+from utils.utils import create_logger, get_llm_instance
 
 _logger = create_logger("area_testset")
 
@@ -42,7 +49,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "evaluation" / "area_testset"
 RUNS_DIR = OUT_DIR / "runs"
 EXAMPLE_RUN_ID = "23d095a19c9c45c89af5c66b5ffcea63"  # example run tracked in files/
-AXES = ("entity", "intent", "timing")
+RESULTS_DIR = ROOT / "evaluation" / "results"
 
 
 def _write_json(path: Path, data: Any) -> None:
@@ -86,7 +93,10 @@ def generate(languages: List[str], profiles: List[str]) -> None:
     for language in languages:
         for profile in profiles:
             path = RUNS_DIR / f"{language}_{profile}.json"
-            run = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"language": language, "profile": profile}
+            if path.exists():
+                run = json.loads(path.read_text(encoding="utf-8"))
+            else:
+                run = {"language": language, "profile": profile, "model": str(get_llm_instance().model)}
             if "causality" in run:
                 _logger.info("Run already complete", run=path.name)
                 continue
@@ -124,6 +134,7 @@ def collect() -> None:
                         "source": run["source"],
                         "language": meta["language"],
                         "profile": run["profile"],
+                        "model": run.get("model"),
                         "subdomain": subdomain,
                         "title": risk["title"],
                         "text": risk["explanation"],
@@ -136,6 +147,99 @@ def collect() -> None:
     _logger.info("Risks collected", rows=len(rows), path=str(OUT_DIR / "risks.jsonl"))
 
 
+def _scores(ids: List[str], risks: Dict[str, Any], gold: Dict[str, Any], seed: int) -> Dict[str, Any]:
+    out: Dict[str, Any] = {}
+    for ax in AXES:
+        y_true = [gold[i][ax] for i in ids]
+        y_pred = [risks[i]["pipeline"][ax] for i in ids]
+        out[ax] = summarize(y_true, y_pred, LABELS[ax], seed=seed)
+    out["all_three"] = {
+        "accuracy": accuracy(
+            [tuple(gold[i][ax] for ax in AXES) for i in ids], [tuple(risks[i]["pipeline"][ax] for ax in AXES) for i in ids]
+        )
+    }
+    return out
+
+
+def evaluate(seed: int = 0) -> None:
+    """Pipeline labels (risks.jsonl) against the reviewed gold labels (labels.jsonl)."""
+    risks = {r["id"]: r for r in load_jsonl(OUT_DIR / "risks.jsonl")}
+    gold = {g["id"]: g for g in load_jsonl(OUT_DIR / "labels.jsonl")}
+    ids = [i for i in risks if i in gold]
+    subsets = {f"{key}={value}": [i for i in ids if risks[i][key] == value] for key in ("language", "source") for value in sorted({risks[i][key] for i in ids})}
+    examples = [{"labels": {ax: gold[i][ax] for ax in AXES}} for i in ids]
+    models = sorted({risks[i].get("model") or "unknown" for i in ids})
+    res = {
+        "task": "causal_clf_area",
+        "predictions": "causal labels assigned by the AREA pipeline (causality agent)",
+        "models": {src: sorted({risks[i].get("model") or "unknown" for i in sel}) for src, sel in subsets.items() if src.startswith("source=")},
+        "run": {"date": datetime.now(timezone.utc).strftime("%Y-%m-%d"), "git_commit": _git_commit()},
+        "data": {
+            "risks": "evaluation/area_testset/risks.jsonl",
+            "risks_sha256": _sha256((OUT_DIR / "risks.jsonl").read_bytes()),
+            "labels": "evaluation/area_testset/labels.jsonl",
+            "labels_sha256": _sha256((OUT_DIR / "labels.jsonl").read_bytes()),
+            "rows": len(ids),
+        },
+        "gold_distribution": {ax: dict(Counter(gold[i][ax] for i in ids)) for ax in AXES},
+        "review": {ax: sum(ax in gold[i].get("changed", []) for i in ids) / len(ids) for ax in AXES},
+        "majority_reference": majority_reference(load_jsonl(DATA_DIR / "causal_clf.train.jsonl"), examples),
+        "metrics": _scores(ids, risks, gold, seed),
+        "subsets": {
+            name: {
+                "n": len(sel),
+                **{
+                    ax: {
+                        "accuracy": accuracy([gold[i][ax] for i in sel], [risks[i]["pipeline"][ax] for i in sel]),
+                        "macro_f1": macro_f1([gold[i][ax] for i in sel], [risks[i]["pipeline"][ax] for i in sel], LABELS[ax]),
+                    }
+                    for ax in AXES
+                },
+            }
+            for name, sel in subsets.items()
+        },
+    }
+    slug = models[0] if len(models) == 1 else "pipeline"
+    stem = f"area_testset__{slug}__{res['run']['date']}"
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    _write_json(RESULTS_DIR / f"{stem}.json", res)
+    _write_markdown(RESULTS_DIR / f"{stem}.md", res)
+    print((RESULTS_DIR / f"{stem}.md").read_text(encoding="utf-8"))
+
+
+def _write_markdown(path: Path, res: Dict[str, Any]) -> None:
+    pct = lambda v: f"{v * 100:.1f}"
+    ci = lambda c: f"[{pct(c[0])}–{pct(c[1])}]"
+    m = res["metrics"]
+    langs = {k.split("=")[1]: v["n"] for k, v in res["subsets"].items() if k.startswith("language=")}
+    models = "; ".join(f"{k.split('=')[1]}: {', '.join(v)}" for k, v in res["models"].items())
+    lines = [
+        "# Causal classification on AREA risks — pipeline labels vs gold",
+        "",
+        f"Test set: `{res['data']['risks']}` ({res['data']['rows']} risks: "
+        + ", ".join(f"{n} {lang.upper()}" for lang, n in langs.items())
+        + f"); gold: `{res['data']['labels']}` (reviewed by hand, see LABELING.md). "
+        f"Pipeline model by source: {models}. Run {res['run']['date']} · commit `{res['run']['git_commit']}`.",
+        "",
+        "| Axis | Accuracy % [95% CI] | Macro-F1 % [95% CI] | Majority class (MIT train): acc / macro-F1 % |",
+        "|---|---|---|---|",
+    ]
+    for ax in AXES:
+        a, b = m[ax], res["majority_reference"][ax]
+        lines.append(
+            f"| {ax} | {pct(a['accuracy'])} {ci(a['accuracy_ci95'])} | {pct(a['macro_f1'])} {ci(a['macro_f1_ci95'])} "
+            f"| {pct(b['accuracy'])} / {pct(b['macro_f1'])} (`{b['label']}`) |"
+        )
+    lines += ["", f"All three axes correct: {pct(m['all_three']['accuracy'])}%.", "", "Per-class F1 % (gold support):", ""]
+    for ax in AXES:
+        lines.append(f"- **{ax}**: " + ", ".join(f"{c} {pct(s['f1'])} (n={s['support']})" for c, s in m[ax]["per_class"].items()))
+    lines += ["", "| Subset | n | " + " | ".join(f"{ax} acc / macro-F1 %" for ax in AXES) + " |", "|---|---|" + "---|" * len(AXES)]
+    for name, sub in res["subsets"].items():
+        lines.append(f"| {name} | {sub['n']} | " + " | ".join(f"{pct(sub[ax]['accuracy'])} / {pct(sub[ax]['macro_f1'])}" for ax in AXES) + " |")
+    lines += ["", "Gold labels changed from the proposals they were reviewed from: " + ", ".join(f"{ax} {pct(v)}%" for ax, v in res["review"].items()) + "."]
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="AREA in-distribution test set")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -143,11 +247,14 @@ def main() -> None:
     gen.add_argument("--languages", nargs="+", default=["en", "it"], choices=["en", "it"])
     gen.add_argument("--profiles", nargs="+", default=list(DEFAULT_PROFILE_TEMPS), choices=list(DEFAULT_PROFILE_TEMPS))
     sub.add_parser("collect", help="Flatten the runs into risks.jsonl")
+    sub.add_parser("evaluate", help="Score the pipeline labels against labels.jsonl (no LLM calls)")
     args = parser.parse_args()
     if args.command == "generate":
         generate(args.languages, args.profiles)
-    else:
+    elif args.command == "collect":
         collect()
+    else:
+        evaluate()
 
 
 if __name__ == "__main__":

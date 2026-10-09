@@ -1,6 +1,7 @@
 {
   "language": "en",
   "profile": "beginner",
+  "model": "gemini-2.5-flash",
   "answers": {
     "metadata": {
       "profile": "beginner",
