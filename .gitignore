@@ -28,3 +28,6 @@ evaluation/results/*.checkpoint.json
 # cache files
 __pycache__/
 *.pyc
+
+# AREA training labels: the adjudicator work file, rebuilt by `data_prep.area_trainset disagreements`
+files/data/area_trainset/annotations/disputed.jsonl
