@@ -1,7 +1,8 @@
 """
-Compare fine-tuned Laya variants on the validation split and pick one.
+Compare fine-tuned Laya variants on a validation split and pick one.
 
-Scores each checkpoint on training/data/causal_val.jsonl with the metrics of
+Scores each checkpoint on training/data/causal_val.jsonl (the MIT validation groups) or, with
+`--val area`, on area_val.jsonl (the AREA validation runs) with the metrics of
 training.evaluate_laya and picks the highest macro-F1 averaged over the three axes (the
 prediction is the most probable option, so the fitted temperatures do not change it), among the
 variants Laya can calibrate: a fitted temperature at Laya's upper bound (laya.common.TEMP_MAX)
@@ -10,7 +11,7 @@ variant qualifies does the choice fall back to macro-F1 alone, with a warning. W
 training/checkpoints/selection.json; the test sets are not touched.
 
 Usage (from the project root, training environment):
-    python -m training.select_laya <checkpoint name> [<checkpoint name> ...] [--limit N]
+    python -m training.select_laya <checkpoint name> [<checkpoint name> ...] [--val mit|area] [--limit N]
 """
 
 import argparse
@@ -36,10 +37,12 @@ def calibratable(calibration: Optional[Dict[str, Any]]) -> bool:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Pick a Laya variant on the validation split")
     parser.add_argument("names", nargs="+", help="Checkpoint directories under training/checkpoints/")
+    parser.add_argument("--val", choices=["mit", "area"], default="mit", help="mit: causal_val.jsonl; area: area_val.jsonl")
     parser.add_argument("--limit", type=int, default=None, help="Only the first N validation rows (smoke runs)")
     args = parser.parse_args()
 
-    rows = _read(DATA / "causal_val.jsonl")[: args.limit]
+    val = "area_val.jsonl" if args.val == "area" else "causal_val.jsonl"
+    rows = _read(DATA / val)[: args.limit]
     labels = {ax: list(rows[0]["questions"][ax]["criteria"]) for ax in AXES}
     variants = {}
     for name in args.names:
@@ -49,6 +52,7 @@ def main() -> None:
         variants[name] = {
             "epochs": run["config"]["epochs"],
             "oversample": run.get("oversample", False),
+            "area": run.get("area"),
             "label_smoothing": run["config"].get("label_smoothing", 0.0),
             "temperature": cal["temperature"][QTYPES["choice"]] if cal else None,
             "calibratable": calibratable(cal),
@@ -63,7 +67,7 @@ def main() -> None:
     selection = {
         "best": best,
         "criterion": f"mean macro-F1 over the axes, among the variants whose fitted temperature stays below {TEMP_MAX}",
-        "data": "training/data/causal_val.jsonl",
+        "data": f"training/data/{val}",
         "rows": len(rows),
         "variants": variants,
     }

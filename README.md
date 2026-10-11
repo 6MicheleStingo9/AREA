@@ -295,7 +295,19 @@ subdomain, and the MIT labels follow conventions that differ by subdomain. Varia
 MIT training split without its validation groups (`causal_fit.jsonl`), calibrated on those groups
 (`causal_val.jsonl`) and compared on them with `training.select_laya`, which keeps only the variants
 Laya can calibrate (fitted temperature below its cap) and picks the best mean macro-F1; only the
-chosen one is evaluated on the test sets. Fine-tuning needs a GPU (about 15 hours on a laptop CPU):
+chosen one is evaluated on the test sets.
+
+MIT-only training does not learn how AREA frames its risks, so AREA also writes training risks of
+its own, for 28 simulated systems unlike those of the test set, labelled by Claude subagents with the
+rules of the test set ([files/data/area_trainset/](files/data/area_trainset/README.md)):
+
+```bash
+python -m data_prep.area_trainset generate   # questionnaire + domain analysis per run (calls the LLM, resumable)
+python -m data_prep.area_trainset collect    # then batches / disagreements / merge for the labels
+```
+
+With `--area`, `training.finetune_laya` adds them to the training rows and calibrates on six AREA runs
+held out (`area_val.jsonl`), and `training.select_laya --val area` compares the variants on those runs. Fine-tuning needs a GPU (about 15 hours on a laptop CPU):
 [training/kaggle_finetune.ipynb](training/kaggle_finetune.ipynb) runs the whole loop on Kaggle (GPU,
 Internet on), or run `python -m training.finetune_laya --device cuda` per variant.
 

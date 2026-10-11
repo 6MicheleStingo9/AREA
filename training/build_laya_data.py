@@ -14,6 +14,9 @@ Writes training/data/:
 - causal_fit.jsonl and causal_val.jsonl: the same split divided by group (paper and risk
   category, as in data_prep/extract_dataset.py), about 15% of the groups for validation: the
   variants are trained on the first, compared and calibrated on the second;
+- area_fit.jsonl and area_val.jsonl: the AREA training risks (files/data/area_trainset/, labelled
+  with the protocol of its README), split by whole runs: six runs (three per language, drawn with
+  a fixed seed) for validation and calibration, the others for training;
 - mit_eval.jsonl and area_test.jsonl: the two test sets in the same format, with their gold
   labels; they are for evaluation only, never for training, selection or calibration.
 
@@ -30,10 +33,14 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 ROOT = Path(__file__).resolve().parent.parent
 PROCESSED = ROOT / "files" / "data" / "processed"
 AREA = ROOT / "evaluation" / "area_testset"
+AREA_TRAIN = ROOT / "files" / "data" / "area_trainset"
 OUT = ROOT / "training" / "data"
 AXES = ("entity", "intent", "timing")
 VAL_FRAC = 0.15
 VAL_SEED = 0
+# Validation runs of the AREA training risks: three English and three Italian runs of the 28
+# planned in data_prep/area_trainset.py, drawn with random.Random(0).sample(runs, 3) per language.
+AREA_VAL_RUNS = ("t13", "t14", "t25", "t26", "t27", "t28")
 
 QUESTIONS: Dict[str, Dict[str, Any]] = {
     "entity": {
@@ -118,7 +125,15 @@ def main() -> None:
     area = [laya_row(r["id"], r["title"], r["text"], gold[r["id"]], with_name(r["subdomain"])) for r in _read(AREA / "risks.jsonl") if r["id"] in gold]
     train = mit("train")
     fit, val = split_by_group(train, VAL_FRAC, VAL_SEED)
-    for name, rows in (("causal_train", train), ("causal_fit", fit), ("causal_val", val), ("mit_eval", mit("eval")), ("area_test", area)):
+    files = [("causal_train", train), ("causal_fit", fit), ("causal_val", val), ("mit_eval", mit("eval")), ("area_test", area)]
+    if (AREA_TRAIN / "labels.jsonl").exists():
+        labels = {g["id"]: g for g in _read(AREA_TRAIN / "labels.jsonl")}
+        risks = [r for r in _read(AREA_TRAIN / "risks.jsonl") if r["id"] in labels]
+        area_rows = lambda keep: [laya_row(r["id"], r["title"], r["text"], labels[r["id"]], with_name(r["subdomain"])) for r in risks if keep(r["run"])]
+        files += [("area_fit", area_rows(lambda run: run not in AREA_VAL_RUNS)), ("area_val", area_rows(lambda run: run in AREA_VAL_RUNS))]
+    else:
+        print(f"no {AREA_TRAIN / 'labels.jsonl'}: area_fit/area_val not written")
+    for name, rows in files:
         known = sum(r["state"].startswith("Risk subdomain: ") for r in rows)
         print(f"{name}.jsonl: {_write(OUT / f'{name}.jsonl', rows)} rows, {known} with their subdomain")
     for ax in AXES:

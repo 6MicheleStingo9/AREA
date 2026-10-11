@@ -8,7 +8,9 @@ training never saw (instead of a random slice of the training items), writing th
 checkpoint's rl_agent_config.json. `--oversample` repeats the rows of the rarest classes (timing
 pre-deployment, entity other) once more each. `--label-smoothing` moves that share of each target
 onto all the options evenly: without it, 8 epochs made the model so overconfident that the
-fitted temperature hit Laya's upper bound (5.0) and could not calibrate it.
+fitted temperature hit Laya's upper bound (5.0) and could not calibrate it. `--area` adds the
+AREA training risks (area_fit.jsonl, each repeated `--area-repeat` times) and calibrates on the
+AREA validation runs (area_val.jsonl) instead of the MIT validation groups.
 
 The checkpoint goes to training/checkpoints/<name>/ (not versioned), with training_run.json
 recording the base revision, the data checksum, the settings, the calibration and the time
@@ -19,7 +21,8 @@ RAM): train on a GPU, e.g. with training/kaggle_finetune.ipynb.
 
 Usage (from the project root, training environment):
     python -m training.finetune_laya [--name laya-causal] [--epochs 4] [--oversample] [--label-smoothing 0.1]
-                                     [--data fit|train] [--device auto] [--limit N] [--val-limit N]
+                                     [--area [--area-repeat K]] [--data fit|train] [--device auto]
+                                     [--limit N] [--val-limit N]
 """
 
 import argparse
@@ -94,18 +97,23 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=4)
     parser.add_argument("--oversample", action="store_true", help="Repeat the rows of the rarest classes")
     parser.add_argument("--label-smoothing", type=float, default=0.0, help="Share of each target spread over all the options")
+    parser.add_argument("--area", action="store_true", help="Add the AREA training risks and calibrate on the AREA validation runs")
+    parser.add_argument("--area-repeat", type=int, default=1, help="Times each AREA training risk appears (with --area)")
     parser.add_argument("--micro-batch", type=int, default=8)
     parser.add_argument("--grad-accum", type=int, default=8)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--device", default="auto", help="auto, cpu or cuda")
-    parser.add_argument("--limit", type=int, default=None, help="Only the first N training rows (timing and smoke runs)")
+    parser.add_argument("--limit", type=int, default=None, help="Only the first N training rows of each source (timing and smoke runs)")
     parser.add_argument("--val-limit", type=int, default=None, help="Only the first N validation rows for calibration (smoke runs)")
     args = parser.parse_args()
 
     rows = _read(DATA / f"causal_{args.data}.jsonl")[: args.limit]
     if args.oversample:
         rows = oversample(rows)
+    area = _read(DATA / "area_fit.jsonl")[: args.limit] if args.area else []
+    rows += area * args.area_repeat
     suffix = (f".limit{args.limit}" if args.limit else "") + (".oversampled" if args.oversample else "")
+    suffix += f".area{args.area_repeat}" if args.area else ""
     data = DATA / f"causal_{args.data}{suffix}.jsonl"
     if suffix:
         data.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
@@ -126,7 +134,7 @@ def main() -> None:
     shutil.rmtree(out / "checkpoint_latest", ignore_errors=True)  # a copy of the final weights
     calibration = None
     if held_out:
-        val = DATA / "causal_val.jsonl"
+        val = DATA / ("area_val.jsonl" if args.area else "causal_val.jsonl")
         calibration = calibrate(out, _read(val)[: args.val_limit], str(val.relative_to(ROOT)))
     run = {
         "base": BASE,
@@ -135,6 +143,7 @@ def main() -> None:
         "data_sha256": hashlib.sha256(data.read_bytes()).hexdigest(),
         "rows": len(rows),
         "oversample": args.oversample,
+        "area": {"rows": len(area), "repeat": args.area_repeat} if args.area else None,
         "config": asdict(config),
         "device": args.device,
         "seconds": round(time.time() - t0, 1),
