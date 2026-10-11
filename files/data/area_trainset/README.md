@@ -25,7 +25,9 @@ rules of LABELING.md and the risks to label:
    label in the repository, by reading each risk (no keyword rules). Each batch of runs goes to a new
    subagent per annotator: `annotations/a/<batch>.jsonl`, `annotations/b/<batch>.jsonl`, with the axes
    the annotator found hard (`doubt`) and a short note.
-2. **Agreement** per axis, raw and as Cohen's kappa (`disagreements`).
+2. **Agreement** per axis, raw and as Cohen's kappa (`disagreements`). Both annotators are the same
+   model with the same instructions, so their agreement measures how consistent the labelling is
+   more than how correct; correctness is what the quality estimate (step 5) measures.
 3. **An adjudicator** settles each disagreement: a fresh subagent sees the risk, the rules and both
    labels with their notes, and picks the final value with a reason (`annotations/adjudication/`).
 4. **`labels.jsonl`**: the final value per axis and where it comes from (`agreed` or `adjudicated`)

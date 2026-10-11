@@ -187,7 +187,8 @@ def save_responses_with_metadata(response, profile, language, output_path, run_i
         # Combine all responses into a single dictionary
         all_responses = {}
         for msg in ai_messages:
-            content = msg.content
+            # A reply split into several parts comes as a list of content blocks: join their text
+            content = msg.content if isinstance(msg.content, str) else msg.text
             # Clean the content: remove "```json" delimiters if present
             if content.startswith("```json"):
                 content = content[7:]

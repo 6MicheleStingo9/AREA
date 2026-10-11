@@ -77,3 +77,15 @@ def test_protocol_merges_agreed_and_adjudicated_labels(tmp_path, capsys):
     assert [r["intent"] for r in rows] == ["unintentional", "unintentional"]
     assert rows[1]["source"] == {"entity": "agreed", "intent": "adjudicated", "timing": "agreed"}
     assert "2 risks (1 with an adjudicated axis)" in capsys.readouterr().out
+
+
+def test_a_questionnaire_reply_in_content_blocks_is_parsed(tmp_path, monkeypatch):
+    from langchain_core.messages import AIMessage
+
+    from agents.questionnaire_generator.question_generator_agent import save_responses_with_metadata
+
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "files" / "answers").mkdir(parents=True)
+    reply = AIMessage(content=[{"type": "text", "text": '{"1.1": {"question": "Q", '}, {"type": "text", "text": '"answer": "A"}}'}])
+    _, path = save_responses_with_metadata({"messages": [reply]}, "expert", "en", "files/answers/", run_id="r1")
+    assert json.loads((tmp_path / path).read_text())["responses"] == {"1.1": {"question": "Q", "answer": "A"}}
