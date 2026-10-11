@@ -6,7 +6,9 @@ options shuffled each epoch so the model cannot learn a position prior. By defau
 causal_fit.jsonl and then fits the temperatures on causal_val.jsonl, the validation groups the
 training never saw (instead of a random slice of the training items), writing them into the
 checkpoint's rl_agent_config.json. `--oversample` repeats the rows of the rarest classes (timing
-pre-deployment, entity other) once more each.
+pre-deployment, entity other) once more each. `--label-smoothing` moves that share of each target
+onto all the options evenly: without it, 8 epochs made the model so overconfident that the
+fitted temperature hit Laya's upper bound (5.0) and could not calibrate it.
 
 The checkpoint goes to training/checkpoints/<name>/ (not versioned), with training_run.json
 recording the base revision, the data checksum, the settings, the calibration and the time
@@ -16,8 +18,8 @@ On CPU a full run takes about 15 hours (3.8 s per item measured on an i7-1255U, 
 RAM): train on a GPU, e.g. with training/kaggle_finetune.ipynb.
 
 Usage (from the project root, training environment):
-    python -m training.finetune_laya [--name laya-causal] [--epochs 4] [--oversample] [--data fit|train]
-                                     [--device auto] [--limit N] [--val-limit N]
+    python -m training.finetune_laya [--name laya-causal] [--epochs 4] [--oversample] [--label-smoothing 0.1]
+                                     [--data fit|train] [--device auto] [--limit N] [--val-limit N]
 """
 
 import argparse
@@ -91,6 +93,7 @@ def main() -> None:
                         help="fit: train without the validation groups and calibrate on them; train: the whole split, calibrated on a random slice")
     parser.add_argument("--epochs", type=int, default=4)
     parser.add_argument("--oversample", action="store_true", help="Repeat the rows of the rarest classes")
+    parser.add_argument("--label-smoothing", type=float, default=0.0, help="Share of each target spread over all the options")
     parser.add_argument("--micro-batch", type=int, default=8)
     parser.add_argument("--grad-accum", type=int, default=8)
     parser.add_argument("--seed", type=int, default=0)
@@ -113,6 +116,7 @@ def main() -> None:
         micro_batch=args.micro_batch,
         grad_accum=args.grad_accum,
         shuffle_options=("choice",),
+        label_smoothing=args.label_smoothing,
         seed=args.seed,
         calib_frac=0.0 if held_out else 0.1,
     )

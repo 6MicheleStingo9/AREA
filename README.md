@@ -268,6 +268,14 @@ python -m evaluation.area_testset collect    # one row per risk in evaluation/ar
 python -m evaluation.area_testset evaluate   # pipeline labels vs labels.jsonl, results in evaluation/results/
 ```
 
+Two classifiers are compared on the same risks with a paired bootstrap: per axis, the difference in
+accuracy and in macro-F1 with its 95% interval, and a verdict (better, on par, worse):
+
+```bash
+python -m evaluation.paired <results file> pipeline   # e.g. a Laya run against the AREA pipeline labels
+python -m evaluation.compare                          # every run side by side, in evaluation/results/comparison.md
+```
+
 ### Training (Laya)
 
 The causal classifier is being re-engineered around [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual)
@@ -278,13 +286,16 @@ split. Training has its own environment:
 python -m venv .venv-train
 .venv-train/bin/pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1
 .venv-train/bin/pip install -r requirements-train.txt
-.venv-train/bin/python -m training.build_laya_data     # training/data/: one row per risk, three typed questions
+.venv-train/bin/python -m training.build_laya_data     # training/data/: one row per risk (subdomain, title, text), three typed questions
 .venv-train/bin/python -m training.evaluate_laya --model <checkpoint> --name <slug>   # both test sets
 ```
 
-Variants are trained on the MIT training split without its validation groups (`causal_fit.jsonl`),
-calibrated on those groups (`causal_val.jsonl`) and compared on them with `training.select_laya`; only
-the chosen one is evaluated on the test sets. Fine-tuning needs a GPU (about 15 hours on a laptop CPU):
+Laya reads each risk with its subdomain in the MIT Domain Taxonomy: AREA writes its risks per
+subdomain, and the MIT labels follow conventions that differ by subdomain. Variants are trained on the
+MIT training split without its validation groups (`causal_fit.jsonl`), calibrated on those groups
+(`causal_val.jsonl`) and compared on them with `training.select_laya`, which keeps only the variants
+Laya can calibrate (fitted temperature below its cap) and picks the best mean macro-F1; only the
+chosen one is evaluated on the test sets. Fine-tuning needs a GPU (about 15 hours on a laptop CPU):
 [training/kaggle_finetune.ipynb](training/kaggle_finetune.ipynb) runs the whole loop on Kaggle (GPU,
 Internet on), or run `python -m training.finetune_laya --device cuda` per variant.
 

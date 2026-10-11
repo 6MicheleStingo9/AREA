@@ -1,10 +1,14 @@
 """
 Laya data files for the causal classification.
 
-Each risk becomes one Laya row: the state is the risk text (title, then description) and the
-three axes are typed `choice` questions whose options carry the MIT Causal Taxonomy definitions
-(Slattery et al., 2025, CC BY 4.0), so the encoder reads the state once for all three. Writes
-training/data/:
+Each risk becomes one Laya row: the state is the risk's subdomain in the MIT Domain Taxonomy
+(code and name), then its title and description; the three axes are typed `choice` questions
+whose options carry the MIT Causal Taxonomy definitions (Slattery et al., 2025, CC BY 4.0), so the
+encoder reads the state once for all three. AREA writes its risks per subdomain and the MIT
+labelling conventions differ by subdomain: the most frequent label of each subdomain alone scores
+about as well as the text-only model. Subdomain names come from the MIT database
+(files/data/processed/full.jsonl) for both sources, so training and AREA use the same strings.
+Writes training/data/:
 
 - causal_train.jsonl: the MIT train split with its labels (`expected`);
 - causal_fit.jsonl and causal_val.jsonl: the same split divided by group (paper and risk
@@ -21,7 +25,7 @@ import json
 import random
 from collections import Counter
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 ROOT = Path(__file__).resolve().parent.parent
 PROCESSED = ROOT / "files" / "data" / "processed"
@@ -62,12 +66,19 @@ QUESTIONS: Dict[str, Dict[str, Any]] = {
 }
 
 
-def state(title: str, text: str) -> str:
-    return f"{title}\n{text}" if title else text
+def state(title: str, text: str, subdomain: Optional[Tuple[str, str]] = None) -> str:
+    """What Laya reads: the subdomain (code, name) when known, the title, the description."""
+    lines = [f"Risk subdomain: {subdomain[0]} {subdomain[1]}"] if subdomain else []
+    return "\n".join(lines + ([title] if title else []) + [text])
 
 
-def laya_row(rid: str, title: str, text: str, labels: Dict[str, str]) -> Dict[str, Any]:
-    return {"id": rid, "state": state(title, text), "questions": QUESTIONS, "expected": {ax: labels[ax] for ax in AXES}}
+def laya_row(rid: str, title: str, text: str, labels: Dict[str, str], subdomain: Optional[Tuple[str, str]] = None) -> Dict[str, Any]:
+    return {"id": rid, "state": state(title, text, subdomain), "questions": QUESTIONS, "expected": {ax: labels[ax] for ax in AXES}}
+
+
+def subdomain_names() -> Dict[str, str]:
+    """Subdomain code -> name, as in the MIT database."""
+    return {r["subdomain_id"]: r["subdomain_name"] for r in _read(PROCESSED / "full.jsonl") if r["subdomain_id"]}
 
 
 def split_by_group(rows: List[Dict[str, Any]], frac: float, seed: int) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
@@ -98,14 +109,18 @@ def _write(path: Path, rows: Iterable[Dict[str, Any]]) -> int:
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    mit = lambda split: (laya_row(ex["meta"]["ev_id"], ex.get("title") or "", ex["input"], ex["labels"])
-                         for ex in _read(PROCESSED / f"causal_clf.{split}.jsonl"))
+    names = subdomain_names()
+    mit_sub = {r["ev_id"]: r["subdomain_id"] for r in _read(PROCESSED / "full.jsonl") if r["subdomain_id"]}
+    with_name = lambda code: (code, names[code]) if code else None
+    mit = lambda split: [laya_row(ex["meta"]["ev_id"], ex.get("title") or "", ex["input"], ex["labels"], with_name(mit_sub.get(ex["meta"]["ev_id"])))
+                         for ex in _read(PROCESSED / f"causal_clf.{split}.jsonl")]
     gold = {g["id"]: g for g in _read(AREA / "labels.jsonl")}
-    area = (laya_row(r["id"], r["title"], r["text"], gold[r["id"]]) for r in _read(AREA / "risks.jsonl") if r["id"] in gold)
-    train = list(mit("train"))
+    area = [laya_row(r["id"], r["title"], r["text"], gold[r["id"]], with_name(r["subdomain"])) for r in _read(AREA / "risks.jsonl") if r["id"] in gold]
+    train = mit("train")
     fit, val = split_by_group(train, VAL_FRAC, VAL_SEED)
     for name, rows in (("causal_train", train), ("causal_fit", fit), ("causal_val", val), ("mit_eval", mit("eval")), ("area_test", area)):
-        print(f"{name}.jsonl: {_write(OUT / f'{name}.jsonl', rows)} rows")
+        known = sum(r["state"].startswith("Risk subdomain: ") for r in rows)
+        print(f"{name}.jsonl: {_write(OUT / f'{name}.jsonl', rows)} rows, {known} with their subdomain")
     for ax in AXES:
         dist = lambda rows: ", ".join(f"{k} {v / len(rows):.0%}" for k, v in sorted(Counter(r["expected"][ax] for r in rows).items()))
         print(f"  {ax}: fit [{dist(fit)}] | val [{dist(val)}]")

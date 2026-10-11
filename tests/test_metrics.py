@@ -2,7 +2,7 @@
 
 import pytest
 
-from evaluation.metrics import accuracy, bootstrap_ci, brier, confusion, ece, macro_f1, per_class, summarize
+from evaluation.metrics import accuracy, bootstrap_ci, brier, confusion, ece, macro_f1, paired_bootstrap_ci, per_class, summarize
 
 LABELS = ["a", "b", "c"]
 Y_TRUE = ["a", "a", "b", "b", "c", "c"]
@@ -30,6 +30,16 @@ def test_bootstrap_is_deterministic_and_brackets_the_estimate():
     lo, hi = bootstrap_ci(Y_TRUE, Y_PRED, accuracy, n_boot=500, seed=1)
     assert (lo, hi) == tuple(bootstrap_ci(Y_TRUE, Y_PRED, accuracy, n_boot=500, seed=1))
     assert lo <= accuracy(Y_TRUE, Y_PRED) <= hi
+
+
+def test_paired_bootstrap_of_the_same_predictions_is_zero():
+    assert paired_bootstrap_ci(Y_TRUE, Y_PRED, Y_PRED, accuracy, n_boot=200) == [0.0, 0.0]
+
+
+def test_paired_bootstrap_resamples_the_same_items_for_both():
+    # A is always right, so on every resample it scores at least as well as B
+    lo, hi = paired_bootstrap_ci(Y_TRUE, Y_TRUE, Y_PRED, accuracy, n_boot=500, seed=1)
+    assert 0.0 <= lo <= accuracy(Y_TRUE, Y_TRUE) - accuracy(Y_TRUE, Y_PRED) <= hi
 
 
 def test_summarize_reports_missing():

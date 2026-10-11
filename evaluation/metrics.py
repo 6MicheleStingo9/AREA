@@ -33,6 +33,16 @@ def confusion(y_true: Sequence[str], y_pred: Sequence[Optional[str]], labels: Se
     return {t: {str(p): sum(1 for a, b in zip(y_true, y_pred) if a == t and b == p) for p in cols} for t in labels}
 
 
+def _percentile_interval(n: int, statistic: Callable[[List[int]], float], n_boot: int, seed: int, alpha: float) -> List[float]:
+    """Percentile interval of `statistic` over `n_boot` resamples (with replacement) of the indexes 0..n-1."""
+    rng = random.Random(seed)
+    values = []
+    for _ in range(n_boot):
+        values.append(statistic([rng.randrange(n) for _ in range(n)]))
+    values.sort()
+    return [values[int((alpha / 2) * n_boot)], values[int((1 - alpha / 2) * n_boot) - 1]]
+
+
 def bootstrap_ci(
     y_true: Sequence[str],
     y_pred: Sequence[Optional[str]],
@@ -42,16 +52,25 @@ def bootstrap_ci(
     alpha: float = 0.05,
 ) -> List[float]:
     """Percentile bootstrap interval of `metric`, resampling items with replacement."""
-    rng = random.Random(seed)
-    n = len(y_true)
-    values = []
-    for _ in range(n_boot):
-        idx = [rng.randrange(n) for _ in range(n)]
-        values.append(metric([y_true[i] for i in idx], [y_pred[i] for i in idx]))
-    values.sort()
-    lo = values[int((alpha / 2) * n_boot)]
-    hi = values[int((1 - alpha / 2) * n_boot) - 1]
-    return [lo, hi]
+    return _percentile_interval(len(y_true), lambda idx: metric([y_true[i] for i in idx], [y_pred[i] for i in idx]), n_boot, seed, alpha)
+
+
+def paired_bootstrap_ci(
+    y_true: Sequence[str],
+    pred_a: Sequence[Optional[str]],
+    pred_b: Sequence[Optional[str]],
+    metric: Callable[[List[str], List[Optional[str]]], float],
+    n_boot: int = 2000,
+    seed: int = 0,
+    alpha: float = 0.05,
+) -> List[float]:
+    """Percentile bootstrap interval of metric(A) - metric(B), with the same resampled items for both."""
+
+    def diff(idx: List[int]) -> float:
+        t = [y_true[i] for i in idx]
+        return metric(t, [pred_a[i] for i in idx]) - metric(t, [pred_b[i] for i in idx])
+
+    return _percentile_interval(len(y_true), diff, n_boot, seed, alpha)
 
 
 def ece(confidence: Sequence[float], correct: Sequence[bool], n_bins: int = 10) -> float:
