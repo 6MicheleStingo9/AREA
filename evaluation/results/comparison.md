@@ -12,6 +12,7 @@ Accuracy / macro-F1 % per axis; F1 % of the `other` class and expected calibrati
 | laya-multilingual-zeroshot | 31.2 / 27.7 | 45.6 / 41.7 | 26.2 / 19.5 | 29.8 / 28.1 / 34.0 | 35.0 / 20.5 / 25.7 |
 | laya-causal | 52.5 / 47.2 | 65.0 / 63.9 | 64.4 / 43.9 | 25.9 / 50.0 / 36.1 | 13.7 / 6.5 / 6.6 |
 | laya-causal-v2 | 58.8 / 50.6 | 65.0 / 63.2 | 59.4 / 46.3 | 19.6 / 46.8 / 27.0 | 32.9 / 26.7 / 32.7 |
+| laya-causal-v3 | 58.8 / 52.9 | 66.2 / 64.9 | 61.3 / 43.3 | 27.1 / 49.4 / 34.7 | 5.7 / 8.2 / 5.1 |
 
 ## AREA risks (145 risks)
 
@@ -22,6 +23,7 @@ Accuracy / macro-F1 % per axis; F1 % of the `other` class and expected calibrati
 | laya-multilingual-zeroshot | 29.7 / 23.3 | 32.4 / 29.6 | 35.9 / 29.2 | 16.3 / 20.0 / 13.9 | 35.0 / 32.4 / 16.3 |
 | laya-causal | 68.3 / 58.4 | 67.6 / 60.8 | 77.2 / 48.2 | 30.3 / 23.1 / 32.6 | 6.8 / 7.0 / 17.3 |
 | laya-causal-v2 | 71.7 / 58.2 | 66.2 / 61.4 | 64.1 / 35.3 | 22.2 / 24.1 / 28.6 | 19.9 / 27.4 / 28.1 |
+| laya-causal-v3 | 71.7 / 58.8 | 63.4 / 62.0 | 64.1 / 35.8 | 16.7 / 34.7 / 30.0 | 9.9 / 7.3 / 3.9 |
 
 Macro-F1 % by language (EN / IT):
 
@@ -31,3 +33,4 @@ Macro-F1 % by language (EN / IT):
 | laya-multilingual-zeroshot | 29.1 / 13.1 | 34.0 / 23.3 | 16.6 / 37.7 |
 | laya-causal | 63.9 / 49.9 | 59.0 / 62.3 | 37.2 / 56.5 |
 | laya-causal-v2 | 61.0 / 54.3 | 61.9 / 61.1 | 35.1 / 35.5 |
+| laya-causal-v3 | 64.3 / 51.0 | 63.6 / 58.7 | 34.3 / 38.1 |

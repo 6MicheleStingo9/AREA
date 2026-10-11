@@ -1,0 +1,64 @@
+{
+  "best": "v8ls",
+  "criterion": "mean macro-F1 over the axes, among the variants whose fitted temperature stays below 5.0",
+  "data": "training/data/causal_val.jsonl",
+  "rows": 197,
+  "variants": {
+    "v4": {
+      "epochs": 4,
+      "oversample": false,
+      "label_smoothing": 0.0,
+      "temperature": 2.565999984741211,
+      "calibratable": true,
+      "mean_macro_f1": 0.5300776524929987,
+      "mean_brier": 0.4921815243993232,
+      "all_three": 0.3147208121827411,
+      "entity": {
+        "accuracy": 0.583756345177665,
+        "macro_f1": 0.5165611859524508,
+        "ece": 0.02944619289340099,
+        "brier": 0.5203831329949239
+      },
+      "intent": {
+        "accuracy": 0.6852791878172588,
+        "macro_f1": 0.6687112196114332,
+        "ece": 0.08030609137055837,
+        "brier": 0.43180103385786806
+      },
+      "timing": {
+        "accuracy": 0.6294416243654822,
+        "macro_f1": 0.40496055191511204,
+        "ece": 0.05070456852791875,
+        "brier": 0.5243604063451777
+      }
+    },
+    "v8ls": {
+      "epochs": 8,
+      "oversample": false,
+      "label_smoothing": 0.1,
+      "temperature": 2.0303070545196533,
+      "calibratable": true,
+      "mean_macro_f1": 0.5884473253501019,
+      "mean_brier": 0.49319189945854486,
+      "all_three": 0.3096446700507614,
+      "entity": {
+        "accuracy": 0.6649746192893401,
+        "macro_f1": 0.6301819363222873,
+        "ece": 0.05002233502538075,
+        "brier": 0.4743641416243655
+      },
+      "intent": {
+        "accuracy": 0.6649746192893401,
+        "macro_f1": 0.6514076442800604,
+        "ece": 0.03344060913705584,
+        "brier": 0.46513874147208123
+      },
+      "timing": {
+        "accuracy": 0.583756345177665,
+        "macro_f1": 0.4837523954479582,
+        "ece": 0.06472791878172593,
+        "brier": 0.5400728152791878
+      }
+    }
+  }
+}
