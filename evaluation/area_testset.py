@@ -28,7 +28,7 @@ import tempfile
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from agents.causality_analyzer.causality_risk_analyzer_agent import CAUSALITY_DIR
 from agents.domain_analyzer.domain_risk_analyzer_agent import DOMAIN_DIR
@@ -56,10 +56,11 @@ def _write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def _answer(language: str, profile: str) -> Dict[str, Any]:
-    """Questionnaire generator: one LLM call; returns the answers file content."""
+def _answer(language: str, profile: str, system: Optional[str] = None) -> Dict[str, Any]:
+    """Questionnaire generator: one LLM call; returns the answers file content. `system` is the
+    AI system to describe (None lets the generator choose)."""
     questions = load_questions(str(ROOT / "files" / f"questions_{language}.json"))
-    response = generate_responses(questions, profile, language)
+    response = generate_responses(questions, profile, language, system)
     _, answers_file = save_responses_with_metadata(response, profile, language, "files/answers/")
     answers_path = Path(answers_file)
     answers = json.loads(answers_path.read_text(encoding="utf-8"))
