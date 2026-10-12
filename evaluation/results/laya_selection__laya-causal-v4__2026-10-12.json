@@ -1,0 +1,104 @@
+{
+  "best": "v8a2",
+  "criterion": "mean macro-F1 over the axes, among the variants whose fitted temperature stays below 5.0",
+  "data": "training/data/area_val.jsonl",
+  "rows": 97,
+  "variants": {
+    "v4a": {
+      "epochs": 4,
+      "oversample": false,
+      "area": {
+        "rows": 363,
+        "repeat": 1
+      },
+      "label_smoothing": 0.0,
+      "temperature": 2.2745940685272217,
+      "calibratable": true,
+      "mean_macro_f1": 0.6819765228833642,
+      "mean_brier": 0.16378605037800686,
+      "all_three": 0.6701030927835051,
+      "entity": {
+        "accuracy": 0.8350515463917526,
+        "macro_f1": 0.7741352720863626,
+        "ece": 0.060135051546391746,
+        "brier": 0.2058371575257732
+      },
+      "intent": {
+        "accuracy": 0.8762886597938144,
+        "macro_f1": 0.8104186351880687,
+        "ece": 0.05265876288659801,
+        "brier": 0.19296267876288659
+      },
+      "timing": {
+        "accuracy": 0.9175257731958762,
+        "macro_f1": 0.4613756613756614,
+        "ece": 0.041359793814433034,
+        "brier": 0.09255831484536081
+      }
+    },
+    "v8a": {
+      "epochs": 8,
+      "oversample": false,
+      "area": {
+        "rows": 363,
+        "repeat": 1
+      },
+      "label_smoothing": 0.1,
+      "temperature": 1.043997049331665,
+      "calibratable": true,
+      "mean_macro_f1": 0.7178181838795873,
+      "mean_brier": 0.17350911357388318,
+      "all_three": 0.7319587628865979,
+      "entity": {
+        "accuracy": 0.8865979381443299,
+        "macro_f1": 0.8474078351573814,
+        "ece": 0.06658762886597937,
+        "brier": 0.17321866340206185
+      },
+      "intent": {
+        "accuracy": 0.865979381443299,
+        "macro_f1": 0.7775627240143369,
+        "ece": 0.058325773195876264,
+        "brier": 0.2357507049484536
+      },
+      "timing": {
+        "accuracy": 0.9278350515463918,
+        "macro_f1": 0.5284839924670434,
+        "ece": 0.06679793814432992,
+        "brier": 0.11155797237113402
+      }
+    },
+    "v8a2": {
+      "epochs": 8,
+      "oversample": false,
+      "area": {
+        "rows": 363,
+        "repeat": 2
+      },
+      "label_smoothing": 0.1,
+      "temperature": 1.0253474712371826,
+      "calibratable": true,
+      "mean_macro_f1": 0.7603909462160737,
+      "mean_brier": 0.14865128391752577,
+      "all_three": 0.7835051546391752,
+      "entity": {
+        "accuracy": 0.8762886597938144,
+        "macro_f1": 0.8198696880585826,
+        "ece": 0.05347835051546395,
+        "brier": 0.2191171681443299
+      },
+      "intent": {
+        "accuracy": 0.9072164948453608,
+        "macro_f1": 0.8591097308488612,
+        "ece": 0.03543298969072168,
+        "brier": 0.17503950659793815
+      },
+      "timing": {
+        "accuracy": 0.9690721649484536,
+        "macro_f1": 0.6021934197407776,
+        "ece": 0.0751917525773196,
+        "brier": 0.05179717701030928
+      }
+    }
+  }
+}
