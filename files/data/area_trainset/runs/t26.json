@@ -1,0 +1,422 @@
+{
+  "run": "t26",
+  "language": "it",
+  "system": "un sistema che assegna la priorità alle chiamate del numero di emergenza 112",
+  "profile": "intermediate",
+  "model": "gemini-2.5-flash",
+  "answers": {
+    "metadata": {
+      "profile": "intermediate",
+      "language": "it",
+      "timestamp": "2026-10-12 12:21:26",
+      "run_id": "9690d95a16e147b1b93a84d2d407e324"
+    },
+    "responses": {
+      "1.1": {
+        "question": "Quali dati o attributi relativi agli utenti vengono raccolti oppure utilizzati dal sistema per fornire servizi, prendere decisioni o generare risultati?",
+        "answer": "Il sistema che assegna la priorità alle chiamate del 112 raccoglie e analizza principalmente l'audio della chiamata di emergenza per estrarre informazioni chiave. Utilizza anche dati di localizzazione geografica del chiamante, solitamente ottenuti dal segnale del telefono cellulare o della rete fissa. Potrebbe anche registrare l'ora della chiamata e, se disponibile, l'identificativo del chiamante. Questi dati servono a comprendere la natura e l'urgenza della situazione riportata.",
+        "followups": {
+          "0": "L'audio della chiamata è fondamentale per l'analisi vocale e la trascrizione, permettendo al sistema di identificare parole chiave e frasi che indicano la gravità dell'emergenza. La localizzazione del chiamante è cruciale per determinare la giurisdizione e l'invio delle risorse appropriate. L'ora della chiamata può aiutare a contestualizzare l'evento. Tutti questi dati combinati contribuiscono a calcolare un punteggio di priorità o a categorizzare l'emergenza per gli operatori."
+        }
+      },
+      "1.2": {
+        "question": "Che tipo di contenuti può generare, mostrare o suggerire il sistema agli utenti?",
+        "answer": {
+          "selected": [
+            "Testo",
+            "Consigli/Raccomandazioni",
+            "Dati strutturati"
+          ],
+          "other": null
+        },
+        "followups": {
+          "0": "Essendo un sistema interno, non genera contenuti 'pubblici' nel senso tradizionale. I controlli riguardano l'accuratezza e la pertinenza delle priorità assegnate e delle classificazioni. Ci sono meccanismi di validazione incrociata con l'operatore umano per assicurare che il sistema non generi interpretazioni fuorvianti o inappropriate della situazione di emergenza, che potrebbero essere dannose per l'intervento dei soccorsi."
+        }
+      },
+      "1.3": {
+        "question": "Esiste la possibilità che il sistema abbia differenze di prestazione o accuratezza tra gruppi di utenti?",
+        "answer": "Sì, ci potrebbero essere differenze tra gruppi",
+        "followups": {
+          "0": "Le differenze potrebbero emergere in base alla lingua parlata o all'accento del chiamante, in particolare per dialetti regionali o minoranze linguistiche, dove i modelli di riconoscimento vocale potrebbero essere meno performanti. Anche la qualità dell'audio della chiamata, che può variare molto, o la presenza di rumore di fondo possono influenzare l'accuratezza della trascrizione e, di conseguenza, della prioritizzazione per alcuni chiamanti."
+        }
+      },
+      "2.1": {
+        "question": "Quali tipi di dati personali, sensibili o confidenziali sono raccolti, trattati, analizzati o conservati dal sistema?",
+        "answer": {
+          "selected": [
+            "Nome o identificativo",
+            "Dati sanitari",
+            "Dati di localizzazione"
+          ],
+          "other": "Dati vocali e audio della chiamata stessa"
+        },
+        "followups": {}
+      },
+      "2.2": {
+        "question": "Quali misure di sicurezza sono adottate per proteggere dati, accessi e funzionamento del sistema?",
+        "answer": "Controlli di base (es. autenticazione, cifratura)",
+        "followups": {
+          "0": "Il sistema implementa l'autenticazione a più fattori per gli operatori e la cifratura dei dati sia in transito che a riposo. Sono anche previste sessioni di revisione interna per identificare e risolvere potenziali vulnerabilità. Finora, non sono state riscontrate problematiche significative, ma si mantiene un monitoraggio costante per garantire la conformità con gli standard di sicurezza richiesti per sistemi così critici."
+        }
+      },
+      "3.1": {
+        "question": "Il sistema produce o suggerisce informazioni agli utenti?",
+        "answer": "Sì, solo a utenti individuali",
+        "followups": {
+          "0": "Sì, sono stati implementati controlli sia a livello tecnico che procedurale. Il sistema è addestrato su un ampio dataset di chiamate reali e le sue previsioni sono costantemente monitorate e convalidate dagli operatori umani. Vi è sempre una supervisione umana finale che può correggere o sovrascrivere le priorità suggerite dal sistema, agendo da filtro per errori o ambiguità nelle informazioni generate."
+        }
+      },
+      "3.2": {
+        "question": "Il sistema personalizza l'output o filtra i contenuti mostrati agli utenti in base al loro profilo/interazioni?",
+        "answer": "No, l'output è uguale per tutti",
+        "followups": {}
+      },
+      "4.1": {
+        "question": "Il sistema potrebbe, per le sue caratteristiche, essere sfruttato per disinformazione, raccolta massiva di dati su utenti o influenzare gruppi su larga scala?",
+        "answer": "Sì",
+        "followups": {
+          "0": "Il rischio principale è legato alla raccolta massiva di dati sensibili derivanti dalle chiamate di emergenza. Un attore malintenzionato che riuscisse ad accedere ai dati grezzi o processati del sistema potrebbe disporre di un'enorme quantità di informazioni personali e sulla localizzazione dei chiamanti, potenzialmente utilizzabili per scopi di sorveglianza o profilazione non etica. Tuttavia, il sistema non è progettato per generare disinformazione né per influenzare direttamente gruppi su larga scala."
+        }
+      },
+      "4.2": {
+        "question": "Il sistema può essere vulnerabile o adattabile per attacchi informatici, sviluppo di armi autonome, software malevoli o causar danni su larga scala?",
+        "answer": "Sì",
+        "followups": {
+          "0": "I tipi di attacco più probabili includono attacchi DDoS (Distributed Denial of Service) per paralizzare il sistema e ritardare la prioritizzazione delle chiamate, o attacchi di iniezione di dati falsi per manipolare le priorità, sviando risorse o ritardando interventi critici. Anche le violazioni dei dati per accedere alle informazioni sensibili dei chiamanti sono un rischio significativo.",
+          "1": "Per mitigare questi rischi, sono stati implementati firewall avanzati, sistemi di rilevamento e prevenzione delle intrusioni (IDS/IPS). Vengono effettuati backup regolari e i dati sono cifrati sia in transito che a riposo. Il sistema opera in una rete isolata e sicura, con accessi strettamente controllati e log di audit completi per monitorare ogni attività."
+        }
+      },
+      "4.3": {
+        "question": "Potrebbe essere usato per truffe, manipolazione mirata, ricatti o attività fraudolente verso singoli o gruppi di utenti?",
+        "answer": "Sì",
+        "followups": {
+          "0": "Se i dati personali e sensibili raccolti dal sistema (come localizzazione e natura dell'emergenza) venissero compromessi, potrebbero essere usati per ricatti mirati o per creare truffe più credibili nei confronti degli individui coinvolti. Ad esempio, un criminale potrebbe usare informazioni su un'emergenza specifica per impersonare i servizi di soccorso e chiedere denaro o dati aggiuntivi con pretesti fraudolenti."
+        }
+      },
+      "5.1": {
+        "question": "In quali ambiti o situazioni tipicamente si utilizza il sistema?",
+        "answer": "Il sistema viene utilizzato esclusivamente nell'ambito dei centri operativi del numero di emergenza 112. Il suo scopo è supportare gli operatori nel processo di assegnazione della priorità alle chiamate in entrata, identificando rapidamente le situazioni più critiche e le risorse necessarie. È un caso d'uso estremamente critico che influenza direttamente la risposta a emergenze sanitarie, di sicurezza pubblica e protezione civile.",
+        "followups": {
+          "0": "Il rischio principale di un'eccessiva affidamento è che gli operatori possano perdere la loro capacità critica di valutazione o che diventino meno attenti alle sfumature che il sistema potrebbe non cogliere. Questo potrebbe portare a sottovalutare o sopravvalutare erroneamente un'emergenza, con conseguenze potenzialmente gravi sulla vita delle persone, se le raccomandazioni del sistema non fossero sempre accurate o contestualizzate."
+        }
+      },
+      "5.2": {
+        "question": "Il sistema prende decisioni automatiche che possono ridurre il controllo umano oppure influenza direttamente le scelte degli utenti?",
+        "answer": "Solo suggerisce, nessuna decisione vincolante",
+        "followups": {
+          "0": "Non ci sono casi in cui l'autonomia della persona sia compromessa in quanto il sistema fornisce solo un suggerimento di priorità. La decisione finale sull'assegnazione delle risorse e sulla gestione della chiamata spetta sempre all'operatore umano, che ha la facoltà di accettare, modificare o ignorare la raccomandazione del sistema basandosi sulla propria esperienza e su ulteriori dettagli della chiamata."
+        }
+      },
+      "6.1": {
+        "question": "Chi trae principali benefici o vantaggi dall'adozione del sistema?",
+        "answer": "I principali beneficiari sono i servizi di emergenza stessi, che ottengono un supporto significativo nell'efficiente gestione del flusso di chiamate, specialmente durante i picchi. Questo si traduce indirettamente in un vantaggio per i cittadini che richiedono assistenza, ricevendo una risposta più rapida e mirata. La pubblica amministrazione ne trae beneficio attraverso un'ottimizzazione delle risorse e una migliore reattività complessiva del sistema di emergenza.",
+        "followups": {
+          "0": "Enti come le centrali operative del 112, le forze dell'ordine, i vigili del fuoco e le organizzazioni sanitarie traggono vantaggio da una migliore coordinazione. Gli utenti, intesi come i cittadini che chiamano il 112, beneficiano di un servizio potenzialmente più rapido ed efficace. Nessun gruppo specifico è intenzionalmente escluso, ma potrebbero esserci benefici indirettamente minori per chi vive in aree con infrastrutture di emergenza già molto efficienti o per chiamate di bassa criticità dove il valore aggiunto del sistema è meno evidente."
+        }
+      },
+      "6.2": {
+        "question": "L'adozione del sistema può causare riduzione di posti di lavoro, cambiamenti nella qualità del lavoro o allargare le disuguaglianze?",
+        "answer": "Sì, può peggiorare la qualità del lavoro",
+        "followups": {
+          "0": "L'adozione del sistema non mira a ridurre i posti di lavoro degli operatori del 112, ma potrebbe modificare la natura delle loro mansioni. Potrebbe esserci un rischio di dequalificazione per alcune attività, dove l'operatore si affida eccessivamente al sistema per la decisione di prioritizzazione, riducendo l'uso delle proprie capacità di giudizio e analisi critica. Gli operatori devono essere adeguatamente formati per mantenere le loro competenze essenziali e lavorare in sinergia con l'AI."
+        }
+      },
+      "6.3": {
+        "question": "Il sistema sostituisce attività creative, culturali o professionali svolte da persone oppure omologa fortemente l'output rispetto alle capacità umane?",
+        "answer": "No, è solo di supporto",
+        "followups": {}
+      },
+      "6.4": {
+        "question": "Il sistema è stato implementato o rilasciato rapidamente per pressioni di mercato o concorrenza, senza attente valutazioni di rischio?",
+        "answer": "No, sviluppo valutato attentamente",
+        "followups": {}
+      },
+      "6.5": {
+        "question": "Esistono regole, strutture organizzative o sistemi di controllo (governance) a cui è sottoposto lo sviluppo e funzionamento del sistema?",
+        "answer": "Sì, governance formalizzata",
+        "followups": {
+          "0": "Il sistema è soggetto a una governance che include direttive e procedure operative standard definite a livello nazionale o regionale per i servizi di emergenza. La sua implementazione e il funzionamento sono supervisionati da comitati tecnici e da organismi di regolamentazione pubblica, che assicurano la conformità alle normative sulla privacy, sulla sicurezza e sull'etica nell'uso dell'AI in contesti critici."
+        }
+      },
+      "6.6": {
+        "question": "Quali risorse computazionali o energetiche richiede il sistema?",
+        "answer": "Il sistema che assegna la priorità alle chiamate del 112 richiede risorse computazionali significative per l'elaborazione del linguaggio naturale e l'analisi dei dati in tempo reale. Utilizza una combinazione di server dedicati in un datacenter sicuro e potrebbe appoggiarsi a servizi cloud privati per la scalabilità e la resilienza. È necessario hardware specializzato, come GPU, per l'addestramento e l'inferenza dei modelli AI.",
+        "followups": {
+          "0": "Le specifiche esatte delle risorse non sono pubbliche, ma si stima che i requisiti energetici siano moderati per il funzionamento quotidiano dopo la fase di addestramento. Non sono a conoscenza di politiche di compensazione ambientale specifiche legate all'uso di questo sistema AI, sebbene il centro operativo aderisca generalmente a politiche di efficienza energetica e sostenibilità dove possibile."
+        }
+      },
+      "7.1": {
+        "question": "Come vengono determinati gli obiettivi o i criteri di successo del sistema e quali misure sono presenti per evitare che operi in modo imprevisto o contrario a quanto desiderato?",
+        "answer": "Gli obiettivi del sistema sono determinati in collaborazione con gli operatori e i gestori dei servizi di emergenza, focalizzandosi sull'efficienza e l'accuratezza nella prioritizzazione delle chiamate. I criteri di successo includono la riduzione del tempo medio di gestione della chiamata e il miglioramento della coerenza nelle decisioni di priorità. Per evitare comportamenti imprevisti, il sistema è sottoposto a rigorosi test e la sua logica è costantemente monitorata.",
+        "followups": {
+          "0": "Sì, sono previsti controlli rigorosi sull'allineamento. Le prestazioni del sistema vengono valutate tramite metriche chiave, come l'accuratezza della prioritizzazione rispetto alle decisioni umane e l'impatto sui tempi di risposta. Vengono condotte revisioni periodiche per confrontare i risultati del sistema con gli obiettivi prefissati e si implementano aggiustamenti ai modelli o ai parametri per mantenere l'allineamento desiderato."
+        }
+      },
+      "7.2": {
+        "question": "Il sistema è dotato di capacità avanzate che, se non adeguatamente controllate, potrebbero teoricamente essere pericolose?",
+        "answer": "Sì, alcune capacità sono rischiose",
+        "followups": {
+          "0": "La capacità del sistema di analizzare e suggerire una priorità per chiamate che riguardano la vita o la morte è intrinsecamente rischiosa se non controllata. La limitazione chiave è che il sistema opera solo come strumento di supporto decisionale; non ha autonomia decisionale. Ogni sua raccomandazione deve essere validata e, se necessario, modificata da un operatore umano. Non può interagire direttamente con infrastrutture esterne per l'invio di soccorsi."
+        }
+      },
+      "7.3": {
+        "question": "Sono stati svolti test approfonditi di robustezza e affidabilità? Sono noti i limiti del sistema in condizioni nuove o non usuali?",
+        "answer": "Sì, con test estesi e limiti noti",
+        "followups": {
+          "0": "Sono stati eseguiti test estesi che includono scenari di carico elevato, gestione di chiamate complesse o ambigue e simulazioni di malfunzionamenti. È noto che il sistema può avere difficoltà in presenza di rumore di fondo estremo, linguaggi gergali specifici o accenti molto marcati che non sono ben rappresentati nel training data. I limiti sono documentati e gli operatori sono formati per riconoscere quando il sistema potrebbe essere meno affidabile."
+        }
+      },
+      "7.4": {
+        "question": "Gli utenti oppure chi amministra il sistema sono in grado di comprendere come vengono prese le decisioni? Esistono spiegazioni o documentazione sulle logiche adottate?",
+        "answer": "Solo alcune decisioni sono spiegabili",
+        "followups": {
+          "0": "Mentre la logica generale di assegnazione delle priorità basata su parole chiave e caratteristiche vocali è documentata e comprensibile, i modelli di machine learning sottostanti possono essere 'scatole nere' per quanto riguarda il peso esatto di ogni variabile o l'interazione complessa tra di esse. Non è sempre possibile spiegare ogni singola decisione a livello di algoritmo profondo, ma si forniscono spiegazioni a livello di fattori rilevanti identificati."
+        }
+      },
+      "7.5": {
+        "question": "Sono state analizzate o considerate implicazioni etiche, possibili diritti, tutela o benessere dell'AI, specialmente in caso di alta autonomia o complessità?",
+        "answer": "Sì, sono state valutate queste implicazioni",
+        "followups": {
+          "0": "Sono state condotte valutazioni etiche che si sono concentrate sulla prevenzione dei bias nella prioritizzazione, sulla protezione della privacy dei chiamanti e sulla responsabilità umana finale. Non si sono considerate implicazioni per il 'benessere dell'AI' in sé, data la natura assistiva e non autonoma del sistema. Le policy adottate includono un rigoroso protocollo sulla privacy e un principio di supervisione umana obbligatoria per ogni decisione critica."
+        }
+      },
+      "7.6": {
+        "question": "Il sistema interagisce o si coordina con altri sistemi AI, agenti autonomi o piattaforme automatiche?",
+        "answer": "Sì, interagisce con altri sistemi o agenti",
+        "followups": {
+          "0": "Il sistema interagisce principalmente con il sistema di gestione delle chiamate e di dispatching esistente. Dopo aver assegnato una priorità e una categoria alla chiamata, le informazioni vengono trasmesse a questi sistemi operativi, che poi attivano gli specifici protocolli di risposta e allertano le unità di soccorso appropriate. Non interagisce con altri sistemi AI autonomi esterni, ma con infrastrutture operative.",
+          "1": "Le interazioni sono gestite tramite API sicure e protocolli di comunicazione standardizzati. Sono previsti controlli di integrità dei dati per assicurare che le informazioni trasmesse siano corrette e complete. Vengono eseguiti test di integrazione regolari per verificare la compatibilità e la robustezza delle interfacce tra i sistemi, minimizzando il rischio di errori o disfunzioni a cascata."
+        }
+      }
+    }
+  },
+  "domain": {
+    "metadata": {
+      "profile": "intermediate",
+      "language": "it",
+      "timestamp": "20261012_122228",
+      "run_id": "9690d95a16e147b1b93a84d2d407e324",
+      "analysis_current_step": "domain_evaluation",
+      "analysis_next_step": "causality_evaluation",
+      "errors": []
+    },
+    "analysis": {
+      "1.1": {
+        "risks": [
+          {
+            "title": "Bias nell'analisi vocale e nella prioritizzazione",
+            "explanation": "Il sistema analizza l'audio delle chiamate per estrarre informazioni chiave. Modelli di elaborazione del linguaggio naturale (NLP) o di riconoscimento vocale possono presentare bias rispetto ad accenti, dialetti, stati emotivi (es. stress), disabilità linguistiche o barriere linguistiche. Questo può portare a interpretazioni errate della situazione di emergenza o a una prioritizzazione ingiusta delle chiamate per specifici gruppi di utenti, risultando in risposte inadeguate o ritardate.",
+            "severity": "high",
+            "severity_rationale": "La discriminazione o misrappresentazione in un sistema di emergenza 112 è estremamente critica, poiché può compromettere l'equità dell'accesso ai servizi di soccorso e portare a esiti gravi, inclusa la perdita di vite umane o lesioni gravi, per le fasce di popolazione colpite da tali bias.",
+            "mitigation": "Implementare e testare modelli AI su un set di dati vocali eterogeneo e rappresentativo di tutte le popolazioni servite. Effettuare audit regolari per identificare e mitigare bias di genere, etnici, socioeconomici o linguistici. Fornire meccanismi di override manuale e formazione continua agli operatori per riconoscere e correggere potenziali errori dovuti a bias del sistema."
+          }
+        ]
+      },
+      "1.2": {
+        "risks": [
+          {
+            "title": "Generazione involontaria di contenuti insensibili o fuorvianti per gli operatori",
+            "explanation": "Il sistema genera testo, consigli e dati strutturati per supportare gli operatori. In situazioni di emergenza complesse o sensibili, un'analisi o una sintesi errata da parte dell'AI potrebbe generare raccomandazioni o descrizioni che, pur non essendo 'tossiche' nel senso comune, risultano insensibili, fuorvianti o inappropriate per l'operatore, influenzando negativamente la loro capacità di gestire la chiamata in modo efficace e empatico.",
+            "severity": "medium",
+            "severity_rationale": "Sebbene il sistema non generi intenzionalmente contenuti tossici per il pubblico, l'insensibilità o l'imprecisione nei consigli agli operatori può aumentare il loro carico cognitivo, rallentare i tempi di risposta o portare a una gestione dell'emergenza meno appropriata, con conseguenze potenzialmente negative per i chiamanti.",
+            "mitigation": "Implementare filtri semantici e di sensibilità per i contenuti generati dal sistema. Formare il sistema su un corpus di dati che includa contesti di emergenza reali e valutati da esperti, con feedback specifico sulla appropriatezza del linguaggio. Adottare cicli di revisione umana sui suggerimenti generati per identificare e correggere eventuali inappropriezze. Incoraggiare gli operatori a fornire feedback sui consigli del sistema."
+          }
+        ]
+      },
+      "1.3": {
+        "risks": [
+          {
+            "title": "Disparità di accuratezza e prestazioni tra gruppi di utenti",
+            "explanation": "Il sistema può presentare differenze di accuratezza e prestazioni nella prioritizzazione delle chiamate tra vari gruppi di utenti. Questo può derivare da dati di addestramento non bilanciati, sensibilità a caratteristiche vocali specifiche di gruppi demografici, o variazioni nella precisione dei dati di localizzazione per aree specifiche, portando a un servizio di emergenza iniquo e meno efficace per alcuni segmenti della popolazione.",
+            "severity": "high",
+            "severity_rationale": "Le disparità di prestazione in un sistema di emergenza sono critiche, poiché possono tradursi in risposte più lente o meno adeguate per specifici gruppi, minando il principio di uguaglianza nell'accesso ai servizi essenziali e potenzialmente causando danni significativi a tali gruppi.",
+            "mitigation": "Eseguire audit regolari e test di equità per valutare le prestazioni del sistema su diverse categorie demografiche (età, genere, etnia, lingua, ubicazione geografica). Adottare tecniche di mitigazione dei bias nei modelli AI per migliorare l'equità delle prestazioni. Implementare un robusto sistema di monitoraggio post-implementazione per rilevare e correggere prontamente eventuali disparità emergenti nel mondo reale."
+          }
+        ]
+      },
+      "2.1": {
+        "risks": [
+          {
+            "title": "Compromissione della privacy e sicurezza dei dati sensibili",
+            "explanation": "Il sistema raccoglie, elabora e conserva dati altamente sensibili come nome/identificativo, dati sanitari, dati di localizzazione e registrazioni audio complete delle chiamate di emergenza. La compromissione di questi dati, attraverso violazioni della sicurezza, accesso non autorizzato o inferenza non voluta, può portare a gravi violazioni della privacy, ricatti o danni personali e reputazionali per gli individui coinvolti.",
+            "severity": "high",
+            "severity_rationale": "La natura dei dati raccolti (salute, localizzazione, identificativi in un contesto di emergenza) li rende estremamente sensibili. Una violazione avrebbe conseguenze devastanti per la privacy degli individui e la fiducia nel servizio pubblico.",
+            "mitigation": "Adottare misure di sicurezza avanzate oltre i controlli di base, inclusa la crittografia end-to-end, la tokenizzazione dei dati sensibili, l'anonimizzazione o la pseudonimizzazione dove possibile. Implementare controlli di accesso granulari basati sul principio del minimo privilegio. Effettuare audit di sicurezza regolari e penetration test. Mantenere la conformità con normative sulla privacy come il GDPR e sviluppare un robusto piano di risposta agli incidenti di sicurezza."
+          }
+        ]
+      },
+      "2.2": {
+        "risks": [
+          {
+            "title": "Vulnerabilità di sicurezza del sistema AI a attacchi avanzati",
+            "explanation": "Sebbene siano implementati controlli di sicurezza di base (autenticazione, cifratura), un sistema AI che gestisce dati così critici potrebbe essere soggetto a vulnerabilità più sofisticate specifiche per l'AI, come attacchi avversari, data poisoning, attacchi di inferenza del modello o evasion attacks. Questi attacchi potrebbero manipolare i suggerimenti del sistema, compromettere l'integrità dei dati o esporre informazioni sensibili, superando i controlli di sicurezza tradizionali.",
+            "severity": "medium",
+            "severity_rationale": "La presenza di controlli di sicurezza di base riduce il rischio generico, ma la specificità dell'AI e la criticità del contesto (emergenze) rendono il sistema un bersaglio attraente per attacchi sofisticati che potrebbero non essere mitigati dalle sole misure fondamentali, con il potenziale di gravi interruzioni o danni.",
+            "mitigation": "Integrare misure di sicurezza specifiche per l'AI, come la robustezza avversaria per i modelli, il monitoraggio dell'integrità dei dati di input, l'analisi del comportamento del modello per anomalie e l'uso di tecniche di privacy-preserving AI. Implementare un Security Information and Event Management (SIEM) per il monitoraggio continuo. Formare gli sviluppatori e gli operatori sulle minacce di sicurezza AI e sulle migliori pratiche."
+          }
+        ]
+      },
+      "3.1": {
+        "risks": [
+          {
+            "title": "Generazione di informazioni false o fuorvianti agli operatori",
+            "explanation": "Il sistema genera suggerimenti (testo, raccomandazioni, dati strutturati) per gli operatori del 112. In un contesto di emergenza, se questi suggerimenti sono imprecisi, fuorvianti o erronei (ad esempio, una prioritizzazione scorretta, un'errata interpretazione della gravità o la raccomandazione di risorse inappropriate), possono portare a decisioni umane sbagliate, ritardi nella risposta o allocazione inefficiente delle risorse, con conseguenze potenzialmente fatali.",
+            "severity": "high",
+            "severity_rationale": "L'accuratezza delle informazioni fornite in un contesto di emergenza è di vitale importanza. Errori o imprecisioni possono avere un impatto diretto sulla capacità di salvare vite e mitigare danni, rendendo il rischio estremamente alto.",
+            "mitigation": "Implementare rigorosi processi di verifica e validazione per tutti gli output del sistema, inclusi test di accuratezza in scenari reali e simulati. Garantire che gli operatori ricevano una formazione completa su come interpretare e convalidare i suggerimenti dell'AI. Integrare meccanismi di feedback degli operatori per correggere rapidamente le fonti di errore. Utilizzare modelli AI con elevata affidabilità e confidenza negli output critici."
+          }
+        ]
+      },
+      "3.2": {
+        "risks": []
+      },
+      "4.1": {
+        "risks": [
+          {
+            "title": "Sfruttamento per sorveglianza di massa o influenza su larga scala",
+            "explanation": "Il sistema, per le sue capacità di elaborare grandi volumi di dati vocali, di localizzazione e identificativi in tempo reale da chiamate di emergenza, potrebbe essere sfruttato da attori malevoli. Questo potrebbe avvenire per condurre sorveglianza di massa, raccogliendo informazioni sensibili su individui o gruppi, o per influenzare la risposta alle emergenze su larga scala, ad esempio deviando risorse o de-prioritizzando intenzionalmente chiamate da specifiche aree o comunità.",
+            "severity": "high",
+            "severity_rationale": "Il potenziale per la sorveglianza di massa e la manipolazione di un servizio critico come il 112 da parte di attori malevoli rappresenta una minaccia grave alla sicurezza nazionale, alla privacy dei cittadini e alla stabilità sociale, con conseguenze sistemiche.",
+            "mitigation": "Rafforzare le misure di sicurezza contro l'accesso non autorizzato e la compromissione del sistema, come descritto in 2.2. Implementare robusti controlli di integrità dei dati e monitoraggio delle anomalie per rilevare tentativi di manipolazione o deviazione delle risorse. Stabilire protocolli di sicurezza operativi e una chiara segregazione dei compiti. Effettuare valutazioni delle minacce e piani di risposta specifici per scenari di sorveglianza e influenza."
+          }
+        ]
+      },
+      "4.2": {
+        "risks": [
+          {
+            "title": "Vulnerabilità ad attacchi informatici con potenziale di danni su larga scala",
+            "explanation": "Il sistema, data la sua natura critica nella gestione delle emergenze, è un obiettivo ad alto valore per attacchi informatici. Una compromissione riuscita (es. ransomware, sabotaggio dei dati, attacchi di negazione del servizio) potrebbe paralizzare l'intero sistema di risposta alle emergenze, dirottare le risorse critiche, alterare le priorità delle chiamate o diffondere il caos, causando danni massivi alla sicurezza pubblica e perdite di vite umane.",
+            "severity": "high",
+            "severity_rationale": "Il potenziale impatto di un attacco informatico su un sistema di emergenza è catastrofico, con la possibilità di causare danni fisici diretti e diffusi alla popolazione, rendendo il rischio di massima gravità.",
+            "mitigation": "Adottare un'architettura di sicurezza a strati (defense-in-depth), inclusa la microsegmentazione della rete, sistemi di rilevamento e prevenzione delle intrusioni avanzati (IDS/IPS), e un robusto sistema di backup e ripristino d'emergenza. Condurre regolarmente esercitazioni di simulazione di attacchi cyber per testare la resilienza del sistema e la prontezza della risposta. Formare continuamente il personale sulla cybersecurity e sulla gestione delle crisi."
+          }
+        ]
+      },
+      "4.3": {
+        "risks": [
+          {
+            "title": "Sfruttamento per frodi, manipolazione mirata o ricatti",
+            "explanation": "Con l'accesso a dati sensibili e in tempo reale (identità, localizzazione, condizioni di salute, stato di distress) provenienti dalle chiamate di emergenza, un sistema compromesso potrebbe essere utilizzato per condurre frodi altamente mirate, ricatti o manipolazione contro individui o gruppi vulnerabili che hanno richiesto aiuto. Ad esempio, attori malevoli potrebbero intercettare informazioni per contattare le vittime con false offerte di aiuto o richieste di riscatto.",
+            "severity": "high",
+            "severity_rationale": "La capacità di sfruttare informazioni acquisite da chiamate di emergenza per attività criminali rappresenta un rischio estremo per la sicurezza personale e finanziaria degli individui, sfruttando la loro vulnerabilità in momenti critici.",
+            "mitigation": "Implementare forti controlli di accesso ai dati e crittografia per i dati a riposo e in transito. Adottare tecniche di 'data masking' o minimizzazione dei dati quando possibile. Monitorare attivamente gli accessi e l'uso dei dati per rilevare schemi anomali. Stabilire politiche rigorose per la gestione degli incidenti e la notifica delle violazioni dei dati."
+          }
+        ]
+      },
+      "5.1": {
+        "risks": [
+          {
+            "title": "Eccessiva dipendenza degli operatori dalle raccomandazioni dell'AI",
+            "explanation": "In un contesto di emergenza ad alta pressione, gli operatori potrebbero sviluppare un'eccessiva dipendenza dai suggerimenti del sistema AI per la prioritizzazione delle chiamate. Questo potrebbe portare a una riduzione del pensiero critico, alla negligenza di informazioni contestuali importanti non elaborate dall'AI, o alla mancata identificazione di errori del sistema, con conseguenti decisioni subottimali o pericolose nella gestione delle emergenze.",
+            "severity": "high",
+            "severity_rationale": "L'over-reliance in un sistema di emergenza è estremamente pericolosa, poiché può compromettere direttamente la qualità delle decisioni umane e la capacità di rispondere efficacemente, con potenziali esiti fatali o gravi danni.",
+            "mitigation": "Progettare interfacce utente che promuovano la collaborazione uomo-AI piuttosto che la sostituzione. Implementare meccanismi che richiedano agli operatori di giustificare o confermare le loro decisioni, specialmente quando si discostano dai suggerimenti dell'AI. Fornire una formazione approfondita sulla comprensione dei limiti dell'AI e sull'importanza del giudizio umano. Effettuare simulazioni e scenari per addestrare gli operatori a gestire situazioni in cui l'AI potrebbe essere in errore."
+          }
+        ]
+      },
+      "5.2": {
+        "risks": [
+          {
+            "title": "Influenza implicita sulla autonomia decisionale degli operatori",
+            "explanation": "Sebbene il sistema fornisca solo suggerimenti non vincolanti, la sua presenza in un ambiente ad alta pressione come un centro di emergenza può portare a una dipendenza cognitiva implicita. Gli operatori, a causa del carico di lavoro, della stanchezza o della percezione dell'autorità dell'AI, potrebbero accettare i suggerimenti del sistema senza un'adeguata valutazione critica, riducendo sottilmente la loro autonomia decisionale e la capacità di agire in modo indipendente.",
+            "severity": "medium",
+            "severity_rationale": "Una riduzione sottile, ma persistente, dell'autonomia decisionale degli operatori può portare a una minore capacità di adattamento a situazioni inusuali o a errori non rilevati, compromettendo la qualità del servizio e la responsabilità umana, anche se le decisioni non sono formalmente vincolanti.",
+            "mitigation": "Promuovere una cultura organizzativa che valorizzi il giudizio e l'expertise umano sull'output dell'AI. Progettare il sistema in modo che la spiegabilità delle raccomandazioni sia chiara e immediata, permettendo agli operatori di comprendere rapidamente la logica. Implementare sessioni di debriefing e analisi dei casi per esaminare le decisioni prese e rafforzare il ruolo critico dell'operatore. Introdurre intervalli di valutazione della performance che non penalizzino la deviazione giustificata dai suggerimenti dell'AI."
+          }
+        ]
+      },
+      "6.1": {
+        "risks": [
+          {
+            "title": "Centralizzazione del controllo tecnologico e dipendenza",
+            "explanation": "L'adozione di un sistema AI critico per i servizi di emergenza, sebbene benefici per l'efficienza, può portare a una centralizzazione del controllo e delle conoscenze tecniche nelle mani di pochi fornitori o di un'unica entità operativa. Questo può creare una forte dipendenza tecnologica, limitare la flessibilità futura e, in assenza di adeguata trasparenza, potenzialmente concentrare il potere decisionale o l'influenza su un'infrastruttura pubblica essenziale, anche se i benefici sono ampiamente distribuiti.",
+            "severity": "medium",
+            "severity_rationale": "La dipendenza da una tecnologia proprietaria o da un singolo attore per un servizio di emergenza critico può generare rischi a lungo termine in termini di costi, innovazione, sicurezza e autonomia operativa, influenzando indirettamente la distribuzione dei benefici e il controllo pubblico.",
+            "mitigation": "Promuovere l'adozione di standard aperti e interoperabilità per evitare il 'vendor lock-in'. Assicurare la disponibilità di documentazione tecnica completa e formazione del personale pubblico per ridurre la dipendenza esterna. Implementare rigorosi processi di appalto con clausole che garantiscano il controllo e l'accesso ai dati e ai modelli. Valutare periodicamente i rischi legati alla centralizzazione e pianificare strategie di diversificazione dei fornitori o di sviluppo di capacità interne."
+          }
+        ]
+      },
+      "6.2": {
+        "risks": [
+          {
+            "title": "Peggioramento della qualità del lavoro degli operatori",
+            "explanation": "L'integrazione del sistema AI può peggiorare la qualità del lavoro degli operatori del 112. Questo potrebbe manifestarsi come aumento dello stress dovuto alla necessità di interagire con un sistema complesso, un de-skilling per la riduzione delle capacità decisionali autonome, un maggiore monitoraggio della performance basato sulle metriche AI o una monotonia crescente se il sistema automatizza le parti più stimolanti del lavoro, con un impatto negativo sulla soddisfazione e sul benessere professionale.",
+            "severity": "medium",
+            "severity_rationale": "Il peggioramento della qualità del lavoro può portare a burnout, demotivazione, turnover del personale e, a lungo termine, a una diminuzione dell'efficacia operativa e della qualità del servizio, rendendolo un rischio significativo per le risorse umane.",
+            "mitigation": "Progettare l'integrazione AI con un approccio 'human-in-the-loop' che valorizzi e potenzi le competenze umane, anziché sostituirle. Offrire formazione e riqualificazione per supportare gli operatori nell'adattamento ai nuovi ruoli e tecnologie. Implementare programmi di benessere sul posto di lavoro per mitigare lo stress e il burnout. Coinvolgere gli operatori nella progettazione e valutazione del sistema per garantire che soddisfi le loro esigenze e migliori l'esperienza lavorativa."
+          }
+        ]
+      },
+      "6.3": {
+        "risks": []
+      },
+      "6.4": {
+        "risks": []
+      },
+      "6.5": {
+        "risks": [
+          {
+            "title": "Insufficienza o inefficacia della governance formalizzata",
+            "explanation": "Nonostante l'esistenza di una governance formalizzata per lo sviluppo e il funzionamento del sistema, la sua efficacia può essere compromessa. Potrebbero esserci lacune nella definizione di responsabilità, processi di supervisione inadeguati, mancanza di competenze specifiche per l'AI negli organi di governance, o incapacità di adattare le regole esistenti alle nuove sfide poste dalla tecnologia AI. Questo potrebbe portare a decisioni subottimali o alla mancata gestione di rischi emergenti.",
+            "severity": "medium",
+            "severity_rationale": "Una governance inadeguata, anche se formalmente in atto, può portare a una gestione insufficiente dei rischi, mancanza di responsabilità e decisioni errate in un sistema di emergenza critico, influenzando l'affidabilità e la sicurezza complessiva.",
+            "mitigation": "Garantire che la governance includa esperti di AI ed etica. Stabilire chiare linee di responsabilità e meccanismi di audit interni ed esterni. Revisionare e aggiornare periodicamente le politiche di governance per affrontare i rischi emergenti e l'evoluzione della tecnologia AI. Implementare un quadro di valutazione dell'impatto etico continuo per il sistema."
+          }
+        ]
+      },
+      "6.6": {
+        "risks": [
+          {
+            "title": "Impatto ambientale dovuto all'elevato consumo energetico",
+            "explanation": "Il sistema richiede risorse computazionali significative, inclusi server dedicati, datacenter e hardware specializzato come GPU, per l'elaborazione del linguaggio naturale e l'analisi dei dati in tempo reale. Questo si traduce in un notevole consumo energetico, contribuendo all'impronta di carbonio e all'impatto ambientale legato alla produzione di energia e al raffreddamento delle infrastrutture.",
+            "severity": "medium",
+            "severity_rationale": "L'elevato consumo energetico dei sistemi AI contribuisce al cambiamento climatico e all'esaurimento delle risorse, un problema globale che richiede attenzione, anche se l'impatto diretto di un singolo sistema può sembrare contenuto, la somma degli impatti è significativa.",
+            "mitigation": "Ottimizzare l'efficienza energetica dei modelli AI e dell'infrastruttura hardware (es. scegliere GPU a basso consumo, ottimizzare algoritmi). Utilizzare data center alimentati da fonti di energia rinnovabile. Implementare politiche di 'green IT' e monitorare regolarmente il consumo energetico del sistema. Esplorare l'uso di tecniche di AI 'efficiente dal punto di vista energetico' (es. compressione di modelli, inferenza su hardware dedicato a basso consumo)."
+          }
+        ]
+      },
+      "7.1": {
+        "risks": []
+      },
+      "7.2": {
+        "risks": [
+          {
+            "title": "Capacità avanzate del sistema che, se mal controllate, possono essere pericolose",
+            "explanation": "Il sistema possiede capacità avanzate di analisi del linguaggio naturale, elaborazione in tempo reale e prioritizzazione basata su inferenze complesse. Se queste capacità non sono adeguatamente controllate, monitorate o se il sistema subisce malfunzionamenti, potrebbe generare raccomandazioni errate che aggravano le emergenze, dirottano risorse vitali in modo improprio o addirittura ignorano chiamate critiche, portando a esiti pericolosi per i cittadini.",
+            "severity": "high",
+            "severity_rationale": "La natura critica del servizio 112 implica che qualsiasi malfunzionamento o controllo inadeguato delle capacità avanzate dell'AI può avere conseguenze dirette e gravi sulla vita e sulla sicurezza delle persone, giustificando una severità alta.",
+            "mitigation": "Implementare un robusto quadro di test e validazione che includa test di stress e scenari 'what-if' per le capacità avanzate. Definire 'kill switch' o meccanismi di disattivazione sicura per il sistema in caso di comportamento imprevisto. Garantire un'adeguata supervisione umana e la capacità di override manuale per tutte le decisioni critiche. Sviluppare un piano di gestione delle crisi per affrontare malfunzionamenti gravi del sistema."
+          }
+        ]
+      },
+      "7.3": {
+        "risks": []
+      },
+      "7.4": {
+        "risks": [
+          {
+            "title": "Mancanza di trasparenza o interpretabilità per alcune decisioni",
+            "explanation": "Solo alcune delle decisioni o raccomandazioni del sistema sono spiegabili. Questa 'black box' per una parte dell'operato del sistema impedisce agli operatori e agli amministratori di comprendere pienamente la logica sottostante a tutte le prioritizzazioni o suggerimenti. In un contesto di emergenza, l'incapacità di capire 'perché' una decisione è stata presa rende difficile la verifica umana, l'identificazione degli errori, il miglioramento continuo e l'instaurazione di fiducia nel sistema.",
+            "severity": "high",
+            "severity_rationale": "La mancanza di interpretabilità in un sistema critico come il 112 è un rischio elevato. Gli operatori devono poter convalidare e fidarsi delle raccomandazioni dell'AI, specialmente quando le decisioni hanno implicazioni vitali. L'opacità può portare a errori non rilevati e a una diminuzione della responsabilità.",
+            "mitigation": "Adottare tecniche di AI interpretabile (XAI) per aumentare la spiegabilità delle decisioni, anche per i modelli più complessi. Fornire agli operatori strumenti e interfacce che mostrino i fattori più influenti nelle decisioni del sistema. Creare documentazione dettagliata sulle logiche algoritmiche e sulle ipotesi del modello. Implementare processi di 'human-in-the-loop' per rivedere e validare le decisioni meno trasparenti, imparando da esse per migliorare l'interpretabilità futura."
+          }
+        ]
+      },
+      "7.5": {
+        "risks": []
+      },
+      "7.6": {
+        "risks": [
+          {
+            "title": "Rischi di complessità e fallimenti a cascata nell'interazione multi-agente",
+            "explanation": "Il sistema interagisce e si coordina con altri sistemi AI o piattaforme automatiche. Questa interconnessione introduce una complessità maggiore, aumentando il rischio di errori di comunicazione, incompatibilità tra sistemi, vulnerabilità nelle interfacce o fallimenti a cascata dove un problema in un sistema si propaga ad altri, compromettendo l'intera catena di risposta all'emergenza.",
+            "severity": "high",
+            "severity_rationale": "In un sistema di emergenza, l'interdipendenza tra più sistemi AI significa che un guasto in un componente può avere effetti a catena imprevedibili e gravi sull'intero ecosistema di risposta, con potenziali conseguenze critiche per la sicurezza pubblica.",
+            "mitigation": "Progettare interfacce di sistema robuste e standardizzate per garantire compatibilità e integrità dei dati. Implementare test di integrazione estesi e simulazioni multi-sistema per identificare e risolvere potenziali punti di fallimento. Sviluppare protocolli chiari per la gestione degli errori e il rollback in caso di problemi. Garantire ridondanza e meccanismi di isolamento per prevenire la propagazione dei guasti tra i sistemi interconnessi."
+          }
+        ]
+      }
+    }
+  }
+}
