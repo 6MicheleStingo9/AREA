@@ -16,7 +16,9 @@ Writes training/data/:
   variants are trained on the first, compared and calibrated on the second;
 - area_fit.jsonl and area_val.jsonl: the AREA training risks (files/data/area_trainset/, labelled
   with the protocol of its README), split by whole runs: six runs (three per language, drawn with
-  a fixed seed) for validation and calibration, the others for training;
+  a fixed seed) for validation and calibration, the others for training. Entries in which the
+  domain analyzer states there is no significant risk (their title says so) are left out: they are
+  not risks, and their labels (`other` on every axis) would teach that `other` means no risk;
 - mit_eval.jsonl and area_test.jsonl: the two test sets in the same format, with their gold
   labels; they are for evaluation only, never for training, selection or calibration.
 
@@ -26,6 +28,7 @@ Usage (from the project root):
 
 import json
 import random
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
@@ -41,6 +44,8 @@ VAL_SEED = 0
 # Validation runs of the AREA training risks: three English and three Italian runs of the 28
 # planned in data_prep/area_trainset.py, drawn with random.Random(0).sample(runs, 3) per language.
 AREA_VAL_RUNS = ("t13", "t14", "t25", "t26", "t27", "t28")
+# Titles of the domain analyzer's "no significant risk" entries (Italian or English)
+NO_RISK = re.compile(r"^\s*(nessun rischio|no (significant |relevant )?risk)", re.IGNORECASE)
 
 QUESTIONS: Dict[str, Dict[str, Any]] = {
     "entity": {
@@ -129,6 +134,9 @@ def main() -> None:
     if (AREA_TRAIN / "labels.jsonl").exists():
         labels = {g["id"]: g for g in _read(AREA_TRAIN / "labels.jsonl")}
         risks = [r for r in _read(AREA_TRAIN / "risks.jsonl") if r["id"] in labels]
+        no_risk = [r for r in risks if NO_RISK.match(r["title"])]
+        risks = [r for r in risks if not NO_RISK.match(r["title"])]
+        print(f"AREA training risks: {len(no_risk)} 'no significant risk' entries left out")
         area_rows = lambda keep: [laya_row(r["id"], r["title"], r["text"], labels[r["id"]], with_name(r["subdomain"])) for r in risks if keep(r["run"])]
         files += [("area_fit", area_rows(lambda run: run not in AREA_VAL_RUNS)), ("area_val", area_rows(lambda run: run in AREA_VAL_RUNS))]
     else:

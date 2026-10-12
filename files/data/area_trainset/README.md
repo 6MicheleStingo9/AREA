@@ -44,4 +44,8 @@ python -m data_prep.area_trainset disagreements   # agreement, kappa, the disput
 python -m data_prep.area_trainset merge           # labels.jsonl
 ```
 
+Six entries of run t28 are not risks: the domain analyzer states, in their title, that the subdomain
+carries no significant risk ("Nessun rischio significativo..."). They stay in `risks.jsonl` and
+`labels.jsonl` as produced, and `training/build_laya_data.py` leaves them out of the training files.
+
 The risks are derived from Gemini outputs on simulated questionnaires; they describe no real system.

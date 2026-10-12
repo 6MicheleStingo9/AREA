@@ -15,3 +15,11 @@ def test_split_by_group_keeps_each_group_on_one_side():
     group = lambda r: ".".join(r["id"].split(".")[:2])
     assert {group(r) for r in fit}.isdisjoint(group(r) for r in val)
     assert len(fit) + len(val) == len(rows) and len(val) >= 0.15 * len(rows)
+
+
+def test_no_risk_entries_are_recognised_by_their_title():
+    from training.build_laya_data import NO_RISK
+
+    assert NO_RISK.match("Nessun rischio significativo di disinformazione")
+    assert NO_RISK.match("No significant risk of toxic content")
+    assert not NO_RISK.match("Risk of no human oversight") and not NO_RISK.match("Rischio di nessun controllo umano")
