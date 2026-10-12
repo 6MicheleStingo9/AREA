@@ -65,7 +65,7 @@ AREA is built as a modular, multi-agent system orchestrated via [LangGraph](http
 - **Orchestration:** LangGraph manages the execution flow, coordinating the sequence and data exchange between agents.
 - **Agents:**
   - **Domain Risk Analyzer Agent (LLM-based):** Assesses risks for each questionnaire answer using the Domain Taxonomy, leveraging a large language model for reasoning and classification.
-  - **Causality Analyzer Agent (LLM-based):** Determines the underlying causes of each risk (Entity, Intent, Timing) using an LLM for nuanced analysis.
+  - **Causality Analyzer Agent (local classifier):** Determines the underlying causes of each risk (Entity, Intent, Timing) with Laya, a small model fine-tuned for this task that runs on the CPU and gives a calibrated confidence per label; an LLM can do it instead ([Causal classification](#causal-classification-laya)).
   - **Heuristic Analyzer Agent (Prolog-based):** Applies expert rules for advanced risk inference.
   - **Report Generator Agent (LLM-based):** Synthesizes results and generates the final HTML report, using an LLM for natural language generation and summary.
 
@@ -75,7 +75,7 @@ AREA is built as a modular, multi-agent system orchestrated via [LangGraph](http
 
 **Key points:**
 
-- Domain, Causality and (partially) Report generation steps are powered by LLMs.
+- Domain and (partially) Report generation steps are powered by LLMs; the causality step runs locally, or with the LLM if configured.
 - The agent-based design allows for easy extension and integration of new analysis modules.
 - LangGraph ensures robust, maintainable, and transparent orchestration of the entire workflow.
 
@@ -104,7 +104,8 @@ The AREA repository is organized as follows:
   - `translations.py`: UI translations and the `t()` helper
 - `utils/` — Common models and utility functions
 - `Dockerfile`, `docker-compose.yml`, `.dockerignore` — containerization
-- `requirements.txt` — Python dependencies
+- `requirements.txt` — Python dependencies; `requirements-laya.txt` — the local causal classifier (Laya)
+- `training/` — fine-tuning of the causal classifier (checkpoints in `training/checkpoints/`, not versioned)
 - `README.md` — Project documentation
 - `.env` — API key and model configuration (not versioned)
 
@@ -130,9 +131,10 @@ GEMINI_MODEL=gemini-2.5-flash
 
 - Replace `your_api_key_here` with your API key from [Google AI Studio](https://aistudio.google.com/).
 - You can set `GEMINI_MODEL` to the specific Gemini model you want to use (e.g., `gemini-2.5-flash`).
-- Each assessment makes 3 LLM requests (domain, causality, report). The Gemini API free tier has a
-  daily request quota per model (20 for `gemini-2.5-flash` as of October 2026), so it allows only a
-  few assessments a day; past the quota, requests fail with `429 RESOURCE_EXHAUSTED` until it resets.
+- Each assessment makes 2 LLM requests (domain, report) with the local causal classifier, 3 with
+  `CAUSALITY_BACKEND=llm`. The Gemini API free tier has a daily request quota per model (20 for
+  `gemini-2.5-flash` as of October 2026), so it allows about ten assessments a day; past the quota,
+  requests fail with `429 RESOURCE_EXHAUSTED` until it resets.
 
 > Get your API key and see available models at: https://aistudio.google.com/
 
@@ -144,7 +146,35 @@ cd area
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+# the local causal classifier (Laya): CPU-only PyTorch first, then the rest
+pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1
+pip install -r requirements-laya.txt
 ```
+
+### Causal classification (Laya)
+
+The causality step labels each risk with `laya-causal-v4`, a [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual)
+checkpoint fine-tuned for this task ([Training (Laya)](#training-laya)), on the CPU and without API calls.
+On the AREA test set it is at least on par with the Gemini pipeline on every axis, in accuracy and
+macro-F1, and better on entity, intent macro-F1 and timing accuracy
+([comparison](evaluation/results/comparison.md)).
+
+- The checkpoint is read from `training/checkpoints/laya-causal-v4` (615 MB, not versioned).
+  `LAYA_MODEL` points to another directory or to a Hugging Face id, `LAYA_REVISION` pins its revision.
+- The model loads once per process (6–9 s) and labels a risk in about 2 s on a laptop CPU (i7-1255U,
+  1.4–2.6 s): under a minute for an assessment of 20 risks, in Docker too.
+- Laya writes no text: in the report each label comes with the MIT definition of its value and Laya's
+  confidence, the calibrated probability of that value. Labels below 90% confidence are marked ⚠, to
+  be checked, with the next most likely value. The threshold was chosen on AREA runs held out from
+  training (the test set was not used): there, the labels below it were 59% correct, the others 94%.
+  On the test set, measured once afterwards, 4.6% of the labels are flagged and half of them are
+  wrong, against 11% of the others. Most errors are confident ones, so the flag points out doubtful
+  labels but does not catch every mistake. `LAYA_REVIEW_THRESHOLD` changes it.
+- The causality step gives exactly the labels that were evaluated: on the 145 test risks, all 435
+  labels match those scored in `evaluation/results/` (computed on a GPU), with probabilities within 0.01.
+- `CAUSALITY_BACKEND=llm` has the LLM label the causality instead, with rationales it writes (one more
+  request per assessment). Without the checkpoint or its packages, the default backend stops the run
+  with an error that says how to fix it: it does not switch to the LLM on its own.
 
 ---
 
@@ -161,6 +191,9 @@ docker compose up --build
 ```
 
 The application is available at `http://localhost:8000`.
+The image includes CPU-only PyTorch for the causal classifier, but not its checkpoint: `./training`
+is mounted read-only, so the container uses `training/checkpoints/laya-causal-v4` from the host
+([Causal classification](#causal-classification-laya)).
 Answers and reports are persisted in `./files/` via a bind mount. The container runs as
 UID/GID 1000 so the files stay editable on the host; if your user has different ids, set
 `UID` and `GID` in `.env` (e.g. `UID=1001`).
@@ -170,6 +203,8 @@ UID/GID 1000 so the files stay editable on the host; if your user has different 
 ```env
 GOOGLE_API_KEY=your_api_key_here
 GEMINI_MODEL=gemini-2.5-flash
+# Optional: the LLM labels the causality instead of the local Laya model
+# CAUSALITY_BACKEND=llm
 ```
 
 ---
@@ -211,7 +246,7 @@ Each agent can be run individually from the terminal for testing or advanced ana
   ```
 
 - **Causality Analysis (Causality Analyzer)**  
-   Analyze a domain analysis file:
+   Analyze a domain analysis file, with the configured backend (`CAUSALITY_BACKEND`):
 
   ```bash
   python -m agents.causality_analyzer.causality_risk_analyzer_agent domain_analysis_12345.json
@@ -278,9 +313,10 @@ python -m evaluation.compare                          # every run side by side, 
 
 ### Training (Laya)
 
-The causal classifier is being re-engineered around [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual)
+The causal classifier is [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual)
 (Apache-2.0, 322M parameters, typed decisions with calibrated probabilities), fine-tuned on the MIT training
-split. Training has its own environment:
+split and on risks written by AREA; the checkpoint chosen, `laya-causal-v4`, is the one the causality step
+uses. Training has its own environment:
 
 ```bash
 python -m venv .venv-train
@@ -324,8 +360,8 @@ The analysis workflow in AREA consists of the following steps:
 2. **Domain Risk Analysis (LLM Agent)**
    - For each answer, a dedicated agent powered by a large language model evaluates the associated risk using the Domain Taxonomy.
    - This phase identifies which types of hazards (e.g., discrimination, privacy, misinformation) are most relevant to the described AI system.
-3. **Causality Analysis (LLM Agent)**
-   - Each identified risk is further analyzed by an LLM-based agent to determine its underlying causes using the Causal Taxonomy (Entity, Intent, Timing).
+3. **Causality Analysis (local classifier)**
+   - Each identified risk is classified by Laya, a fine-tuned local model, along the Causal Taxonomy (Entity, Intent, Timing), with a confidence per label; uncertain labels are marked for review in the report. With `CAUSALITY_BACKEND=llm` an LLM does it instead.
    - This step helps clarify whether the risk is due to human actions, AI behavior, or other factors, and whether it is intentional or accidental.
 4. **Heuristic Analysis (Prolog-based Agent)**
    - After the domain and causality analyses, AREA performs a heuristic risk analysis using a set of expert rules implemented in Prolog. This phase is crucial for several reasons:

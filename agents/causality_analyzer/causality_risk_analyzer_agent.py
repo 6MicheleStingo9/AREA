@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Optional, TypedDict
 from langchain.messages import AnyMessage
 from langgraph.graph import StateGraph
 
+from agents.causality_analyzer import laya_classifier
 from agents.causality_analyzer.prompts import (
     CAUSALITY_JSON_SCHEMA,
     CAUSALITY_SYSTEM_PROMPT,
@@ -21,6 +22,59 @@ _logger = create_logger("causality_analyzer")
 # Setup paths
 CURRENT_DIR = Path(__file__).parent
 CAUSALITY_DIR = Path(__file__).parent.parent.parent / "files" / "analysis" / "causality"
+
+# Who labels the causality (CAUSALITY_BACKEND): "laya", the local fine-tuned classifier
+# (laya_classifier.py, the default), or "llm", the configured LLM with the prompts in prompts.py.
+BACKENDS = ("laya", "llm")
+
+# Laya writes no text: each label gets the MIT definition of its value and the confidence; a
+# label below the review threshold says so and names the next most likely value.
+_LAYA_TEXT = {
+    "en": {
+        "definitions": {ax: q["criteria"] for ax, q in laya_classifier.QUESTIONS.items()},
+        "labels": {
+            "entity": {"ai": "AI", "human": "Human", "other": "Other"},
+            "intent": {"intentional": "Intentional", "unintentional": "Unintentional", "other": "Other"},
+            "timing": {"pre-deployment": "Pre-deployment", "post-deployment": "Post-deployment", "other": "Other"},
+        },
+        "assigned": "Label assigned by the local Laya model with {pct}% confidence.",
+        "review": "Below the {threshold}% review threshold: check this label. Next most likely: {label} ({pct}%).",
+    },
+    "it": {
+        "definitions": {
+            "entity": {
+                "ai": "Il rischio è causato da una decisione o da un'azione di un sistema di IA",
+                "human": "Il rischio è causato da una decisione o da un'azione di esseri umani",
+                "other": "Il rischio ha un'altra causa, oppure la causa è ambigua",
+            },
+            "intent": {
+                "intentional": "Il rischio è un esito atteso del perseguimento di un obiettivo",
+                "unintentional": "Il rischio è un esito inatteso del perseguimento di un obiettivo",
+                "other": "Il rischio è presentato senza specificare chiaramente l'intenzionalità",
+            },
+            "timing": {
+                "pre-deployment": "Il rischio si manifesta prima del rilascio del sistema di IA",
+                "post-deployment": "Il rischio si manifesta dopo l'addestramento e il rilascio del modello",
+                "other": "Il rischio è presentato senza indicare chiaramente quando si manifesta",
+            },
+        },
+        "labels": {
+            "entity": {"ai": "AI", "human": "Umano", "other": "Altro"},
+            "intent": {"intentional": "Intenzionale", "unintentional": "Non intenzionale", "other": "Altro"},
+            "timing": {"pre-deployment": "Pre-deployment", "post-deployment": "Post-deployment", "other": "Altro"},
+        },
+        "assigned": "Etichetta assegnata dal modello locale Laya con confidenza {pct}%.",
+        "review": "Sotto la soglia di revisione del {threshold}%: da verificare. Seconda ipotesi: {label} ({pct}%).",
+    },
+}
+
+
+def causality_backend() -> str:
+    """The configured backend (CAUSALITY_BACKEND, default "laya")."""
+    backend = (os.getenv("CAUSALITY_BACKEND") or "laya").strip().lower()
+    if backend not in BACKENDS:
+        raise ValueError(f"CAUSALITY_BACKEND must be one of {', '.join(BACKENDS)}, got {backend!r}")
+    return backend
 
 
 # ================================
@@ -124,7 +178,7 @@ def _build_messages(analysis_json: Dict[str, Any], language: str) -> List[Any]:
     """
     system_msg = {
         "role": "system",
-        "content": CAUSALITY_SYSTEM_PROMPT,
+        "content": CAUSALITY_SYSTEM_PROMPT.replace("{{language}}", language),
     }
     user_msg = {
         "role": "user",
@@ -191,27 +245,84 @@ def _convert_analysis_to_nested(analysis: Dict[str, Any]) -> Dict[str, Any]:
 
 
 # ================================
-# NODE 3 - Analyze with LLM
+#  Utility functions for the Laya backend
 # ================================
-def node_analyze(state: CausalAnalysisState) -> CausalAnalysisState:
+def _laya_field(axis: str, answer: Dict[str, Any], language: str, threshold: float) -> Dict[str, Any]:
     """
-    Perform causality analysis using the LLM.
+    Build the causality block of one axis from Laya's answer.
 
     Args:
-        state: State dictionary containing 'analysis' key.
+        axis: entity, intent or timing.
+        answer: {"value", "probabilities", "confidence"} from laya_classifier.classify.
+        language: The language of the report (texts in English unless Italian).
+        threshold: Labels with a lower confidence are flagged for review.
 
     Returns:
-        Updated state dictionary with causality analysis results.
+        The value, a rationale (definition of the value and confidence), the confidence, the
+        probabilities of all values and the review flag.
     """
-    analysis_json = state.get("analysis")
+    text = _LAYA_TEXT.get(language.split("-")[0].lower(), _LAYA_TEXT["en"])
+    value, confidence = answer["value"], answer["confidence"]
+    # Rounded down, so a label just below the threshold never shows the threshold itself
+    rationale = f"{text['definitions'][axis][value]}. " + text["assigned"].format(pct=int(confidence * 100))
+    review = confidence < threshold
+    if review:
+        label, p = sorted(answer["probabilities"].items(), key=lambda kv: kv[1], reverse=True)[1]
+        rationale += " " + text["review"].format(
+            threshold=round(threshold * 100), label=text["labels"][axis][label], pct=int(p * 100)
+        )
+    return {
+        "value": value,
+        "rationale": rationale,
+        "confidence": round(confidence, 4),
+        "probabilities": answer["probabilities"],
+        "review": review,
+    }
+
+
+def _analyze_with_laya(analysis: Dict[str, Any], language: str) -> Dict[str, Any]:
+    """
+    Label every risk with Laya.
+
+    Args:
+        analysis: The domain analysis ('x.y' -> {"risks": [...]}).
+        language: The language of the report.
+
+    Returns:
+        The nested analysis: the same subdomains and risks, in the same order, each risk with
+        its causality block.
+    """
+    unknown = sorted(code for code in analysis if code not in laya_classifier.subdomain_names())
+    if unknown:
+        _logger.warning("Subdomains missing from the MIT database: Laya reads their risks without one", step="analyze", subdomains=unknown)
+    items = [(code, risk) for code, block in analysis.items() for risk in block["risks"]]
+    answers = laya_classifier.classify([(code, risk["title"], risk["explanation"]) for code, risk in items])
+    threshold = laya_classifier.review_threshold()
+    nested: Dict[str, Any] = {code: {"risks": []} for code in analysis}
+    for (code, risk), answer in zip(items, answers):
+        causality = {ax: _laya_field(ax, answer[ax], language, threshold) for ax in laya_classifier.AXES}
+        nested[code]["risks"].append({**risk, "causality": causality})
+    return nested
+
+
+# ================================
+#  Utility function for the LLM backend
+# ================================
+def _analyze_with_llm(state: CausalAnalysisState, analysis_json: Dict[str, Any], language: str) -> Dict[str, Any]:
+    """
+    Label every risk with the LLM.
+
+    Args:
+        state: State dictionary; its 'messages' receive the prompt.
+        analysis_json: The domain analysis.
+        language: The language for the rationales.
+
+    Returns:
+        The nested analysis with the causality block of every risk.
+    """
     llm = get_llm_instance(t=0)
-
-    # Retrieve language from metadata, default to 'en'
-    language = (state.get("metadata") or {}).get("language", "en")
-
     messages = _build_messages(analysis_json, language)
     state["messages"] = messages
-    _logger.info("Causality analysis start", step="analyze", language=language)
     _logger.debug(
         "Messages prepared",
         step="analyze",
@@ -225,18 +336,53 @@ def node_analyze(state: CausalAnalysisState) -> CausalAnalysisState:
             schema=CAUSALITY_JSON_SCHEMA, method="json_schema"
         )
     )
-    try:
-        result = structured.invoke(messages)
-        if hasattr(result, "parsed") and isinstance(result.parsed, dict):
-            parsed = result.parsed
-        elif isinstance(result, dict):
-            parsed = result
-        else:
-            raise RuntimeError("Unexpected structured response type")
+    result = structured.invoke(messages)
+    if hasattr(result, "parsed") and isinstance(result.parsed, dict):
+        parsed = result.parsed
+    elif isinstance(result, dict):
+        parsed = result
+    else:
+        raise RuntimeError("Unexpected structured response type")
 
-        # Convert flat structure to nested structure
-        state["analysis"] = _convert_analysis_to_nested(parsed)
-        _logger.info("Causality analysis completed", step="analyze", language=language)
+    # Convert flat structure to nested structure
+    return _convert_analysis_to_nested(parsed)
+
+
+# ================================
+# NODE 3 - Analyze (Laya or LLM)
+# ================================
+def node_analyze(state: CausalAnalysisState) -> CausalAnalysisState:
+    """
+    Perform causality analysis with the configured backend (CAUSALITY_BACKEND).
+
+    Args:
+        state: State dictionary containing 'analysis' key.
+
+    Returns:
+        Updated state dictionary with causality analysis results, and the backend that
+        produced them in metadata['causality_model'].
+    """
+    if state.get("errors"):
+        return state  # invalid input: nothing to label
+    analysis_json = state.get("analysis")
+    metadata = dict(state.get("metadata") or {})
+
+    # Retrieve language from metadata, default to 'en'
+    language = metadata.get("language", "en")
+
+    try:
+        backend = causality_backend()
+        if backend == "laya":
+            model = {"backend": "laya", "model": laya_classifier.model_name(), "review_threshold": laya_classifier.review_threshold()}
+            _logger.info("Causality analysis start", step="analyze", language=language, **model)
+            state["analysis"] = _analyze_with_laya(analysis_json, language)
+        else:
+            model = {"backend": "llm", "model": os.getenv("GEMINI_MODEL", "gemini-2.5-flash")}
+            _logger.info("Causality analysis start", step="analyze", language=language, **model)
+            state["analysis"] = _analyze_with_llm(state, analysis_json, language)
+        metadata["causality_model"] = model
+        state["metadata"] = metadata
+        _logger.info("Causality analysis completed", step="analyze", language=language, backend=backend)
     except Exception as e:
         _logger.error("Causality analysis failed", step="analyze", exc_info=e)
         state.setdefault("errors", []).append(str(e))

@@ -6,8 +6,11 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# CPU-only PyTorch for the local causal classifier (Laya), first: the default wheels pull in CUDA
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch==2.14.1
+
+COPY requirements.txt requirements-laya.txt ./
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-laya.txt
 
 COPY . .
 

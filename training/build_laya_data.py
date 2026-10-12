@@ -33,12 +33,14 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
+# The pipeline builds what Laya reads with the same definitions (agents/causality_analyzer/laya_classifier.py)
+from agents.causality_analyzer.laya_classifier import AXES, QUESTIONS, state, subdomain_names  # noqa: F401
+
 ROOT = Path(__file__).resolve().parent.parent
 PROCESSED = ROOT / "files" / "data" / "processed"
 AREA = ROOT / "evaluation" / "area_testset"
 AREA_TRAIN = ROOT / "files" / "data" / "area_trainset"
 OUT = ROOT / "training" / "data"
-AXES = ("entity", "intent", "timing")
 VAL_FRAC = 0.15
 VAL_SEED = 0
 # Validation runs of the AREA training risks: three English and three Italian runs of the 28
@@ -47,50 +49,9 @@ AREA_VAL_RUNS = ("t13", "t14", "t25", "t26", "t27", "t28")
 # Titles of the domain analyzer's "no significant risk" entries (Italian or English)
 NO_RISK = re.compile(r"^\s*(nessun rischio|no (significant |relevant )?risk)", re.IGNORECASE)
 
-QUESTIONS: Dict[str, Dict[str, Any]] = {
-    "entity": {
-        "type": "choice",
-        "instructions": "Who or what causes the risk, as the text frames it?",
-        "criteria": {
-            "ai": "The risk is caused by a decision or action made by an AI system",
-            "human": "The risk is caused by a decision or action made by humans",
-            "other": "The risk is caused by some other reason or is ambiguous",
-        },
-    },
-    "intent": {
-        "type": "choice",
-        "instructions": "Does the risk come from an expected or an unexpected outcome of pursuing a goal?",
-        "criteria": {
-            "intentional": "The risk occurs due to an expected outcome from pursuing a goal",
-            "unintentional": "The risk occurs due to an unexpected outcome from pursuing a goal",
-            "other": "The risk is presented as occurring without clearly specifying the intentionality",
-        },
-    },
-    "timing": {
-        "type": "choice",
-        "instructions": "When does the risk occur?",
-        "criteria": {
-            "pre-deployment": "The risk occurs before the AI is deployed",
-            "post-deployment": "The risk occurs after the AI model has been trained and deployed",
-            "other": "The risk is presented without a clearly specified time of occurrence",
-        },
-    },
-}
-
-
-def state(title: str, text: str, subdomain: Optional[Tuple[str, str]] = None) -> str:
-    """What Laya reads: the subdomain (code, name) when known, the title, the description."""
-    lines = [f"Risk subdomain: {subdomain[0]} {subdomain[1]}"] if subdomain else []
-    return "\n".join(lines + ([title] if title else []) + [text])
-
 
 def laya_row(rid: str, title: str, text: str, labels: Dict[str, str], subdomain: Optional[Tuple[str, str]] = None) -> Dict[str, Any]:
     return {"id": rid, "state": state(title, text, subdomain), "questions": QUESTIONS, "expected": {ax: labels[ax] for ax in AXES}}
-
-
-def subdomain_names() -> Dict[str, str]:
-    """Subdomain code -> name, as in the MIT database."""
-    return {r["subdomain_id"]: r["subdomain_name"] for r in _read(PROCESSED / "full.jsonl") if r["subdomain_id"]}
 
 
 def split_by_group(rows: List[Dict[str, Any]], frac: float, seed: int) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:

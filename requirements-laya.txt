@@ -1,0 +1,8 @@
+# The local causal classifier (Laya, agents/causality_analyzer/laya_classifier.py), used by the app
+# and by training/. Install CPU-only PyTorch first (avoids the CUDA wheels), then this file:
+#   pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1
+#   pip install -r requirements-laya.txt
+laya==0.4.1
+transformers==5.19.0
+huggingface_hub==2.2.0
+safetensors==0.8.0

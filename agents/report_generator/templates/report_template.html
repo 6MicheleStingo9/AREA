@@ -258,6 +258,10 @@
         <!-- Hierarchical Risk Analysis Section -->
         <div class="section">
             <h2>📋 {{ translations.detailed_analysis_title }}</h2>
+            {% set causality_model = metadata.get('causality_model') %}
+            {% if causality_model %}
+            <p class="causality-source">🔍 {% if causality_model.backend == 'laya' %}{{ translations.causality_source_laya|replace('{{model}}', causality_model.model)|replace('{{threshold}}', (causality_model.review_threshold * 100)|round|int) }}{% else %}{{ translations.causality_source_llm|replace('{{model}}', causality_model.model) }}{% endif %}</p>
+            {% endif %}
             
             <!-- Filters -->
             <div class="filters-bar">
@@ -335,18 +339,18 @@
                                                             <span class="badge badge-{{ risk.severity }}">{{ translations.risk_severity[risk.severity]|upper }}</span>
                                                         </div>
                                                         <div>
-                                                            <span class="badge" style="background: {% if risk.causality.entity.value == 'ai' %}#DBEAFE{% elif risk.causality.entity.value == 'human' %}#EDE9FE{% else %}#F3F4F6{% endif %}; color: {% if risk.causality.entity.value == 'ai' %}#1E40AF{% elif risk.causality.entity.value == 'human' %}#5B21B6{% else %}#374151{% endif %};">
-                                                                {% if risk.causality.entity.value == 'ai' %}{{ translations.entity_ai }}{% elif risk.causality.entity.value == 'human' %}{{ translations.entity_human }}{% else %}{{ translations.entity_other }}{% endif %}
+                                                            <span class="badge{% if risk.causality.entity.review %} badge-review{% endif %}"{% if risk.causality.entity.review %} title="{{ translations.review_hint }}"{% endif %} style="background: {% if risk.causality.entity.value == 'ai' %}#DBEAFE{% elif risk.causality.entity.value == 'human' %}#EDE9FE{% else %}#F3F4F6{% endif %}; color: {% if risk.causality.entity.value == 'ai' %}#1E40AF{% elif risk.causality.entity.value == 'human' %}#5B21B6{% else %}#374151{% endif %};">
+                                                                {% if risk.causality.entity.value == 'ai' %}{{ translations.entity_ai }}{% elif risk.causality.entity.value == 'human' %}{{ translations.entity_human }}{% else %}{{ translations.entity_other }}{% endif %}{% if risk.causality.entity.review %} ⚠{% endif %}
                                                             </span>
                                                         </div>
                                                         <div>
-                                                            <span class="badge" style="background: {% if risk.causality.timing.value == 'pre-deployment' %}#CCFBF1{% else %}#FEE2E2{% endif %}; color: {% if risk.causality.timing.value == 'pre-deployment' %}#065F46{% else %}#991B1B{% endif %};">
-                                                                {% if risk.causality.timing.value == 'pre-deployment' %}{{ translations.timing_pre_deployment }}{% elif risk.causality.timing.value == 'post-deployment' %}{{ translations.timing_post_deployment }}{% else %}{{ translations.timing_other }}{% endif %}
+                                                            <span class="badge{% if risk.causality.timing.review %} badge-review{% endif %}"{% if risk.causality.timing.review %} title="{{ translations.review_hint }}"{% endif %} style="background: {% if risk.causality.timing.value == 'pre-deployment' %}#CCFBF1{% else %}#FEE2E2{% endif %}; color: {% if risk.causality.timing.value == 'pre-deployment' %}#065F46{% else %}#991B1B{% endif %};">
+                                                                {% if risk.causality.timing.value == 'pre-deployment' %}{{ translations.timing_pre_deployment }}{% elif risk.causality.timing.value == 'post-deployment' %}{{ translations.timing_post_deployment }}{% else %}{{ translations.timing_other }}{% endif %}{% if risk.causality.timing.review %} ⚠{% endif %}
                                                             </span>
                                                         </div>
                                                         <div>
-                                                            <span class="badge" style="background: {% if risk.causality.intent.value == 'intentional' %}#FED7AA{% else %}#D9F99D{% endif %}; color: {% if risk.causality.intent.value == 'intentional' %}#9A3412{% else %}#3F6212{% endif %};">
-                                                                {% if risk.causality.intent.value == 'intentional' %}{{ translations.intent_intentional }}{% elif risk.causality.intent.value == 'unintentional' %}{{ translations.intent_unintentional }}{% else %}{{ translations.intent_other }}{% endif %}
+                                                            <span class="badge{% if risk.causality.intent.review %} badge-review{% endif %}"{% if risk.causality.intent.review %} title="{{ translations.review_hint }}"{% endif %} style="background: {% if risk.causality.intent.value == 'intentional' %}#FED7AA{% else %}#D9F99D{% endif %}; color: {% if risk.causality.intent.value == 'intentional' %}#9A3412{% else %}#3F6212{% endif %};">
+                                                                {% if risk.causality.intent.value == 'intentional' %}{{ translations.intent_intentional }}{% elif risk.causality.intent.value == 'unintentional' %}{{ translations.intent_unintentional }}{% else %}{{ translations.intent_other }}{% endif %}{% if risk.causality.intent.review %} ⚠{% endif %}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -407,16 +411,16 @@
                                                         <div class="detail-section">
                                                             <span class="detail-label">🔍 {{ translations.causality_analysis_label }}</span>
                                                             <div class="causality-grid">
-                                                                <div class="causality-box entity">
-                                                                    <div class="causality-box-label">{{ translations.causality_entity_label }}</div>
+                                                                <div class="causality-box entity{% if risk.causality.entity.review %} review{% endif %}">
+                                                                    <div class="causality-box-label">{{ translations.causality_entity_label }}{% if risk.causality.entity.review %} · ⚠ {{ translations.review_label }}{% endif %}</div>
                                                                     <div class="causality-box-text">{{ risk.causality.entity.rationale }}</div>
                                                                 </div>
-                                                                <div class="causality-box timing">
-                                                                    <div class="causality-box-label">{{ translations.causality_timing_label }}</div>
+                                                                <div class="causality-box timing{% if risk.causality.timing.review %} review{% endif %}">
+                                                                    <div class="causality-box-label">{{ translations.causality_timing_label }}{% if risk.causality.timing.review %} · ⚠ {{ translations.review_label }}{% endif %}</div>
                                                                     <div class="causality-box-text">{{ risk.causality.timing.rationale }}</div>
                                                                 </div>
-                                                                <div class="causality-box intent">
-                                                                    <div class="causality-box-label">{{ translations.causality_intent_label }}</div>
+                                                                <div class="causality-box intent{% if risk.causality.intent.review %} review{% endif %}">
+                                                                    <div class="causality-box-label">{{ translations.causality_intent_label }}{% if risk.causality.intent.review %} · ⚠ {{ translations.review_label }}{% endif %}</div>
                                                                     <div class="causality-box-text">{{ risk.causality.intent.rationale }}</div>
                                                                 </div>
                                                             </div>

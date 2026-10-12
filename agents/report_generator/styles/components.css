@@ -431,6 +431,26 @@
     line-height: 1.4;
 }
 
+/* Causal labels to review: Laya's confidence is below the review threshold */
+.badge-review {
+    outline: 2px dashed #B45309;
+    outline-offset: 1px;
+}
+
+.causality-box.review {
+    background: #FFFBEB;
+}
+
+.causality-box.review .causality-box-label {
+    color: #92400E;
+}
+
+.causality-source {
+    margin: 0 0 15px;
+    font-size: 0.9rem;
+    color: #4B5563;
+}
+
 @media (max-width: 768px) {
     .risk-header {
         grid-template-columns: 1fr;
@@ -461,6 +481,10 @@
     .meta-link.secondary { background: #1F2937; color: #93C5FD; border-color: #374151; }
     .causality-box { background: #1F2937; }
     .causality-box-text { color: #D1D5DB; }
+    .causality-box.review { background: #422006; }
+    .causality-box.review .causality-box-label { color: #FCD34D; }
+    .badge-review { outline-color: #FBBF24; }
+    .causality-source { color: #9CA3AF; }
     .executive-summary p { color: #E5E7EB; }
     .metadata-description { background: #1F2937; border-color: #374151; }
     .meta-desc-text { color: #D1D5DB; }

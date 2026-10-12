@@ -9,3 +9,8 @@ __pycache__/
 *.pyo
 .env
 files/reports/*
+.venv-train/
+.plan/
+.claude/
+training/checkpoints/
+training/data/
