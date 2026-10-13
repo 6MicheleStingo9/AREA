@@ -10,6 +10,7 @@ top-1 confidence and the multiclass Brier score. Results go to evaluation/result
 
 Usage (from the project root):
     python -m training.evaluate_laya --model <checkpoint dir or hub id> --name <results slug> [--revision R]
+        [--sets causal_clf area_testset] [--limit N]
 """
 
 import argparse
@@ -134,6 +135,8 @@ def main() -> None:
     parser.add_argument("--revision", default=None, help="Hub revision (for a Hugging Face id)")
     parser.add_argument("--name", required=True, help="Slug for the results files, e.g. laya-multilingual-zeroshot")
     parser.add_argument("--seed", type=int, default=0, help="Bootstrap seed")
+    parser.add_argument("--sets", nargs="+", choices=list(TEST_SETS), default=list(TEST_SETS), help="Test sets to score (default: both)")
+    parser.add_argument("--limit", type=int, default=None, help="Only the first N risks of each test set (smoke runs)")
     args = parser.parse_args()
 
     agent = laya.load(args.model, revision=args.revision) if args.revision else laya.load(args.model)
@@ -141,8 +144,9 @@ def main() -> None:
     labels = {ax: list(train[0]["questions"][ax]["criteria"]) for ax in AXES}
     date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     RESULTS.mkdir(parents=True, exist_ok=True)
-    for task, fname in TEST_SETS.items():
-        rows = _read(DATA / fname)
+    for task in args.sets:
+        fname = TEST_SETS[task]
+        rows = _read(DATA / fname)[: args.limit]
         t0 = time.time()
         preds = predict(agent, rows)
         elapsed = time.time() - t0
