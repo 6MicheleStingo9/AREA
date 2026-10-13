@@ -32,3 +32,6 @@ __pycache__/
 # Kindynos training labels: the adjudicator work file, rebuilt by `data_prep.area_trainset disagreements`
 files/data/area_trainset/annotations/disputed.jsonl
 evaluation/area_testset/annotator_check/annotations/disputed.jsonl
+
+# Hugging Face repositories built by `python -m publish.export_hf`
+publish/build/

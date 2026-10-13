@@ -83,9 +83,10 @@ def _write(path: Path, rows: Iterable[Dict[str, Any]]) -> int:
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     names = subdomain_names()
-    mit_sub = {r["ev_id"]: r["subdomain_id"] for r in _read(PROCESSED / "full.jsonl") if r["subdomain_id"]}
+    # By Ev_ID and text: the source repeats a few Ev_IDs for different risks (62.31.01-03)
+    mit_sub = {(r["ev_id"], r["description"]): r["subdomain_id"] for r in _read(PROCESSED / "full.jsonl") if r["subdomain_id"]}
     with_name = lambda code: (code, names[code]) if code else None
-    mit = lambda split: [laya_row(ex["meta"]["ev_id"], ex.get("title") or "", ex["input"], ex["labels"], with_name(mit_sub.get(ex["meta"]["ev_id"])))
+    mit = lambda split: [laya_row(ex["meta"]["ev_id"], ex.get("title") or "", ex["input"], ex["labels"], with_name(mit_sub.get((ex["meta"]["ev_id"], ex["input"]))))
                          for ex in _read(PROCESSED / f"causal_clf.{split}.jsonl")]
     gold = {g["id"]: g for g in _read(AREA / "labels.jsonl")}
     area = [laya_row(r["id"], r["title"], r["text"], gold[r["id"]], with_name(r["subdomain"])) for r in _read(AREA / "risks.jsonl") if r["id"] in gold]
