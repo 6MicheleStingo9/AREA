@@ -11,7 +11,7 @@
   },
   "run": {
     "date": "2026-10-09",
-    "git_commit": "bcd1cee"
+    "git_commit": "744a9fc"
   },
   "data": {
     "risks": "evaluation/area_testset/risks.jsonl",

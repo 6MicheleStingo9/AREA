@@ -9,7 +9,7 @@
     "date": "2026-10-11",
     "device": "cuda",
     "seconds_per_risk": 0.03048177752001532,
-    "git_commit": "50256c6"
+    "git_commit": "99810ff"
   },
   "data": {
     "file": "training/data/area_test.jsonl",

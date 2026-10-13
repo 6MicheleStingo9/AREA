@@ -9,7 +9,7 @@
     "date": "2026-10-12",
     "device": "cuda",
     "seconds_per_risk": 0.03594498187303543,
-    "git_commit": "b576a26"
+    "git_commit": "7b76e12"
   },
   "data": {
     "file": "training/data/mit_eval.jsonl",

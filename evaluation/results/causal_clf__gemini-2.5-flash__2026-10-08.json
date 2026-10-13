@@ -11,7 +11,7 @@
     "batch_size": 20,
     "calls": 16,
     "elapsed_s": 474.1,
-    "git_commit": "079b63d"
+    "git_commit": "fb02581"
   },
   "data": {
     "file": "files/data/processed/causal_clf.eval.jsonl",

@@ -1,6 +1,6 @@
 # Causal classification on AREA risks — pipeline labels vs gold
 
-Test set: `evaluation/area_testset/risks.jsonl` (145 risks: 85 EN, 60 IT); gold: `evaluation/area_testset/labels.jsonl` (reviewed by hand, see LABELING.md). Pipeline model by source: example: unknown; generated: gemini-2.5-flash. Run 2026-10-09 · commit `bcd1cee`.
+Test set: `evaluation/area_testset/risks.jsonl` (145 risks: 85 EN, 60 IT); gold: `evaluation/area_testset/labels.jsonl` (reviewed by hand, see LABELING.md). Pipeline model by source: example: unknown; generated: gemini-2.5-flash. Run 2026-10-09 · commit `744a9fc`.
 
 | Axis | Accuracy % [95% CI] | Macro-F1 % [95% CI] | Majority class (MIT train): acc / macro-F1 % |
 |---|---|---|---|

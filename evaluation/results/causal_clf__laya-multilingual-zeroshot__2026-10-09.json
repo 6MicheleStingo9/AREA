@@ -9,7 +9,7 @@
     "date": "2026-10-09",
     "device": "cpu",
     "seconds_per_risk": 1.7043591454625129,
-    "git_commit": "902e6bf"
+    "git_commit": "4b2b594"
   },
   "data": {
     "file": "training/data/mit_eval.jsonl",

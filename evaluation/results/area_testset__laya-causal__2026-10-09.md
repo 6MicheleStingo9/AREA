@@ -1,6 +1,6 @@
 # area_testset — laya-causal
 
-Test set: `training/data/area_test.jsonl` (145 risks). Checkpoint `training/checkpoints/laya-causal`. Run 2026-10-09 on cuda · 0.03 s per risk (3 questions) · commit `de5c5de`.
+Test set: `training/data/area_test.jsonl` (145 risks). Checkpoint `training/checkpoints/laya-causal`. Run 2026-10-09 on cuda · 0.03 s per risk (3 questions) · commit `24fce88`.
 
 | Axis | Accuracy % [95% CI] | Macro-F1 % [95% CI] | ECE % | Brier | Majority class (MIT train): acc / macro-F1 % |
 |---|---|---|---|---|---|

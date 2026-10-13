@@ -1,6 +1,6 @@
 # area_testset — laya-multilingual-zeroshot
 
-Test set: `training/data/area_test.jsonl` (145 risks). Checkpoint `convaiinnovations/laya-multilingual` @ 1720e3e335. Run 2026-10-09 on cpu · 1.68 s per risk (3 questions) · commit `902e6bf`.
+Test set: `training/data/area_test.jsonl` (145 risks). Checkpoint `convaiinnovations/laya-multilingual` @ 1720e3e335. Run 2026-10-09 on cpu · 1.68 s per risk (3 questions) · commit `4b2b594`.
 
 | Axis | Accuracy % [95% CI] | Macro-F1 % [95% CI] | ECE % | Brier | Majority class (MIT train): acc / macro-F1 % |
 |---|---|---|---|---|---|

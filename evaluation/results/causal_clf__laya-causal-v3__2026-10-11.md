@@ -1,6 +1,6 @@
 # causal_clf — laya-causal-v3
 
-Test set: `training/data/mit_eval.jsonl` (160 risks). Checkpoint `training/checkpoints/laya-causal-v3`. Run 2026-10-11 on cuda · 0.03 s per risk (3 questions) · commit `50256c6`.
+Test set: `training/data/mit_eval.jsonl` (160 risks). Checkpoint `training/checkpoints/laya-causal-v3`. Run 2026-10-11 on cuda · 0.03 s per risk (3 questions) · commit `99810ff`.
 
 | Axis | Accuracy % [95% CI] | Macro-F1 % [95% CI] | ECE % | Brier | Majority class (MIT train): acc / macro-F1 % |
 |---|---|---|---|---|---|

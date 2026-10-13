@@ -1,6 +1,6 @@
 # Causal classification — gemini-2.5-flash baseline
 
-Eval: `files/data/processed/causal_clf.eval.jsonl` (160 risks, frozen split). Run 2026-10-08 · batch 20 · repeats 2 · 16 calls, 29.6 s per call · commit `079b63d`.
+Eval: `files/data/processed/causal_clf.eval.jsonl` (160 risks, frozen split). Run 2026-10-08 · batch 20 · repeats 2 · 16 calls, 29.6 s per call · commit `fb02581`.
 
 | Axis | Accuracy % [95% CI] | Macro-F1 % [95% CI] | Majority class: acc / macro-F1 % |
 |---|---|---|---|
