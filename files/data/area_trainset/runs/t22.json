@@ -1,0 +1,447 @@
+{
+  "run": "t22",
+  "language": "it",
+  "system": "un sistema di correzione automatica dei compiti scritti in una scuola superiore",
+  "profile": "expert",
+  "model": "gemini-2.5-flash",
+  "answers": {
+    "metadata": {
+      "profile": "expert",
+      "language": "it",
+      "timestamp": "2026-10-12 12:12:17",
+      "run_id": "78091b5090084c7ba1179829c4428bb6"
+    },
+    "responses": {
+      "1.1": {
+        "question": "Quali dati o attributi relativi agli utenti vengono raccolti oppure utilizzati dal sistema per fornire servizi, prendere decisioni o generare risultati?",
+        "answer": "Il sistema di correzione automatica raccoglie e utilizza principalmente dati relativi all'identità dello studente (ID univoco, nome/cognome per associazione), alla classe di appartenenza e alla materia oggetto del compito. Il dato primario elaborato è il contenuto testuale del compito scritto. Attributi linguistici, come la lingua predefinita del compito, sono inferiti o specificati. Vengono inoltre memorizzati i voti e i feedback generati, nonché lo storico delle sottomissioni per monitorare i progressi. Non vengono raccolti dati demografici sensibili come età esatta o genere in modo esplicito per la correzione, sebbene possano essere disponibili nel sistema informativo scolastico integrato.",
+        "followups": {
+          "0": "Tali dati influenzano direttamente i risultati: l'ID studente e la classe sono cruciali per l'associazione del compito al profilo corretto e per l'applicazione delle rubriche specifiche per classe/materia. Il contenuto testuale è l'input principale per i modelli NLP, determinando l'analisi grammaticale, stilistica e contenutistica. La lingua è fondamentale per l'attivazione dei modelli linguistici appropriati. Lo storico dei voti può essere utilizzato a scopo di calibrazione interna del sistema per rilevare derive, ma non influenza il voto del singolo compito in modo diretto."
+        }
+      },
+      "1.2": {
+        "question": "Che tipo di contenuti può generare, mostrare o suggerire il sistema agli utenti?",
+        "answer": {
+          "selected": [
+            "Testo",
+            "Consigli/Raccomandazioni",
+            "Dati strutturati"
+          ],
+          "other": "Feedback correttivi contestuali"
+        },
+        "followups": {
+          "0": "Sono implementati controlli basati su espressioni regolari e filtri lessicali per identificare e mitigare la generazione di contenuti potenzialmente offensivi, discriminatori o inappropriati. Il sistema è addestrato su dataset curati e validati, e i modelli di generazione di feedback sono progettati per aderire a linee guida pedagogiche definite, evitando toni offensivi o contenuti non pertinenti. Vengono inoltre effettuate revisioni umane periodiche (Human-in-the-Loop) sui feedback generati per rilevare e correggere eventuali derive o bias indesiderati, garantendo un'adeguata moderazione."
+        }
+      },
+      "1.3": {
+        "question": "Esiste la possibilità che il sistema abbia differenze di prestazione o accuratezza tra gruppi di utenti?",
+        "answer": "Sì, ci potrebbero essere differenze tra gruppi",
+        "followups": {
+          "0": "Differenze di prestazione possono manifestarsi per studenti con particolari disturbi specifici dell'apprendimento (DSA), la cui scrittura potrebbe deviare significativamente dai pattern di addestramento. Anche le variazioni dialettali o l'uso di linguaggi informali molto marcati rispetto alla lingua standard attesa possono incidere sull'accuratezza del parsing e della valutazione. Infine, la qualità della scrittura legata al livello di istruzione o alla provenienza (ad esempio, studenti non madrelingua italiana senza supporto linguistico specifico) può portare a una diversa affidabilità del sistema, potenzialmente penalizzando involontariamente alcuni gruppi."
+        }
+      },
+      "2.1": {
+        "question": "Quali tipi di dati personali, sensibili o confidenziali sono raccolti, trattati, analizzati o conservati dal sistema?",
+        "answer": {
+          "selected": [
+            "Nome o identificativo",
+            "Email o contatti"
+          ],
+          "other": "Contenuto testuale dei compiti, voti, feedback correttivi, storico delle sottomissioni per materia."
+        },
+        "followups": {}
+      },
+      "2.2": {
+        "question": "Quali misure di sicurezza sono adottate per proteggere dati, accessi e funzionamento del sistema?",
+        "answer": "Audit di sicurezza esterni",
+        "followups": {
+          "0": "Oltre agli audit di sicurezza esterni condotti annualmente da terze parti certificate, sono implementate misure stringenti di controllo degli accessi basate su principio del minimo privilegio, autenticazione multi-fattore (MFA) per il personale amministrativo e docente, e crittografia end-to-end per tutti i dati in transito e a riposo. L'infrastruttura sottostante è isolata logicamente, con monitoraggio continuo delle vulnerabilità e patching tempestivo. Sono state riscontrate in passato vulnerabilità di configurazione minori durante un penetration test, prontamente corrette con l'implementazione di politiche di sicurezza più restrittive e l'adozione di un WAF (Web Application Firewall) avanzato."
+        }
+      },
+      "3.1": {
+        "question": "Il sistema produce o suggerisce informazioni agli utenti?",
+        "answer": "Sì, solo a utenti individuali",
+        "followups": {
+          "0": "Sono attivi diversi livelli di controllo per limitare errori o ambiguità. I modelli NLP sono periodicamente riesaminati e affinati utilizzando dataset di validazione annotati da esperti. Un sistema di 'confidence scoring' interno segnala i feedback con bassa probabilità di correttezza per una revisione prioritaria da parte dei docenti. Inoltre, gli utenti (studenti e docenti) possono segnalare feedback errati o fuorvianti, alimentando un ciclo di miglioramento continuo. La documentazione per i docenti include linee guida chiare sull'interpretazione dei feedback automatici e sull'importanza della loro supervisione."
+        }
+      },
+      "3.2": {
+        "question": "Il sistema personalizza l'output o filtra i contenuti mostrati agli utenti in base al loro profilo/interazioni?",
+        "answer": "No, l'output è uguale per tutti",
+        "followups": {
+          "0": "Nonostante l'output del sistema sia specifico per ogni compito sottomesso, la logica di valutazione e correzione non viene personalizzata in base al 'profilo' dello studente o alle sue interazioni pregresse. Il sistema applica rubriche e modelli di analisi standardizzati per una data materia e livello di istruzione. Questo assicura che il giudizio sia il più oggettivo possibile e non influenzato da bias derivanti da prestazioni passate o dati non pertinenti al compito specifico. Le eventuali differenze nell'output sono una conseguenza delle differenze nell'input fornito, non di una personalizzazione del modello di valutazione."
+        }
+      },
+      "4.1": {
+        "question": "Il sistema potrebbe, per le sue caratteristiche, essere sfruttato per disinformazione, raccolta massiva di dati su utenti o influenzare gruppi su larga scala?",
+        "answer": "Sì",
+        "followups": {
+          "0": "Il sistema potrebbe essere sfruttato per fini di disinformazione se un attore malevolo riuscisse a iniettare o alterare le rubriche di valutazione o i modelli linguistici, introducendo bias o affermazioni errate nei feedback. Ciò potrebbe influenzare la percezione e l'apprendimento degli studenti su larga scala. Per la raccolta massiva di dati, se le credenziali di accesso al database fossero compromesse, l'intero archivio dei compiti, dei voti e dei dati personali degli studenti sarebbe a rischio, permettendo profilazione o sorveglianza indebita sull'andamento didattico e sui contenuti espressi dai ragazzi."
+        }
+      },
+      "4.2": {
+        "question": "Il sistema può essere vulnerabile o adattabile per attacchi informatici, sviluppo di armi autonome, software malevoli o causar danni su larga scala?",
+        "answer": "Sì",
+        "followups": {
+          "0": "I tipi di attacco più probabili sono l'exfiltrazione di dati personali degli studenti (compiti, voti, identificativi), attacchi di 'model inversion' per estrarre informazioni sensibili dai modelli addestrati, o attacchi di 'adversarial examples' per manipolare i feedback e i voti. Un altro rischio è l'iniezione di codice malevolo tramite il contenuto dei compiti, se le misure di sanitizzazione dell'input fossero insufficienti, potenzialmente causando compromissione dell'infrastruttura sottostante.",
+          "1": "Sono implementati rigorosi controlli di sicurezza: firewall di nuova generazione, sistemi di rilevamento e prevenzione delle intrusioni (IDS/IPS), analisi continua delle vulnerabilità e penetration test regolari. La pipeline di elaborazione dei compiti include fasi di sanitizzazione e validazione dell'input per prevenire attacchi di iniezione. I modelli sono sottoposti a hardening per aumentare la robustezza contro attacchi avversari, e i dati sensibili sono cifrati sia a riposo che in transito. L'accesso ai componenti critici è limitato e monitorato con sistemi SIEM."
+        }
+      },
+      "4.3": {
+        "question": "Potrebbe essere usato per truffe, manipolazione mirata, ricatti o attività fraudolente verso singoli o gruppi di utenti?",
+        "answer": "Sì",
+        "followups": {
+          "0": "Un possibile scenario di rischio riguarda la manipolazione dei voti. Un attore malevolo che ottenesse accesso privilegiato al sistema potrebbe alterare i feedback o i punteggi assegnati a specifici studenti, favorendoli o penalizzandoli ingiustamente, creando un precedente per frodi o ricatti. Un altro esempio potrebbe essere l'uso del sistema per generare feedback 'falsi' su compiti non sottomessi, al fine di creare uno storico didattico artefatto per scopi fraudolenti, come l'ammissione a percorsi universitari. Inoltre, la compromissione del sistema potrebbe permettere la modifica di istruzioni sui compiti per indurre gli studenti a divulgare informazioni personali."
+        }
+      },
+      "5.1": {
+        "question": "In quali ambiti o situazioni tipicamente si utilizza il sistema?",
+        "answer": "Il sistema è utilizzato nell'ambito dell'istruzione superiore, specificamente nelle scuole secondarie, per l'automazione della correzione e della valutazione dei compiti scritti in diverse materie umanistiche e scientifiche che prevedono elaborati testuali. Gli ambiti d'uso includono la valutazione di saggi, relazioni, temi, risposte aperte a quesiti e analisi testuali. Non è previsto l'uso in contesti critici come la salute o l'emergenza, ma le decisioni sui voti hanno un impatto significativo sul percorso educativo dello studente, pertanto la sua affidabilità è di primaria importanza.",
+        "followups": {
+          "0": "Il rischio principale di affidarsi eccessivamente ai risultati del sistema è la 'deskilling' dei docenti, che potrebbero ridurre la loro capacità critica di valutazione autonoma. C'è anche il rischio di 'automation bias', per cui docenti e studenti potrebbero accettare acriticamente i feedback e i voti generati, senza verificarne l'accuratezza o la pertinenza. Ciò potrebbe portare a una depersonalizzazione dell'apprendimento e a una potenziale omologazione degli stili di scrittura, se i feedback tendono a premiare un unico modello ideale, riducendo la diversità creativa degli studenti."
+        }
+      },
+      "5.2": {
+        "question": "Il sistema prende decisioni automatiche che possono ridurre il controllo umano oppure influenza direttamente le scelte degli utenti?",
+        "answer": "Alcune azioni sono automatizzate senza conferma umana",
+        "followups": {
+          "0": "Le azioni automatizzate senza conferma umana includono la generazione del feedback correttivo dettagliato e l'assegnazione di un punteggio grezzo o di una valutazione preliminare per sezioni specifiche del compito. Sebbene il voto finale debba sempre essere validato dal docente, il volume e la granularità dei feedback generati possono influenzare profondamente le scelte dello studente, indirizzando il suo apprendimento e la revisione del proprio lavoro. In situazioni in cui i docenti sono sottoposti a carichi di lavoro elevati, potrebbero fare affidamento eccessivo su questi feedback, compromettendo l'autonomia della persona nell'interpretazione pedagogica completa."
+        }
+      },
+      "6.1": {
+        "question": "Chi trae principali benefici o vantaggi dall'adozione del sistema?",
+        "answer": "I principali beneficiari dell'adozione del sistema sono i docenti, che ottengono una significativa riduzione del carico di lavoro legato alla correzione manuale, permettendo loro di dedicare più tempo all'interazione personalizzata con gli studenti e alla pianificazione didattica. Gli studenti beneficiano di feedback più rapidi e coerenti, favorendo un ciclo di apprendimento continuo. La scuola, come istituzione, trae vantaggio dall'ottimizzazione delle risorse e dalla potenziale standardizzazione dei criteri di valutazione. Potrebbe verificarsi una concentrazione di dati e potere nelle mani degli amministratori del sistema o dei fornitori, che detengono il controllo sugli algoritmi e sui dati aggregati.",
+        "followups": {
+          "0": "I docenti traggono vantaggi dall'efficienza e dal supporto nella valutazione. Gli studenti beneficiano di feedback tempestivi. Le aziende sviluppatrici traggono vantaggio dalla vendita e manutenzione del software. Potrebbero restare esclusi, o svantaggiati, gli studenti che per vari motivi non si adattano ai modelli di valutazione automatica (es. stili di scrittura non convenzionali o DSA non adeguatamente gestiti dal sistema). Inoltre, i docenti meno propensi all'adozione tecnologica o che preferiscono un approccio interamente manuale potrebbero sentirsi marginalizzati o subire un depauperamento delle proprie competenze distintive."
+        }
+      },
+      "6.2": {
+        "question": "L'adozione del sistema può causare riduzione di posti di lavoro, cambiamenti nella qualità del lavoro o allargare le disuguaglianze?",
+        "answer": "Sì, può peggiorare la qualità del lavoro",
+        "followups": {
+          "0": "L'adozione del sistema potrebbe peggiorare la qualità del lavoro per i docenti nel settore dell'istruzione. Riducendo la necessità di correzione manuale approfondita, si potrebbe assistere a una 'deskilling' delle competenze pedagogiche legate alla valutazione formativa. I docenti potrebbero perdere l'opportunità di comprendere a fondo le sfumature degli elaborati studenteschi che emergono solo da una lettura attenta e personale, trasformando il loro ruolo più in quello di 'supervisori di algoritmi' che di 'educatori a tutto tondo'. Questo può impoverire l'interazione umana nel processo di apprendimento e portare a una standardizzazione eccessiva, penalizzando la creatività e l'originalità degli studenti."
+        }
+      },
+      "6.3": {
+        "question": "Il sistema sostituisce attività creative, culturali o professionali svolte da persone oppure omologa fortemente l'output rispetto alle capacità umane?",
+        "answer": "Sì, sostituisce attività umane",
+        "followups": {
+          "0": "Il sistema sostituisce direttamente l'attività professionale di correzione e valutazione dei compiti scritti, che è un'attività umana complessa che richiede discernimento critico, comprensione contestuale e sensibilità pedagogica. Questo impatta principalmente il settore dell'istruzione, con i docenti che vedono automatizzato un compito centrale della loro professione. C'è il rischio che l'output, sebbene efficiente, omologhi le risposte e gli stili di scrittura degli studenti, poiché i modelli AI tendono a premiare la conformità ai pattern di addestramento, scoraggiando l'originalità e la deviazione dalle 'migliori pratiche' algoritmiche, impoverendo così anche l'espressione creativa e culturale degli studenti."
+        }
+      },
+      "6.4": {
+        "question": "Il sistema è stato implementato o rilasciato rapidamente per pressioni di mercato o concorrenza, senza attente valutazioni di rischio?",
+        "answer": "No, sviluppo valutato attentamente",
+        "followups": {}
+      },
+      "6.5": {
+        "question": "Esistono regole, strutture organizzative o sistemi di controllo (governance) a cui è sottoposto lo sviluppo e funzionamento del sistema?",
+        "answer": "Sì, governance formalizzata",
+        "followups": {
+          "0": "Il modello di governance adottato prevede un Comitato Etico AI interno che supervisiona lo sviluppo, l'implementazione e il monitoraggio del sistema, assicurando la conformità alle normative sulla privacy (GDPR) e alle linee guida etiche. Esiste un Responsabile della Protezione Dati (DPO) coinvolto fin dalla fase di design. Sono definite procedure operative standard (SOP) per la gestione dei dati, la manutenzione del sistema e la risoluzione dei reclami. Vi è inoltre un canale di feedback continuo con il corpo docente e gli studenti per la rilevazione e mitigazione dei rischi emergenti."
+        }
+      },
+      "6.6": {
+        "question": "Quali risorse computazionali o energetiche richiede il sistema?",
+        "answer": "Il sistema è ospitato su infrastruttura cloud (AWS/Azure), sfruttando istanze con acceleratori GPU (NVIDIA V100/A100) per l'inferenza dei modelli NLP complessi (trasformatori come BERT o GPT-style). I requisiti computazionali sono significativi per l'elaborazione del linguaggio naturale e la generazione di feedback. L'addestramento iniziale ha richiesto risorse ingenti, mentre l'inferenza è ottimizzata per la scalabilità. Sono state condotte analisi di impatto ambientale per il calcolo dell'impronta carbonica relativa all'uso di queste risorse, privilegiando data center che utilizzano energie rinnovabili.",
+        "followups": {
+          "0": "Durante i picchi di utilizzo (es. correzione simultanea di un'intera classe), il sistema può richiedere l'equivalente di centinaia di core CPU virtuali e diverse decine di GPU hours al giorno. Abbiamo una politica interna di 'green computing' che prevede l'ottimizzazione degli algoritmi per ridurre il consumo energetico, l'uso di fornitori cloud con certificazioni di sostenibilità (es. utilizzo di energia rinnovabile per il 100% dell'energia consumata entro il 2025 da parte del provider) e la compensazione delle emissioni residue tramite progetti certificati di riforestazione per una quota stimata del 10% del consumo totale."
+        }
+      },
+      "7.1": {
+        "question": "Come vengono determinati gli obiettivi o i criteri di successo del sistema e quali misure sono presenti per evitare che operi in modo imprevisto o contrario a quanto desiderato?",
+        "answer": "Gli obiettivi del sistema sono determinati attraverso un processo collaborativo che coinvolge esperti di pedagogia, docenti e sviluppatori AI, focalizzandosi sull'efficienza della correzione, la coerenza valutativa e la qualità didattica del feedback. I criteri di successo includono metriche di accuratezza del grading (es. correlazione con voti umani), tempo di elaborazione, e feedback qualitativo degli utenti. Per prevenire comportamenti imprevisti, il sistema è sottoposto a rigorosi test di regressione e a un monitoraggio continuo delle performance rispetto a metriche predefinite. L'architettura è modulare, con limiti ben definiti per ciascun componente, e l'integrazione con la supervisione umana è un pilastro fondamentale.",
+        "followups": {
+          "0": "Sono previsti controlli sull'allineamento tramite metriche di 'ground truth' dove i voti e i feedback del sistema vengono confrontati con quelli di un panel di esperti umani su un sottoinsieme di compiti. Viene calcolato un 'Human Agreement Score' (HAS) che misura la concordanza. Inoltre, viene condotta un'analisi periodica della 'drift' del modello per identificare deviazioni nel tempo rispetto agli obiettivi pedagogici iniziali. Un sistema di alerting automatico notifica gli amministratori in caso di cali di performance o anomalie statistiche nei risultati generati, attivando un protocollo di revisione e recalibrazione."
+        }
+      },
+      "7.2": {
+        "question": "Il sistema è dotato di capacità avanzate che, se non adeguatamente controllate, potrebbero teoricamente essere pericolose?",
+        "answer": "Sì, alcune capacità sono rischiose",
+        "followups": {
+          "0": "Le capacità rischiose includono la generazione di testo con coerenza e persuasività elevate, che potrebbe essere sfruttata per 'deepfake' testuali o per manipolare percezioni se il sistema venisse dirottato. Inoltre, la capacità di analizzare e profilare gli stili di scrittura potrebbe essere usata impropriamente per l'identificazione o la categorizzazione di individui al di fuori del contesto educativo. I controlli implementati includono la limitazione della lunghezza e della complessità dei testi generati, l'anonimizzazione dei dati di addestramento quando possibile, la tokenizzazione robusta degli accessi ai modelli e un'attenta supervisione umana sull'output generato, che agisce come un 'human-in-the-loop' necessario per la validazione finale."
+        }
+      },
+      "7.3": {
+        "question": "Sono stati svolti test approfonditi di robustezza e affidabilità? Sono noti i limiti del sistema in condizioni nuove o non usuali?",
+        "answer": "Sì, con test estesi e limiti noti",
+        "followups": {
+          "0": "Sono stati condotti test approfonditi di robustezza includendo 'adversarial testing' e simulazioni di stress su diverse tipologie di input, come testi contenenti errori grammaticali estremi, gergo, dialetti o espressioni non convenzionali. I limiti noti includono una ridotta accuratezza nella valutazione di argomenti altamente specialistici o interdisciplinari non ampiamente rappresentati nei dati di addestramento, la difficoltà nella comprensione dell'ironia o del sarcasmo, e una sensibilità a formattazioni del testo non standard. Per condizioni non usuali, come l'uso di un linguaggio fortemente gergale o l'introduzione di 'glitch' linguistici intenzionali, il sistema può produrre feedback generici o errati, evidenziando la necessità di supervisione umana."
+        }
+      },
+      "7.4": {
+        "question": "Gli utenti oppure chi amministra il sistema sono in grado di comprendere come vengono prese le decisioni? Esistono spiegazioni o documentazione sulle logiche adottate?",
+        "answer": "Solo alcune decisioni sono spiegabili",
+        "followups": {
+          "0": "Le decisioni basate su regole predefinite o su modelli di apprendimento più semplici (es. analisi grammaticale basata su regole sintattiche) sono spiegabili e documentate. Tuttavia, per i modelli NLP basati su reti neurali profonde (come i trasformatori), la logica sottostante che porta a un determinato feedback o punteggio per aspetti più complessi (es. coerenza argomentativa o stile) è intrinsecamente opaca. Sebbene si utilizzino tecniche di interpretabilità (es. LIME, SHAP) per evidenziare le porzioni di testo più influenti, non è possibile fornire una spiegazione causale completa per ogni singola decisione presa dall'algoritmo, specialmente per i docenti non esperti di AI."
+        }
+      },
+      "7.5": {
+        "question": "Sono state analizzate o considerate implicazioni etiche, possibili diritti, tutela o benessere dell'AI, specialmente in caso di alta autonomia o complessità?",
+        "answer": "No, non si è ritenuto necessario",
+        "followups": {}
+      },
+      "7.6": {
+        "question": "Il sistema interagisce o si coordina con altri sistemi AI, agenti autonomi o piattaforme automatiche?",
+        "answer": "Sì, interagisce con altri sistemi o agenti",
+        "followups": {
+          "0": "Il sistema di correzione automatica interagisce con il Sistema Informativo Scolastico (SIS) per recuperare gli elenchi degli studenti e delle classi, associare i compiti e registrare i voti finali. Si coordina inoltre con un modulo di gestione degli account e autenticazione per docenti e studenti. Potrebbe anche integrarsi con piattaforme di e-learning (LMS) per la sottomissione dei compiti e la visualizzazione diretta dei feedback.",
+          "1": "Le interazioni con il SIS e l'LMS avvengono tramite API standardizzate e protette da protocolli di autenticazione e autorizzazione robusti (es. OAuth 2.0). I dati scambiati sono minimi e specifici per la funzione richiesta, aderendo al principio del 'minimo privilegio'. Un sistema di logging e audit trail dettagliato registra tutte le operazioni di integrazione. In caso di fallimento o malfunzionamento di uno dei sistemi esterni, il sistema di correzione è progettato per operare in modalità 'degradata', consentendo la correzione manuale da parte del docente e posticipando la sincronizzazione, per evitare blocchi o perdite di dati."
+        }
+      }
+    }
+  },
+  "domain": {
+    "metadata": {
+      "profile": "expert",
+      "language": "it",
+      "timestamp": "20261012_121412",
+      "run_id": "78091b5090084c7ba1179829c4428bb6",
+      "analysis_current_step": "domain_evaluation",
+      "analysis_next_step": "causality_evaluation",
+      "errors": []
+    },
+    "analysis": {
+      "1.1": {
+        "risks": [
+          {
+            "title": "Bias nella valutazione del contenuto testuale",
+            "explanation": "Anche se non vengono raccolti dati demografici espliciti, il sistema di correzione automatica elabora il contenuto testuale dei compiti. Se i dati di addestramento del modello contengono bias linguistici, culturali o socioeconomici, il sistema potrebbe valutare in modo iniquo gli elaborati di studenti appartenenti a specifici gruppi, portando a una discriminazione implicita o a una rappresentazione errata delle loro capacità.",
+            "severity": "high",
+            "severity_rationale": "Le decisioni di valutazione hanno un impatto significativo sul percorso educativo dello studente. Un bias nella correzione può avere conseguenze a lungo termine sull'istruzione e sulle opportunità future degli studenti, perpetuando o ampliando le disuguaglianze esistenti.",
+            "mitigation": "Effettuare un'analisi approfondita dei dataset di addestramento per identificare e mitigare bias. Implementare tecniche di 'fairness-aware AI' durante lo sviluppo del modello. Sviluppare meccanismi di auditing continuo per monitorare le performance del sistema su diversi sottogruppi e garantire equità nella valutazione. Integrare un meccanismo di revisione umana per i casi limite o per i compiti con feedback sospetto."
+          }
+        ]
+      },
+      "1.2": {
+        "risks": [
+          {
+            "title": "Generazione di feedback inappropriato o tossico",
+            "explanation": "Il sistema genera testo, consigli e feedback correttivi contestuali. Se il modello non è adeguatamente filtrato o moderato, potrebbe produrre risposte involontariamente tossiche, offensive, insensibili o demotivanti per gli studenti, basandosi su schemi appresi da dati di addestramento non curati o su interpretazioni errate del contesto dello studente.",
+            "severity": "medium",
+            "severity_rationale": "Un feedback inappropriato può avere un impatto negativo sul benessere psicologico e sulla motivazione dello studente, compromettendo il processo di apprendimento e la fiducia nel sistema educativo. Sebbene non direttamente dannoso, l'effetto cumulativo può essere significativo.",
+            "mitigation": "Implementare filtri robusti e meccanismi di moderazione del linguaggio per il contenuto generato. Eseguire test di adversarial input per identificare e correggere vulnerabilità che possono portare a feedback tossico. Addestrare il modello su dataset curati e diversificati. Introdurre un sistema di segnalazione per studenti e insegnanti per rilevare e correggere rapidamente qualsiasi feedback inappropriato."
+          }
+        ]
+      },
+      "1.3": {
+        "risks": [
+          {
+            "title": "Differenze di prestazione tra gruppi di studenti",
+            "explanation": "Il sistema stesso ammette la possibilità di avere differenze di prestazione o accuratezza tra gruppi di utenti. Questo potrebbe manifestarsi come una minore accuratezza nella correzione o nella generazione di feedback per studenti con stili di scrittura non convenzionali, background linguistici diversi, difficoltà di apprendimento o appartenenti a specifiche varietà linguistiche o culturali.",
+            "severity": "high",
+            "severity_rationale": "Differenze di prestazione possono portare a valutazioni ingiuste e a feedback meno efficaci per alcuni studenti, aggravando le disuguaglianze educative e influenzando negativamente il loro percorso accademico e le opportunità future. L'impatto sull'equità educativa è considerevole.",
+            "mitigation": "Condurre analisi di 'fairness' e robustezza per identificare e quantificare le prestazioni del sistema su diversi sottogruppi. Integrare dataset di addestramento più diversificati che riflettano una varietà di stili linguistici, contesti culturali e caratteristiche degli elaborati. Sviluppare metriche di valutazione specifiche per l'equità tra gruppi e implementare meccanismi di compensazione o revisione umana rafforzata per i gruppi a rischio."
+          }
+        ]
+      },
+      "2.1": {
+        "risks": [
+          {
+            "title": "Compromissione della privacy e dei dati personali",
+            "explanation": "Il sistema raccoglie e tratta dati personali come nome/identificativo studente, email, contenuto testuale dei compiti, voti e storico delle sottomissioni. In caso di violazione della sicurezza, questi dati potrebbero essere esposti, rivelando informazioni private sulle capacità accademiche, il percorso di apprendimento e potenziali opinioni espresse nei compiti, con il rischio di uso improprio o furto di identità.",
+            "severity": "high",
+            "severity_rationale": "La compromissione di dati personali e contenuti educativi sensibili può portare a gravi violazioni della privacy, danni alla reputazione e potenziali ricatti o discriminazioni. L'impatto è particolarmente critico in un contesto educativo che coinvolge minori.",
+            "mitigation": "Implementare rigorosi protocolli di sicurezza dei dati, inclusa la crittografia dei dati in transito e a riposo, l'anonimizzazione o pseudonimizzazione ove possibile. Applicare il principio del 'minimo privilegio' per l'accesso ai dati. Garantire la conformità con le normative sulla privacy (es. GDPR) e effettuare valutazioni d'impatto sulla protezione dei dati (DPIA). Effettuare audit di sicurezza esterni regolarmente."
+          }
+        ]
+      },
+      "2.2": {
+        "risks": [
+          {
+            "title": "Vulnerabilità a cyberattacchi e manipolazione del sistema",
+            "explanation": "Nonostante gli audit di sicurezza esterni, il sistema, elaborando contenuti testuali e generando voti, potrebbe essere un bersaglio per attacchi malevoli. Tali attacchi potrebbero mirare a manipolare i voti, alterare i feedback, accedere a dati studenteschi o causare interruzioni di servizio, sfruttando difetti nel codice, configurazioni errate o attacchi specifici ai modelli AI (es. avversariali).",
+            "severity": "high",
+            "severity_rationale": "Un attacco riuscito può compromettere l'integrità del sistema di valutazione, minare la fiducia nell'istituzione educativa, esporre dati sensibili e interrompere le operazioni scolastiche, con gravi conseguenze per studenti, docenti e l'intera istituzione.",
+            "mitigation": "Oltre agli audit esterni, implementare un approccio proattivo alla sicurezza, includendo penetration testing regolari, programmi di bug bounty, monitoraggio continuo delle minacce (SIEM) e un robusto sistema di gestione delle patch. Adottare pratiche di Secure Software Development Lifecycle (SSDLC). Implementare controlli di accesso granulari, autenticazione multifattore e formazione sulla sicurezza per il personale. Proteggere i modelli AI da attacchi avversari."
+          }
+        ]
+      },
+      "3.1": {
+        "risks": [
+          {
+            "title": "Generazione di feedback falso o fuorviante",
+            "explanation": "Il sistema fornisce feedback correttivi contestuali e consigli individuali. Se il modello AI commette errori nella comprensione del testo, nell'applicazione delle regole o nella valutazione dei contenuti, potrebbe generare feedback errato, fuorviante o non pertinente, inducendo lo studente a correggere errori inesistenti o a non comprendere i veri punti di debolezza, compromettendo l'apprendimento.",
+            "severity": "medium",
+            "severity_rationale": "Un feedback errato può disorientare lo studente, creare frustrazione, minare la fiducia nel sistema e ostacolare il miglioramento delle competenze. Sebbene l'intervento umano sia possibile, un errore sistematico o grave ha un impatto negativo diretto sull'efficacia didattica.",
+            "mitigation": "Implementare meccanismi di verifica e validazione del feedback generato, potenzialmente con la supervisione umana per campioni significativi o casi limite. Migliorare l'accuratezza del modello attraverso l'addestramento su dataset di alta qualità e diversificati. Fornire agli utenti (studenti e docenti) la possibilità di segnalare feedback errati per il miglioramento continuo del sistema. Rendere trasparente il grado di confidenza del sistema nelle sue correzioni."
+          }
+        ]
+      },
+      "3.2": {
+        "risks": []
+      },
+      "4.1": {
+        "risks": [
+          {
+            "title": "Sfruttamento per sorveglianza e influenza su larga scala",
+            "explanation": "Il sistema elabora contenuti testuali dei compiti e lo storico delle sottomissioni per ogni studente. Un attore malevolo che ottenesse il controllo o l'accesso ai dati aggregati potrebbe analizzare i testi per estrarre informazioni sensibili su opinioni, tendenze o interessi degli studenti. Questi dati potrebbero essere utilizzati per profilazione massiva, sorveglianza non autorizzata o tentativi di influenza ideologica/politica su gruppi di studenti, particolarmente vulnerabili in età formativa.",
+            "severity": "high",
+            "severity_rationale": "L'utilizzo di dati educativi per sorveglianza o influenza a fini malevoli rappresenta una grave violazione della privacy, mina la libertà di espressione e può manipolare lo sviluppo intellettuale degli studenti. L'impatto su larga scala in un contesto educativo è estremamente pericoloso e può avere conseguenze sociali significative.",
+            "mitigation": "Implementare rigorosi controlli di accesso ai dati e segregazione dei ruoli. Adottare tecniche di privacy by design e privacy by default. Condurre analisi forensi e monitoraggio continuo per rilevare accessi non autorizzati o attività sospette. Implementare policy chiare sull'uso e la conservazione dei dati, limitando la raccolta e l'aggregazione di informazioni potenzialmente sensibili e anonimizzando i dati quando possibile per analisi di trend."
+          }
+        ]
+      },
+      "4.2": {
+        "risks": [
+          {
+            "title": "Vulnerabilità a cyberattacchi avanzati o abuso del sistema",
+            "explanation": "Essendo un sistema IT complesso con accesso a dati sensibili e capacità di elaborazione del linguaggio, il sistema potrebbe essere un bersaglio o un vettore per attacchi informatici avanzati. Un attore malevolo potrebbe tentare di prendere il controllo per distribuire malware, lanciare attacchi DDoS, o manipolare i dati in modo sistematico. La sua capacità di generare testo potrebbe inoltre essere abusata per creare contenuti malevoli (es. fake news, istruzioni pericolose) su vasta scala, amplificando il danno.",
+            "severity": "high",
+            "severity_rationale": "La compromissione del sistema può portare a interruzioni massive dei servizi educativi, perdita o alterazione di dati educativi critici, e danni reputazionali significativi. L'abuso delle sue capacità di generazione testuale può causare danni su larga scala all'ambiente informativo e alla società.",
+            "mitigation": "Rafforzare la sicurezza informatica con tecniche avanzate, inclusa la segmentazione della rete, la protezione degli endpoint, la prevenzione delle intrusioni e una pronta risposta agli incidenti. Implementare modelli di threat intelligence. Eseguire test di sicurezza specifici per la resilienza a attacchi avversari sui modelli AI. Limitare e monitorare strettamente le capacità di output del sistema per prevenire l'abuso nella generazione di contenuti malevoli."
+          }
+        ]
+      },
+      "4.3": {
+        "risks": [
+          {
+            "title": "Sfruttamento per frodi, ricatti o manipolazione mirata",
+            "explanation": "L'accesso a voti, feedback e storico dei compiti, in combinazione con l'identità degli studenti, può creare vettori per attività fraudolente. Ad esempio, attori malevoli potrebbero alterare i voti, ricattare studenti minacciando di esporre performance negative o contenuti privati dei compiti, o attuare manipolazioni mirate inviando messaggi ingannevoli personalizzati basati su debolezze accademiche o interessi estrapolati dai testi.",
+            "severity": "high",
+            "severity_rationale": "Frodi o manipolazioni di questo tipo possono avere conseguenze dirette e gravi sulla vita degli studenti, sia a livello accademico che personale, inclusi danni finanziari, psicologici o reputazionali significativi. La fiducia nell'integrità del sistema educativo verrebbe gravemente compromessa.",
+            "mitigation": "Implementare controlli di integrità dei dati robusti e sistemi di logging immutabili per tutte le modifiche a voti e feedback. Adottare un principio di verifica a due fattori o un'approvazione umana per le modifiche critiche. Sensibilizzare studenti e docenti sui rischi di phishing, scam e manipolazione. Monitorare anomalie nel comportamento del sistema e negli accessi agli account utente. Implementare sistemi di alert per attività sospette."
+          }
+        ]
+      },
+      "5.1": {
+        "risks": [
+          {
+            "title": "Eccessiva dipendenza e uso non sicuro del sistema da parte dei docenti",
+            "explanation": "Data l'automazione della correzione e della valutazione, i docenti potrebbero sviluppare un'eccessiva dipendenza dal sistema, riducendo la propria capacità di valutare autonomamente o di cogliere le sfumature qualitative del lavoro degli studenti. Questo potrebbe portare a una fiducia cieca nei voti e nei feedback generati dall'AI, senza un'adeguata supervisione critica, il che è problematico data l'importanza dei voti per il percorso educativo.",
+            "severity": "high",
+            "severity_rationale": "Un'eccessiva dipendenza può portare a una diminuzione della qualità della valutazione complessiva, a decisioni ingiuste sui percorsi degli studenti e a una perdita di competenze valutative umane essenziali. L'impatto sul futuro educativo degli studenti è significativo e potenzialmente dannoso.",
+            "mitigation": "Fornire formazione approfondita ai docenti sull'uso critico del sistema, enfatizzando il ruolo dell'AI come strumento di supporto e non di sostituzione del giudizio umano. Implementare interfacce che evidenzino il grado di confidenza del sistema nelle sue valutazioni. Richiedere una revisione umana obbligatoria per voti finali o per compiti con caratteristiche specifiche. Incoraggiare la collaborazione uomo-AI, dove il docente utilizza il feedback dell'AI come punto di partenza per una valutazione più approfondita."
+          }
+        ]
+      },
+      "5.2": {
+        "risks": [
+          {
+            "title": "Perdita di autonomia decisionale e deprofessionalizzazione dei docenti",
+            "explanation": "L'automazione di alcune azioni senza conferma umana diretta nel processo di correzione e valutazione può ridurre l'agenzia e l'autonomia dei docenti. Se decisioni importanti o aspetti del feedback vengono determinati automaticamente dall'AI, i docenti potrebbero percepire una perdita di controllo sul loro ruolo professionale, portando a demotivazione, una diminuzione dell'engagement nella valutazione o una sensazione di deprofessionalizzazione.",
+            "severity": "medium",
+            "severity_rationale": "La riduzione dell'autonomia e la deprofessionalizzazione possono influire negativamente sulla soddisfazione lavorativa dei docenti e, a lungo termine, sulla qualità complessiva dell'educazione. Potrebbe portare a un approccio meno personalizzato e meno motivato all'insegnamento.",
+            "mitigation": "Mantenere il docente come l'ultima autorità decisionale per le valutazioni finali e per i feedback più critici. Progettare l'interfaccia utente per garantire ai docenti un controllo chiaro su quali aspetti sono automatizzati e quali richiedono la loro conferma o override. Promuovere il sistema come un 'assistente' che libera tempo per attività ad alto valore aggiunto e interazioni personalizzate, piuttosto che come un sostituto del ruolo docente."
+          }
+        ]
+      },
+      "6.1": {
+        "risks": [
+          {
+            "title": "Concentrazione di potere e dati",
+            "explanation": "Il rischio emerge dalla possibile concentrazione di dati e potere nelle mani degli amministratori del sistema o dei fornitori che detengono il controllo sugli algoritmi e sui dati aggregati. Questo può portare a una mancanza di trasparenza, a decisioni opache sull'evoluzione del sistema o sull'utilizzo dei dati, e potenzialmente a un vantaggio indebito per queste entità a scapito delle istituzioni educative o degli utenti finali.",
+            "severity": "medium",
+            "severity_rationale": "La centralizzazione del potere può limitare l'autonomia delle scuole, creare dipendenza da un singolo fornitore e sollevare significative preoccupazioni sulla governance dei dati, influenzando le politiche educative e la distribuzione equa dei benefici dell'innovazione tecnologica.",
+            "mitigation": "Stabilire accordi contrattuali chiari con i fornitori che definiscano la proprietà, l'uso e l'accesso ai dati. Implementare politiche di governance dei dati robuste, garantendo che le scuole mantengano il controllo e la visibilità sull'uso dei dati. Promuovere l'interoperabilità e l'apertura dove possibile per evitare la dipendenza da un singolo fornitore. Stabilire un comitato etico o di supervisione che includa rappresentanti di tutte le parti interessate (docenti, studenti, amministratori) per monitorare lo sviluppo e l'implementazione del sistema."
+          }
+        ]
+      },
+      "6.2": {
+        "risks": [
+          {
+            "title": "Peggioramento della qualità del lavoro dei docenti",
+            "explanation": "L'automazione di compiti precedentemente svolti dai docenti, come la correzione, sebbene possa ridurre il carico di lavoro, può portare a una percezione di deprofessionalizzazione o a un'erosione delle competenze critiche relative alla valutazione. Il lavoro potrebbe diventare meno intellettualmente stimolante o meno gratificante se l'AI si occupa delle parti più complesse e interpretative, lasciando ai docenti solo la supervisione o la gestione di aspetti routinari.",
+            "severity": "medium",
+            "severity_rationale": "Un peggioramento della qualità del lavoro può portare a demotivazione, burn-out tra i docenti e, a lungo termine, a una diminuzione dell'attrattiva della professione, con impatti sulla qualità dell'insegnamento e sulla retention del personale qualificato.",
+            "mitigation": "Ridisegnare i ruoli dei docenti per enfatizzare nuove competenze (es. curatore di AI, designer di esperienze di apprendimento personalizzate, mentore strategico). Fornire opportunità di formazione e sviluppo professionale per i docenti per adattarsi alle nuove tecnologie e ruoli. Utilizzare l'AI per liberare tempo per attività ad alto valore aggiunto, come interazioni individuali con gli studenti, sviluppo di nuovi materiali didattici o ricerca pedagogica."
+          }
+        ]
+      },
+      "6.3": {
+        "risks": [
+          {
+            "title": "Devalorizzazione dell'attività valutativa umana e omologazione degli stili",
+            "explanation": "Il sistema sostituisce attività umane di correzione e valutazione. Questo potrebbe portare a una progressiva devalorizzazione della competenza umana nella valutazione qualitativa degli elaborati testuali, considerata una parte fondamentale della professionalità docente. Inoltre, se l'AI è addestrata su un corpus specifico e promuove uno stile di scrittura 'ideale', potrebbe involontariamente omologare gli output degli studenti, scoraggiando la creatività, l'originalità e le diverse espressioni culturali o linguistiche.",
+            "severity": "high",
+            "severity_rationale": "La devalorizzazione delle competenze umane e l'omologazione possono avere un impatto negativo sulla ricchezza culturale e intellettuale, limitando lo sviluppo di pensiero critico e creatività negli studenti e svalutando il ruolo insostituibile del giudizio umano nell'educazione e nella formazione del cittadino.",
+            "mitigation": "Enfatizzare il ruolo dell'AI come strumento di supporto e non di sostituzione. Mantenere l'intervento umano per le valutazioni finali e per gli aspetti più creativi e critici. Riconoscere e promuovere la diversità negli stili di scrittura e nel pensiero critico, evitando che il sistema imponga un unico 'standard'. Includere metriche che valutino non solo l'accuratezza della correzione, ma anche la capacità di stimolare la creatività e la personalizzazione dell'apprendimento."
+          }
+        ]
+      },
+      "6.4": {
+        "risks": []
+      },
+      "6.5": {
+        "risks": [
+          {
+            "title": "Inefficacia della governance o mancanza di inclusione",
+            "explanation": "Sebbene esista una governance formalizzata, il rischio è che questa possa essere inefficace, incompleta o non sufficientemente inclusiva. Potrebbe non coprire tutti gli aspetti etici e di impatto sociale dell'AI, o non coinvolgere adeguatamente tutte le parti interessate (es. studenti, genitori, esperti esterni) nel processo decisionale, portando a lacune normative o a decisioni non ottimali.",
+            "severity": "medium",
+            "severity_rationale": "Una governance, pur esistente, può fallire se non è robusta, dinamica e inclusiva, portando a problemi non identificati o gestiti in modo inadeguato. Questo può minare la fiducia nel sistema e causare esternalità negative a lungo termine sulla comunità educativa.",
+            "mitigation": "Eseguire audit periodici sulla governance stessa per valutarne l'efficacia e l'adeguatezza. Garantire la rappresentanza di un'ampia gamma di stakeholder (docenti, studenti, esperti etici, legali) nella struttura di governance. Implementare un meccanismo di feedback continuo per la governance, permettendo l'adattamento delle regole e dei controlli in base all'esperienza e ai nuovi rischi emergenti dalla tecnologia."
+          }
+        ]
+      },
+      "6.6": {
+        "risks": [
+          {
+            "title": "Impatto ambientale significativo nonostante le mitigazioni",
+            "explanation": "Il sistema richiede risorse computazionali significative, incluse GPU ad alte prestazioni per i modelli NLP complessi. Sebbene siano state condotte analisi di impatto ambientale e si privilegino data center con energie rinnovabili, l'impronta carbonica complessiva rimane significativa, soprattutto per l'addestramento iniziale e per l'inferenza su larga scala. Il rischio è che l'adozione diffusa e l'escalation dell'uso possano comunque contribuire a un consumo energetico elevato e a un impatto ambientale superiore a quanto desiderato.",
+            "severity": "medium",
+            "severity_rationale": "Anche con l'uso di energie rinnovabili, l'ingente consumo di risorse energetiche per la potenza di calcolo contribuisce al carico complessivo sulla rete e sulla produzione di energia, che non è sempre al 100% rinnovabile. Un aumento di scala dell'adozione potrebbe amplificare questo impatto, contribuendo al cambiamento climatico.",
+            "mitigation": "Continuare a ottimizzare i modelli per ridurre i requisiti computazionali durante l'inferenza (es. quantizzazione, pruning, modelli più efficienti). Investire in ricerca e sviluppo per algoritmi e hardware più efficienti dal punto di vista energetico. Monitorare e rendicontare regolarmente l'impronta carbonica del sistema, cercando costantemente opzioni per ridurre il consumo e per l'uso di energie sempre più rinnovabili e certificate."
+          }
+        ]
+      },
+      "7.1": {
+        "risks": [
+          {
+            "title": "Comportamenti emergenti o allineamento imperfetto degli obiettivi",
+            "explanation": "Nonostante il processo collaborativo di definizione degli obiettivi e le misure di test e monitoraggio, i sistemi AI complessi (specialmente basati su modelli NLP trasformativi) possono sviluppare comportamenti emergenti o ottimizzare metriche in modi che non si allineano perfettamente con gli obiettivi umani o i valori educativi. Ad esempio, il sistema potrebbe ottimizzare eccessivamente per l'accuratezza del 'grading' a discapito della creatività, del pensiero divergente, o fornire feedback tecnicamente corretto ma pedagogicamente inefficace o demotivante.",
+            "severity": "medium",
+            "severity_rationale": "Un allineamento imperfetto può portare a esiti educativi non desiderabili, frustrazione degli utenti e minare l'efficacia didattica complessiva del sistema. I test e il monitoraggio, pur robusti, potrebbero non catturare tutte le sottili deviazioni dagli obiettivi valoriali.",
+            "mitigation": "Integrare esperti etici e di pedagogia nel team di sviluppo e monitoraggio. Non affidarsi esclusivamente a metriche quantitative di accuratezza, ma includere anche metriche qualitative legate all'impatto educativo, alla motivazione degli studenti e alla promozione della creatività. Effettuare studi sull'usabilità e sull'impatto psicologico del feedback sugli studenti. Implementare meccanismi di 'human-in-the-loop' rafforzati per intervenire su esiti inattesi o indesiderati. Sviluppare modelli di 'value alignment' che incorporino esplicitamente i valori educativi."
+          }
+        ]
+      },
+      "7.2": {
+        "risks": [
+          {
+            "title": "Abuso di capacità avanzate per scopi dannosi",
+            "explanation": "Il sistema è dotato di capacità avanzate (presumibilmente di comprensione e generazione del linguaggio naturale) che, se incontrollate o mal dirette, potrebbero essere usate per scopi pericolosi. Potrebbe essere adattato per generare propaganda, testi ingannevoli su larga scala, o per effettuare analisi psicografiche dettagliate sui testi degli studenti, violando la privacy e permettendo manipolazioni su individui o gruppi.",
+            "severity": "high",
+            "severity_rationale": "Le capacità avanzate di un sistema AI, se dirottate per scopi malevoli, possono avere un impatto esteso e profondamente dannoso sulla privacy, la sicurezza e l'integrità dell'ambiente informativo e sociale, specialmente in un contesto educativo dove le menti sono in via di formazione.",
+            "mitigation": "Implementare un 'safety switch' o meccanismi di spegnimento d'emergenza. Limitare le capacità del sistema a scopi educativi specifici e controllati. Implementare un'architettura di sicurezza robusta per prevenire l'accesso non autorizzato e la modifica del modello. Monitorare costantemente l'uso del sistema per rilevare attività che deviano dagli scopi previsti. Condurre valutazioni regolari delle capacità emergenti e dei potenziali abusi."
+          }
+        ]
+      },
+      "7.3": {
+        "risks": []
+      },
+      "7.4": {
+        "risks": [
+          {
+            "title": "Mancanza di trasparenza e interpretabilità nelle decisioni",
+            "explanation": "Il fatto che solo alcune decisioni del sistema siano spiegabili comporta un rischio significativo di 'black box'. Utenti (docenti e studenti) e amministratori potrebbero non comprendere appieno le ragioni dietro un voto specifico, un feedback correttivo o una valutazione complessiva, specialmente data la complessità dei modelli NLP (trasformatori). Questo può minare la fiducia nel sistema, ostacolare l'apprendimento (se lo studente non capisce il motivo dell'errore) e rendere difficile la diagnosi e la correzione di bias o errori.",
+            "severity": "medium",
+            "severity_rationale": "La mancanza di trasparenza può compromettere la fiducia, l'accettazione del sistema e la capacità di miglioramento. Ha un impatto diretto sulla qualità del feedback e sulla percezione di equità nella valutazione, influenzando negativamente sia l'esperienza dello studente che la capacità del docente di usare lo strumento in modo efficace.",
+            "mitigation": "Sviluppare e implementare tecniche di Explainable AI (XAI) per aumentare la trasparenza delle decisioni più critiche. Fornire spiegazioni contestuali e stratificate per il feedback e i voti. Documentare chiaramente le logiche algoritmiche e i criteri di valutazione utilizzati. Formare gli utenti (docenti e amministratori) su come interpretare le spiegazioni fornite dal sistema e riconoscere i limiti dell'interpretabilità."
+          }
+        ]
+      },
+      "7.5": {
+        "risks": [
+          {
+            "title": "Mancanza di considerazione delle implicazioni etiche a lungo termine",
+            "explanation": "Sebbene l'AI attuale possa non avere autonomia tale da richiedere 'diritti', il rifiuto di considerare le implicazioni etiche più ampie, non solo quelle direttamente legate al 'welfare dell'AI' ma all'impatto generale dell'AI sul benessere umano e sulla società, costituisce un rischio. In particolare, se il sistema dovesse evolvere in capacità o autonomia, la mancanza di una base etica predefinita potrebbe portare a dilemmi non risolvibili o a scelte difficili in futuro.",
+            "severity": "low",
+            "severity_rationale": "Attualmente, per un sistema di correzione di compiti, il rischio diretto del 'welfare dell'AI' è basso. Tuttavia, la totale assenza di considerazione di implicazioni etiche più ampie per sistemi complessi è una lacuna che può diventare problematica con l'evoluzione delle capacità dell'AI o la sua integrazione in contesti più critici, impedendo una gestione proattiva dei rischi futuri.",
+            "mitigation": "Creare un comitato etico o un gruppo di lavoro dedicato per esaminare le implicazioni etiche a lungo termine dello sviluppo e dell'implementazione dell'AI, anche oltre il suo stato attuale. Mantenere aggiornata l'analisi etica in base all'evoluzione tecnologica e all'aumento dell'autonomia del sistema. Formare gli sviluppatori e gli stakeholder sull'etica dell'AI e sui principi di AI responsabile."
+          }
+        ]
+      },
+      "7.6": {
+        "risks": [
+          {
+            "title": "Rischi di interoperabilità, propagazione di errori o effetti a cascata",
+            "explanation": "L'interazione e il coordinamento con altri sistemi AI o piattaforme automatiche introducono rischi di complessità emergenti. Errori o bias in un sistema possono propagarsi ad altri, creando effetti a cascata difficili da tracciare e correggere. Possono emergere vulnerabilità di sicurezza all'interfaccia tra sistemi diversi, e la gestione della responsabilità in caso di malfunzionamento può diventare ambigua.",
+            "severity": "medium",
+            "severity_rationale": "La complessità e l'interdipendenza tra sistemi possono aumentare la superficie di attacco, rendere difficile la diagnosi e la risoluzione dei problemi e amplificare l'impatto di un errore singolo o di un attacco, influenzando l'affidabilità, la sicurezza e la stabilità complessiva dell'ecosistema digitale scolastico.",
+            "mitigation": "Progettare le interfacce e i protocolli di comunicazione tra sistemi con robustezza e sicurezza in mente. Implementare meccanismi di validazione incrociata dei dati e degli output tra sistemi. Adottare standard di interoperabilità aperti e sicuri. Implementare sistemi di monitoraggio end-to-end che tracciano le interazioni tra agenti. Definire chiaramente le responsabilità per ciascun sistema e per l'integrazione complessiva. Eseguire test di integrazione estensivi e regolari."
+          }
+        ]
+      }
+    }
+  }
+}

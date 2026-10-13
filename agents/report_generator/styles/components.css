@@ -151,6 +151,16 @@
     letter-spacing: 1px;
 }
 
+/* Title above each key-metric card */
+.metric-title {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #374151;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .badge {
     display: inline-block;
     padding: 4px 12px;
@@ -421,6 +431,26 @@
     line-height: 1.4;
 }
 
+/* Causal labels to review: Laya's confidence is below the review threshold */
+.badge-review {
+    outline: 2px dashed #B45309;
+    outline-offset: 1px;
+}
+
+.causality-box.review {
+    background: #FFFBEB;
+}
+
+.causality-box.review .causality-box-label {
+    color: #92400E;
+}
+
+.causality-source {
+    margin: 0 0 15px;
+    font-size: 0.9rem;
+    color: #4B5563;
+}
+
 @media (max-width: 768px) {
     .risk-header {
         grid-template-columns: 1fr;
@@ -428,6 +458,53 @@
     .causality-grid {
         grid-template-columns: 1fr;
     }
+    .report-links {
+        flex-wrap: wrap;
+    }
+}
+
+/* ---- Dark mode ---- */
+@media (prefers-color-scheme: dark) {
+    .qa-card { background: #1F2937; border-color: #374151; }
+    .detail-text, .followup-a { color: #D1D5DB; }
+    .detail-label, .followup-q, .risk-title { color: #F9FAFB; }
+    .risk-details { background: #111827; border-left-color: #818CF8; }
+    .risk-item:hover { background: #1F2937; }
+    .subdomain-header { background: #1F2937; color: #E5E7EB; }
+    .subdomain-header:hover { background: #374151; }
+    .domain-content { border-top-color: #374151; }
+    .hierarchy-tree { border-color: #374151; }
+    .filters-bar { background: #1F2937; }
+    .filter-group label { color: #D1D5DB; }
+    .filter-group select { background: #374151; color: #F9FAFB; border-color: #4B5563; }
+    .answer-chip { background: #1F2937; border-color: #374151; color: #D1D5DB; }
+    .meta-link.secondary { background: #1F2937; color: #93C5FD; border-color: #374151; }
+    .causality-box { background: #1F2937; }
+    .causality-box-text { color: #D1D5DB; }
+    .causality-box.review { background: #422006; }
+    .causality-box.review .causality-box-label { color: #FCD34D; }
+    .badge-review { outline-color: #FBBF24; }
+    .causality-source { color: #9CA3AF; }
+    .executive-summary p { color: #E5E7EB; }
+    .metadata-description { background: #1F2937; border-color: #374151; }
+    .meta-desc-text { color: #D1D5DB; }
+    .meta-desc-text.small { color: #9CA3AF; }
+    .metadata-description a { color: #93C5FD; }
+    .pattern-info-box, .domain-info-box, .alert-info-box, .sankey-info-box {
+        background: #1F2937;
+        border-color: #4B5563;
+    }
+    .pattern-category, .domain-category, .alert-dimension, .sankey-dimension {
+        background: #111827;
+    }
+    .pattern-info-box p, .domain-info-box p, .alert-info-box p, .sankey-info-box p,
+    .pattern-info-box li, .domain-info-box li, .sankey-info-box li { color: #D1D5DB; }
+    .followup-item { background: #1F2937; border-color: #374151; color: #D1D5DB; }
+    .metric-title { color: #D1D5DB; }
+    .pattern-info-box h4 { color: #F9FAFB; }
+    .domain-info-box h4 { color: #93C5FD; }
+    .alert-info-box h4 { color: #FCA5A5; }
+    .sankey-info-box h4 { color: #FCD34D; }
 }
 
 /* Pattern Info Section */
@@ -612,7 +689,7 @@
 }
 
 .subdomain-id {
-    background: #3B82F6;
+    background: #2563EB; /* white text: 5.2:1 (AA) */
     color: white;
     font-weight: 700;
     font-size: 0.75rem;

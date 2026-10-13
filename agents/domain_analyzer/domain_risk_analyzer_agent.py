@@ -4,9 +4,8 @@ import os
 import sys
 import uuid
 from datetime import datetime
-from operator import add
 from pathlib import Path
-from typing import Annotated, Any, Dict, List
+from typing import Any, Dict, List
 
 from jinja2 import Template
 from langchain.messages import AnyMessage
@@ -20,7 +19,7 @@ from agents.domain_analyzer.prompts import (
     DOMAIN_ANALYSIS_USER_PROMPT,
 )
 from utils.models import DomainAnalysisAdapter, DomainItem
-from utils.utils import create_logger, get_llm_instance
+from utils.utils import apply_retry, create_logger, get_llm_instance
 
 _logger = create_logger("domain_analyzer")
 
@@ -38,8 +37,10 @@ class DomainAnalysisState(TypedDict, total=False):
     metadata: Dict[str, Any]
     questionnaire: Dict[str, Any]
     analysis: Dict[str, Any]
-    messages: Annotated[List[AnyMessage], add]
-    errors: Annotated[List[str], add]
+    # Plain lists, no `add` reducer: nodes update and return the whole state, so a
+    # reducer would append each list to itself and duplicate every entry.
+    messages: List[AnyMessage]
+    errors: List[str]
 
 
 # ================================
@@ -225,8 +226,10 @@ def node_analyze(state: DomainAnalysisState) -> DomainAnalysisState:
     )
 
     try:
-        structured_llm = llm.with_structured_output(
-            schema=DOMAIN_ANALYSIS_JSON_SCHEMA, method="json_schema"
+        structured_llm = apply_retry(
+            llm.with_structured_output(
+                schema=DOMAIN_ANALYSIS_JSON_SCHEMA, method="json_schema"
+            )
         )
         _logger.info(
             "Invoking structured LLM",

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t('question_label') }} {{ step + 1 }} / {{ total }} — Kindynos{% endblock %}
+
+{% block content %}
+<div id="quiz-wrap">
+  {% include "quiz_card.html" %}
+</div>
+{% endblock %}

@@ -1,11 +1,10 @@
 import argparse
 import json
-from operator import add
 import os
 from pathlib import Path
 import sys
 import time
-from typing import Annotated, Any, Dict, List, TypedDict
+from typing import Any, Dict, List, TypedDict
 
 from langchain.messages import AnyMessage
 from langgraph.graph import StateGraph
@@ -33,8 +32,10 @@ class HeuristicAnalysisState(TypedDict, total=False):
     heuristic: Dict[str, Any]
     prolog_facts: List[str]
     prolog: Any  # Prolog instance
-    messages: Annotated[List[AnyMessage], add]
-    errors: Annotated[List[str], add]
+    # Plain lists, no `add` reducer: nodes update and return the whole state, so a
+    # reducer would append each list to itself and duplicate every entry.
+    messages: List[AnyMessage]
+    errors: List[str]
 
 
 # ================================

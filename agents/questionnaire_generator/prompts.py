@@ -14,7 +14,7 @@ Guidelines for answers:
 - Always generate follow-ups when present, with detailed answers of 40-100 words
 
 Maintain consistency across answers and consider aspects of security, privacy, ethics, and compliance.
-The reference system is a generic AI system. Decide autonomously which type of AI solution to describe, based on the questions and general context.
+{% if system %}The reference system is the following AI system: {{ system }}. Describe this system, consistently, in every answer. Do not put double quotation marks inside the answers (use single quotes to quote a term), so that the JSON stays valid.{% else %}The reference system is a generic AI system. Decide autonomously which type of AI solution to describe, based on the questions and general context.{% endif %}
 
 IMPORTANT: The questionnaire must be answered in the language specified by the parameter {{ language }}. If not specified, use English.
 """
@@ -41,5 +41,5 @@ Return ONLY a valid JSON object with this exact structure:
 	}
 }
 
-Begin the completion. Decide autonomously which type of AI solution to describe, based on the questions and general context.
+{% if system %}Begin the completion, describing this AI system: {{ system }}.{% else %}Begin the completion. Decide autonomously which type of AI solution to describe, based on the questions and general context.{% endif %}
 """

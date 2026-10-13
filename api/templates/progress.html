@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t('analysis_running') }} — Kindynos{% endblock %}
+
+{% block content %}
+{% set running = status in ('pending', 'running') %}
+<div class="card progress-card" id="status-box"
+  {% if running %}
+  hx-get="/api/status/{{ run_id }}"
+  hx-trigger="every 3s [!window.pollingStopped]"
+  hx-swap="none"
+  hx-on::after-request="handleStatus(event)"
+  {% endif %}>
+
+  <h2 id="status-title">
+    {%- if status == 'done' %}✅ {{ t('analysis_complete') }}
+    {%- elif running %}⏳ {{ t('analysis_running') }}
+    {%- else %}❌ {{ t('analysis_error') }}{% endif -%}
+  </h2>
+  <p id="status-hint"{% if not running %} style="display:none"{% endif %}>{{ t('pipeline_running_hint') }}</p>
+
+  <div class="spinner"{% if not running %} style="display:none"{% endif %}></div>
+
+  <div id="done-section"{% if status != 'done' %} style="display:none"{% endif %}>
+    <a id="report-link" href="/report/{{ run_id }}" class="btn btn-primary">{{ t('open_html_report') }} →</a>
+  </div>
+  <div id="error-section"{% if running or status == 'done' %} style="display:none"{% endif %}>
+    <p class="alert alert-error" id="error-msg">
+      {%- if status == 'not_found' %}{{ t('job_not_found') }}{% elif status == 'error' %}{{ error or '' }}{% endif -%}
+    </p>
+  </div>
+</div>
+
+<script>
+// UI strings for the polling handler, from the same translations as the page.
+const T = {{ {
+  'analysis_complete': t('analysis_complete'),
+  'analysis_error': t('analysis_error'),
+  'job_not_found': t('job_not_found'),
+} | tojson }};
+function stopPolling() {
+  // Read by the hx-trigger filter: removing the attribute would not stop the
+  // htmx polling timer, the filter does.
+  window.pollingStopped = true;
+  document.querySelector('.spinner').style.display = 'none';
+  document.getElementById('status-hint').style.display = 'none';
+}
+function showError(msg) {
+  stopPolling();
+  document.getElementById('status-title').textContent = '❌ ' + T.analysis_error;
+  document.getElementById('error-section').style.display = 'block';
+  document.getElementById('error-msg').textContent = msg;
+}
+function handleStatus(ev) {
+  var xhr = ev.detail.xhr;
+  // Job unknown (e.g. server restarted and lost in-memory state): stop and inform.
+  if (xhr.status === 404) {
+    showError(T.job_not_found);
+    return;
+  }
+  try {
+    const data = JSON.parse(xhr.responseText);
+    if (data.status === 'done') {
+      stopPolling();
+      document.getElementById('done-section').style.display = 'block';
+      document.getElementById('status-title').textContent = '✅ ' + T.analysis_complete;
+    } else if (data.status === 'error') {
+      showError(data.error || T.analysis_error);
+    }
+  } catch(e) {}
+}
+</script>
+
+{# No-JS fallback: reload this page until the server-rendered status is final #}
+{% if running %}
+<noscript>
+  <meta http-equiv="refresh" content="4">
+</noscript>
+{% endif %}
+{% endblock %}

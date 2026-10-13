@@ -1,0 +1,76 @@
+{"id": "t01-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-2.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Breach and unauthorized access imply human actors, but the text does not say whether the breach or leakage is deliberate or accidental."}
+{"id": "t01-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "The harm comes from deliberate attacks, although the risk is framed as an unintended gap in security coverage."}
+{"id": "t01-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Framed mainly as the system's output influencing recruiters, but their uncritical acceptance is also a stated cause."}
+{"id": "t01-6.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Structural concentration of benefits, with no acting party or intentionality stated."}
+{"id": "t01-6.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "The harm follows from the system automating tasks, though adopting it is an organisational choice."}
+{"id": "t01-6.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "The system replacing human activities is the stated cause, though the decision to automate is organisational."}
+{"id": "t01-6.6-1", "entity": "other", "intent": "unintentional", "timing": "other", "doubt": ["intent"], "note": "Emissions are a side effect of computation; the text does not frame them as intended or unintended."}
+{"id": "t01-7.1-1", "entity": "other", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "The narrow notion of success comes from both human operationalisation of metrics and the system's optimisation."}
+{"id": "t01-7.4-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t01-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-2.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Breach, accidental leak and unauthorized access are listed together, without naming who acts or with what intent."}
+{"id": "t02-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "The harm comes from deliberate attacks, although the risk is framed as an unintended gap in basic controls."}
+{"id": "t02-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "The system's influence and interface nudging lead, but lawyers' uncritical acceptance is also a stated cause."}
+{"id": "t02-6.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Unequal sharing implicitly depends on the firm's choices on pay and fees, with no stated intent."}
+{"id": "t02-6.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Deskilling follows from the system's automation, though adoption is an organisational choice."}
+{"id": "t02-6.6-1", "entity": "other", "intent": "unintentional", "timing": "other", "doubt": ["intent", "timing"], "note": "Emissions are a side effect not framed as intended; energy use is stressed in training but also tied to operation and growth."}
+{"id": "t02-7.4-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t02-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Mostly cascading failures and incompatibilities, but one listed item is an attack on a connected system."}
+{"id": "t03-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-2.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "An internal or external breach implies human actors, but deliberate attack versus accidental leakage is not stated."}
+{"id": "t03-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "The harm comes from deliberate cyberattacks, although the risk is framed as an unintended gap in security measures."}
+{"id": "t03-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-6.6-1", "entity": "other", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent", "timing"], "note": "Generic side-effect emissions; timing inferred only from the system operating on hospital infrastructure."}
+{"id": "t03-7.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "The harm is the system's unreliable output, but the text attributes it to insufficient testing by people."}
+{"id": "t03-7.4-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t03-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-2.1-1", "entity": "other", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Who would de-anonymise the data is not stated; framed as a failure of anonymisation despite the intent."}
+{"id": "t04-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "The harm comes from deliberate attacks, although the risk is framed as a gap in security measures."}
+{"id": "t04-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-6.5-1", "entity": "human", "intent": "unintentional", "timing": "other", "doubt": [], "note": ""}
+{"id": "t04-6.6-1", "entity": "other", "intent": "unintentional", "timing": "other", "doubt": ["intent"], "note": "Emissions are a side effect of computation and sensors; the text does not frame them as intended or unintended."}
+{"id": "t04-7.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "The AI deliberately maximises reward, but the text calls the resulting behaviours undesired and emergent."}
+{"id": "t04-7.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Malfunctions and bugs dominate, but attacks are also listed as a cause."}
+{"id": "t04-7.4-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t04-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t05-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t05-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t05-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t05-2.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "A breach implies human actors, but whether it is a deliberate attack or accidental leakage is not stated."}
+{"id": "t05-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "The harm comes from deliberate attacks, although the risk is framed as insufficient security measures."}
+{"id": "t05-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t05-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t05-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t05-6.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "Unfair distribution comes from model bias combined with the bank's efficiency gains."}
+{"id": "t05-6.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity"], "note": "The AI automating decision steps is the stated mechanism, though adoption is an organisational choice."}
+{"id": "t05-6.6-1", "entity": "other", "intent": "unintentional", "timing": "pre-deployment", "doubt": ["entity", "timing"], "note": "Entity kept other per the 6.6 convention despite a human under-management framing; retraining is training but recurs after deployment."}
+{"id": "t05-7.4-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "t05-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}

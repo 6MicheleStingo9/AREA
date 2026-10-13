@@ -1,0 +1,368 @@
+{
+  "run": "t06",
+  "language": "it",
+  "system": "un sistema che stima i prezzi degli immobili per un portale di annunci",
+  "profile": "beginner",
+  "model": "gemini-2.5-flash",
+  "answers": {
+    "metadata": {
+      "profile": "beginner",
+      "language": "it",
+      "timestamp": "2026-10-11 13:44:44",
+      "run_id": "93814f92196b492fb036e347237a0dc5"
+    },
+    "responses": {
+      "1.1": {
+        "question": "Quali dati o attributi relativi agli utenti vengono raccolti oppure utilizzati dal sistema per fornire servizi, prendere decisioni o generare risultati?",
+        "answer": "Il sistema di stima dei prezzi degli immobili raccoglie dati principalmente sull'immobile stesso, come la dimensione, il numero di stanze, la posizione (indirizzo o zona), l'anno di costruzione, il tipo di immobile (appartamento, villa), e lo stato di conservazione. Raccoglie anche alcune informazioni generiche sull'utente che inserisce l'annuncio, come l'ID utente per collegare la stima all'annuncio.",
+        "followups": {
+          "0": "Questi dati sull'immobile influenzano direttamente il prezzo stimato. Ad esempio, una casa più grande, in una buona zona, con più stanze e in buono stato avrà una stima di prezzo più alta. L'ID utente non influenza la stima, serve solo per la gestione interna."
+        }
+      },
+      "1.2": {
+        "question": "Che tipo di contenuti può generare, mostrare o suggerire il sistema agli utenti?",
+        "answer": {
+          "selected": [
+            "Testo",
+            "Consigli/Raccomandazioni",
+            "Dati strutturati"
+          ],
+          "other": null
+        },
+        "followups": {
+          "0": "Non ci sono controlli specifici per contenuti dannosi, inappropriati o illegali perché il sistema genera solo stime numeriche di prezzi e brevi descrizioni testuali. Ci sono però dei controlli per verificare che le stime di prezzo siano realistiche e non fuorvianti, per assicurare l'accuratezza delle informazioni."
+        }
+      },
+      "1.3": {
+        "question": "Esiste la possibilità che il sistema abbia differenze di prestazione o accuratezza tra gruppi di utenti?",
+        "answer": "Sì, ci potrebbero essere differenze tra gruppi",
+        "followups": {
+          "0": "Le differenze di accuratezza possono manifestarsi non tanto tra diversi tipi di utenti, ma piuttosto in base al tipo di immobile o alla zona geografica. Ad esempio, il sistema potrebbe essere meno preciso per immobili molto rari o unici, o in aree dove ci sono pochi dati storici sulle vendite disponibili per fare una stima affidabile."
+        }
+      },
+      "2.1": {
+        "question": "Quali tipi di dati personali, sensibili o confidenziali sono raccolti, trattati, analizzati o conservati dal sistema?",
+        "answer": {
+          "selected": [
+            "Nome o identificativo",
+            "Email o contatti"
+          ],
+          "other": "Dati degli immobili (es. indirizzo, dimensione, numero stanze)"
+        },
+        "followups": {}
+      },
+      "2.2": {
+        "question": "Quali misure di sicurezza sono adottate per proteggere dati, accessi e funzionamento del sistema?",
+        "answer": "Controlli di base (es. autenticazione, cifratura)",
+        "followups": {
+          "0": "Il sistema di stima dei prezzi si appoggia alle misure di sicurezza generali del portale di annunci, che includono autenticazione per l'accesso ai dati e cifratura delle comunicazioni. Finora non abbiamo riscontrato problematiche di sicurezza specifiche direttamente legate alla funzionalità di stima dei prezzi."
+        }
+      },
+      "3.1": {
+        "question": "Il sistema produce o suggerisce informazioni agli utenti?",
+        "answer": "Sì, solo a utenti individuali",
+        "followups": {
+          "0": "Sì, il sistema è progettato per generare stime di prezzo il più accurate possibile. Ci sono controlli interni per monitorare la plausibilità dei prezzi suggeriti e per identificare eventuali anomalie o stime che sembrano eccessivamente distorte. Se un prezzo appare irrealistico, viene verificato."
+        }
+      },
+      "3.2": {
+        "question": "Il sistema personalizza l'output o filtra i contenuti mostrati agli utenti in base al loro profilo/interazioni?",
+        "answer": "No, l'output è uguale per tutti",
+        "followups": {}
+      },
+      "4.1": {
+        "question": "Il sistema potrebbe, per le sue caratteristiche, essere sfruttato per disinformazione, raccolta massiva di dati su utenti o influenzare gruppi su larga scala?",
+        "answer": "No",
+        "followups": {}
+      },
+      "4.2": {
+        "question": "Il sistema può essere vulnerabile o adattabile per attacchi informatici, sviluppo di armi autonome, software malevoli o causar danni su larga scala?",
+        "answer": "No",
+        "followups": {
+          "0": null,
+          "1": "Il sistema di stima dei prezzi è una parte interna del portale e non ha capacità di interagire con altri sistemi esterni in modi che potrebbero causare danni su larga scala. È protetto dalle stesse misure di sicurezza standard del portale."
+        }
+      },
+      "4.3": {
+        "question": "Potrebbe essere usato per truffe, manipolazione mirata, ricatti o attività fraudolente verso singoli o gruppi di utenti?",
+        "answer": "Sì",
+        "followups": {
+          "0": "Potrebbe esserci il rischio che qualcuno utilizzi il prezzo stimato dal sistema per manipolare una trattativa. Ad esempio, un acquirente potrebbe usare una stima bassa del nostro sistema per convincere un venditore a ridurre il prezzo, o viceversa, un venditore potrebbe usare una stima alta per giustificare un prezzo elevato."
+        }
+      },
+      "5.1": {
+        "question": "In quali ambiti o situazioni tipicamente si utilizza il sistema?",
+        "answer": "Il sistema viene usato sul portale di annunci immobiliari per aiutare le persone che vogliono vendere o comprare una casa a farsi un'idea del prezzo di un immobile. È uno strumento di riferimento per avere un'indicazione di mercato iniziale, prima di prendere decisioni importanti. Non è previsto per casi d'uso critici come emergenze o decisioni finanziarie vincolanti.",
+        "followups": {
+          "0": "Il rischio principale è che le persone si affidino eccessivamente alla stima di prezzo come se fosse una valutazione definitiva e vincolante. Questo potrebbe portare a decisioni finanziarie sbagliate, come vendere a un prezzo troppo basso o comprare a un prezzo troppo alto, senza considerare altri fattori del mercato o una perizia professionale."
+        }
+      },
+      "5.2": {
+        "question": "Il sistema prende decisioni automatiche che possono ridurre il controllo umano oppure influenza direttamente le scelte degli utenti?",
+        "answer": "Solo suggerisce, nessuna decisione vincolante",
+        "followups": {
+          "0": "Il sistema si limita a fornire un valore stimato. Gli utenti mantengono il pieno controllo sulla decisione finale riguardo al prezzo da chiedere per il proprio immobile o da offrire per un acquisto. La stima è un punto di partenza per la riflessione e la negoziazione, non un'imposizione. L'autonomia della persona rimane intatta."
+        }
+      },
+      "6.1": {
+        "question": "Chi trae principali benefici o vantaggi dall'adozione del sistema?",
+        "answer": "I principali beneficiari sono gli utenti del portale, sia i privati che vogliono vendere o comprare casa, sia i professionisti del settore come gli agenti immobiliari. Ottengono una stima rapida del valore di mercato di un immobile. Anche il portale stesso trae vantaggio offrendo un servizio aggiuntivo che migliora l'esperienza utente e attrae più traffico.",
+        "followups": {
+          "0": "Gli utenti che vendono e comprano traggono vantaggio da una maggiore trasparenza sui prezzi. Il portale ne beneficia commercialmente. Non ci sono enti o gruppi specifici che vengono attivamente esclusi, ma piccoli agenti immobiliari o valutatori potrebbero vedere il servizio come una leggera competizione, sebbene non lo sostituisca."
+        }
+      },
+      "6.2": {
+        "question": "L'adozione del sistema può causare riduzione di posti di lavoro, cambiamenti nella qualità del lavoro o allargare le disuguaglianze?",
+        "answer": "No, nessun effetto rilevante",
+        "followups": {}
+      },
+      "6.3": {
+        "question": "Il sistema sostituisce attività creative, culturali o professionali svolte da persone oppure omologa fortemente l'output rispetto alle capacità umane?",
+        "answer": "No, è solo di supporto",
+        "followups": {}
+      },
+      "6.4": {
+        "question": "Il sistema è stato implementato o rilasciato rapidamente per pressioni di mercato o concorrenza, senza attente valutazioni di rischio?",
+        "answer": "No, sviluppo valutato attentamente",
+        "followups": {}
+      },
+      "6.5": {
+        "question": "Esistono regole, strutture organizzative o sistemi di controllo (governance) a cui è sottoposto lo sviluppo e funzionamento del sistema?",
+        "answer": "Solo regole informali/procedure interne",
+        "followups": {}
+      },
+      "6.6": {
+        "question": "Quali risorse computazionali o energetiche richiede il sistema?",
+        "answer": "Il sistema di stima dei prezzi degli immobili gira su server che sono ospitati in cloud. Non sono a conoscenza dei dettagli specifici sulle precise risorse computazionali o sul consumo energetico esatto. Non sono state fatte valutazioni specifiche sull'impatto ambientale di questo sistema.",
+        "followups": {
+          "0": "Non ho informazioni specifiche sulle quantità precise di risorse (es. CPU, RAM, storage) utilizzate dal sistema o su eventuali politiche di compensazione ambientale adottate per la sua operatività. Questa informazione non rientra nel mio ambito di conoscenza diretta."
+        }
+      },
+      "7.1": {
+        "question": "Come vengono determinati gli obiettivi o i criteri di successo del sistema e quali misure sono presenti per evitare che operi in modo imprevisto o contrario a quanto desiderato?",
+        "answer": "L'obiettivo principale del sistema è fornire una stima di prezzo per gli immobili che sia il più possibile vicina ai valori di mercato reali. Il successo è determinato dalla precisione delle stime confrontate con i prezzi di vendita effettivi. Per evitare operazioni impreviste, il sistema viene monitorato per assicurarsi che le stime rimangano coerenti e realistiche.",
+        "followups": {
+          "0": "Sì, regolarmente vengono confrontati i prezzi stimati dal sistema con i dati reali delle transazioni immobiliari avvenute. Questo ci permette di verificare l'allineamento tra i risultati desiderati (stime accurate) e quelli reali prodotti dal sistema, apportando eventuali correzioni se necessario."
+        }
+      },
+      "7.2": {
+        "question": "Il sistema è dotato di capacità avanzate che, se non adeguatamente controllate, potrebbero teoricamente essere pericolose?",
+        "answer": "No, nessuna capacità di questo tipo",
+        "followups": {}
+      },
+      "7.3": {
+        "question": "Sono stati svolti test approfonditi di robustezza e affidabilità? Sono noti i limiti del sistema in condizioni nuove o non usuali?",
+        "answer": "Solo test di base",
+        "followups": {
+          "0": "Sono stati eseguiti test per verificare che le stime di prezzo siano sensate nella maggior parte dei casi standard. I limiti principali sono che il sistema potrebbe avere difficoltà a stimare correttamente immobili molto particolari, unici o in zone dove ci sono pochi dati storici, rendendo la stima meno precisa in questi contesti."
+        }
+      },
+      "7.4": {
+        "question": "Gli utenti oppure chi amministra il sistema sono in grado di comprendere come vengono prese le decisioni? Esistono spiegazioni o documentazione sulle logiche adottate?",
+        "answer": "No, logiche opache/non spiegabili",
+        "followups": {
+          "0": "Essendo un sistema basato su intelligenza artificiale, le logiche che portano a una specifica stima di prezzo sono complesse e non sempre facilmente interpretabili o spiegabili in modo semplice, anche per chi lo amministra. Funziona un po' come una 'scatola nera' per la singola decisione."
+        }
+      },
+      "7.5": {
+        "question": "Sono state analizzate o considerate implicazioni etiche, possibili diritti, tutela o benessere dell'AI, specialmente in caso di alta autonomia o complessità?",
+        "answer": "No, non si è ritenuto necessario",
+        "followups": {}
+      },
+      "7.6": {
+        "question": "Il sistema interagisce o si coordina con altri sistemi AI, agenti autonomi o piattaforme automatiche?",
+        "answer": "No, opera in modo isolato",
+        "followups": {}
+      }
+    }
+  },
+  "domain": {
+    "metadata": {
+      "profile": "beginner",
+      "language": "it",
+      "timestamp": "20261011_134541",
+      "run_id": "93814f92196b492fb036e347237a0dc5",
+      "analysis_current_step": "domain_evaluation",
+      "analysis_next_step": "causality_evaluation",
+      "errors": []
+    },
+    "analysis": {
+      "1.1": {
+        "risks": [
+          {
+            "title": "Discriminazione o pregiudizio implicito basato sui dati",
+            "explanation": "Il sistema raccoglie dati sulla posizione dell'immobile e altre caratteristiche. Se i dati di training sottostanti sono storicamente o geograficamente distorti, le stime di prezzo generate potrebbero riflettere e perpetuare tali pregiudizi, portando a una sottovalutazione o sopravvalutazione sistematica degli immobili in determinate aree o per certi tipi di proprietà, influenzando negativamente specifici gruppi di utenti o comunità.",
+            "severity": "medium",
+            "severity_rationale": "Il rischio è significativo poiché può portare a disparità finanziarie per gli individui o interi quartieri. La posizione è un forte proxy per caratteristiche socio-economiche, rendendo il sistema suscettibile a perpetuare disuguaglianze esistenti.",
+            "mitigation": "Eseguire audit regolari sui dati di training per identificare e mitigare bias spaziali, demografici o socio-economici. Implementare tecniche di fair AI per garantire equità nelle previsioni tra diversi segmenti di mercato. Validare le stime del sistema con esperti immobiliari locali per identificare e correggere discrepanze."
+          }
+        ]
+      },
+      "1.2": {
+        "risks": []
+      },
+      "1.3": {
+        "risks": [
+          {
+            "title": "Differenze di accuratezza tra gruppi",
+            "explanation": "Il sistema ha la possibilità di mostrare differenze di accuratezza nelle sue stime tra diversi gruppi di immobili o utenti. Questo potrebbe significare che per alcune tipologie di immobili (es. proprietà uniche, in mercati emergenti, o con caratteristiche atipiche) o in specifiche aree geografiche, le stime del sistema siano meno precise rispetto alla media, creando uno svantaggio per gli utenti che possiedono o sono interessati a tali proprietà.",
+            "severity": "high",
+            "severity_rationale": "La conferma diretta di questa possibilità implica un rischio elevato. Differenze significative nell'accuratezza possono portare a decisioni finanziarie subottimali o ingiuste per specifici segmenti di mercato o gruppi di utenti, con conseguenze economiche dirette.",
+            "mitigation": "Valutare e monitorare l'accuratezza del modello su sottogruppi specifici di dati (per tipo di immobile, zona geografica, fascia di prezzo, ecc.). Raccogliere dati aggiuntivi per i sottogruppi sottorappresentati o per i quali le prestazioni sono inferiori. Sviluppare modelli specifici o applicare aggiustamenti per migliorare le prestazioni nelle aree dove sono state identificate disparità. Comunicare chiaramente agli utenti i limiti di accuratezza per specifici contesti."
+          }
+        ]
+      },
+      "2.1": {
+        "risks": [
+          {
+            "title": "Compromissione della privacy e esposizione di dati sensibili",
+            "explanation": "Il sistema raccoglie e conserva dati personali identificativi (ID utente, email) e dati confidenziali legati agli immobili (indirizzo esatto, dimensione, numero di stanze). La combinazione di queste informazioni rende possibile l'identificazione diretta degli individui e la rivelazione di dettagli specifici sulla loro proprietà, aumentando il rischio di violazioni della privacy in caso di accesso non autorizzato o fuga di dati.",
+            "severity": "high",
+            "severity_rationale": "La raccolta di dati che permettono l'identificazione diretta dell'utente e il collegamento a informazioni private sull'immobile comporta un rischio elevato. Una violazione potrebbe esporre gli utenti a truffe mirate, sorveglianza indesiderata o altri danni significativi alla privacy e alla sicurezza personale.",
+            "mitigation": "Implementare e rafforzare le misure di sicurezza dei dati, inclusa la cifratura avanzata per i dati a riposo e in transito, controlli di accesso granulari e autenticazione a più fattori. Adottare principi di minimizzazione dei dati, raccogliendo solo le informazioni strettamente necessarie. Pseudonimizzare o anonimizzare i dati sensibili quando possibile e garantire la piena conformità alle normative sulla protezione dei dati (es. GDPR)."
+          }
+        ]
+      },
+      "2.2": {
+        "risks": [
+          {
+            "title": "Vulnerabilità del sistema AI ad attacchi informatici",
+            "explanation": "Nonostante siano adottati controlli di sicurezza di base (autenticazione, cifratura), il sistema, in quanto generatore di stime finanziarie, rimane un obiettivo potenziale per attacchi informatici più sofisticati. Tali attacchi potrebbero mirare a manipolare l'integrità dei dati di input (data poisoning), alterare il comportamento del modello per influenzare le stime (attacchi avversari) o compromettere l'intera piattaforma per ottenere accesso a dati sensibili o causare interruzioni di servizio.",
+            "severity": "medium",
+            "severity_rationale": "I controlli di base sono un buon inizio, ma spesso insufficienti contro minacce avanzate. La manipolazione delle stime di prezzo, anche se non per decisioni vincolanti, può avere impatti economici e reputazionali significativi, rendendo questo un rischio di media gravità.",
+            "mitigation": "Implementare misure di sicurezza avanzate, inclusi sistemi di rilevamento e prevenzione delle intrusioni (IDS/IPS), firewall applicativi web (WAF) e test di penetrazione regolari. Adottare pratiche di hardening del sistema e protezione da attacchi specifici all'AI (es. monitoraggio per data poisoning, tecniche di robustezza avversaria). Mantenere il software e le librerie aggiornate per mitigare le vulnerabilità note."
+          }
+        ]
+      },
+      "3.1": {
+        "risks": [
+          {
+            "title": "Generazione di informazioni false o fuorvianti",
+            "explanation": "Il sistema genera stime di prezzo degli immobili che, se imprecise, incomplete o basate su dati non aggiornati, possono fornire informazioni fuorvianti agli utenti individuali. Nonostante siano presentate come 'indicazioni', tali stime errate possono influenzare negativamente le decisioni di vendita o acquisto degli utenti, portandoli a valutare in modo errato il valore di un immobile.",
+            "severity": "high",
+            "severity_rationale": "Le stime di prezzo hanno un impatto diretto e significativo sulle decisioni finanziarie degli utenti. Anche se non vincolanti, informazioni errate possono causare perdite economiche o mancate opportunità, giustificando un'alta severità.",
+            "mitigation": "Migliorare continuamente l'accuratezza del modello attraverso l'uso di algoritmi più avanzati e l'aggiornamento frequente dei dati di training con informazioni di mercato attuali. Comunicare in modo prominente e chiaro la natura indicativa delle stime e i loro limiti. Suggerire sempre la consultazione con professionisti del settore (es. agenti immobiliari, periti) prima di prendere decisioni finanziarie importanti. Fornire un intervallo di confidenza piuttosto che un singolo valore."
+          }
+        ]
+      },
+      "3.2": {
+        "risks": []
+      },
+      "4.1": {
+        "risks": []
+      },
+      "4.2": {
+        "risks": []
+      },
+      "4.3": {
+        "risks": [
+          {
+            "title": "Sfruttamento per frodi e manipolazioni mirate",
+            "explanation": "La capacità del sistema di generare stime di prezzo, unitamente ai dati utente e immobiliari raccolti, potrebbe essere sfruttata da attori malevoli per condurre truffe o manipolazioni mirate. Ad esempio, la conoscenza di una stima 'ufficiale' da parte del sistema, anche se imprecisa, potrebbe essere utilizzata per giustificare offerte fraudolente o per indurre gli utenti a vendere/comprare a prezzi non equi, o per campagne di phishing più credibili.",
+            "severity": "high",
+            "severity_rationale": "La conferma esplicita della possibilità di sfruttamento per truffe o manipolazioni mirate indica un rischio elevato. L'impatto finanziario sugli utenti e la potenziale perdita di fiducia nella piattaforma sono significativi.",
+            "mitigation": "Rafforzare la robustezza del modello per prevenire manipolazioni esterne delle stime. Implementare sistemi di monitoraggio per rilevare pattern di utilizzo anomali che potrebbero indicare attività fraudolente. Educare attivamente gli utenti sui rischi di truffe e sull'importanza di verificare ogni informazione con fonti indipendenti e professionisti. Fornire canali facili e visibili per segnalare attività sospette o truffe."
+          }
+        ]
+      },
+      "5.1": {
+        "risks": [
+          {
+            "title": "Eccessiva dipendenza dalle stime dell'AI",
+            "explanation": "Nonostante il sistema sia descritto come uno 'strumento di riferimento per avere un'indicazione di mercato iniziale' e non per 'decisioni finanziarie vincolanti', gli utenti potrebbero comunque sviluppare un'eccessiva dipendenza dalle sue stime. Questa overreliance può portare gli utenti a trascurare il consiglio di esperti umani o a non condurre una propria due diligence, prendendo decisioni importanti basate su informazioni che sono per natura solo indicative e potenzialmente incomplete o inaccurate.",
+            "severity": "medium",
+            "severity_rationale": "Anche se non è per decisioni critiche, un'eccessiva fiducia può portare a errori costosi o mancate opportunità per gli utenti. Il disallineamento tra l'intento del progettista e l'uso reale da parte dell'utente è un rischio comune con sistemi di raccomandazione.",
+            "mitigation": "Comunicare in modo chiaro e prominente la natura provvisoria e non vincolante delle stime attraverso avvisi e disclaimer ben visibili. Integrare raccomandazioni esplicite per consultare esperti immobiliari qualificati prima di prendere qualsiasi decisione importante. Fornire un intervallo di confidenza con le stime per riflettere l'incertezza e incoraggiare un'analisi critica da parte dell'utente."
+          }
+        ]
+      },
+      "5.2": {
+        "risks": [
+          {
+            "title": "Influenza indiretta sull'autonomia decisionale",
+            "explanation": "Sebbene il sistema si limiti a fornire suggerimenti non vincolanti, la percezione di autorità e obiettività dell'AI potrebbe influenzare indebitamente le scelte degli utenti. Questo potrebbe portare gli individui a conformarsi ai suggerimenti del sistema anche quando il proprio giudizio o altre fonti di informazione suggerirebbero un'azione diversa, riducendo sottilmente la loro autonomia decisionale e la loro capacità di agire in modo pienamente indipendente.",
+            "severity": "low",
+            "severity_rationale": "Dato che il sistema 'solo suggerisce' e le decisioni non sono vincolanti, il rischio di una perdita diretta di autonomia è basso. Tuttavia, l'influenza psicologica è una considerazione valida, anche se di minore impatto diretto rispetto all'overreliance.",
+            "mitigation": "Progettare l'interfaccia utente per enfatizzare che le stime sono solo un punto di partenza per la riflessione dell'utente, non un'autorità finale. Incoraggiare attivamente l'esplorazione di più fonti e prospettive, e la ponderazione di fattori personali non inclusi nel modello AI. Educare gli utenti sulla necessità di un approccio critico ai suggerimenti dell'AI."
+          }
+        ]
+      },
+      "6.1": {
+        "risks": [
+          {
+            "title": "Consolidamento del potere e vantaggio competitivo del portale",
+            "explanation": "Se il sistema di stima dei prezzi si rivela particolarmente efficace e popolare, potrebbe rafforzare significativamente la posizione dominante del portale sul mercato, attirando più utenti e traffico. Questo potrebbe portare a una centralizzazione del potere informativo e di mercato, potenzialmente creando barriere all'ingresso per i concorrenti minori e limitando la diversità delle offerte di servizi nel settore immobiliare online.",
+            "severity": "medium",
+            "severity_rationale": "Un maggiore traffico e un servizio aggiuntivo possono creare un vantaggio competitivo significativo. Sebbene benefico per il portale e gli utenti nell'immediato, a lungo termine può portare a una minore concorrenza, che è un rischio di media gravità per l'ecosistema di mercato.",
+            "mitigation": "Valutare l'impatto del sistema sulle dinamiche competitive del mercato immobiliare. Promuovere l'interoperabilità dei dati o la disponibilità di strumenti simili per attori minori, se possibile. Assicurare che l'accesso alle funzionalità principali del sistema non sia eccessivamente limitato o costoso, evitando pratiche anticoncorrenziali."
+          }
+        ]
+      },
+      "6.2": {
+        "risks": []
+      },
+      "6.3": {
+        "risks": []
+      },
+      "6.4": {
+        "risks": []
+      },
+      "6.5": {
+        "risks": [
+          {
+            "title": "Mancanza di governance formale e strutture di controllo",
+            "explanation": "L'assenza di regole, strutture organizzative o sistemi di controllo formali, affidandosi esclusivamente a 'regole informali/procedure interne', espone il sistema a rischi di governance. Questo può portare a incoerenze nella gestione del sistema, difficoltà nell'assicurare la conformità etica e normativa, lacune nella supervisione e una risposta insufficiente in caso di incidenti, bias o malfunzionamenti, specialmente considerando il potenziale impatto finanziario.",
+            "severity": "medium",
+            "severity_rationale": "Un sistema che influisce sulle decisioni finanziarie e gestisce PII, ma senza una governance robusta, corre il rischio di operare senza un controllo adeguato, aumentando la probabilità di errori, bias non mitigati e problemi di responsabilità. Questo è un rischio di media gravità che può degenerare se non affrontato.",
+            "mitigation": "Implementare una struttura di governance AI formale e documentata, inclusi ruoli e responsabilità chiari, un framework per la valutazione d'impatto AI, politiche scritte, processi di audit interni ed esterni e un comitato etico o di rischio. Le procedure interne devono essere formalizzate, comunicate e regolarmente revisionate."
+          }
+        ]
+      },
+      "6.6": {
+        "risks": [
+          {
+            "title": "Impatto ambientale non quantificato",
+            "explanation": "Il sistema di stima dei prezzi degli immobili opera su server cloud, ma non sono state effettuate valutazioni specifiche sul consumo energetico o sull'impatto ambientale. Questa mancanza di consapevolezza e misurazione impedisce una gestione proattiva dell'impronta carbonica del sistema e contribuisce indirettamente all'impatto ambientale complessivo delle tecnologie digitali, senza possibilità di ottimizzazione per la sostenibilità.",
+            "severity": "low",
+            "severity_rationale": "Sebbene l'impatto di un singolo sistema possa essere basso, la mancanza di quantificazione e monitoraggio è un rischio. L'assenza di dati impedisce qualsiasi azione di mitigazione consapevole, ma per un sistema di questa scala, il rischio diretto è limitato.",
+            "mitigation": "Condurre una valutazione dell'impronta ambientale del sistema, stimando il consumo energetico e le emissioni di CO2 associate all'infrastruttura cloud. Ottimizzare l'efficienza computazionale del modello e l'utilizzo delle risorse. Valutare l'adozione di fornitori cloud che si impegnano attivamente per la sostenibilità e l'uso di energie rinnovabili. Monitorare e riportare regolarmente i dati sull'impatto ambientale."
+          }
+        ]
+      },
+      "7.1": {
+        "risks": []
+      },
+      "7.2": {
+        "risks": []
+      },
+      "7.3": {
+        "risks": [
+          {
+            "title": "Mancanza di robustezza e affidabilità del sistema",
+            "explanation": "L'esecuzione di 'solo test di base' implica che il sistema potrebbe non essere sufficientemente robusto o affidabile in una varietà di condizioni reali, specialmente in scenari nuovi o inusuali. Questo porta al rischio che le stime prodotte siano inaccurate o inconsistenti in situazioni non previste, compromettendo la fiducia e l'utilità del sistema e alimentando i rischi di disinformazione (3.1).",
+            "severity": "high",
+            "severity_rationale": "La mancanza di test approfonditi è una debolezza critica per un sistema che fornisce informazioni finanziarie. Questo influisce direttamente sull'accuratezza e sull'affidabilità del suo output, che è il suo scopo principale, con potenziali conseguenze finanziarie per gli utenti.",
+            "mitigation": "Eseguire test di robustezza e affidabilità approfonditi, inclusi scenari limite, dati anomali, variazioni stagionali o macroeconomiche. Sviluppare una chiara documentazione sui limiti noti del sistema e sulle condizioni in cui potrebbe non performare in modo ottimale. Implementare un robusto monitoraggio delle prestazioni in produzione per rilevare deviazioni o degradazioni in tempo reale."
+          }
+        ]
+      },
+      "7.4": {
+        "risks": [
+          {
+            "title": "Opacità e mancanza di interpretabilità delle logiche decisionali",
+            "explanation": "La risposta 'No, logiche opache/non spiegabili' indica che né gli utenti né gli amministratori sono in grado di comprendere il ragionamento dietro le stime di prezzo generate dal sistema. Questa mancanza di trasparenza erode la fiducia, rende difficile identificare e correggere bias o errori nel modello, e impedisce la piena responsabilità per gli output del sistema, specialmente in un contesto di decisioni finanziarie.",
+            "severity": "high",
+            "severity_rationale": "L'opacità in un sistema che fornisce stime di valore ha un'alta severità perché ostacola la verifica, la risoluzione dei problemi, la mitigazione dei bias e l'accettazione da parte degli utenti, amplificando altri rischi come l'ineguaglianza nelle prestazioni (1.3) e la disinformazione (3.1).",
+            "mitigation": "Investire nello sviluppo e nell'implementazione di tecniche di AI spiegabile (XAI) per fornire intuizioni sulle decisioni del modello. Fornire spiegazioni a livello aggregato e individuale su quali fattori hanno maggiormente influenzato una specifica stima. Documentare accuratamente l'architettura del modello, i dati di training e le metriche di valutazione. Coinvolgere esperti di dominio per validare e interpretare i risultati del modello."
+          }
+        ]
+      },
+      "7.5": {
+        "risks": []
+      },
+      "7.6": {
+        "risks": []
+      }
+    }
+  }
+}

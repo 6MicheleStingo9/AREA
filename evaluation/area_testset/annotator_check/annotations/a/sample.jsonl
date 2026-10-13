@@ -1,0 +1,60 @@
+{"id": "64a44527-6.5-1", "entity": "human", "intent": "unintentional", "timing": "other", "doubt": ["intent"], "note": "Missing governance framework read as an organizational failure (unintentional), though the text does not discuss intent."}
+{"id": "40722168-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-6.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The system is framed as replacing humans and homogenizing output (ai); devaluation read as a side effect, intent not stated."}
+{"id": "83fe243b-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Framed as insufficient basic controls, but the harm comes from attacks aimed at manipulation or exfiltration (intentional)."}
+{"id": "40722168-7.5-1", "entity": "human", "intent": "unintentional", "timing": "other", "doubt": ["entity", "intent"], "note": "Inadequate human evaluation and frameworks dominate over growing AI autonomy; insufficient foresight read as a failure (unintentional)."}
+{"id": "40722168-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "No intent marker; harmful outputs read as an unwanted by-product of broad generative capability (other also plausible)."}
+{"id": "f82e99a1-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-7.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Filter bubbles read as a side effect of unbalanced personalization; no explicit statement of intent."}
+{"id": "be3c1640-2.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Cyberattack, insider threat and malicious actors dominate, but a system vulnerability is also listed as a possibly accidental route."}
+{"id": "83fe243b-2.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Compromise of stored data with no stated agent or intent; fraudulent use is only a downstream consequence."}
+{"id": "18598c69-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Filter bubbles read as a side effect of excessive personalization; no explicit statement of intent."}
+{"id": "23d095a1-6.3-2", "entity": "other", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Harm needs both the system's homogenized outputs and wide human adoption, neither dominant; loss of diversity read as a side effect."}
+{"id": "be3c1640-6.1-1", "entity": "other", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Inequality stems from unequal market access to the system, not an AI or a specific human decision; read as a side effect, not a stated trade-off."}
+{"id": "18598c69-2.1-1", "entity": "other", "intent": "other", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Security vulnerabilities with no stated agent; unauthorized access implies attackers but exposure or leakage may be accidental."}
+{"id": "18598c69-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Framed as inadequate protection, but the harm comes from a successful, deliberate attack."}
+{"id": "23d095a1-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-6.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The system is framed as worsening job quality through automation (ai); deskilling and inequality read as side effects, intent not stated."}
+{"id": "40722168-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Filter bubbles read as a side effect of personalization; the text gives no intent marker."}
+{"id": "64a44527-1.3-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Unequal performance across groups (ai) outweighs the lack of evaluation (human); the disparity read as a failure, intent not stated."}
+{"id": "18598c69-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "40722168-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-4.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-3.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "f82e99a1-6.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "The AI is framed as automating the stimulating parts of jobs (ai); deskilling read as a side effect, intent not stated."}
+{"id": "23d095a1-6.6-1", "entity": "other", "intent": "unintentional", "timing": "other", "doubt": ["intent"], "note": "Emissions read as a by-product of compute (unintentional), not a stated trade-off; training and inference give timing other."}
+{"id": "be3c1640-7.6-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-4.3-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-2.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Framed as insufficient security controls, but the harm comes from sophisticated, deliberate cyberattacks."}
+{"id": "83fe243b-7.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Engagement optimization could read as a trade-off, but cost functions penalizing extremism make the harm unintended."}
+{"id": "23d095a1-7.6-2", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-6.1-1", "entity": "human", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Power concentrated with the operator may be a side effect or lead to deliberate abuse; the text does not settle which."}
+{"id": "40722168-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-1.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-4.1-2", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "18598c69-7.4-1", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent"], "note": "Opacity is stated as a property, not as an error or a side effect of a goal, so intent is left other."}
+{"id": "64a44527-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "64a44527-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Biases acquired from training data read as a side effect; the text does not state intent."}
+{"id": "f82e99a1-6.1-1", "entity": "other", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Unequal access, training and utility have no stated decision-maker; uneven benefits read as an unexpected outcome of a system meant to benefit all."}
+{"id": "23d095a1-1.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Biases in training data or tailoring logic read as a side effect; the text does not state intent."}
+{"id": "40722168-5.1-1", "entity": "human", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "be3c1640-5.2-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["entity", "intent"], "note": "Persuasive AI suggestions are the framed cause though user deference is also needed; erosion of autonomy read as a side effect."}
+{"id": "40722168-6.6-1", "entity": "other", "intent": "unintentional", "timing": "other", "doubt": ["intent"], "note": "Emissions read as a by-product of compute (unintentional), not a stated trade-off; training and inference give timing other."}
+{"id": "23d095a1-7.4-2", "entity": "ai", "intent": "other", "timing": "post-deployment", "doubt": ["intent", "timing"], "note": "Opacity is stated as a property without intent; hindered debugging and audits could span development, but outputs in use suggest post-deployment."}
+{"id": "18598c69-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-3.1-2", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": ["intent"], "note": "Bias from training data read as a side effect; the text does not state intent."}
+{"id": "83fe243b-4.1-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "83fe243b-3.1-1", "entity": "ai", "intent": "unintentional", "timing": "post-deployment", "doubt": [], "note": ""}
+{"id": "23d095a1-7.2-1", "entity": "human", "intent": "intentional", "timing": "post-deployment", "doubt": [], "note": ""}

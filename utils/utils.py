@@ -4,6 +4,7 @@ from typing import Dict
 
 import structlog
 from dotenv import load_dotenv
+from langchain_core.runnables import Runnable
 from langchain_google_genai import ChatGoogleGenerativeAI
 from rich.console import Console
 from rich.logging import RichHandler
@@ -71,28 +72,67 @@ def create_logger(name: str) -> structlog.stdlib.BoundLogger:
     return structlog.get_logger(name)
 
 
-# TODO: Add exponential backoff and retry logic for rate limit handling
-def get_llm_instance(t: float = 0.0) -> ChatGoogleGenerativeAI:
+# Shared resilience policy for LLM calls: exponential backoff + jitter on
+# transient errors (rate limits, 5xx). Applied via apply_retry() as the
+# OUTERMOST layer so it does not hide model methods like with_structured_output.
+# It is the only retry layer: get_llm_instance() turns off the SDK's own retries,
+# which would otherwise run inside every attempt (5 x 6 HTTP calls per request).
+# Waits of 2, 4, 8, 16 and 30 s (plus jitter) ride out about a minute of
+# "high demand" 503s, while an exhausted daily quota still fails within a minute.
+_LLM_RETRY_KWARGS = dict(
+    stop_after_attempt=6,
+    wait_exponential_jitter=True,
+    exponential_jitter_params={"initial": 2, "max": 30},
+)
+# Seconds without a reply before a request fails (and apply_retry() retries it):
+# without a timeout a stuck request hangs forever. The slowest calls take ~70 s.
+_LLM_TIMEOUT_S = 180
+
+
+def get_llm_instance(t: float = 0.0, json_mode: bool = False) -> ChatGoogleGenerativeAI:
     """
-    Configure and return an instance of the LLM model with specific parameters.
-    Also checks for rate limit issues by making a test call.
+    Configure and return the base chat model.
+
+    Returns the raw ``ChatGoogleGenerativeAI`` (not a retry wrapper) so callers
+    can still use ``with_structured_output()`` or pass it to ``create_agent()``.
+    Wrap the final runnable with :func:`apply_retry` to add resilience.
 
     Args:
         t (float, optional): Temperature setting for the model. Defaults to 0.0.
+        json_mode (bool, optional): Constrain the reply to valid JSON, for callers that
+            parse the reply text themselves. Defaults to False.
 
     Returns:
-        ChatGoogleGenerativeAI: Configured LLM instance.
+        ChatGoogleGenerativeAI: Configured base LLM instance.
     """
-    model_name = os.getenv("GEMINI_MODEL", "GEMINI_MODEL_BACKOFF")
+    model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
     google_api_key = os.getenv("GOOGLE_API_KEY")
 
-    llm = ChatGoogleGenerativeAI(
+    return ChatGoogleGenerativeAI(
         model=model_name,
         temperature=t,
-        max_retries=2,
         google_api_key=google_api_key,
+        max_retries=0,  # retries come from apply_retry() only
+        timeout=_LLM_TIMEOUT_S,
+        response_mime_type="application/json" if json_mode else None,
     )
-    return llm
+
+
+def apply_retry(runnable: Runnable) -> Runnable:
+    """
+    Wrap a runnable with exponential backoff + jitter on transient LLM errors.
+
+    Must be applied as the OUTERMOST layer — i.e. AFTER ``with_structured_output()`` —
+    otherwise the underlying model methods are no longer reachable.
+
+    Args:
+        runnable (Runnable): The runnable to make resilient (a chat model or a
+            structured-output runnable).
+
+    Returns:
+        Runnable: The runnable wrapped with the shared retry policy.
+    """
+    return runnable.with_retry(**_LLM_RETRY_KWARGS)
 
 
 if __name__ == "__main__":

@@ -6,18 +6,35 @@
 
 # Local configuration files
 .env
-langgraph.json
+
+# Dev plans
+.plan
+
+# Claude settings
+.claude
 
 # Langgraph checkpoints and configuration
 .checkpoints/
 .langgraph_api
 
+# Training environment, derived data and checkpoints
+.venv-train/
+training/data/
+training/checkpoints/
+
+# Interrupted evaluation runs (resumable)
+evaluation/results/*.checkpoint.json
+
 # cache files
-agents/__pycache__
-agents/causality_analyzer/__pycache__
-agents/domain_analyzer/__pycache__
-agents/heuristic_analyzer/__pycache__
-agents/questionnaire_generator/__pycache__
-agents/report_generator/__pycache__
-ui/__pycache__
-utils/__pycache__
+__pycache__/
+*.pyc
+
+# Kindynos training labels: the adjudicator work file, rebuilt by `data_prep.area_trainset disagreements`
+files/data/area_trainset/annotations/disputed.jsonl
+evaluation/area_testset/annotator_check/annotations/disputed.jsonl
+
+# Hugging Face cache of the Docker container (docker-compose.yml)
+files/.cache/
+
+# Hugging Face repositories built by `python -m publish.export_hf`
+publish/build/

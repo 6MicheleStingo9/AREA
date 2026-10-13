@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="{{ lang | default('en') }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Kindynos — AI Risk Assessment{% endblock %}</title>
+  {% if brand_favicon %}<link rel="icon" href="{{ brand_favicon }}">{% endif %}
+  <link rel="stylesheet" href="/static/quiz.css">
+  <script src="/static/htmx.min.js" defer></script>
+</head>
+<body>
+  <header>
+    <span class="logo">
+      {% if brand_wordmark %}<span class="logo-mark" aria-hidden="true">{{ brand_mark | safe }}</span>{{ brand_wordmark | safe }}{% else %}Kindynos{% endif %}
+    </span>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <script>
+    // htmx skips DOM swaps on 4xx responses by default. Our validation errors
+    // return HTTP 422 with the re-rendered form (including the error message),
+    // so opt in to swapping 422 — otherwise the user gets no visible feedback.
+    document.body.addEventListener('htmx:beforeSwap', function (evt) {
+      if (evt.detail.xhr.status === 422) {
+        evt.detail.shouldSwap = true;
+        evt.detail.isError = false;
+      }
+    });
+  </script>
+</body>
+</html>

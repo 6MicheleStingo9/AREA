@@ -35,7 +35,7 @@
         if (!btn) return;
         btn.disabled = true;
         const origText = btn.innerText;
-        btn.innerText = 'Preparazione...';
+        btn.innerText = (typeof translations !== 'undefined' && translations.zip_preparing) || 'Preparing...';
         let metadata = {};
         try {
             const metaEl = document.getElementById('report-metadata');
@@ -66,7 +66,7 @@
             URL.revokeObjectURL(link.href);
         } catch (err) {
             console.error('ZIP creation failed', err);
-            alert('Error creating ZIP file: ' + err.message);
+            alert(((typeof translations !== 'undefined' && translations.zip_error_alert) || 'Error creating ZIP file.') + '\n' + err.message);
         } finally {
             btn.disabled = false;
             btn.innerText = origText;
@@ -74,3 +74,16 @@
     };
 
 })();
+
+// Global click handler wired to the download button in the report template.
+// Relies on createReportZip() defined above.
+window.handleDownloadClick = function handleDownloadClick() {
+    if (typeof window.createReportZip === 'function') {
+        window.createReportZip().catch(function (e) {
+            console.error(typeof translations !== 'undefined' ? translations.zip_error_console : 'ZIP error', e);
+            alert(typeof translations !== 'undefined' ? translations.zip_error_alert : 'Error creating ZIP');
+        });
+    } else {
+        alert(typeof translations !== 'undefined' ? translations.download_offline_alert : 'Download unavailable offline');
+    }
+};
