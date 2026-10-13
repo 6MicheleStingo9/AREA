@@ -2,9 +2,9 @@
 Side-by-side comparison of the causal classifiers on the two test sets.
 
 Collects the results files in evaluation/results/ (`causal_clf__*.json` for the MIT eval split,
-`area_testset__*.json` for the AREA risks): every run of every model, with accuracy and macro-F1
+`area_testset__*.json` for the Kindynos risks): every run of every model, with accuracy and macro-F1
 per axis, the F1 of the `other` class and, for the models that return probabilities, the
-expected calibration error. On the AREA risks it also splits macro-F1 by language. Writes
+expected calibration error. On the Kindynos risks it also splits macro-F1 by language. Writes
 evaluation/results/comparison.md.
 
 Usage (from the project root):
@@ -17,8 +17,8 @@ from typing import Any, Dict, List, Tuple
 
 AXES = ("entity", "intent", "timing")
 RESULTS = Path(__file__).resolve().parent / "results"
-TEST_SETS = {"causal_clf": "MIT eval split", "area_testset": "AREA risks"}
-NAMES = {"pipeline": "gemini-2.5-flash, AREA pipeline labels"}
+TEST_SETS = {"causal_clf": "MIT eval split", "area_testset": "Kindynos risks"}
+NAMES = {"pipeline": "gemini-2.5-flash, Kindynos pipeline labels"}
 
 
 def _order(path: Path) -> Tuple[int, int, str]:

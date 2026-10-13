@@ -1,6 +1,6 @@
 # Annotator check
 
-A one-off estimate of the quality of the AREA training labels (`files/data/area_trainset/`): the same
+A one-off estimate of the quality of the Kindynos training labels (`files/data/area_trainset/`): the same
 protocol (two blind annotators, Claude Opus 5.5 subagents, and an adjudicator) applied to 60 risks of
 this test set drawn at random (`python -m data_prep.area_trainset quality-sample`, seed 0), then scored
 against the reviewed gold labels (`quality-score`). It was measured once, after the training labels were

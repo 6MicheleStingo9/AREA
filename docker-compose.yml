@@ -1,5 +1,7 @@
+name: kindynos
+
 services:
-  area:
+  app:
     build: .
     env_file: .env
     # Run as the host user so files written to the ./files volume stay editable

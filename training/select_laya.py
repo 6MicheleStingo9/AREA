@@ -2,7 +2,7 @@
 Compare fine-tuned Laya variants on a validation split and pick one.
 
 Scores each checkpoint on training/data/causal_val.jsonl (the MIT validation groups) or, with
-`--val area`, on area_val.jsonl (the AREA validation runs) with the metrics of
+`--val area`, on area_val.jsonl (the Kindynos validation runs) with the metrics of
 training.evaluate_laya and picks the highest macro-F1 averaged over the three axes (the
 prediction is the most probable option, so the fitted temperatures do not change it), among the
 variants Laya can calibrate: a fitted temperature at Laya's upper bound (laya.common.TEMP_MAX)

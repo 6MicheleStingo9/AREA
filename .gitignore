@@ -29,6 +29,6 @@ evaluation/results/*.checkpoint.json
 __pycache__/
 *.pyc
 
-# AREA training labels: the adjudicator work file, rebuilt by `data_prep.area_trainset disagreements`
+# Kindynos training labels: the adjudicator work file, rebuilt by `data_prep.area_trainset disagreements`
 files/data/area_trainset/annotations/disputed.jsonl
 evaluation/area_testset/annotator_check/annotations/disputed.jsonl

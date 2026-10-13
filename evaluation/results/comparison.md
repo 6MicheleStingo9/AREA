@@ -15,12 +15,12 @@ Accuracy / macro-F1 % per axis; F1 % of the `other` class and expected calibrati
 | laya-causal-v3 | 58.8 / 52.9 | 66.2 / 64.9 | 61.3 / 43.3 | 27.1 / 49.4 / 34.7 | 5.7 / 8.2 / 5.1 |
 | laya-causal-v4 | 61.3 / 52.6 | 61.9 / 58.7 | 65.6 / 48.4 | 20.0 / 34.7 / 32.3 | 26.9 / 29.6 / 24.2 |
 
-## AREA risks (145 risks)
+## Kindynos risks (145 risks)
 
 | Model | entity | intent | timing | F1 `other` | ECE |
 |---|---|---|---|---|---|
 | majority class (MIT train) | 54.5 / 23.5 | 57.9 / 24.5 | 91.0 / 31.8 | – | – |
-| gemini-2.5-flash, AREA pipeline labels | 80.0 / 63.2 | 75.2 / 55.2 | 83.4 / 49.6 | 22.2 / 0.0 / 40.0 | – |
+| gemini-2.5-flash, Kindynos pipeline labels | 80.0 / 63.2 | 75.2 / 55.2 | 83.4 / 49.6 | 22.2 / 0.0 / 40.0 | – |
 | laya-multilingual-zeroshot | 29.7 / 23.3 | 32.4 / 29.6 | 35.9 / 29.2 | 16.3 / 20.0 / 13.9 | 35.0 / 32.4 / 16.3 |
 | laya-causal | 68.3 / 58.4 | 67.6 / 60.8 | 77.2 / 48.2 | 30.3 / 23.1 / 32.6 | 6.8 / 7.0 / 17.3 |
 | laya-causal-v2 | 71.7 / 58.2 | 66.2 / 61.4 | 64.1 / 35.3 | 22.2 / 24.1 / 28.6 | 19.9 / 27.4 / 28.1 |
@@ -31,7 +31,7 @@ Macro-F1 % by language (EN / IT):
 
 | Model | entity | intent | timing |
 |---|---|---|---|
-| gemini-2.5-flash, AREA pipeline labels | 69.4 / 52.6 | 58.3 / 50.7 | 54.3 / 35.7 |
+| gemini-2.5-flash, Kindynos pipeline labels | 69.4 / 52.6 | 58.3 / 50.7 | 54.3 / 35.7 |
 | laya-multilingual-zeroshot | 29.1 / 13.1 | 34.0 / 23.3 | 16.6 / 37.7 |
 | laya-causal | 63.9 / 49.9 | 59.0 / 62.3 | 37.2 / 56.5 |
 | laya-causal-v2 | 61.0 / 54.3 | 61.9 / 61.1 | 35.1 / 35.5 |

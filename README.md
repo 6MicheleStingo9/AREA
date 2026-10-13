@@ -1,6 +1,10 @@
-# AREA: Automatic Risk Evaluation Analysis
+# Kindynos
 
-AREA is a LangGraph-based MAS platform for assessing risks associated with AI systems. It uses a user-driven questionnaire and a multi-agent workflow for risk analysis and report generation, providing a user-friendly interface with multilingual support.
+AI risk assessment with the taxonomies of the MIT AI Risk Repository.
+
+Kindynos (Greek κίνδυνος, "danger, risk", the root of *cindynics*, the science of danger) is a LangGraph-based MAS platform for assessing risks associated with AI systems. It uses a user-driven questionnaire and a multi-agent workflow for risk analysis and report generation, providing a user-friendly interface with multilingual support.
+
+> Formerly AREA (Automatic Risk Evaluation Analysis). Some internal names keep that prefix: `evaluation/area_testset/`, `files/data/area_trainset/`, the `--area` options and the `area_*` data files.
 
 ## Table of Contents
 
@@ -22,11 +26,11 @@ AREA is a LangGraph-based MAS platform for assessing risks associated with AI sy
 
 ## Scientific Foundations
 
-AREA is grounded in the scientific work of the [MIT Risk AI Repository](https://airisk.mit.edu/) - [Slattery et al., 2024](#references), leveraging two complementary taxonomies to systematically assess risks associated with AI systems:
+Kindynos is grounded in the scientific work of the [MIT Risk AI Repository](https://airisk.mit.edu/) - [Slattery et al., 2024](#references), leveraging two complementary taxonomies to systematically assess risks associated with AI systems:
 
 ### 1. Domain Taxonomy of AI Risks
 
-This taxonomy catalogs the types of hazards and harms that can arise from AI systems. Each question in the AREA questionnaire is mapped to a specific domain and subdomain, allowing for a structured risk assessment.
+This taxonomy catalogs the types of hazards and harms that can arise from AI systems. Each question in the Kindynos questionnaire is mapped to a specific domain and subdomain, allowing for a structured risk assessment.
 
 **Main domains and example subdomains:**
 
@@ -47,7 +51,7 @@ _Question 1.1 (“What user data or attributes are collected or used by the syst
 
 ### 2. Causal Taxonomy of AI Risks
 
-After the initial domain-based assessment, AREA analyzes the underlying causes of each risk using the Causal Taxonomy, which classifies risks along three axes:
+After the initial domain-based assessment, Kindynos analyzes the underlying causes of each risk using the Causal Taxonomy, which classifies risks along three axes:
 
 | Category | Levels                                 | Description                                                             |
 | -------- | -------------------------------------- | ----------------------------------------------------------------------- |
@@ -60,7 +64,7 @@ _If a risk is identified as “AI system generates biased outputs due to poor tr
 
 ## Architecture
 
-AREA is built as a modular, multi-agent system orchestrated via [LangGraph](https://github.com/langchain-ai/langgraph). Each main analysis step is handled by a specialized agent, enabling clear separation of concerns and extensibility. The workflow is as follows:
+Kindynos is built as a modular, multi-agent system orchestrated via [LangGraph](https://github.com/langchain-ai/langgraph). Each main analysis step is handled by a specialized agent, enabling clear separation of concerns and extensibility. The workflow is as follows:
 
 - **Orchestration:** LangGraph manages the execution flow, coordinating the sequence and data exchange between agents.
 - **Agents:**
@@ -83,7 +87,7 @@ AREA is built as a modular, multi-agent system orchestrated via [LangGraph](http
 
 ## Project Structure
 
-The AREA repository is organized as follows:
+The Kindynos repository is organized as follows:
 
 - `agents/` — All analysis and generator agents:
   - `orchestrator.py`: pipeline controller
@@ -122,7 +126,7 @@ The AREA repository is organized as follows:
 
 ### API Key and Model Configuration
 
-To use AREA, you need access to a Google Gemini model. Before running the application, create a `.env` file in the project root with the following content:
+To use Kindynos, you need access to a Google Gemini model. Before running the application, create a `.env` file in the project root with the following content:
 
 ```env
 GOOGLE_API_KEY=your_api_key_here
@@ -155,7 +159,7 @@ pip install -r requirements-laya.txt
 
 The causality step labels each risk with `laya-causal-v4`, a [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual)
 checkpoint fine-tuned for this task ([Training (Laya)](#training-laya)), on the CPU and without API calls.
-On the AREA test set it is at least on par with the Gemini pipeline on every axis, in accuracy and
+On the Kindynos test set it is at least on par with the Gemini pipeline on every axis, in accuracy and
 macro-F1, and better on entity, intent macro-F1 and timing accuracy
 ([comparison](evaluation/results/comparison.md)).
 
@@ -165,7 +169,7 @@ macro-F1, and better on entity, intent macro-F1 and timing accuracy
   1.4–2.6 s): under a minute for an assessment of 20 risks, in Docker too.
 - Laya writes no text: in the report each label comes with the MIT definition of its value and Laya's
   confidence, the calibrated probability of that value. Labels below 90% confidence are marked ⚠, to
-  be checked, with the next most likely value. The threshold was chosen on AREA runs held out from
+  be checked, with the next most likely value. The threshold was chosen on Kindynos runs held out from
   training (the test set was not used): there, the labels below it were 59% correct, the others 94%.
   On the test set, measured once afterwards, 4.6% of the labels are flagged and half of them are
   wrong, against 11% of the others. Most errors are confident ones, so the flag points out doubtful
@@ -180,7 +184,7 @@ macro-F1, and better on entity, intent macro-F1 and timing accuracy
 
 ## Docker
 
-The fastest way to run AREA is via Docker (no local Python or SWI-Prolog setup needed).
+The fastest way to run Kindynos is via Docker (no local Python or SWI-Prolog setup needed).
 
 ```bash
 # 1. Copy and fill in your API key
@@ -293,7 +297,7 @@ python -m evaluation.causal_baseline       # results in evaluation/results/ (cal
 Progress is saved after every LLM call: if a run stops (e.g. on the Gemini free tier daily quota),
 rerunning the same command resumes it.
 
-A second, in-distribution test set uses risks written by AREA itself: simulated questionnaires for each
+A second, in-distribution test set uses risks written by Kindynos itself: simulated questionnaires for each
 profile and language, analyzed by the domain and causality agents. Its gold labels are added by hand,
 following [evaluation/area_testset/LABELING.md](evaluation/area_testset/LABELING.md):
 
@@ -307,7 +311,7 @@ Two classifiers are compared on the same risks with a paired bootstrap: per axis
 accuracy and in macro-F1 with its 95% interval, and a verdict (better, on par, worse):
 
 ```bash
-python -m evaluation.paired <results file> pipeline   # e.g. a Laya run against the AREA pipeline labels
+python -m evaluation.paired <results file> pipeline   # e.g. a Laya run against the Kindynos pipeline labels
 python -m evaluation.compare                          # every run side by side, in evaluation/results/comparison.md
 ```
 
@@ -315,7 +319,7 @@ python -m evaluation.compare                          # every run side by side, 
 
 The causal classifier is [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual)
 (Apache-2.0, 322M parameters, typed decisions with calibrated probabilities), fine-tuned on the MIT training
-split and on risks written by AREA; the checkpoint chosen, `laya-causal-v4`, is the one the causality step
+split and on risks written by Kindynos; the checkpoint chosen, `laya-causal-v4`, is the one the causality step
 uses. Training has its own environment:
 
 ```bash
@@ -326,14 +330,14 @@ python -m venv .venv-train
 .venv-train/bin/python -m training.evaluate_laya --model <checkpoint> --name <slug>   # both test sets
 ```
 
-Laya reads each risk with its subdomain in the MIT Domain Taxonomy: AREA writes its risks per
+Laya reads each risk with its subdomain in the MIT Domain Taxonomy: Kindynos writes its risks per
 subdomain, and the MIT labels follow conventions that differ by subdomain. Variants are trained on the
 MIT training split without its validation groups (`causal_fit.jsonl`), calibrated on those groups
 (`causal_val.jsonl`) and compared on them with `training.select_laya`, which keeps only the variants
 Laya can calibrate (fitted temperature below its cap) and picks the best mean macro-F1; only the
 chosen one is evaluated on the test sets.
 
-MIT-only training does not learn how AREA frames its risks, so AREA also writes training risks of
+MIT-only training does not learn how Kindynos frames its risks, so Kindynos also writes training risks of
 its own, for 28 simulated systems unlike those of the test set, labelled by Claude subagents with the
 rules of the test set ([files/data/area_trainset/](files/data/area_trainset/README.md)):
 
@@ -342,7 +346,7 @@ python -m data_prep.area_trainset generate   # questionnaire + domain analysis p
 python -m data_prep.area_trainset collect    # then batches / disagreements / merge for the labels
 ```
 
-With `--area`, `training.finetune_laya` adds them to the training rows and calibrates on six AREA runs
+With `--area`, `training.finetune_laya` adds them to the training rows and calibrates on six Kindynos runs
 held out (`area_val.jsonl`), and `training.select_laya --val area` compares the variants on those runs. Fine-tuning needs a GPU (about 15 hours on a laptop CPU):
 [training/kaggle_finetune.ipynb](training/kaggle_finetune.ipynb) runs the whole loop on Kaggle (GPU,
 Internet on), or run `python -m training.finetune_laya --device cuda` per variant.
@@ -351,7 +355,7 @@ Internet on), or run `python -m training.finetune_laya --device cuda` per varian
 
 ## Analysis Workflow
 
-The analysis workflow in AREA consists of the following steps:
+The analysis workflow in Kindynos consists of the following steps:
 
 1. **Questionnaire Compilation**
    - The user answers a set of structured questions, each mapped to a specific domain and subdomain of AI risk.
@@ -364,9 +368,9 @@ The analysis workflow in AREA consists of the following steps:
    - Each identified risk is classified by Laya, a fine-tuned local model, along the Causal Taxonomy (Entity, Intent, Timing), with a confidence per label; uncertain labels are marked for review in the report. With `CAUSALITY_BACKEND=llm` an LLM does it instead.
    - This step helps clarify whether the risk is due to human actions, AI behavior, or other factors, and whether it is intentional or accidental.
 4. **Heuristic Analysis (Prolog-based Agent)**
-   - After the domain and causality analyses, AREA performs a heuristic risk analysis using a set of expert rules implemented in Prolog. This phase is crucial for several reasons:
+   - After the domain and causality analyses, Kindynos performs a heuristic risk analysis using a set of expert rules implemented in Prolog. This phase is crucial for several reasons:
      - **Expert Knowledge Integration:** Heuristic rules allow the system to encode domain expertise, regulatory requirements, and best practices that go beyond what is captured by the taxonomies alone.
-     - **Logical Inference:** Using Prolog, AREA can infer complex risk patterns, aggregate risk metrics, and identify critical issues that may not be evident from individual answers. The rules operate on facts derived from the previous analyses (e.g., risk severity, causality attributes).
+     - **Logical Inference:** Using Prolog, Kindynos can infer complex risk patterns, aggregate risk metrics, and identify critical issues that may not be evident from individual answers. The rules operate on facts derived from the previous analyses (e.g., risk severity, causality attributes).
      - **Customizability:** The heuristic ruleset is fully extensible. Advanced users can add or modify rules in the `agents/heuristic_analyzer/rules.pl` file to tailor the analysis to specific domains, regulations, or organizational needs.
      - **What the heuristic analysis adds:**
        - Computes a global risk score and qualitative risk level (e.g., critical, high, medium, low).

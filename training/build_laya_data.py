@@ -4,17 +4,17 @@ Laya data files for the causal classification.
 Each risk becomes one Laya row: the state is the risk's subdomain in the MIT Domain Taxonomy
 (code and name), then its title and description; the three axes are typed `choice` questions
 whose options carry the MIT Causal Taxonomy definitions (Slattery et al., 2025, CC BY 4.0), so the
-encoder reads the state once for all three. AREA writes its risks per subdomain and the MIT
+encoder reads the state once for all three. Kindynos writes its risks per subdomain and the MIT
 labelling conventions differ by subdomain: the most frequent label of each subdomain alone scores
 about as well as the text-only model. Subdomain names come from the MIT database
-(files/data/processed/full.jsonl) for both sources, so training and AREA use the same strings.
+(files/data/processed/full.jsonl) for both sources, so training and Kindynos use the same strings.
 Writes training/data/:
 
 - causal_train.jsonl: the MIT train split with its labels (`expected`);
 - causal_fit.jsonl and causal_val.jsonl: the same split divided by group (paper and risk
   category, as in data_prep/extract_dataset.py), about 15% of the groups for validation: the
   variants are trained on the first, compared and calibrated on the second;
-- area_fit.jsonl and area_val.jsonl: the AREA training risks (files/data/area_trainset/, labelled
+- area_fit.jsonl and area_val.jsonl: the Kindynos training risks (files/data/area_trainset/, labelled
   with the protocol of its README), split by whole runs: six runs (three per language, drawn with
   a fixed seed) for validation and calibration, the others for training. Entries in which the
   domain analyzer states there is no significant risk (their title says so) are left out: they are
@@ -43,7 +43,7 @@ AREA_TRAIN = ROOT / "files" / "data" / "area_trainset"
 OUT = ROOT / "training" / "data"
 VAL_FRAC = 0.15
 VAL_SEED = 0
-# Validation runs of the AREA training risks: three English and three Italian runs of the 28
+# Validation runs of the Kindynos training risks: three English and three Italian runs of the 28
 # planned in data_prep/area_trainset.py, drawn with random.Random(0).sample(runs, 3) per language.
 AREA_VAL_RUNS = ("t13", "t14", "t25", "t26", "t27", "t28")
 # Titles of the domain analyzer's "no significant risk" entries (Italian or English)
@@ -97,7 +97,7 @@ def main() -> None:
         risks = [r for r in _read(AREA_TRAIN / "risks.jsonl") if r["id"] in labels]
         no_risk = [r for r in risks if NO_RISK.match(r["title"])]
         risks = [r for r in risks if not NO_RISK.match(r["title"])]
-        print(f"AREA training risks: {len(no_risk)} 'no significant risk' entries left out")
+        print(f"Kindynos training risks: {len(no_risk)} 'no significant risk' entries left out")
         area_rows = lambda keep: [laya_row(r["id"], r["title"], r["text"], labels[r["id"]], with_name(r["subdomain"])) for r in risks if keep(r["run"])]
         files += [("area_fit", area_rows(lambda run: run not in AREA_VAL_RUNS)), ("area_val", area_rows(lambda run: run in AREA_VAL_RUNS))]
     else:

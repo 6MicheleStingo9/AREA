@@ -33,7 +33,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="AREA — AI Risk Assessment", lifespan=lifespan)
+app = FastAPI(title="Kindynos — AI Risk Assessment", lifespan=lifespan)
 
 app.mount(
     "/static",

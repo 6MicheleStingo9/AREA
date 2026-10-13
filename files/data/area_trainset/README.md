@@ -1,9 +1,9 @@
-# AREA training risks
+# Kindynos training risks
 
-Risks written by AREA itself, labelled with the MIT Causal Taxonomy (entity, intent, timing), to
-fine-tune Laya on how AREA frames its risks. The MIT training data teach the MIT annotators'
-conventions on paper excerpts; the AREA test set (`evaluation/area_testset/`) follows
-[LABELING.md](../../../evaluation/area_testset/LABELING.md) on AREA's own risk descriptions, and three
+Risks written by Kindynos itself, labelled with the MIT Causal Taxonomy (entity, intent, timing), to
+fine-tune Laya on how Kindynos frames its risks. The MIT training data teach the MIT annotators'
+conventions on paper excerpts; the Kindynos test set (`evaluation/area_testset/`) follows
+[LABELING.md](../../../evaluation/area_testset/LABELING.md) on the Kindynos own risk descriptions, and three
 MIT-only fine-tuning runs could not learn that framing (e.g. a harm of the system in use is
 post-deployment).
 

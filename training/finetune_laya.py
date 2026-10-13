@@ -9,8 +9,8 @@ checkpoint's rl_agent_config.json. `--oversample` repeats the rows of the rarest
 pre-deployment, entity other) once more each. `--label-smoothing` moves that share of each target
 onto all the options evenly: without it, 8 epochs made the model so overconfident that the
 fitted temperature hit Laya's upper bound (5.0) and could not calibrate it. `--area` adds the
-AREA training risks (area_fit.jsonl, each repeated `--area-repeat` times) and calibrates on the
-AREA validation runs (area_val.jsonl) instead of the MIT validation groups.
+Kindynos training risks (area_fit.jsonl, each repeated `--area-repeat` times) and calibrates on the
+Kindynos validation runs (area_val.jsonl) instead of the MIT validation groups.
 
 The checkpoint goes to training/checkpoints/<name>/ (not versioned), with training_run.json
 recording the base revision, the data checksum, the settings, the calibration and the time
@@ -97,8 +97,8 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=4)
     parser.add_argument("--oversample", action="store_true", help="Repeat the rows of the rarest classes")
     parser.add_argument("--label-smoothing", type=float, default=0.0, help="Share of each target spread over all the options")
-    parser.add_argument("--area", action="store_true", help="Add the AREA training risks and calibrate on the AREA validation runs")
-    parser.add_argument("--area-repeat", type=int, default=1, help="Times each AREA training risk appears (with --area)")
+    parser.add_argument("--area", action="store_true", help="Add the Kindynos training risks and calibrate on the Kindynos validation runs")
+    parser.add_argument("--area-repeat", type=int, default=1, help="Times each Kindynos training risk appears (with --area)")
     parser.add_argument("--micro-batch", type=int, default=8)
     parser.add_argument("--grad-accum", type=int, default=8)
     parser.add_argument("--seed", type=int, default=0)

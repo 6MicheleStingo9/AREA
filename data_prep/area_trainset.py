@@ -1,9 +1,9 @@
 """
-Training risks written by AREA itself, to fine-tune Laya on how AREA frames its risks.
+Training risks written by Kindynos itself, to fine-tune Laya on how Kindynos frames its risks.
 
-The causal labels of the AREA test set follow evaluation/area_testset/LABELING.md, whose
+The causal labels of the Kindynos test set follow evaluation/area_testset/LABELING.md, whose
 conventions (e.g. a harm of the system in use is post-deployment) the MIT training data do not
-teach. These runs add AREA's own risks to the training data. Unlike the test set, where the
+teach. These runs add risks written by Kindynos itself to the training data. Unlike the test set, where the
 questionnaire generator picks the AI system, each run describes a given one: 28 systems, half in
 English and half in Italian, none of the kinds in the test set, with the three simulated profiles
 in rotation. A run is the simulated questionnaire and the domain analysis, one LLM call each (the
@@ -317,7 +317,7 @@ def quality_score() -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="AREA risks for the Laya training data")
+    parser = argparse.ArgumentParser(description="Kindynos risks for the Laya training data")
     sub = parser.add_subparsers(dest="command", required=True)
     gen = sub.add_parser("generate", help="Simulated questionnaires + domain analyses (calls the LLM)")
     gen.add_argument("--max-runs", type=int, default=None, help="Start at most N runs")
@@ -326,7 +326,7 @@ def main() -> None:
                             ("disagreements", "Agreement of the annotators and the risks to adjudicate"),
                             ("merge", "Final labels in labels.jsonl")):
         cmd = sub.add_parser(name, help=help_text)
-        cmd.add_argument("--set", choices=list(SETS), default="train", help="train: the AREA training risks; quality: the test sample")
+        cmd.add_argument("--set", choices=list(SETS), default="train", help="train: the Kindynos training risks; quality: the test sample")
         if name == "batches":
             cmd.add_argument("--runs-per-batch", type=int, default=5)
     qs = sub.add_parser("quality-sample", help="Random test-set risks for the annotator check")

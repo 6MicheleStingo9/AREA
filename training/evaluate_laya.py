@@ -1,5 +1,5 @@
 """
-Evaluate a Laya checkpoint on the two causal test sets: the MIT eval split and the AREA risks.
+Evaluate a Laya checkpoint on the two causal test sets: the MIT eval split and the Kindynos risks.
 
 Runs in the training environment (requirements-train.txt). The checkpoint answers the three
 typed questions for every risk (training/data/*.jsonl, built by training.build_laya_data); the
@@ -84,7 +84,7 @@ def majority_reference(train: List[Dict[str, Any]], rows: List[Dict[str, Any]], 
 
 
 def subsets(rows: List[Dict[str, Any]], preds: Dict[str, Any], labels: Dict[str, List[str]]) -> Dict[str, Any]:
-    """AREA only: scores by language and by source (generated runs or the example run)."""
+    """Kindynos only: scores by language and by source (generated runs or the example run)."""
     meta = {r["id"]: r for r in _read(ROOT / "evaluation" / "area_testset" / "risks.jsonl")}
     out = {}
     for key in ("language", "source"):

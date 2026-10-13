@@ -5,10 +5,10 @@ Resamples the risks (2000 bootstrap draws, seed 0, the same draws for both model
 per axis, the difference A - B in accuracy and in macro-F1 with its 95% interval and a verdict:
 "better" when the whole interval is above zero, "worse" when it is below, "on par" otherwise.
 This is the success criterion fixed before the third Laya run: Laya should be at least on par
-with Gemini on every axis and metric of the AREA risks. A missing prediction counts as wrong.
+with Gemini on every axis and metric of the Kindynos risks. A missing prediction counts as wrong.
 
 A and B are results files in evaluation/results/ (a Laya run, or run N of the Gemini baseline
-with --run-a / --run-b), or `pipeline` for the labels the AREA pipeline gave the AREA risks.
+with --run-a / --run-b), or `pipeline` for the labels the Kindynos pipeline gave the Kindynos risks.
 
 Usage (from the project root):
     python -m evaluation.paired <results A | pipeline> <results B | pipeline> [--run-a N] [--run-b N]
@@ -27,7 +27,7 @@ RESULTS = ROOT / "evaluation" / "results"
 AREA = ROOT / "evaluation" / "area_testset"
 MIT_EVAL = ROOT / "files" / "data" / "processed" / "causal_clf.eval.jsonl"
 AXES = ("entity", "intent", "timing")
-TEST_SETS = {"area": "AREA risks", "mit": "MIT eval split"}
+TEST_SETS = {"area": "Kindynos risks", "mit": "MIT eval split"}
 
 _RISK_PROPS = CAUSALITY_JSON_SCHEMA["additionalProperties"]["properties"]["risks"]["items"]["properties"]
 LABELS: Dict[str, List[str]] = {ax: _RISK_PROPS[ax]["enum"] for ax in AXES}
@@ -43,7 +43,7 @@ def _read(path: Path) -> List[Dict[str, Any]]:
 def load(source: str, run: int) -> Tuple[str, str, Labels]:
     """(name, test set, {risk id: {axis: label}}) for a results file or `pipeline`."""
     if source == "pipeline":
-        return "AREA pipeline (Gemini)", "area", {r["id"]: r["pipeline"] for r in _read(AREA / "risks.jsonl")}
+        return "Kindynos pipeline (Gemini)", "area", {r["id"]: r["pipeline"] for r in _read(AREA / "risks.jsonl")}
     path = Path(source) if Path(source).exists() else RESULTS / source
     res = json.loads(path.read_text(encoding="utf-8"))
     test_set = "area" if "area" in res["task"] else "mit"
@@ -53,7 +53,7 @@ def load(source: str, run: int) -> Tuple[str, str, Labels]:
     elif isinstance(res.get("predictions"), dict):
         preds = res["predictions"]
     else:
-        raise SystemExit(f"{path.name} has no predictions (for the AREA pipeline labels pass `pipeline`)")
+        raise SystemExit(f"{path.name} has no predictions (for the Kindynos pipeline labels pass `pipeline`)")
     choice = lambda p: p["choice"] if isinstance(p, dict) else p
     return name, test_set, {i: {ax: choice(p.get(ax)) for ax in AXES} for i, p in preds.items()}
 

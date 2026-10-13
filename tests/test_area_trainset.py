@@ -1,4 +1,4 @@
-"""Unit tests for the AREA training runs (data_prep/area_trainset.py), without LLM calls."""
+"""Unit tests for the Kindynos training runs (data_prep/area_trainset.py), without LLM calls."""
 
 import json
 import logging

@@ -216,7 +216,7 @@ def build_outputs(rows: List[Dict[str, Any]], out_dir: Path, eval_frac: float) -
       - domain_clf.{train,eval}.jsonl : description -> {domain_id/name, subdomain_id/name}
       - causal_clf.{train,eval}.jsonl : description -> {entity, intent, timing}
     Ogni esempio ha anche "title" (sottocategoria, o categoria), l'analogo del titolo
-    dei rischi generati da AREA. Split deterministico per gruppo (vedi _group_key).
+    dei rischi generati da Kindynos. Split deterministico per gruppo (vedi _group_key).
     Restituisce conteggi e distribuzioni delle etichette per il manifest.
     """
     stats: Dict[str, Any] = {}

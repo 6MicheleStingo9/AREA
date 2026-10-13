@@ -1,4 +1,4 @@
-# Labeling guidelines — AREA causal test set
+# Labeling guidelines — Kindynos causal test set
 
 Gold labels for `risks.jsonl` follow the **MIT Causal Taxonomy of AI Risks** (Slattery et al.,
 2025, CC BY 4.0), the same taxonomy as the MIT data used for training and for the baseline.
@@ -71,7 +71,7 @@ the reviewed value and the reason (`harmonized` in `labels.jsonl`).
 ## Known differences from the MIT convention
 
 - **7.1 misalignment, 7.2 dangerous capabilities (intent):** the MIT annotators mostly code these
-  `intentional` (53% and 69% of the training rows), the AI pursuing its own goals; the AREA risks
+  `intentional` (53% and 69% of the training rows), the AI pursuing its own goals; the Kindynos risks
   explicitly call the outcomes unintended or unanticipated, and the gold follows the text.
 - **6.6 environmental harm (entity):** `other` here; the MIT annotators are split (ai 50%,
   human 25%, other 25%).

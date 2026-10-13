@@ -1,7 +1,7 @@
 """
-In-distribution test set for the causal classification: risks written by AREA itself.
+In-distribution test set for the causal classification: risks written by Kindynos itself.
 
-The MIT eval split holds risk descriptions from papers, while in AREA the causal labels
+The MIT eval split holds risk descriptions from papers, while in Kindynos the causal labels
 are assigned to the risks that the domain analyzer derives from questionnaire answers.
 
 - `generate` answers the questionnaire with each simulated profile (questionnaire
@@ -172,7 +172,7 @@ def evaluate(seed: int = 0) -> None:
     models = sorted({risks[i].get("model") or "unknown" for i in ids})
     res = {
         "task": "causal_clf_area",
-        "predictions": "causal labels assigned by the AREA pipeline (causality agent)",
+        "predictions": "causal labels assigned by the Kindynos pipeline (causality agent)",
         "models": {src: sorted({risks[i].get("model") or "unknown" for i in sel}) for src, sel in subsets.items() if src.startswith("source=")},
         "run": {"date": datetime.now(timezone.utc).strftime("%Y-%m-%d"), "git_commit": _git_commit()},
         "data": {
@@ -216,7 +216,7 @@ def _write_markdown(path: Path, res: Dict[str, Any]) -> None:
     langs = {k.split("=")[1]: v["n"] for k, v in res["subsets"].items() if k.startswith("language=")}
     models = "; ".join(f"{k.split('=')[1]}: {', '.join(v)}" for k, v in res["models"].items())
     lines = [
-        "# Causal classification on AREA risks — pipeline labels vs gold",
+        "# Causal classification on Kindynos risks — pipeline labels vs gold",
         "",
         f"Test set: `{res['data']['risks']}` ({res['data']['rows']} risks: "
         + ", ".join(f"{n} {lang.upper()}" for lang, n in langs.items())
@@ -250,7 +250,7 @@ def _write_markdown(path: Path, res: Dict[str, Any]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="AREA in-distribution test set")
+    parser = argparse.ArgumentParser(description="Kindynos in-distribution test set")
     sub = parser.add_subparsers(dest="command", required=True)
     gen = sub.add_parser("generate", help="Generate answers and analyses (calls the LLM)")
     gen.add_argument("--languages", nargs="+", default=["en", "it"], choices=["en", "it"])

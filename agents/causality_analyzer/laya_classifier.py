@@ -30,7 +30,7 @@ MIT_DATABASE = ROOT / "files" / "data" / "processed" / "full.jsonl"
 DEFAULT_MODEL = ROOT / "training" / "checkpoints" / "laya-causal-v4"
 AXES = ("entity", "intent", "timing")
 # Labels whose confidence (the calibrated probability of the chosen label) is below this are
-# flagged for review. Chosen for laya-causal-v4 on the AREA validation runs
+# flagged for review. Chosen for laya-causal-v4 on the Kindynos validation runs
 # (training/data/area_val.jsonl), not on the test set: label smoothing 0.1 caps the confidence
 # near 0.93, where 274 of the 291 validation labels sit (93.8% correct); the 17 below 0.9 are 59%
 # correct. Laya's own abstention threshold, fitted on the same runs for a 10% error (0.44),
