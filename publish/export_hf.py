@@ -4,7 +4,7 @@ Build the two Hugging Face repositories of Kindynos in publish/build/.
 - model/ (MicheleStingo/laya-kindynos-causal): the laya-causal-v4 checkpoint
   (training/checkpoints/, not versioned), its card and Apache-2.0 license (publish/huggingface/model/),
   the root config.json the Hub uses to recognise a Laya model, and eval/kindynos_test.json, the
-  scored predictions on the test risks.
+  scored predictions on the test risks, citing the current hash of the commit they were made at.
 - dataset/ (MicheleStingo/kindynos-causal-risks): its card (publish/huggingface/dataset/), the
   `kindynos` and `mit` configs split exactly as in training (training/build_laya_data.py), the
   labeling guidelines, the raw annotations and the quality check. As in the cards, these copies call
@@ -34,6 +34,7 @@ AREA_TEST = ROOT / "evaluation" / "area_testset"
 AREA_TRAIN = ROOT / "files" / "data" / "area_trainset"
 PROCESSED = ROOT / "files" / "data" / "processed"
 TEST_RESULTS = ROOT / "evaluation" / "results" / "area_testset__laya-causal-v4__2026-10-12.json"
+COMMIT_MAP = ROOT / "evaluation" / "results" / "commit_map.md"
 CHECKPOINT_FILES = ("model.safetensors", "rl_agent_config.json", "questions.json", "training_run.json",
                     "encoder/config.json", "tokenizer/tokenizer.json", "tokenizer/tokenizer_config.json")
 # Laya training file of each exported split
@@ -70,6 +71,15 @@ def _write(path: Path, rows: Iterable[Dict[str, Any]]) -> int:
 def _replace(text: str, old: str, new: str) -> str:
     assert text.count(old) == 1, f"expected once: {old[:60]!r}"
     return text.replace(old, new)
+
+
+def current_commit(cited: str) -> str:
+    """The current hash of a commit cited before the history rewrites (evaluation/results/commit_map.md)."""
+    for line in COMMIT_MAP.read_text(encoding="utf-8").splitlines():
+        cells = line.split(" | ")
+        if line.startswith("| `") and f"`{cited}`" in cells[0]:
+            return cells[1].strip("`")
+    return cited
 
 
 def kindynos_splits(names: Dict[str, str]) -> Dict[str, List[Dict[str, Any]]]:
@@ -182,7 +192,10 @@ def build_model(out: Path) -> None:
     for name in ("README.md", "LICENSE", "config.json"):
         shutil.copy(CARDS / "model" / name, out / name)
     (out / "eval").mkdir(exist_ok=True)
-    shutil.copy(TEST_RESULTS, out / "eval" / "kindynos_test.json")
+    results = TEST_RESULTS.read_text(encoding="utf-8")
+    cited = json.loads(results)["run"]["git_commit"]
+    results = _replace(results, f'"git_commit": "{cited}"', f'"git_commit": "{current_commit(cited)}"')
+    (out / "eval" / "kindynos_test.json").write_text(results, encoding="utf-8")
 
 
 def main() -> None:
