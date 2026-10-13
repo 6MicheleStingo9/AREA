@@ -109,8 +109,21 @@ def test_node_analyze_records_the_backend_and_leaves_the_input_metadata_alone(fa
     metadata = state["metadata"]
     out = causality.node_analyze(state)
     assert out["errors"] == []
-    assert out["metadata"]["causality_model"] == {"backend": "laya", "model": "laya-causal-v4", "review_threshold": 0.9}
+    assert out["metadata"]["causality_model"] == {"backend": "laya", "model": laya_classifier.model_name(), "review_threshold": 0.9}
     assert "causality_model" not in metadata
+
+
+def test_the_model_is_the_local_checkpoint_else_the_published_one(monkeypatch, tmp_path):
+    monkeypatch.delenv("LAYA_MODEL", raising=False)
+    monkeypatch.delenv("LAYA_REVISION", raising=False)
+    monkeypatch.setattr(laya_classifier, "DEFAULT_MODEL", tmp_path)
+    assert laya_classifier.model_spec() == (str(tmp_path), None)
+    monkeypatch.setattr(laya_classifier, "DEFAULT_MODEL", tmp_path / "missing")
+    assert laya_classifier.model_spec() == ("MicheleStingo/laya-kindynos-causal", "v1.0")
+    assert laya_classifier.model_name() == "MicheleStingo/laya-kindynos-causal"
+    assert laya_classifier.problem() in (None, laya_classifier._NO_PACKAGES)  # a Hub id needs no local directory
+    monkeypatch.setenv("LAYA_MODEL", "someone/another-laya")
+    assert laya_classifier.model_spec() == ("someone/another-laya", None)
 
 
 def test_an_unknown_backend_is_an_error(monkeypatch):

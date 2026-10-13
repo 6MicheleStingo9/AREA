@@ -8,8 +8,9 @@ services:
     # on the host (as root they would be root-owned). Override UID/GID if yours differ.
     user: "${UID:-1000}:${GID:-1000}"
     environment:
-      # The Hugging Face libraries need a writable cache; the host user has no home in the image
-      HF_HOME: /tmp/huggingface
+      # The Hugging Face cache, kept on the host in files/.cache/: without a local checkpoint the
+      # published model is downloaded there once
+      HF_HOME: /app/files/.cache/huggingface
     volumes:
       - ./files:/app/files
       # The Laya checkpoint (training/checkpoints/laya-causal-v4) is not in the image: the

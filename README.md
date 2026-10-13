@@ -173,8 +173,10 @@ On the Kindynos test set it is at least on par with the Gemini pipeline on every
 macro-F1, and better on entity, intent macro-F1 and timing accuracy
 ([comparison](evaluation/results/comparison.md)).
 
-- The checkpoint is read from `training/checkpoints/laya-causal-v4` (615 MB, not versioned).
-  `LAYA_MODEL` points to another directory or to a Hugging Face id, `LAYA_REVISION` pins its revision.
+- The model is [laya-kindynos-causal](https://huggingface.co/MicheleStingo/laya-kindynos-causal) on Hugging Face,
+  downloaded on first use (615 MB, revision `v1.0`) and cached; a local checkpoint in
+  `training/checkpoints/laya-causal-v4` is used instead when present. `LAYA_MODEL` points to another
+  directory or Hugging Face id, `LAYA_REVISION` pins its revision.
 - The model loads once per process (6–9 s) and labels a risk in about 2 s on a laptop CPU (i7-1255U,
   1.4–2.6 s): under a minute for an assessment of 20 risks, in Docker too.
 - Laya writes no text: in the report each label comes with the MIT definition of its value and Laya's
@@ -206,7 +208,8 @@ docker compose up --build
 
 The application is available at `http://localhost:8000`.
 The image includes CPU-only PyTorch for the causal classifier, but not its checkpoint: `./training`
-is mounted read-only, so the container uses `training/checkpoints/laya-causal-v4` from the host
+is mounted read-only, so the container uses `training/checkpoints/laya-causal-v4` from the host when
+present, and otherwise downloads the published model once into `files/.cache/huggingface`
 ([Causal classification](#causal-classification-laya)).
 Answers and reports are persisted in `./files/` via a bind mount. The container runs as
 UID/GID 1000 so the files stay editable on the host; if your user has different ids, set

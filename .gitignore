@@ -33,5 +33,8 @@ __pycache__/
 files/data/area_trainset/annotations/disputed.jsonl
 evaluation/area_testset/annotator_check/annotations/disputed.jsonl
 
+# Hugging Face cache of the Docker container (docker-compose.yml)
+files/.cache/
+
 # Hugging Face repositories built by `python -m publish.export_hf`
 publish/build/

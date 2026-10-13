@@ -12,8 +12,9 @@ the LLM backend of the causality step, work without them.
 
 Configuration (environment):
     LAYA_MODEL             checkpoint directory or Hugging Face id (default: the local
-                           training/checkpoints/laya-causal-v4)
-    LAYA_REVISION          Hub revision, for a Hugging Face id
+                           training/checkpoints/laya-causal-v4 when present, else the published
+                           MicheleStingo/laya-kindynos-causal, downloaded on first use)
+    LAYA_REVISION          Hub revision, for a Hugging Face id (default for the published model: v1.0)
     LAYA_REVIEW_THRESHOLD  confidence below which a label is flagged for review (default 0.9)
 """
 
@@ -28,6 +29,8 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 ROOT = Path(__file__).resolve().parent.parent.parent
 MIT_DATABASE = ROOT / "files" / "data" / "processed" / "full.jsonl"
 DEFAULT_MODEL = ROOT / "training" / "checkpoints" / "laya-causal-v4"
+# The published model, downloaded from Hugging Face on first use when there is no local checkpoint
+HUB_MODEL, HUB_REVISION = "MicheleStingo/laya-kindynos-causal", "v1.0"
 AXES = ("entity", "intent", "timing")
 # Labels whose confidence (the calibrated probability of the chosen label) is below this are
 # flagged for review. Chosen for laya-causal-v4 on the Kindynos validation runs
@@ -87,8 +90,14 @@ def subdomain_names() -> Dict[str, str]:
 
 
 def model_spec() -> Tuple[str, Optional[str]]:
-    """(checkpoint directory or Hugging Face id, revision) from the environment."""
-    return os.getenv("LAYA_MODEL") or str(DEFAULT_MODEL), os.getenv("LAYA_REVISION") or None
+    """(checkpoint directory or Hugging Face id, revision): LAYA_MODEL and LAYA_REVISION when set, else
+    the local checkpoint when present, else the published model at its release revision."""
+    name, revision = os.getenv("LAYA_MODEL"), os.getenv("LAYA_REVISION") or None
+    if name:
+        return name, revision
+    if DEFAULT_MODEL.is_dir():
+        return str(DEFAULT_MODEL), None
+    return HUB_MODEL, revision or HUB_REVISION
 
 
 def model_name() -> str:
