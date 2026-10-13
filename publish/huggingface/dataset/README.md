@@ -121,7 +121,7 @@ Two sources, with the same core fields:
   papers, labeled by the repository's annotators (CC BY 4.0).
 
 These are the data of [laya-kindynos-causal](https://huggingface.co/MicheleStingo/laya-kindynos-causal), split exactly as
-they were used for training, model selection and testing.
+they were used for training, model selection and testing. They are also on [Kaggle](https://www.kaggle.com/datasets/michelestingo/kindynos-causal-risks).
 
 | Config | Split | Risks | Languages | Labels |
 |---|---|---|---|---|

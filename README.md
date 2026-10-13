@@ -333,7 +333,8 @@ python -m evaluation.compare                          # every run side by side, 
 The causal classifier is [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual)
 (Apache-2.0, 322M parameters, typed decisions with calibrated probabilities), fine-tuned on the MIT training
 split and on risks written by Kindynos; the checkpoint chosen, `laya-causal-v4`, is the one the causality step
-uses. Training has its own environment:
+uses. Model and data are published on Hugging Face ([model](https://huggingface.co/MicheleStingo/laya-kindynos-causal), [data](https://huggingface.co/datasets/MicheleStingo/kindynos-causal-risks)) and on Kaggle
+([model](https://www.kaggle.com/models/michelestingo/laya-kindynos-causal), [data](https://www.kaggle.com/datasets/michelestingo/kindynos-causal-risks)). Training has its own environment:
 
 ```bash
 python -m venv .venv-train
@@ -361,7 +362,7 @@ python -m data_prep.area_trainset collect    # then batches / disagreements / me
 
 With `--area`, `training.finetune_laya` adds them to the training rows and calibrates on six Kindynos runs
 held out (`area_val.jsonl`), and `training.select_laya --val area` compares the variants on those runs. Fine-tuning needs a GPU (about 15 hours on a laptop CPU):
-[training/kaggle_finetune.ipynb](training/kaggle_finetune.ipynb) runs it on Kaggle (GPU, Internet on): it
+[training/kaggle_finetune.ipynb](training/kaggle_finetune.ipynb) runs it on Kaggle (GPU, Internet on; [published run](https://www.kaggle.com/code/michelestingo/kindynos-fine-tuning-laya-to-label-ai-risks)): it
 trains the published configuration (about 35 minutes), or the three variants with `COMPARE_VARIANTS = True`, and
 evaluates the model on the test risks; `SMOKE_TEST = True` checks every step on a few risks, even on a CPU. Or run
 `python -m training.finetune_laya --device cuda` per variant (`--limit` and `--val-limit` for smoke runs).
