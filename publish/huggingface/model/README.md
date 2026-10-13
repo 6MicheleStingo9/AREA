@@ -73,7 +73,7 @@ with a calibrated probability for each value. It is
 [Laya-multilingual](https://huggingface.co/convaiinnovations/laya-multilingual) (322M parameters)
 fine-tuned on the risks that [Kindynos](https://github.com/6MicheleStingo9/kindynos), an open-source AI risk
 assessment tool, writes from a questionnaire about an AI system. It reads English and Italian and runs
-on a CPU, in about 2 seconds per risk on a laptop.
+on a CPU, in about 2 seconds per risk on a laptop. The same model is on [Kaggle](https://www.kaggle.com/models/michelestingo/laya-kindynos-causal).
 
 Results on the Kindynos test set, 145 risks in English and Italian whose labels were verified by a human
 annotator (95% bootstrap intervals):
@@ -184,7 +184,7 @@ The model is built for short AI risk statements organized by MIT subdomain, like
   on Kaggle. Three variants were trained (4 epochs; 8 epochs with label smoothing; the same with the Kindynos
   risks twice). Among those Laya could calibrate, the one with the best mean macro-F1 on validation was
   kept: 76.0, against 71.8 and 68.2.
-- **Reproduce**: [Kaggle notebook](<kaggle-notebook-url>), and the code in the Kindynos
+- **Reproduce**: [Kaggle notebook](https://www.kaggle.com/code/michelestingo/kindynos-fine-tuning-laya-to-label-ai-risks), and the code in the Kindynos
   [`training/`](https://github.com/6MicheleStingo9/kindynos/tree/main/training) folder.
 
 ## Evaluation
