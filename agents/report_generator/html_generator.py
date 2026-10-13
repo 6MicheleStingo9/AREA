@@ -9,6 +9,7 @@ from typing import Dict, Any
 from jinja2 import Environment, FileSystemLoader
 
 from .chart_data_builder import prepare_chart_data, build_risk_table_data
+from utils import brand
 
 
 REPORT_DIR = Path(__file__).parent.parent.parent / "files" / "reports"
@@ -172,6 +173,8 @@ def generate_html_report(
         plotly_content=load_vendor("plotly-2.27.0.min.js"),
         jszip_content=load_vendor("jszip-3.10.1.min.js"),
         language=language,
+        brand_mark=brand.svg("kindynos-mark"),
+        favicon=brand.favicon(),
     )
 
     try:

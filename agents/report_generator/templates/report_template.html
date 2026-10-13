@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ translations.page_title }}</title>
+    {% if favicon %}<link rel="icon" href="{{ favicon }}">{% endif %}
     {% if plotly_content %}<script>{{ plotly_content }}</script>{% else %}<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>{% endif %}
     <style>
 {{ css_content }}
@@ -16,7 +17,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>🛡️ {{ translations.page_title }}</h1>
+            <h1>{% if brand_mark %}<span class="report-mark" aria-hidden="true">{{ brand_mark }}</span>{% else %}🛡️ {% endif %}{{ translations.page_title }}</h1>
             <h2>{{ translations.page_subtitle }}</h2>
             <div class="report-meta-actions">
                 <div class="report-links">

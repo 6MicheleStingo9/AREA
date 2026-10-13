@@ -17,9 +17,16 @@ from quiz.logic import (
     validate_answer,
 )
 from quiz.translations import t
+from utils import brand
 
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+# The logo of every page (base.html): the mark, the wordmark and the favicon
+templates.env.globals.update(
+    brand_mark=brand.svg("kindynos-mark"),
+    brand_wordmark=brand.svg("kindynos-wordmark-light"),
+    brand_favicon=brand.favicon(),
+)
 
 router = APIRouter()
 

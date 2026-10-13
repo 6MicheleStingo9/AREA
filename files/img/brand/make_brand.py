@@ -165,7 +165,7 @@ def main() -> None:
     word = Face(font_path, WORD_AXES)
     word_parts = word.line(WORD)
     for theme, colors in THEMES.items():
-        (out / f"kindynos-wordmark-{theme}.svg").write_text(text_svg(word, word_parts, colors, "kindÿnos", 120, 14), encoding="utf-8")
+        (out / f"kindynos-wordmark-{theme}.svg").write_text(text_svg(word, word_parts, colors, "Kindynos", 120, 14), encoding="utf-8")
     (out / "kindynos-mark.svg").write_text(mark_svg(word), encoding="utf-8")
     tag = Face(font_path, TAGLINE_AXES)
     leading = 1.35 * tag.hb.face.upem

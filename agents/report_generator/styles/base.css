@@ -34,6 +34,21 @@ header h1 {
     font-weight: 700;
 }
 
+/* The Kindynos mark before the title */
+header h1 .report-mark {
+    display: inline-block;
+    vertical-align: -0.18em;
+    margin-right: 0.35em;
+}
+
+header h1 .report-mark svg {
+    display: block;
+    width: 1.15em;
+    height: 1.15em;
+    border-radius: 22%;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
 header .subtitle {
     font-size: 1.1rem;
     opacity: 0.95;
