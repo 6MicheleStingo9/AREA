@@ -1,6 +1,15 @@
-# Kindynos
+<p align="center">
+  <img src="files/img/brand/kindynos-owl.png" alt="" width="128">
+</p>
 
-AI risk assessment with the taxonomies of the MIT AI Risk Repository.
+<h1 align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="files/img/brand/kindynos-wordmark-dark.svg">
+    <img src="files/img/brand/kindynos-wordmark-light.svg" alt="Kindynos" width="340">
+  </picture>
+</h1>
+
+<p align="center"><em>AI risk assessment with the taxonomies of the MIT AI Risk Repository.</em></p>
 
 Kindynos (Greek κίνδυνος, "danger, risk", the root of *cindynics*, the science of danger) is a LangGraph-based MAS platform for assessing risks associated with AI systems. It uses a user-driven questionnaire and a multi-agent workflow for risk analysis and report generation, providing a user-friendly interface with multilingual support.
 
@@ -97,6 +106,7 @@ The Kindynos repository is organized as follows:
   - `answers/`: user answers
   - `analysis/`: intermediate results (domain, causality, heuristic)
   - `reports/`: generated HTML reports and metadata
+  - `img/brand/`: logo, mascot and social preview ([README](files/img/brand/README.md))
 - `api/` — FastAPI web layer:
   - `main.py`: app entry point (mounts static assets, includes routers)
   - `routes_quiz.py`, `routes_run.py`: questionnaire and pipeline/report endpoints
