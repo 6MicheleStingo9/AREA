@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from agents.causality_analyzer import laya_classifier
 from agents.causality_analyzer.causality_risk_analyzer_agent import causality_backend
+from api import jobs
 from api.routes_quiz import router as quiz_router
 from api.routes_run import router as run_router
 from utils import brand
@@ -31,6 +32,9 @@ def check_causality_backend() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     check_causality_backend()
+    interrupted = jobs.mark_interrupted()
+    if interrupted:
+        _logger.warning("Analyses interrupted by the last stop of the server", count=interrupted)
     yield
 
 

@@ -416,6 +416,8 @@ The analysis workflow in Kindynos consists of the following steps:
 
 - You can find the results of each analysis step (domain, causality, heuristic) as JSON files in the `files/analysis/` subfolders.
 - The final HTML report is saved in `files/reports/` and can be opened with your browser.
+- The state of each analysis started from the web interface is kept in `files/jobs/`: after a restart the
+  progress page still shows how a finished analysis ended, and marks those the restart cut short as interrupted.
 
 ---
 

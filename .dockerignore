@@ -15,4 +15,5 @@ files/reports/*
 training/checkpoints/
 training/data/
 files/.cache/
+files/jobs/
 publish/build/

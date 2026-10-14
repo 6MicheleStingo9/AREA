@@ -10,4 +10,5 @@ FILES = ROOT / "files"
 ANSWERS = FILES / "answers"  # the questionnaire answers, one file per run
 ANALYSIS = FILES / "analysis"  # domain/, causality/, heuristic/: the output of each step
 REPORTS = FILES / "reports"
+JOBS = FILES / "jobs"  # the state of each analysis started from the web interface
 DATA = FILES / "data"  # the MIT AI Risk Repository and the Kindynos training risks

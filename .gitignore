@@ -36,5 +36,8 @@ evaluation/area_testset/annotator_check/annotations/disputed.jsonl
 # Hugging Face cache of the Docker container (docker-compose.yml)
 files/.cache/
 
+# State of the analyses started from the web interface (api/jobs.py)
+files/jobs/
+
 # Hugging Face repositories built by `python -m publish.export_hf`
 publish/build/
