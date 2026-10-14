@@ -1,0 +1,28 @@
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-variation-settings: var(--font-display-settings);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.hero {
+  font-size: var(--text-4xl);
+  letter-spacing: -0.015em;
+  line-height: 1.06;
+}
+
+.page {
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+}
+
+.section {
+  font-size: var(--text-2xl);
+  line-height: 1.2;
+}
+
+.title {
+  font-size: var(--text-xl);
+  line-height: 1.2;
+}

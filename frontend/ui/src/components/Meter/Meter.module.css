@@ -1,0 +1,42 @@
+.track {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--color-track);
+}
+
+.md {
+  height: 0.5rem;
+}
+
+.sm {
+  height: 0.375rem;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--fill);
+  transition: width var(--duration-base) var(--ease-out);
+}
+
+.neutral {
+  --fill: var(--color-ink-muted);
+}
+
+.high {
+  --fill: var(--color-severity-high);
+}
+
+.medium {
+  --fill: var(--color-severity-medium);
+}
+
+.low {
+  --fill: var(--color-severity-low);
+}
+
+.human {
+  --fill: var(--color-human);
+}

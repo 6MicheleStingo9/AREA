@@ -16,8 +16,7 @@ from quiz.logic import (
     should_show_followup,
     validate_answer,
 )
-from quiz.translations import t
-from utils import brand
+from utils import brand, i18n
 
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
@@ -29,6 +28,11 @@ templates.env.globals.update(
 )
 
 router = APIRouter()
+
+
+def _strings(lang: str):
+    """The t() of the templates: the strings of the questionnaire pages, locales/<lang>/quiz.json."""
+    return lambda key, **kw: i18n.t(f"quiz.{key}", lang, **kw)
 
 
 def _is_htmx(request: Request) -> bool:
@@ -61,7 +65,7 @@ def _quiz_ctx(
         "saved": saved,
         "error": error,
         "is_fragment": _is_htmx(request),
-        "t": lambda key, **kw: t(key, lang=lang, **kw),
+        "t": _strings(lang),
         "should_show_followup": should_show_followup,
     }
 
@@ -101,7 +105,7 @@ async def quiz_done(request: Request, session_id: str):
         "total": len(session["questions"]),
         "answered": len(session["answers"]),
         "lang": lang,
-        "t": lambda key, **kw: t(key, lang=lang, **kw),
+        "t": _strings(lang),
     })
 
 
@@ -126,7 +130,7 @@ async def quiz_progress(request: Request, session_id: str, run_id: str):
         "lang": lang,
         "status": status,
         "error": job.get("error") if job else None,
-        "t": lambda key, **kw: t(key, lang=lang, **kw),
+        "t": _strings(lang),
     })
 
 
@@ -155,7 +159,7 @@ async def followups_fragment(request: Request, session_id: str, step: int):
         "question": question,
         "answer": answer,
         "saved": {"answer": answer, "followups": followups},
-        "t": lambda key, **kw: t(key, lang=lang, **kw),
+        "t": _strings(lang),
         "should_show_followup": should_show_followup,
         "session_id": session_id,
         "step": step,

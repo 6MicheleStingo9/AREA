@@ -1,6 +1,5 @@
 import logging
 import os
-from typing import Dict
 
 import structlog
 from dotenv import load_dotenv

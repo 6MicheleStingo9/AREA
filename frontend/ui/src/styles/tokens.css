@@ -1,0 +1,111 @@
+/*
+ * The design tokens of Kindynos: colours, type, spacing, shapes and motion.
+ *
+ * The colours come from the brand (files/img/brand/README.md). Each one has a light and a dark value,
+ * and light-dark() picks the one for the color-scheme of the page: the system setting, unless the
+ * data-theme attribute of <html> fixes it (ThemeProvider sets it).
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Grounds and surfaces */
+  --color-ground: light-dark(#f6f4ee, #0d1626);
+  --color-surface: light-dark(#ffffff, #14213a);
+  --color-surface-muted: light-dark(#efece3, #1b2b48);
+  --color-line: light-dark(#dfd9cb, #2b3d5e);
+  /* The edge of the fields: 3:1 against the surfaces, as WCAG asks of the boundary of a control */
+  --color-line-strong: light-dark(#7f889c, #6b7c9e);
+  --color-track: light-dark(#e9e5da, #22324f);
+
+  /* Text */
+  --color-ink: light-dark(#132747, #f4ebd9);
+  --color-ink-muted: light-dark(#46536b, #c6cddb);
+  --color-ink-subtle: light-dark(#5d687e, #9da8be);
+
+  /* Actions: navy and cream, swapped in the dark */
+  --color-primary: light-dark(#132747, #fae5b9);
+  --color-on-primary: light-dark(#fae5b9, #132747);
+  --color-focus: light-dark(#4b70b8, #8eaee3);
+
+  /* The causal entity, as the two dots of the logo: AI in blue, human in gold */
+  --color-ai: light-dark(#4b70b8, #8eaee3);
+  --color-human: #edaa26;
+  --color-other: light-dark(#8a93a6, #9da8be);
+
+  /* Severity */
+  --color-severity-high: light-dark(#a3261b, #f07563);
+  --color-severity-medium: light-dark(#e0705f, #b5503f);
+  --color-severity-low: light-dark(#f0bfb4, #6a3c36);
+
+  --color-shadow: light-dark(rgb(19 39 71 / 0.14), rgb(0 0 0 / 0.45));
+
+  /* Type: Fraunces for the titles, Inter for the text (fonts.css) */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-text: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /* Fraunces softened, as in the wordmark */
+  --font-display-settings: 'SOFT' 50;
+
+  --text-xs: 0.8125rem; /* 13px: eyebrows, notes */
+  --text-sm: 0.875rem; /* 14px: labels, secondary text */
+  --text-md: 1rem; /* 16px: body */
+  --text-lg: 1.125rem; /* 18px: lead paragraphs */
+  --text-xl: clamp(1.5rem, 1.2rem + 1vw, 1.875rem); /* 24-30px: a question, a card title */
+  --text-2xl: 1.75rem; /* 28px: section titles */
+  --text-3xl: clamp(2rem, 1.4rem + 2vw, 2.75rem); /* 32-44px: page titles */
+  --text-4xl: clamp(2.25rem, 1.5rem + 2.8vw, 3.375rem); /* 36-54px: the welcome title */
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.55;
+  --tracking-caps: 0.08em;
+
+  /* Spacing, on a 4px grid */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Page layout */
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --width-page: 73.75rem; /* 1180px */
+  --width-content: 60rem; /* 960px */
+  --width-text: 38em;
+
+  /* Shapes */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-control: 0.75rem;
+  --radius-panel: 0.875rem;
+  --radius-card: 1.125rem;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px var(--color-shadow);
+  --shadow-lg: 0 18px 40px var(--color-shadow);
+
+  /* Controls: 44px is the smallest target that WCAG 2.5.5 accepts */
+  --target-min: 2.75rem;
+  --control-height: 3rem;
+  --control-height-lg: 3.25rem;
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

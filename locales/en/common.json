@@ -1,0 +1,40 @@
+{
+  "brand": {
+    "home": "Kindynos, home page"
+  },
+  "skip_to_content": "Skip to the content",
+  "optional": "(optional)",
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "it": "Italiano"
+  },
+  "theme": {
+    "to_dark": "Switch to the dark theme",
+    "to_light": "Switch to the light theme"
+  },
+  "severity": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "entity": {
+    "ai": "AI",
+    "human": "Human",
+    "other": "Other"
+  },
+  "intent": {
+    "intentional": "Intentional",
+    "unintentional": "Unintentional",
+    "other": "Other"
+  },
+  "timing": {
+    "pre_deployment": "Pre-deployment",
+    "post_deployment": "Post-deployment",
+    "other": "Other"
+  },
+  "report_footer": {
+    "disclaimer": "Kindynos generates this report automatically, with AI models and expert rules. It supports, but does not replace, a risk assessment by qualified people.",
+    "attribution": "© {year} · Taxonomies: MIT AI Risk Repository (Slattery et al., 2024), CC BY 4.0"
+  }
+}

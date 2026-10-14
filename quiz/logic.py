@@ -5,6 +5,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
+from utils import i18n
 from utils.paths import ANSWERS, FILES
 
 
@@ -59,10 +60,8 @@ def should_show_followup(followup: Dict, answer: Any, question_type: str) -> boo
 
 
 def validate_answer(question: Dict, answer: Any, lang: str = "en") -> Tuple[bool, str]:
-    from quiz.translations import t as _t
-
     def t(key: str, **kwargs) -> str:
-        return _t(key, lang=lang, **kwargs)
+        return i18n.t(f"quiz.{key}", lang, **kwargs)
 
     if not question.get("required", False):
         return True, ""

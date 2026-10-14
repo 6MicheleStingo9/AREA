@@ -14,7 +14,8 @@ and human, in gold. The mark is the same ÿ on a navy tile.
 
 The web interface and the HTML report embed `kindynos-mark.svg` (also as the favicon) and
 `kindynos-wordmark-light.svg` through [`utils/brand.py`](../../../utils/brand.py), and the welcome
-page shows `kindynos-owl.png`: keep these names when regenerating the files.
+page shows `kindynos-owl.png`. The new interface in `frontend/` imports the mark and both wordmarks.
+Keep these names when regenerating the files.
 
 ## Palette
 

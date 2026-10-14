@@ -1,0 +1,8 @@
+# The Python linter, run by the CI: `ruff check .`
+target-version = "py311"
+
+[lint]
+# Pyflakes and the pycodestyle errors, named so that a newer ruff keeps the same rules. Without E731:
+# the code assigns short lambdas on purpose, for sort keys and formatters.
+select = ["E4", "E7", "E9", "F"]
+ignore = ["E731"]

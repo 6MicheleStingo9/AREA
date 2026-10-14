@@ -1,0 +1,23 @@
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--color-ink-subtle);
+  font-family: var(--font-text);
+  font-size: var(--text-xs);
+  font-variation-settings: normal;
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  line-height: var(--leading-snug);
+  text-transform: uppercase;
+}
+
+.icon {
+  display: inline-flex;
+}
+
+.icon svg {
+  width: 1rem;
+  height: 1rem;
+}

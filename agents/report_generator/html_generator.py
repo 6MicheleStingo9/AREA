@@ -9,7 +9,7 @@ from typing import Dict, Any
 from jinja2 import Environment, FileSystemLoader
 
 from .chart_data_builder import prepare_chart_data, build_risk_table_data
-from utils import brand
+from utils import brand, i18n
 from utils.paths import FILES, REPORTS
 
 
@@ -50,24 +50,6 @@ def load_vendor(filename: str) -> str:
     """Return the content of a vendored JS file, or empty string if not found."""
     path = STATIC_DIR / filename
     return path.read_text(encoding="utf-8") if path.exists() else ""
-
-
-def load_translations(language: str) -> dict:
-    """
-    Load translations from JSON file based on the selected language.
-
-    Args:
-        language (str): The language code.
-
-    Returns:
-        dict: A dictionary of translations.
-    """
-    translations_path = TEMPLATE_DIR / "translations.json"
-    if translations_path.exists():
-        with open(translations_path, "r", encoding="utf-8") as f:
-            translations = json.load(f)
-        return translations.get(language, {})
-    return {}
 
 
 def generate_html_report(
@@ -111,7 +93,7 @@ def generate_html_report(
 
     # Load questions dynamically based on language
     language = metadata.get("language", "en")
-    translations = load_translations(language)
+    translations = i18n.strings("report", language)  # locales/<language>/report.json
     questions_path = FILES / f"questions_{language}.json"
     questions = {}
     if questions_path.exists():
