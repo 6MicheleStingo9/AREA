@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, Ref } from 'react';
 import styles from './Heading.module.css';
 
 type Level = 1 | 2 | 3 | 4;
@@ -11,6 +11,7 @@ interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   level: Level;
   /** The look, by default the one of the level: hero is the title of the welcome page */
   size?: Size;
+  ref?: Ref<HTMLHeadingElement>;
 }
 
 export function Heading({ level, size = SIZE_OF_LEVEL[level], className, ...rest }: HeadingProps) {

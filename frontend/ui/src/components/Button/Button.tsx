@@ -1,4 +1,10 @@
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import type {
+  ButtonHTMLAttributes,
+  ComponentPropsWithoutRef,
+  ElementType,
+  ReactNode,
+  Ref,
+} from 'react';
 import styles from './Button.module.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'link';
@@ -33,7 +39,7 @@ export function Button({
   type = 'button',
   children,
   ...rest
-}: ButtonLook & ButtonHTMLAttributes<HTMLButtonElement>) {
+}: ButtonLook & ButtonHTMLAttributes<HTMLButtonElement> & { ref?: Ref<HTMLButtonElement> }) {
   return (
     <button type={type} className={className({ variant, size }, extra)} {...rest}>
       {icon && <Icon>{icon}</Icon>}
@@ -43,8 +49,16 @@ export function Button({
   );
 }
 
+type ButtonLinkProps<C extends ElementType> = ButtonLook & {
+  /** The element: an <a> by default, or the link component of a router */
+  as?: C;
+  className?: string;
+  children?: ReactNode;
+} & Omit<ComponentPropsWithoutRef<C>, keyof ButtonLook | 'as' | 'className' | 'children'>;
+
 /** A link with the look of a button: for an action that goes to another page */
-export function ButtonLink({
+export function ButtonLink<C extends ElementType = 'a'>({
+  as,
   variant,
   size,
   icon,
@@ -52,12 +66,13 @@ export function ButtonLink({
   className: extra,
   children,
   ...rest
-}: ButtonLook & AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) {
+}: ButtonLinkProps<C>) {
+  const Element: ElementType = as ?? 'a';
   return (
-    <a className={className({ variant, size }, extra)} {...rest}>
+    <Element className={className({ variant, size }, extra)} {...rest}>
       {icon && <Icon>{icon}</Icon>}
       {children}
       {iconEnd && <Icon>{iconEnd}</Icon>}
-    </a>
+    </Element>
   );
 }

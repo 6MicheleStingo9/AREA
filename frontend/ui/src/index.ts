@@ -13,7 +13,7 @@ export { Button, ButtonLink, type ButtonVariant } from './components/Button/Butt
 export { Card } from './components/Card/Card';
 export { Choice, ChoiceGroup } from './components/Choice/Choice';
 export { Eyebrow } from './components/Eyebrow/Eyebrow';
-export { Field, TextArea, TextInput } from './components/Field/Field';
+export { Field, FieldError, TextArea, TextInput } from './components/Field/Field';
 export { Heading } from './components/Heading/Heading';
 export { IconButton } from './components/IconButton/IconButton';
 export { LanguageSwitch } from './components/LanguageSwitch/LanguageSwitch';

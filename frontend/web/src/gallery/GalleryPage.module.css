@@ -8,11 +8,6 @@
   padding: clamp(var(--space-8), 5vw, var(--space-16)) var(--gutter) var(--space-16);
 }
 
-/* The target of the skip link: focused by it, never by the user */
-.main:focus {
-  outline: none;
-}
-
 .intro {
   display: flex;
   flex-direction: column;

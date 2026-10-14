@@ -1,0 +1,145 @@
+.welcome {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(27.5rem, 100%), 1fr));
+  align-items: center;
+  gap: clamp(var(--space-10), 6vw, var(--space-20));
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  min-width: 0;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+}
+
+.featureIcon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-control);
+  background: var(--color-surface-muted);
+  color: var(--color-ink);
+}
+
+.featureIcon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.featureText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.featureText strong {
+  font-weight: 600;
+}
+
+.featureText span {
+  color: var(--color-ink-muted);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.name {
+  max-width: 30em;
+}
+
+.confirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
+}
+
+.privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  max-width: var(--width-text);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+.privacy strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.privacyIcon {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.owl {
+  width: clamp(10rem, 18vw, 13.75rem);
+  height: auto;
+  border-radius: 22%;
+  box-shadow: var(--shadow-lg);
+}
+
+.example {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: min(100%, 26.25rem);
+  margin-top: -1.625rem;
+  padding-top: 2.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.exampleTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.exampleTitle strong {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.exampleTitle span {
+  color: var(--color-ink-subtle);
+  font-size: var(--text-sm);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

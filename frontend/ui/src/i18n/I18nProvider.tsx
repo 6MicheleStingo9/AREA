@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { startTransition, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { I18nContext, type I18n } from './context';
 import { detectLanguage, storeLanguage } from './language';
 import { translate, type Language, type Messages } from './translate';
@@ -22,7 +22,8 @@ export function I18nProvider({ messages, children }: I18nProviderProps) {
       lang,
       setLang: (next) => {
         storeLanguage(next);
-        setLang(next);
+        // A transition: what loads for the new language (the questions) keeps the page on screen
+        startTransition(() => setLang(next));
       },
       t: (key, params) => translate(messages, lang, key, params),
     }),
