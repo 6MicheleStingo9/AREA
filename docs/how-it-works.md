@@ -50,7 +50,10 @@ sequenceDiagram
 subdomain of the MIT Domain Taxonomy ([the taxonomies](taxonomies.md)). Some answers open follow-up
 questions. The interface also works without JavaScript. The answers are saved in `files/answers/`.
 
-<p align="center"><img src="img/welcome.png" width="70%" alt="The welcome page of Kindynos"></p>
+<p align="center">
+  <img src="img/welcome.png" width="49%" alt="The welcome page of Kindynos">
+  <img src="img/questionnaire.png" width="49%" alt="A question of the Kindynos questionnaire">
+</p>
 
 ## 2. Domain analysis (LLM)
 
@@ -69,6 +72,8 @@ of the risk, and gives a calibrated probability for each value.
 In the report each label carries the MIT definition of its value and the model's confidence. Labels below
 90% confidence are flagged ⚠, with the next most likely value. An LLM can label the causes instead
 ([configuration](configuration.md#the-causal-model)). Output: `files/analysis/causality/`.
+
+<p align="center"><img src="img/report-risk.png" width="70%" alt="A risk in the Kindynos report, with its causal labels"></p>
 
 ## 4. Heuristic analysis (Prolog)
 
