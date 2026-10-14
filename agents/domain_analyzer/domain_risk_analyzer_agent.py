@@ -74,7 +74,7 @@ def node_load(state: DomainAnalysisState, file_path: str) -> DomainAnalysisState
             step="load_file",
             keys=list(state["questionnaire"].keys()),
         )
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         msg = (
             f"[DOMAIN][FATAL] load_questionnaire: file_not_found file_path={file_path}"
         )

@@ -17,3 +17,6 @@ training/data/
 files/.cache/
 files/jobs/
 publish/build/
+frontend/node_modules/
+frontend/*/node_modules/
+frontend/*/dist/
