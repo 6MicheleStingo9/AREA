@@ -82,32 +82,39 @@
             placeholder="{{ t('specify_other') }}"
             class="input-text"
             style="display:{% if other_on %}block{% else %}none{% endif %}">
-          {# No-JS: the onchange above cannot reveal the field, so always show it #}
-          <noscript><style>[id="other-input-{{ question.id }}"] { display: block !important; }</style></noscript>
+          {# No-JS: the onchange above cannot reveal the field, so always show it. Not in the cards
+             htmx swaps in: JavaScript runs there, and htmx would turn the style into a real one #}
+          {% if not is_fragment %}<noscript><style>[id="other-input-{{ question.id }}"] { display: block !important; }</style></noscript>{% endif %}
         {% endif %}
       {% endif %}
 
     </div>{# /answer-area #}
 
-    {# ---- Follow-up area: refreshed via htmx when answer changes ---- #}
+    {# ---- Follow-up area: refreshed via htmx when the answer changes. The follow-ups of a written
+         answer are shown from the start and do not change, so that area is not refreshed. ---- #}
     <div id="followups-area"
+         {% if question.type != 'free_text' %}
          hx-post="/quiz/{{ session_id }}/{{ step }}/followups"
          hx-trigger="change from:#answer-area"
          hx-include="#answer-area, #followups-area"
          hx-target="this"
-         hx-swap="innerHTML">
+         hx-swap="innerHTML"
+         {% endif %}>
       {% set answer = saved.get('answer') %}
       {% include "followups_fragment.html" %}
     </div>
 
     {# ---- No-JS fallback: without htmx the follow-ups cannot appear when the
          answer changes, so list the remaining ones; the server keeps only those
-         pertinent to the submitted answer. Inert when JS is enabled. ---- #}
+         pertinent to the submitted answer. Inert when JS is enabled, and left out
+         of the cards htmx swaps in: htmx turns <noscript> into real, hidden fields,
+         which the form sends after the visible ones, and the server keeps the last
+         value of a field, so the answers to the follow-ups were lost. ---- #}
     {% set ns = namespace(rest=0) %}
     {% for fu in question.get('follow_ups', []) %}
       {% if not should_show_followup(fu, answer, question.type) %}{% set ns.rest = ns.rest + 1 %}{% endif %}
     {% endfor %}
-    {% if ns.rest %}
+    {% if ns.rest and not is_fragment %}
     <noscript>
       <p class="help-text">{{ t('followups_nojs_hint') }}</p>
       {% with nojs_rest = true %}{% include "followups_fragment.html" %}{% endwith %}
