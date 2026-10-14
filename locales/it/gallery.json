@@ -1,0 +1,78 @@
+{
+  "page_title": "Kindynos · Interfaccia",
+  "eyebrow": "Design system",
+  "title": "L'interfaccia di Kindynos",
+  "lead": "I colori, i caratteri e i componenti comuni al questionario e al report. Lingua e tema si cambiano dall'intestazione.",
+  "colors": {
+    "title": "Colori",
+    "intro": "Ogni colore ha un valore per il tema chiaro e uno per il tema scuro. Blu notte, crema, oro e azzurro vengono dal gufo del logo.",
+    "surfaces": "Sfondi e superfici",
+    "text": "Testo",
+    "actions": "Azioni e cause",
+    "severity": "Gravità"
+  },
+  "type": {
+    "title": "Caratteri",
+    "intro": "Fraunces per i titoli, ammorbidito come nel logotipo, e Inter per il testo.",
+    "eyebrow": "Valutazione dei rischi AI",
+    "display": "Conosci i rischi del tuo sistema AI, e da dove vengono.",
+    "heading": "Rischi per dominio",
+    "lead": "Rispondi a 24 domande sul tuo sistema: Kindynos ne trova i rischi, dice chi o che cosa causa ciascuno e ti dà un report da conservare.",
+    "body": "Ogni rischio ha una gravità, una spiegazione e una mitigazione, e le sue cause secondo la MIT Causal Taxonomy: entità, intenzionalità e momento.",
+    "code": "Il report è salvato anche su questo computer, in {path}."
+  },
+  "buttons": {
+    "title": "Pulsanti",
+    "primary": "Inizia la valutazione",
+    "secondary": "Scarica (ZIP)",
+    "back": "Indietro",
+    "link": "Come funziona",
+    "disabled": "Analisi in corso"
+  },
+  "badges": {
+    "title": "Etichette e indicatori",
+    "intro": "Il colore non è mai da solo: ogni etichetta ha il suo testo, ogni indicatore il suo valore.",
+    "score": "Punteggio di rischio globale",
+    "score_value": "{value} / 100",
+    "confidence": "Confidenza dell'etichetta di entità",
+    "risks": {
+      "one": "{count} rischio",
+      "other": "{count} rischi"
+    }
+  },
+  "form": {
+    "title": "Campi e scelte",
+    "name_label": "Nome del sistema AI",
+    "name_hint": "Diventa il titolo del report e resta su questo computer.",
+    "name_placeholder": "es. Assistente per sviluppatori",
+    "question": "È possibile che il sistema abbia prestazioni o accuratezza diverse tra gruppi di utenti?",
+    "question_hint": "Per esempio per lingua, età, origine, livello di istruzione.",
+    "option_yes": "Sì, potrebbero esserci differenze tra gruppi",
+    "option_no": "No, funziona allo stesso modo per tutti",
+    "option_unknown": "Non lo so",
+    "followup": "Specifica per quali gruppi o in quali condizioni si verificano queste differenze.",
+    "followup_error": "Scrivi almeno 10 caratteri.",
+    "data_legend": "Da quali dati impara il sistema?",
+    "data_personal": "Dati personali dei suoi utenti",
+    "data_public": "Pagine web pubbliche",
+    "data_synthetic": "Dati sintetici",
+    "filter_legend": "Gravità",
+    "filter_all": "Tutti"
+  },
+  "accordion": {
+    "title": "Fisarmonica",
+    "data_question": "Che cosa esce dal tuo computer?",
+    "data_answer": "Le tue risposte vanno a Gemini, il modello di Google, che scrive i rischi e il riepilogo. Un modello sul tuo computer ne etichetta le cause, e anche le regole esperte girano qui.",
+    "time_question": "Quanto dura l'analisi?",
+    "time_answer": "Di solito da uno a tre minuti.",
+    "answers_question": "Posso cambiare le risposte?",
+    "answers_answer": "Sì. Finché non avvii l'analisi restano in questo browser, e puoi tornare a qualunque domanda."
+  },
+  "icons": {
+    "title": "Icone",
+    "intro": "Da Lucide, disegnate nel colore del testo che le circonda."
+  },
+  "footer": {
+    "title": "Piè di pagina del report"
+  }
+}

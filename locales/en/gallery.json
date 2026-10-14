@@ -1,0 +1,78 @@
+{
+  "page_title": "Kindynos · Interface",
+  "eyebrow": "Design system",
+  "title": "The Kindynos interface",
+  "lead": "The colours, the type and the components that the questionnaire and the report share. Change the language and the theme from the header.",
+  "colors": {
+    "title": "Colours",
+    "intro": "Each colour has a value for the light theme and one for the dark theme. Navy, cream, gold and blue come from the owl of the logo.",
+    "surfaces": "Grounds and surfaces",
+    "text": "Text",
+    "actions": "Actions and causes",
+    "severity": "Severity"
+  },
+  "type": {
+    "title": "Type",
+    "intro": "Fraunces for the titles, softened as in the wordmark, and Inter for the text.",
+    "eyebrow": "AI risk assessment",
+    "display": "Know the risks of your AI system, and where they come from.",
+    "heading": "Risks by domain",
+    "lead": "Answer 24 questions about your system: Kindynos finds its risks, says who or what causes each one, and gives you a report to keep.",
+    "body": "Each risk has a severity, an explanation and a mitigation, and its causes along the MIT Causal Taxonomy: entity, intent and timing.",
+    "code": "The report is also saved on this computer, in {path}."
+  },
+  "buttons": {
+    "title": "Buttons",
+    "primary": "Start the assessment",
+    "secondary": "Download (ZIP)",
+    "back": "Back",
+    "link": "How it works",
+    "disabled": "Analysis running"
+  },
+  "badges": {
+    "title": "Badges and meters",
+    "intro": "Colour is never alone: every badge has its text, every meter its value.",
+    "score": "Global risk score",
+    "score_value": "{value} / 100",
+    "confidence": "Confidence of the entity label",
+    "risks": {
+      "one": "{count} risk",
+      "other": "{count} risks"
+    }
+  },
+  "form": {
+    "title": "Fields and choices",
+    "name_label": "Name of the AI system",
+    "name_hint": "It becomes the title of the report, and stays on this computer.",
+    "name_placeholder": "e.g. Developer assistant",
+    "question": "Is there a possibility that the system has differences in performance or accuracy across user groups?",
+    "question_hint": "E.g. by language, age, origin, education level.",
+    "option_yes": "Yes, there could be differences between groups",
+    "option_no": "No, it works the same for everyone",
+    "option_unknown": "I don't know",
+    "followup": "Specify for which groups or under what conditions these differences occur.",
+    "followup_error": "Write at least 10 characters.",
+    "data_legend": "Which data does the system learn from?",
+    "data_personal": "Personal data of its users",
+    "data_public": "Public web pages",
+    "data_synthetic": "Synthetic data",
+    "filter_legend": "Severity",
+    "filter_all": "All"
+  },
+  "accordion": {
+    "title": "Accordion",
+    "data_question": "What leaves your computer?",
+    "data_answer": "Your answers go to Gemini, Google's model, which writes the risks and the summary. A model on your computer labels their causes, and the expert rules run here too.",
+    "time_question": "How long does the analysis take?",
+    "time_answer": "Usually from one to three minutes.",
+    "answers_question": "Can I change my answers?",
+    "answers_answer": "Yes. Until you start the analysis they stay in this browser, and you can go back to any question."
+  },
+  "icons": {
+    "title": "Icons",
+    "intro": "From Lucide, drawn in the colour of the text around them."
+  },
+  "footer": {
+    "title": "Report footer"
+  }
+}

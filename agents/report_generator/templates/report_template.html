@@ -261,7 +261,7 @@
             <h2>📋 {{ translations.detailed_analysis_title }}</h2>
             {% set causality_model = metadata.get('causality_model') %}
             {% if causality_model %}
-            <p class="causality-source">🔍 {% if causality_model.backend == 'laya' %}{{ translations.causality_source_laya|replace('{{model}}', causality_model.model)|replace('{{threshold}}', (causality_model.review_threshold * 100)|round|int) }}{% else %}{{ translations.causality_source_llm|replace('{{model}}', causality_model.model) }}{% endif %}</p>
+            <p class="causality-source">🔍 {% if causality_model.backend == 'laya' %}{{ translations.causality_source_laya|replace('{model}', causality_model.model)|replace('{threshold}', (causality_model.review_threshold * 100)|round|int) }}{% else %}{{ translations.causality_source_llm|replace('{model}', causality_model.model) }}{% endif %}</p>
             {% endif %}
             
             <!-- Filters -->
@@ -313,7 +313,7 @@
                                 <span class="toggle-icon">▼</span>
                                 <span>📁 {{ translations.domain_label }} {{ domain_id }}: {{ translations['d' ~ domain_id ~ '_title'] or domain_names[domain_id] }}</span>
                                 <span style="margin-left: auto; font-size: 0.9rem; opacity: 0.9;">
-                                    {{ translations.subdomains_label|replace('{{count}}', domains_structure[domain_id]|length) }}
+                                    {{ translations.subdomains_label|replace('{count}', domains_structure[domain_id]|length) }}
                                 </span>
                             </div>
                             <div class="domain-content">
@@ -323,7 +323,7 @@
                                             <span class="toggle-icon">▼</span>
                                             <span>📂 {{ subdomain_id }}: {{ translations['d' ~ (subdomain_id|replace('.', '_')) ~ '_title'] or subdomain_names.get(subdomain_id, translations.unknown_label) }}</span>
                                             <span style="margin-left: auto; font-size: 0.85rem; opacity: 0.8;">
-                                                {{ translations.risks_count_label|replace('{{count}}', subdomain_data.risks|length) }}
+                                                {{ translations.risks_count_label|replace('{count}', subdomain_data.risks|length) }}
                                             </span>
                                         </div>
                                         <div class="subdomain-content">

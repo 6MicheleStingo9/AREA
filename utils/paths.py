@@ -1,4 +1,4 @@
-"""Where Kindynos keeps its files: the project root and the files/ tree, in one place.
+"""Where Kindynos keeps its files: the project root, the files/ tree and the other folders it reads.
 
 Resources that live next to their module (templates, styles, Prolog rules) stay relative to it.
 """
@@ -12,3 +12,5 @@ ANALYSIS = FILES / "analysis"  # domain/, causality/, heuristic/: the output of 
 REPORTS = FILES / "reports"
 JOBS = FILES / "jobs"  # the state of each analysis started from the web interface
 DATA = FILES / "data"  # the MIT AI Risk Repository and the Kindynos training risks
+LOCALES = ROOT / "locales"  # the strings of the interface, one folder per language (utils/i18n.py)
+WEB_BUILD = ROOT / "frontend" / "web" / "dist"  # the web interface, built by `npm run build` in frontend/
