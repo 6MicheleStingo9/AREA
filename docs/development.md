@@ -15,27 +15,42 @@ The tests make no LLM calls. One of them checks that the causality step gives th
 runs only when the local checkpoint of the causal model and its packages are there.
 
 Every pull request, and every push to `main`, runs the same checks on GitHub Actions
-([`ci.yml`](../.github/workflows/ci.yml)): ruff and pytest; lint, types, tests and build of the web
-interface; the build of the Docker image. No job needs a secret or calls Gemini.
+([`ci.yml`](../.github/workflows/ci.yml)): ruff and pytest; lint, types, tests, build and end-to-end
+tests of the web interface; the build of the Docker image. No job needs a secret or calls Gemini.
 
 ## The web interface
 
-The web interface is being rewritten in `frontend/`, an npm workspace in React and TypeScript, built by
-Vite. For now it holds the design system, and a page that shows its components at
-http://localhost:8000/ui; the questionnaire at `/` is still the one in `api/templates/`.
+The web interface is in `frontend/`, an npm workspace in React and TypeScript, built by Vite. It draws
+every screen in the browser, and talks to FastAPI through a JSON API; FastAPI serves its build
+([`api/web.py`](../api/web.py)) at every path but the API's.
 
 | Folder | Content |
 |---|---|
 | `frontend/ui/` | the design system: the tokens in CSS custom properties (colours of the brand, type, spacing), the Fraunces and Inter fonts, the components, the language and the theme |
-| `frontend/web/` | the app that FastAPI serves from its build ([`api/web.py`](../api/web.py)) |
+| `frontend/web/` | the app: the welcome page, the questions, the review, the analysis and its results, and at `/ui` the components of the design system |
+| `frontend/e2e/` | the end-to-end tests, in Chrome with Playwright |
+
+The answers stay in the browser (localStorage) until the analysis starts. The rules on them, which
+follow-ups an answer opens and what an answer misses, live twice: in TypeScript for the interface
+(`web/src/questionnaire/logic.ts`) and in Python for the API (`quiz/logic.py`). The cases in
+`tests/fixtures/questionnaire_cases.json` run against both.
+
+| API | |
+|---|---|
+| `GET /api/questionnaire?lang=en` | the questions in a language |
+| `POST /api/assessments` | checks the answers and starts the analysis; 422 with the errors of each question |
+| `GET /api/assessments/<id>` | where the analysis is: the step in course, then the main results |
+| `GET /api/assessments/<id>/archive` | a ZIP with the report and its data |
+| `GET /report/<id>` | the report |
 
 It needs Node 22 (`frontend/.node-version`, which fnm and nvm read). From `frontend/`:
 
 ```bash
 npm ci              # the packages, at the versions of package-lock.json
-npm run dev         # the app with live reload, at http://localhost:5173
-npm run build       # the build in web/dist/, served by FastAPI at /ui
+npm run dev         # the app with live reload, at http://localhost:5173 (the API from uvicorn on 8000)
+npm run build       # the build in web/dist/, which FastAPI serves
 npm test            # Vitest, Testing Library and axe-core
+npm run e2e         # Playwright, on the build, in the Chrome installed on the computer
 npm run lint        # ESLint, with the accessibility rules, and Prettier
 npm run typecheck   # TypeScript
 ```
@@ -43,15 +58,15 @@ npm run typecheck   # TypeScript
 Docker builds the interface by itself, in the Node stage of the Dockerfile.
 
 **Strings.** The strings of the whole interface are in `locales/<language>/`, one file per area:
-`common.json` for the components, `gallery.json` for the page at /ui, `quiz.json` for the questionnaire
-pages, `report.json` for the report. Python reads them through [`utils/i18n.py`](../utils/i18n.py), and the
+`common.json` for the components, `app.json` for the pages, `taxonomy.json` for the names of the MIT
+domains and subdomains, `gallery.json` for the page at /ui, `report.json` for the report. Python reads them through [`utils/i18n.py`](../utils/i18n.py), and the
 web interface imports the same files. Both fill the placeholders in braces (`{count}`), and both pick
 the plural form of a string with two (`{"one": ..., "other": ...}`). Every language has the same keys
 and placeholders: `tests/test_i18n.py` checks it.
 
-**Accessibility.** The components aim at WCAG 2.2 AA: a test checks the contrast of the colour tokens
-(`frontend/ui/src/styles/tokens.css`) in both themes, and another runs axe-core on the page of the
-components.
+**Accessibility.** The interface aims at WCAG 2.2 AA: a test checks the contrast of the colour tokens
+(`frontend/ui/src/styles/tokens.css`) in both themes, and axe-core runs on every screen, in Chrome, in
+the light and the dark theme, on a desktop and on a phone.
 
 ## Architecture
 
@@ -65,7 +80,7 @@ config:
   layout: dagre
 ---
 flowchart TB
-    U(["User"]) <--> W["Web interface<br/>FastAPI + htmx"]
+    U(["User"]) <--> W["Web interface<br/>FastAPI + React"]
     W e1@-- "background job" --> P
     subgraph P["Pipeline · LangGraph"]
         D["1 · Domain analyzer"] e2@--> C["2 · Causality analyzer"] e3@--> H["3 · Heuristic analyzer"] e4@--> R["4 · Report generator"]
@@ -89,18 +104,18 @@ flowchart TB
 | Path | Content |
 |---|---|
 | `agents/` | the pipeline: `orchestrator.py` and one folder per agent (`domain_analyzer/`, `causality_analyzer/`, `heuristic_analyzer/`, `report_generator/`); `questionnaire_generator/` simulates a user who fills in the questionnaire |
-| `api/` | the web interface (FastAPI): routes, Jinja2 templates with htmx, static files, sessions, the state of the analyses, and the build of `frontend/` (`web.py`) |
+| `api/` | the server of the web interface (FastAPI): the JSON API (`assessments.py`), the reports (`reports.py`), the state of the analyses (`jobs.py`), and the build of `frontend/` (`web.py`) |
 | `frontend/` | the new web interface, in React and TypeScript ([above](#the-web-interface)) |
 | `locales/` | the strings of the interface, in English and Italian |
-| `quiz/` | the questionnaire logic (loading, validation, follow-ups, saving) |
-| `utils/` | shared code: `paths.py` (where Kindynos keeps its files), `utils.py` (LLM client and logging), `models.py` (the schemas of the analyses), `brand.py` (the logo in pages and reports), `i18n.py` (the strings of the interface) |
+| `quiz/` | the questionnaire logic (loading, follow-ups, checks, the answers file) |
+| `utils/` | shared code: `paths.py` (where Kindynos keeps its files), `utils.py` (LLM client and logging), `models.py` (the schemas of the analyses), `brand.py` (the logo in the reports), `i18n.py` (the strings of the interface), `progress.py` (the step in course of a run) |
 | `files/` | the questionnaires (`questions_*.json`), the outputs of each run, the MIT data ([`data/`](../files/data/README.md)) and the logo ([`img/brand/`](../files/img/brand/README.md)) |
 | `data_prep/` | the extraction of the MIT datasets and the generation of Kindynos training risks |
 | `evaluation/` | test sets, evaluation scripts and results ([README](../evaluation/README.md)) |
 | `training/` | the fine-tuning of the causal model ([README](../training/README.md)) |
 | `publish/` | the builder of the Hugging Face repositories of the model and the data |
 | `docs/` | this documentation |
-| `tests/` | the unit tests |
+| `tests/` | the Python tests, and the cases of the questionnaire shared with the web interface (`fixtures/`) |
 
 Kindynos was formerly called AREA, and some internal names keep that prefix: `evaluation/area_testset/`,
 `files/data/area_trainset/`, the `--area` options and the `area_*` data files.

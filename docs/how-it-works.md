@@ -1,6 +1,6 @@
 # How Kindynos works
 
-Kindynos is a web questionnaire, built with FastAPI and htmx, in front of a pipeline of four agents
+Kindynos is a web questionnaire, built with FastAPI and React, in front of a pipeline of four agents
 orchestrated with [LangGraph](https://github.com/langchain-ai/langgraph). Each agent passes its output to
 the next and also saves it in `files/analysis/`, so every step can be run on its own from the saved files
 ([development](development.md#running-a-single-agent)).
@@ -48,7 +48,10 @@ sequenceDiagram
 
 24 questions in English or Italian (`files/questions_en.json`, `files/questions_it.json`), each tied to a
 subdomain of the MIT Domain Taxonomy ([the taxonomies](taxonomies.md)). Some answers open follow-up
-questions. The interface also works without JavaScript. The answers are saved in `files/answers/`.
+questions. The answers stay in your browser until you start the analysis, after a page that reviews them
+all; then they are saved in `files/answers/`. The name you may give the system goes with them, for the
+report: it never reaches the LLM. While the analysis runs, its page shows the step in course, and at the
+end the main results, with the report and an archive of its data.
 
 <p align="center">
   <img src="img/welcome.png" width="49%" alt="The welcome page of Kindynos">
@@ -148,8 +151,8 @@ All the files of a run share its id, from `answers_<run_id>.json` to `ai_risk_re
 | `files/reports/` | the HTML reports and their metadata |
 | `files/jobs/` | the state of each analysis started from the web interface |
 
-Thanks to `files/jobs/`, after a restart the progress page still shows how a finished analysis ended, and
-marks those the restart cut short as interrupted.
+Thanks to `files/jobs/`, after a restart the page of an analysis still shows how it ended, and marks those
+the restart cut short as interrupted.
 
 ## Extending Kindynos
 
