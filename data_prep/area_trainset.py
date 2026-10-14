@@ -45,12 +45,12 @@ from agents.orchestrator import domain_step
 from evaluation.area_testset import _answer, _write_json
 from evaluation.causal_baseline import AXES, LABELS
 from evaluation.metrics import accuracy, macro_f1
+from utils.paths import DATA, ROOT
 from utils.utils import create_logger, get_llm_instance
 
 _logger = create_logger("area_trainset")
 
-ROOT = Path(__file__).resolve().parent.parent
-OUT_DIR = ROOT / "files" / "data" / "area_trainset"
+OUT_DIR = DATA / "area_trainset"
 RUNS_DIR = OUT_DIR / "runs"
 TEST_DIR = ROOT / "evaluation" / "area_testset"
 # Where each labelling set keeps risks.jsonl, annotations/ and labels.jsonl

@@ -2,7 +2,6 @@ import json
 import os
 import sys
 import time
-from pathlib import Path
 from typing import Any, Dict, List, TypedDict
 
 from langchain.messages import AnyMessage
@@ -13,6 +12,7 @@ from agents.report_generator.prompts import (
     EXECUTIVE_SUMMARY_SYSTEM_PROMPT,
     EXECUTIVE_SUMMARY_USER_PROMPT,
 )
+from utils.paths import ANALYSIS, ANSWERS, REPORTS
 from utils.utils import apply_retry, create_logger, get_llm_instance
 
 
@@ -68,9 +68,7 @@ def generate_executive_summary_text(heuristic, analysis, language) -> str:
 
 _logger = create_logger("report_generator")
 
-# Setup paths
-CURRENT_DIR = Path(__file__).parent
-REPORT_DIR = Path(__file__).parent.parent.parent / "files" / "reports"
+REPORT_DIR = REPORTS
 
 
 # ================================
@@ -171,18 +169,8 @@ def node_generate_html_report(state: ReportGenerationState) -> ReportGenerationS
             )
             run_id = meta.get("run_id")
             if run_id:
-                import os
-
-                answers_path = os.path.join(
-                    os.path.dirname(__file__),
-                    "..",
-                    "..",
-                    "files",
-                    "answers",
-                    f"answers_{run_id}.json",
-                )
-                answers_path = os.path.abspath(answers_path)
-                if os.path.isfile(answers_path):
+                answers_path = ANSWERS / f"answers_{run_id}.json"
+                if answers_path.is_file():
                     try:
                         with open(answers_path, "r", encoding="utf-8") as f:
                             state["questionnaire"] = json.load(f)
@@ -324,8 +312,7 @@ if __name__ == "__main__":
     filename = args.filename
 
     # Resolve the base project path and the heuristic analysis folder
-    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-    heuristic_dir = os.path.join(repo_root, "files", "analysis", "heuristic")
+    heuristic_dir = str(ANALYSIS / "heuristic")
 
     # If it's an absolute path, use it directly; otherwise, resolve it in the default folder
     input_file = (

@@ -25,14 +25,14 @@ from typing import Any, Dict, Iterable, List
 
 from agents.causality_analyzer.laya_classifier import AXES, state, subdomain_names
 from training.build_laya_data import AREA_VAL_RUNS, NO_RISK, VAL_FRAC, VAL_SEED, split_by_group
+from utils.paths import DATA, ROOT
 
-ROOT = Path(__file__).resolve().parent.parent
 CARDS = ROOT / "publish" / "huggingface"
 CHECKPOINT = ROOT / "training" / "checkpoints" / "laya-causal-v4"
 TRAIN_DATA = ROOT / "training" / "data"
 AREA_TEST = ROOT / "evaluation" / "area_testset"
-AREA_TRAIN = ROOT / "files" / "data" / "area_trainset"
-PROCESSED = ROOT / "files" / "data" / "processed"
+AREA_TRAIN = DATA / "area_trainset"
+PROCESSED = DATA / "processed"
 TEST_RESULTS = ROOT / "evaluation" / "results" / "area_testset__laya-causal-v4__2026-10-12.json"
 CHECKPOINT_FILES = ("model.safetensors", "rl_agent_config.json", "questions.json", "training_run.json",
                     "encoder/config.json", "tokenizer/tokenizer.json", "tokenizer/tokenizer_config.json")

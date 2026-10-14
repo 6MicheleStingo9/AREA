@@ -26,12 +26,12 @@ from typing import Any, Callable, Dict, List, Optional
 
 from agents.causality_analyzer.prompts import CAUSALITY_JSON_SCHEMA, CAUSALITY_SYSTEM_PROMPT
 from evaluation.metrics import accuracy, macro_f1, summarize
+from utils.paths import DATA, ROOT
 from utils.utils import apply_retry, create_logger, get_llm_instance
 
 _logger = create_logger("causal_baseline")
 
-ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "files" / "data" / "processed"
+DATA_DIR = DATA / "processed"
 AXES = ("entity", "intent", "timing")
 
 # Allowed values, taken from the production causality schema

@@ -41,11 +41,11 @@ from agents.questionnaire_generator.question_generator_agent import (
 )
 from evaluation.causal_baseline import AXES, DATA_DIR, LABELS, _git_commit, _sha256, load_jsonl, majority_reference
 from evaluation.metrics import accuracy, macro_f1, summarize
+from utils.paths import ANSWERS, FILES, ROOT
 from utils.utils import create_logger, get_llm_instance
 
 _logger = create_logger("area_testset")
 
-ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "evaluation" / "area_testset"
 RUNS_DIR = OUT_DIR / "runs"
 EXAMPLE_RUN_ID = "23d095a19c9c45c89af5c66b5ffcea63"  # example run tracked in files/
@@ -59,9 +59,9 @@ def _write_json(path: Path, data: Any) -> None:
 def _answer(language: str, profile: str, system: Optional[str] = None) -> Dict[str, Any]:
     """Questionnaire generator: one LLM call; returns the answers file content. `system` is the
     AI system to describe (None lets the generator choose)."""
-    questions = load_questions(str(ROOT / "files" / f"questions_{language}.json"))
+    questions = load_questions(str(FILES / f"questions_{language}.json"))
     response = generate_responses(questions, profile, language, system)
-    _, answers_file = save_responses_with_metadata(response, profile, language, "files/answers/")
+    _, answers_file = save_responses_with_metadata(response, profile, language, str(ANSWERS))
     answers_path = Path(answers_file)
     answers = json.loads(answers_path.read_text(encoding="utf-8"))
     answers_path.unlink()  # kept in the run file instead

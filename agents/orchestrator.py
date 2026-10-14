@@ -17,6 +17,7 @@ from agents.heuristic_analyzer.heuristic_risk_analyzer_agent import (
 from agents.report_generator.report_generator_agent import (
     create_report_generator_graph,
 )
+from utils.paths import ANSWERS
 from utils.utils import create_logger
 
 
@@ -210,10 +211,7 @@ def _standaloneExecution():
     args = parser.parse_args()
 
     filename = args.filename
-    # Resolve paths relative to this file (orchestrator.py lives in area/agents/),
-    # so it does not depend on the project folder being named "area".
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    base_input_dir = os.path.join(project_root, "files", "answers")
+    base_input_dir = str(ANSWERS)
     input_file = (
         filename if os.path.isabs(filename) else os.path.join(base_input_dir, filename)
     )

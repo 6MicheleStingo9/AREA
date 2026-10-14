@@ -10,6 +10,7 @@ from langchain.messages import AnyMessage
 from langgraph.graph import StateGraph
 from pyswip import Prolog
 
+from utils.paths import ANALYSIS
 from utils.utils import create_logger
 
 
@@ -18,7 +19,7 @@ _logger = create_logger("heuristic_analyzer")
 # Setup paths
 CURRENT_DIR = Path(__file__).parent
 RULES_FILE = CURRENT_DIR / "rules.pl"
-HEURISTIC_DIR = Path(__file__).parent.parent.parent / "files" / "analysis" / "heuristic"
+HEURISTIC_DIR = ANALYSIS / "heuristic"
 
 
 # ================================
@@ -1035,9 +1036,7 @@ if __name__ == "__main__":
     if Path(filename).is_absolute():
         input_file = Path(filename)
     else:
-        repo_root = Path(__file__).parent.parent.parent
-        causality_dir = repo_root / "files" / "analysis" / "causality"
-        input_file = causality_dir / filename
+        input_file = ANALYSIS / "causality" / filename
 
     if not input_file.exists():
         _logger.error(

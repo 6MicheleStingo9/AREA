@@ -2,14 +2,13 @@
 
 import importlib.util
 import json
-from pathlib import Path
 
 import pytest
 
 import agents.causality_analyzer.causality_risk_analyzer_agent as causality
 from agents.causality_analyzer import laya_classifier
+from utils.paths import ROOT
 
-ROOT = Path(__file__).resolve().parent.parent
 EVALUATED = ROOT / "evaluation" / "results" / "area_testset__laya-causal-v4__2026-10-12.json"
 
 

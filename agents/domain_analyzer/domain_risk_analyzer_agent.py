@@ -4,7 +4,6 @@ import os
 import sys
 import uuid
 from datetime import datetime
-from pathlib import Path
 from typing import Any, Dict, List
 
 from jinja2 import Template
@@ -19,13 +18,12 @@ from agents.domain_analyzer.prompts import (
     DOMAIN_ANALYSIS_USER_PROMPT,
 )
 from utils.models import DomainAnalysisAdapter, DomainItem
+from utils.paths import ANALYSIS, ANSWERS
 from utils.utils import apply_retry, create_logger, get_llm_instance
 
 _logger = create_logger("domain_analyzer")
 
-# Setup paths
-CURRENT_DIR = Path(__file__).parent
-DOMAIN_DIR = Path(__file__).parent.parent.parent / "files" / "analysis" / "domain"
+DOMAIN_DIR = ANALYSIS / "domain"
 
 
 # ================================
@@ -417,8 +415,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-    answers_dir = os.path.join(repo_root, "files", "answers")
+    answers_dir = str(ANSWERS)
 
     # Search for file by run_id if provided
     input_file = None

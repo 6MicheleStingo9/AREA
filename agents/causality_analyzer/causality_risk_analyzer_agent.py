@@ -3,7 +3,6 @@ import json
 import os
 import sys
 import time
-from pathlib import Path
 from typing import Any, Dict, List, Optional, TypedDict
 
 from langchain.messages import AnyMessage
@@ -15,13 +14,12 @@ from agents.causality_analyzer.prompts import (
     CAUSALITY_SYSTEM_PROMPT,
     CAUSALITY_USER_PROMPT,
 )
+from utils.paths import ANALYSIS
 from utils.utils import apply_retry, create_logger, get_llm_instance
 
 _logger = create_logger("causality_analyzer")
 
-# Setup paths
-CURRENT_DIR = Path(__file__).parent
-CAUSALITY_DIR = Path(__file__).parent.parent.parent / "files" / "analysis" / "causality"
+CAUSALITY_DIR = ANALYSIS / "causality"
 
 # Who labels the causality (CAUSALITY_BACKEND): "laya", the local fine-tuned classifier
 # (laya_classifier.py, the default), or "llm", the configured LLM with the prompts in prompts.py.
@@ -501,8 +499,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Build input file path from fixed directory
-    domain_dir = Path(__file__).parent.parent.parent / "files" / "analysis" / "domain"
-    input_file = domain_dir / args.filename
+    input_file = ANALYSIS / "domain" / args.filename
 
     # Verify that the file exists
     if not os.path.isfile(input_file):

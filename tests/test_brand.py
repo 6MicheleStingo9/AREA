@@ -9,11 +9,9 @@ from fastapi.testclient import TestClient
 import agents.report_generator.html_generator as html_generator
 from api.main import app
 from utils import brand
+from utils.paths import ANALYSIS
 
-SAMPLE = (
-    Path(__file__).resolve().parent.parent
-    / "files/analysis/heuristic/heuristic_analysis_23d095a19c9c45c89af5c66b5ffcea63.json"
-)
+SAMPLE = ANALYSIS / "heuristic" / "heuristic_analysis_23d095a19c9c45c89af5c66b5ffcea63.json"
 
 
 def test_the_favicon_is_the_mark():
