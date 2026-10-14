@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from agents.causality_analyzer import laya_classifier
 from agents.causality_analyzer.causality_risk_analyzer_agent import causality_backend
-from api import jobs
+from api import jobs, web
 from api.routes_quiz import router as quiz_router
 from api.routes_run import router as run_router
 from utils import brand
@@ -32,6 +32,8 @@ def check_causality_backend() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     check_causality_backend()
+    if not web.is_built():
+        _logger.warning(f"The new web interface (/ui) is not built: {web.BUILD_COMMAND}")
     interrupted = jobs.mark_interrupted()
     if interrupted:
         _logger.warning("Analyses interrupted by the last stop of the server", count=interrupted)
@@ -50,3 +52,4 @@ app.mount("/brand", StaticFiles(directory=str(brand.BRAND_DIR), check_dir=False)
 
 app.include_router(quiz_router)
 app.include_router(run_router)
+web.install(app)

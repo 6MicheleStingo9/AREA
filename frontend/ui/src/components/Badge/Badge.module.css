@@ -1,0 +1,57 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: var(--space-1) 0.6875rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: var(--leading-snug);
+  white-space: nowrap;
+}
+
+.on-surface {
+  background: var(--color-surface-muted);
+}
+
+.on-muted {
+  background: var(--color-surface);
+}
+
+.dot {
+  flex: none;
+  width: 0.5625rem;
+  height: 0.5625rem;
+  border-radius: var(--radius-pill);
+  background: var(--dot);
+}
+
+.high,
+.medium,
+.low {
+  font-weight: 600;
+}
+
+.high {
+  --dot: var(--color-severity-high);
+}
+
+.medium {
+  --dot: var(--color-severity-medium);
+}
+
+.low {
+  --dot: var(--color-severity-low);
+}
+
+.ai {
+  --dot: var(--color-ai);
+}
+
+.human {
+  --dot: var(--color-human);
+}
+
+.other {
+  --dot: var(--color-other);
+}

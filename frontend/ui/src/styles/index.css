@@ -1,0 +1,4 @@
+/* The global styles of an app that uses @kindynos/ui: import once, from its entry point. */
+@import './fonts.css';
+@import './tokens.css';
+@import './base.css';
