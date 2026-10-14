@@ -26,23 +26,32 @@ custom_theme = Theme(
 
 # Rich console used for manual prints from agents
 CONSOLE = Console(theme=custom_theme)
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(message)s",
-    handlers=[
-        RichHandler(
-            rich_tracebacks=True,
-            tracebacks_show_locals=True,
-            markup=True,
-            show_time=True,
-            log_time_format="%H:%M:%S",
-            show_level=True,
-            show_path=True,
-            enable_link_path=True,
-            console=CONSOLE,
-        )
-    ],
+
+LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
+
+
+def log_level() -> str:
+    """The level of the root logger: ``LOG_LEVEL``, one of LOG_LEVELS, INFO by default."""
+    level = os.getenv("LOG_LEVEL", "INFO").strip()
+    if level.upper() not in LOG_LEVELS:
+        raise ValueError(f"LOG_LEVEL must be one of {', '.join(LOG_LEVELS)}, got {level!r}")
+    return level.upper()
+
+
+# No local variables in tracebacks: they would print secrets, such as the API key
+# in get_llm_instance(), to the terminal and the container logs.
+LOG_HANDLER = RichHandler(
+    rich_tracebacks=True,
+    tracebacks_show_locals=False,
+    markup=True,
+    show_time=True,
+    log_time_format="%H:%M:%S",
+    show_level=True,
+    show_path=True,
+    enable_link_path=True,
+    console=CONSOLE,
 )
+logging.basicConfig(level=log_level(), format="%(message)s", handlers=[LOG_HANDLER])
 
 
 # Configure structlog for structured logging
