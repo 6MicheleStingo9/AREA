@@ -9,15 +9,6 @@
 }
 /* Components - Cards, Badges, Filters, Tree */
 
-.risk-badge {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-}
-
 /* Metadata description box under header */
 .metadata-description {
     margin-top: 10px;
@@ -107,26 +98,6 @@
     padding: 4px 8px;
     border-radius: 6px;
     margin-right: 6px;
-}
-
-.risk-badge.critical {
-    background: #DC2626;
-    color: white;
-}
-
-.risk-badge.high {
-    background: #F59E0B;
-    color: white;
-}
-
-.risk-badge.medium {
-    background: #10B981;
-    color: white;
-}
-
-.risk-badge.low {
-    background: #3B82F6;
-    color: white;
 }
 
 .stat-card {
