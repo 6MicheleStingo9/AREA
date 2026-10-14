@@ -6,12 +6,52 @@ Install Kindynos as in the README ([without Docker](../README.md#without-docker)
 packages, and run the unit tests from the project root:
 
 ```bash
-pip install -r requirements-dev.txt   # pytest, and openpyxl for data_prep/extract_dataset.py
+pip install -r requirements-dev.txt   # pytest, ruff, and openpyxl for data_prep/extract_dataset.py
+ruff check .
 pytest
 ```
 
 The tests make no LLM calls. One of them checks that the causality step gives the evaluated labels; it
 runs only when the local checkpoint of the causal model and its packages are there.
+
+Every pull request, and every push to `main`, runs the same checks on GitHub Actions
+([`ci.yml`](../.github/workflows/ci.yml)): ruff and pytest; lint, types, tests and build of the web
+interface; the build of the Docker image. No job needs a secret or calls Gemini.
+
+## The web interface
+
+The web interface is being rewritten in `frontend/`, an npm workspace in React and TypeScript, built by
+Vite. For now it holds the design system, and a page that shows its components at
+http://localhost:8000/ui; the questionnaire at `/` is still the one in `api/templates/`.
+
+| Folder | Content |
+|---|---|
+| `frontend/ui/` | the design system: the tokens in CSS custom properties (colours of the brand, type, spacing), the Fraunces and Inter fonts, the components, the language and the theme |
+| `frontend/web/` | the app that FastAPI serves from its build ([`api/web.py`](../api/web.py)) |
+
+It needs Node 22 (`frontend/.node-version`, which fnm and nvm read). From `frontend/`:
+
+```bash
+npm ci              # the packages, at the versions of package-lock.json
+npm run dev         # the app with live reload, at http://localhost:5173
+npm run build       # the build in web/dist/, served by FastAPI at /ui
+npm test            # Vitest, Testing Library and axe-core
+npm run lint        # ESLint, with the accessibility rules, and Prettier
+npm run typecheck   # TypeScript
+```
+
+Docker builds the interface by itself, in the Node stage of the Dockerfile.
+
+**Strings.** The strings of the whole interface are in `locales/<language>/`, one file per area:
+`common.json` for the components, `gallery.json` for the page at /ui, `quiz.json` for the questionnaire
+pages, `report.json` for the report. Python reads them through [`utils/i18n.py`](../utils/i18n.py), and the
+web interface imports the same files. Both fill the placeholders in braces (`{count}`), and both pick
+the plural form of a string with two (`{"one": ..., "other": ...}`). Every language has the same keys
+and placeholders: `tests/test_i18n.py` checks it.
+
+**Accessibility.** The components aim at WCAG 2.2 AA: a test checks the contrast of the colour tokens
+(`frontend/ui/src/styles/tokens.css`) in both themes, and another runs axe-core on the page of the
+components.
 
 ## Architecture
 
@@ -49,9 +89,11 @@ flowchart TB
 | Path | Content |
 |---|---|
 | `agents/` | the pipeline: `orchestrator.py` and one folder per agent (`domain_analyzer/`, `causality_analyzer/`, `heuristic_analyzer/`, `report_generator/`); `questionnaire_generator/` simulates a user who fills in the questionnaire |
-| `api/` | the web interface (FastAPI): routes, Jinja2 templates with htmx, static files, sessions and the state of the analyses |
-| `quiz/` | the questionnaire logic (loading, validation, follow-ups, saving) and the interface translations |
-| `utils/` | shared code: `paths.py` (where Kindynos keeps its files), `utils.py` (LLM client and logging), `models.py` (the schemas of the analyses), `brand.py` (the logo in pages and reports) |
+| `api/` | the web interface (FastAPI): routes, Jinja2 templates with htmx, static files, sessions, the state of the analyses, and the build of `frontend/` (`web.py`) |
+| `frontend/` | the new web interface, in React and TypeScript ([above](#the-web-interface)) |
+| `locales/` | the strings of the interface, in English and Italian |
+| `quiz/` | the questionnaire logic (loading, validation, follow-ups, saving) |
+| `utils/` | shared code: `paths.py` (where Kindynos keeps its files), `utils.py` (LLM client and logging), `models.py` (the schemas of the analyses), `brand.py` (the logo in pages and reports), `i18n.py` (the strings of the interface) |
 | `files/` | the questionnaires (`questions_*.json`), the outputs of each run, the MIT data ([`data/`](../files/data/README.md)) and the logo ([`img/brand/`](../files/img/brand/README.md)) |
 | `data_prep/` | the extraction of the MIT datasets and the generation of Kindynos training risks |
 | `evaluation/` | test sets, evaluation scripts and results ([README](../evaluation/README.md)) |
