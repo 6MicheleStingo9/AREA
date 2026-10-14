@@ -1,15 +1,12 @@
 """LangGraph state handling in the agents (no LLM calls)."""
 
 import json
-from pathlib import Path
 
 import agents.report_generator.html_generator as html_generator
 import agents.report_generator.report_generator_agent as report_agent
+from utils.paths import ANALYSIS
 
-SAMPLE = (
-    Path(__file__).resolve().parent.parent
-    / "files/analysis/heuristic/heuristic_analysis_23d095a19c9c45c89af5c66b5ffcea63.json"
-)
+SAMPLE = ANALYSIS / "heuristic" / "heuristic_analysis_23d095a19c9c45c89af5c66b5ffcea63.json"
 
 
 def test_report_error_is_recorded_once(tmp_path, monkeypatch):

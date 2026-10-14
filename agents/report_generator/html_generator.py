@@ -10,9 +10,10 @@ from jinja2 import Environment, FileSystemLoader
 
 from .chart_data_builder import prepare_chart_data, build_risk_table_data
 from utils import brand
+from utils.paths import FILES, REPORTS
 
 
-REPORT_DIR = Path(__file__).parent.parent.parent / "files" / "reports"
+REPORT_DIR = REPORTS
 TEMPLATE_DIR = Path(__file__).parent / "templates"
 STYLES_DIR = Path(__file__).parent / "styles"
 SCRIPTS_DIR = Path(__file__).parent / "scripts"
@@ -61,13 +62,7 @@ def load_translations(language: str) -> dict:
     Returns:
         dict: A dictionary of translations.
     """
-    translations_path = (
-        Path(__file__).parent.parent.parent
-        / "agents"
-        / "report_generator"
-        / "templates"
-        / "translations.json"
-    )
+    translations_path = TEMPLATE_DIR / "translations.json"
     if translations_path.exists():
         with open(translations_path, "r", encoding="utf-8") as f:
             translations = json.load(f)
@@ -117,9 +112,7 @@ def generate_html_report(
     # Load questions dynamically based on language
     language = metadata.get("language", "en")
     translations = load_translations(language)
-    questions_path = (
-        Path(__file__).parent.parent.parent / "files" / f"questions_{language}.json"
-    )
+    questions_path = FILES / f"questions_{language}.json"
     questions = {}
     if questions_path.exists():
         with open(questions_path, "r", encoding="utf-8") as f:

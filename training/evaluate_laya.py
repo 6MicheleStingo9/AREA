@@ -26,8 +26,8 @@ from typing import Any, Dict, List
 import laya
 
 from evaluation.metrics import accuracy, brier, ece, macro_f1, summarize
+from utils.paths import ROOT
 
-ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "training" / "data"
 RESULTS = ROOT / "evaluation" / "results"
 AXES = ("entity", "intent", "timing")

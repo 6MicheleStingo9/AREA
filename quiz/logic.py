@@ -5,11 +5,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-FILES_DIR = Path(__file__).resolve().parent.parent / "files"
+from utils.paths import ANSWERS, FILES
 
 
 def load_questions(lang: str) -> List[Dict]:
-    path = FILES_DIR / f"questions_{lang}.json"
+    path = FILES / f"questions_{lang}.json"
     with open(path, encoding="utf-8") as f:
         return json.load(f)["questions"]
 
@@ -129,7 +129,7 @@ def save_answers(
     metadata so the whole pipeline (domain → … → report) shares a single id and
     the generated report is addressable as ``ai_risk_report_<run_id>.html``.
     """
-    out_dir = FILES_DIR / "answers"
+    out_dir = ANSWERS
     out_dir.mkdir(parents=True, exist_ok=True)
     name = run_id or datetime.now().strftime("%Y%m%d_%H%M%S")
     out_path = out_dir / f"answers_{name}.json"

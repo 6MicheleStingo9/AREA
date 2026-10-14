@@ -8,9 +8,9 @@ assets. A missing file leaves the pages without the logo.
 
 import base64
 from functools import lru_cache
-from pathlib import Path
+from utils.paths import FILES
 
-BRAND_DIR = Path(__file__).resolve().parent.parent / "files" / "img" / "brand"
+BRAND_DIR = FILES / "img" / "brand"
 
 
 @lru_cache(maxsize=None)

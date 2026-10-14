@@ -26,7 +26,7 @@
   </div>
   <div id="error-section"{% if running or status == 'done' %} style="display:none"{% endif %}>
     <p class="alert alert-error" id="error-msg">
-      {%- if status == 'not_found' %}{{ t('job_not_found') }}{% elif status == 'error' %}{{ error or '' }}{% endif -%}
+      {%- if status == 'not_found' %}{{ t('job_not_found') }}{% elif status == 'interrupted' %}{{ t('job_interrupted') }}{% elif status == 'error' %}{{ error or '' }}{% endif -%}
     </p>
   </div>
 </div>
@@ -37,6 +37,7 @@ const T = {{ {
   'analysis_complete': t('analysis_complete'),
   'analysis_error': t('analysis_error'),
   'job_not_found': t('job_not_found'),
+  'job_interrupted': t('job_interrupted'),
 } | tojson }};
 function stopPolling() {
   // Read by the hx-trigger filter: removing the attribute would not stop the
@@ -66,6 +67,8 @@ function handleStatus(ev) {
       document.getElementById('status-title').textContent = '✅ ' + T.analysis_complete;
     } else if (data.status === 'error') {
       showError(data.error || T.analysis_error);
+    } else if (data.status === 'interrupted') {
+      showError(T.job_interrupted);
     }
   } catch(e) {}
 }

@@ -26,8 +26,9 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
-ROOT = Path(__file__).resolve().parent.parent.parent
-MIT_DATABASE = ROOT / "files" / "data" / "processed" / "full.jsonl"
+from utils.paths import DATA, ROOT
+
+MIT_DATABASE = DATA / "processed" / "full.jsonl"
 DEFAULT_MODEL = ROOT / "training" / "checkpoints" / "laya-causal-v4"
 # The published model, downloaded from Hugging Face on first use when there is no local checkpoint
 HUB_MODEL, HUB_REVISION = "MicheleStingo/laya-kindynos-causal", "v1.0"

@@ -149,6 +149,8 @@ GEMINI_MODEL=gemini-2.5-flash
   `CAUSALITY_BACKEND=llm`. The Gemini API free tier has a daily request quota per model (20 for
   `gemini-2.5-flash` as of October 2026), so it allows about ten assessments a day; past the quota,
   requests fail with `429 RESOURCE_EXHAUSTED` until it resets.
+- `LOG_LEVEL` sets how much the application logs: `DEBUG`, `INFO` (the default), `WARNING`, `ERROR`
+  or `CRITICAL`.
 
 > Get your API key and see available models at: https://aistudio.google.com/
 
@@ -414,6 +416,8 @@ The analysis workflow in Kindynos consists of the following steps:
 
 - You can find the results of each analysis step (domain, causality, heuristic) as JSON files in the `files/analysis/` subfolders.
 - The final HTML report is saved in `files/reports/` and can be opened with your browser.
+- The state of each analysis started from the web interface is kept in `files/jobs/`: after a restart the
+  progress page still shows how a finished analysis ended, and marks those the restart cut short as interrupted.
 
 ---
 

@@ -21,11 +21,11 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from agents.causality_analyzer.prompts import CAUSALITY_JSON_SCHEMA
 from evaluation.metrics import accuracy, macro_f1, paired_bootstrap_ci
+from utils.paths import DATA, ROOT
 
-ROOT = Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "evaluation" / "results"
 AREA = ROOT / "evaluation" / "area_testset"
-MIT_EVAL = ROOT / "files" / "data" / "processed" / "causal_clf.eval.jsonl"
+MIT_EVAL = DATA / "processed" / "causal_clf.eval.jsonl"
 AXES = ("entity", "intent", "timing")
 TEST_SETS = {"area": "Kindynos risks", "mit": "MIT eval split"}
 

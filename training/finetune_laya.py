@@ -37,7 +37,8 @@ from typing import Any, Dict, List
 from huggingface_hub import snapshot_download
 from laya.train import TrainConfig, finetune
 
-ROOT = Path(__file__).resolve().parent.parent
+from utils.paths import ROOT
+
 DATA = ROOT / "training" / "data"
 CHECKPOINTS = ROOT / "training" / "checkpoints"
 BASE = "convaiinnovations/laya-multilingual"

@@ -58,6 +58,10 @@ TRANSLATIONS = {
         "en": "Analysis job not found (the server may have restarted). Please start a new analysis.",
         "it": "Analisi non trovata (il server potrebbe essere stato riavviato). Avvia una nuova analisi.",
     },
+    "job_interrupted": {
+        "en": "The analysis was interrupted because the server stopped. Please start a new analysis.",
+        "it": "L'analisi si è interrotta perché il server si è fermato. Avvia una nuova analisi.",
+    },
     "analysis_complete": {
         "en": "Analysis complete! Report generated.",
         "it": "Analisi completata! Report generato.",

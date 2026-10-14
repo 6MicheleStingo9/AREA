@@ -35,11 +35,11 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 # The pipeline builds what Laya reads with the same definitions (agents/causality_analyzer/laya_classifier.py)
 from agents.causality_analyzer.laya_classifier import AXES, QUESTIONS, state, subdomain_names  # noqa: F401
+from utils.paths import DATA, ROOT
 
-ROOT = Path(__file__).resolve().parent.parent
-PROCESSED = ROOT / "files" / "data" / "processed"
+PROCESSED = DATA / "processed"
 AREA = ROOT / "evaluation" / "area_testset"
-AREA_TRAIN = ROOT / "files" / "data" / "area_trainset"
+AREA_TRAIN = DATA / "area_trainset"
 OUT = ROOT / "training" / "data"
 VAL_FRAC = 0.15
 VAL_SEED = 0

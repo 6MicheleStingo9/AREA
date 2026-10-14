@@ -1,15 +1,16 @@
 import uuid
 from pathlib import Path
 
-from fastapi import APIRouter, BackgroundTasks, Request
+from fastapi import APIRouter, BackgroundTasks
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
 
 from agents.orchestrator import run_orchestrator
 from api.jobs import create_job, get_job, update_job
 from api.sessions import get_session
 from quiz.logic import save_answers
+from utils.paths import REPORTS
 
-REPORT_DIR = Path(__file__).parent.parent / "files" / "reports"
+REPORT_DIR = REPORTS
 
 router = APIRouter()
 
