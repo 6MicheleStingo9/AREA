@@ -5,12 +5,43 @@ orchestrated with [LangGraph](https://github.com/langchain-ai/langgraph). Each a
 the next and also saves it in `files/analysis/`, so every step can be run on its own from the saved files
 ([development](development.md#running-a-single-agent)).
 
+What happens during an analysis, and what leaves your computer:
+
+<!-- The steps appear one after the other: themeCSS animates each message and note by its data-id
+     (i0, i1, ... in the order of the diagram), so renumber the rules when adding a step. -->
 ```mermaid
-flowchart LR
-    Q["Questionnaire<br/>web interface"] --> D["Domain analysis<br/>LLM (Gemini)"]
-    D --> C["Causal analysis<br/>local model (Laya)"]
-    C --> H["Heuristic analysis<br/>Prolog rules"]
-    H --> R["Report<br/>LLM summary + HTML"]
+---
+config:
+  themeCSS: |
+    @keyframes reveal { from { opacity: 0; transform: translateY(-6px) } to { opacity: 1; transform: none } }
+    @media (prefers-reduced-motion: no-preference) {
+      [data-id=i0], text:has(+ [data-id=i0]) { animation: reveal 0.5s ease-out 0.4s both }
+      [data-id=i1], text:has(+ [data-id=i1]) { animation: reveal 0.5s ease-out 1s both }
+      [data-id=i2], text:has(+ [data-id=i2]) { animation: reveal 0.5s ease-out 1.6s both }
+      [data-id=i3], text:has(+ [data-id=i3]) { animation: reveal 0.5s ease-out 2.2s both }
+      [data-id=i4], text:has(+ [data-id=i4]), text:has(+ text + [data-id=i4]) { animation: reveal 0.5s ease-out 2.8s both }
+      [data-id=i5] { animation: reveal 0.5s ease-out 3.4s both }
+      [data-id=i6], text:has(+ [data-id=i6]) { animation: reveal 0.5s ease-out 4s both }
+      [data-id=i7], text:has(+ [data-id=i7]) { animation: reveal 0.5s ease-out 4.6s both }
+      [data-id=i8] { animation: reveal 0.5s ease-out 5.2s both }
+      [data-id=i9], text:has(+ [data-id=i9]) { animation: reveal 0.5s ease-out 5.8s both }
+    }
+---
+sequenceDiagram
+    actor U as User
+    participant W as Web interface
+    participant P as Pipeline
+    participant G as Gemini API
+    U->>W: answers the 24 questions
+    W->>P: starts the analysis in the background
+    W-->>U: progress page
+    P->>G: questions and answers
+    G-->>P: risks per subdomain,<br/>with severity and mitigation
+    Note over P: on your computer:<br/>Laya labels the causes,<br/>Prolog computes the score,<br/>patterns and recommendations
+    P->>G: the results
+    G-->>P: executive summary
+    Note over P: builds the HTML report<br/>and saves it in files/
+    W-->>U: the report is ready
 ```
 
 ## 1. Questionnaire
@@ -19,7 +50,10 @@ flowchart LR
 subdomain of the MIT Domain Taxonomy ([the taxonomies](taxonomies.md)). Some answers open follow-up
 questions. The interface also works without JavaScript. The answers are saved in `files/answers/`.
 
-<p align="center"><img src="img/welcome.png" width="70%" alt="The welcome page of Kindynos"></p>
+<p align="center">
+  <img src="img/welcome.png" width="49%" alt="The welcome page of Kindynos">
+  <img src="img/questionnaire.png" width="49%" alt="A question of the Kindynos questionnaire">
+</p>
 
 ## 2. Domain analysis (LLM)
 
@@ -38,6 +72,8 @@ of the risk, and gives a calibrated probability for each value.
 In the report each label carries the MIT definition of its value and the model's confidence. Labels below
 90% confidence are flagged ⚠, with the next most likely value. An LLM can label the causes instead
 ([configuration](configuration.md#the-causal-model)). Output: `files/analysis/causality/`.
+
+<p align="center"><img src="img/report-risk.png" width="70%" alt="A risk in the Kindynos report, with its causal labels"></p>
 
 ## 4. Heuristic analysis (Prolog)
 
@@ -69,7 +105,37 @@ The report embeds its scripts, styles and charting library: it opens offline, fr
 interface, and follows the light or dark theme of the system. *Download Report* saves it with its metadata
 as a ZIP. Output: `files/reports/`.
 
-<p align="center"><img src="img/report-summary.png" width="70%" alt="The top of a Kindynos report"></p>
+### What a report looks like
+
+From an example analysis. In the report, the charts are interactive.
+
+<p align="center">
+  <img src="img/report-summary.png" alt="The header and the executive summary of a Kindynos report"><br>
+  <em>The header and the executive summary, written by the LLM.</em>
+</p>
+
+<p align="center">
+  <img src="img/report-metrics.png" alt="The key metrics of a Kindynos report"><br>
+  <em>The key metrics: the risks found, the global risk score and its level, and how the risks divide by
+  severity, entity, timing and intent.</em>
+</p>
+
+<p align="center">
+  <img src="img/report-charts.png" alt="The Alert and Safety radar and the Risk Distribution chart of a Kindynos report"><br>
+  <em>Left, the criticality and safety profiles: shares of the risks, such as the high-severity or the
+  intentional ones. Right, the risks of each domain by severity.</em>
+</p>
+
+<p align="center">
+  <img src="img/report-patterns.png" alt="The Pattern Matrix of a Kindynos report"><br>
+  <em>The risk patterns found by the Prolog rules, such as unintended AI failures or malicious human risks,
+  and how many risks fall in each.</em>
+</p>
+
+<p align="center">
+  <img src="img/report-causality-flow.png" alt="The Causality Flow chart of a Kindynos report"><br>
+  <em>How the risks flow from their entity to their intent and timing.</em>
+</p>
 
 ## Where the results go
 

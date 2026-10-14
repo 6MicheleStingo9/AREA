@@ -13,6 +13,37 @@ pytest
 The tests make no LLM calls. One of them checks that the causality step gives the evaluated labels; it
 runs only when the local checkpoint of the causal model and its packages are there.
 
+## Architecture
+
+The web interface starts each analysis as a background job. The four agents run in turn, each with its
+own engine: Gemini for the domain analysis and the summary, the Laya model on the CPU for the causes, the
+Prolog rules for the heuristics. The report goes to `files/`, where the web interface finds it.
+
+```mermaid
+---
+config:
+  layout: dagre
+---
+flowchart TB
+    U(["User"]) <--> W["Web interface<br/>FastAPI + htmx"]
+    W e1@-- "background job" --> P
+    subgraph P["Pipeline · LangGraph"]
+        D["1 · Domain analyzer"] e2@--> C["2 · Causality analyzer"] e3@--> H["3 · Heuristic analyzer"] e4@--> R["4 · Report generator"]
+    end
+    D <--> G(["Gemini API<br/>cloud"])
+    R <--> G
+    C --- L{{"Laya model<br/>local CPU"}}
+    H --- PL{{"Prolog rules<br/>local"}}
+    R e5@--> F[("files/")]
+    F e6@-- "the report" --> W
+    e1@{ animation: slow }
+    e2@{ animation: slow }
+    e3@{ animation: slow }
+    e4@{ animation: slow }
+    e5@{ animation: slow }
+    e6@{ animation: slow }
+```
+
 ## Project structure
 
 | Path | Content |
