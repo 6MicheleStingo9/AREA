@@ -34,7 +34,7 @@ jobs:
       - run: pytest
 
   frontend:
-    name: Web interface · lint, tests and build
+    name: Web interface · lint, tests, build, end-to-end
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -53,6 +53,8 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
+      # The questionnaire end to end, in the Chrome of the runner, with the API answered in the page
+      - run: npm run e2e
 
   docker:
     name: Docker image
