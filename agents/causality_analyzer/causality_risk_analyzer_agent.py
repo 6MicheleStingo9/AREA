@@ -14,6 +14,7 @@ from agents.causality_analyzer.prompts import (
     CAUSALITY_SYSTEM_PROMPT,
     CAUSALITY_USER_PROMPT,
 )
+from utils import progress
 from utils.paths import ANALYSIS
 from utils.utils import apply_retry, create_logger, get_llm_instance
 
@@ -278,13 +279,14 @@ def _laya_field(axis: str, answer: Dict[str, Any], language: str, threshold: flo
     }
 
 
-def _analyze_with_laya(analysis: Dict[str, Any], language: str) -> Dict[str, Any]:
+def _analyze_with_laya(analysis: Dict[str, Any], language: str, run_id: Optional[str] = None) -> Dict[str, Any]:
     """
     Label every risk with Laya.
 
     Args:
         analysis: The domain analysis ('x.y' -> {"risks": [...]}).
         language: The language of the report.
+        run_id: The run, to report how many risks have their labels (utils/progress.py).
 
     Returns:
         The nested analysis: the same subdomains and risks, in the same order, each risk with
@@ -294,7 +296,10 @@ def _analyze_with_laya(analysis: Dict[str, Any], language: str) -> Dict[str, Any
     if unknown:
         _logger.warning("Subdomains missing from the MIT database: Laya reads their risks without one", step="analyze", subdomains=unknown)
     items = [(code, risk) for code, block in analysis.items() for risk in block["risks"]]
-    answers = laya_classifier.classify([(code, risk["title"], risk["explanation"]) for code, risk in items])
+    answers = laya_classifier.classify(
+        [(code, risk["title"], risk["explanation"]) for code, risk in items],
+        on_progress=lambda done: progress.report(run_id, "causes", risks=len(items), labelled=done),
+    )
     threshold = laya_classifier.review_threshold()
     nested: Dict[str, Any] = {code: {"risks": []} for code in analysis}
     for (code, risk), answer in zip(items, answers):
@@ -373,7 +378,7 @@ def node_analyze(state: CausalAnalysisState) -> CausalAnalysisState:
         if backend == "laya":
             model = {"backend": "laya", "model": laya_classifier.model_name(), "review_threshold": laya_classifier.review_threshold()}
             _logger.info("Causality analysis start", step="analyze", language=language, **model)
-            state["analysis"] = _analyze_with_laya(analysis_json, language)
+            state["analysis"] = _analyze_with_laya(analysis_json, language, metadata.get("run_id"))
         else:
             model = {"backend": "llm", "model": os.getenv("GEMINI_MODEL", "gemini-2.5-flash")}
             _logger.info("Causality analysis start", step="analyze", language=language, **model)

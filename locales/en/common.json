@@ -33,6 +33,26 @@
     "post_deployment": "Post-deployment",
     "other": "Other"
   },
+  "level": {
+    "critical": "Critical risk level",
+    "high": "High risk level",
+    "medium": "Medium risk level",
+    "low": "Low risk level"
+  },
+  "concern": {
+    "high_concentration": "Concentration of high-severity risks",
+    "ai_dominance": "Risks caused mostly by the AI",
+    "active_threats": "Active threats",
+    "operational_issues": "Risks in operation",
+    "severity_issues": "Many high-severity risks",
+    "manageable": "Manageable risks"
+  },
+  "action": {
+    "focus_prevention": "Focus on prevention",
+    "immediate_mitigation": "Immediate mitigation",
+    "strengthen_predeployment": "Strengthen the checks before deployment",
+    "monitor_and_maintain": "Monitor and maintain"
+  },
   "report_footer": {
     "disclaimer": "Kindynos generates this report automatically, with AI models and expert rules. It supports, but does not replace, a risk assessment by qualified people.",
     "attribution": "© {year} · Taxonomies: MIT AI Risk Repository (Slattery et al., 2024), CC BY 4.0"

@@ -1,12 +1,26 @@
-"""Pure-Python quiz logic — Streamlit-free. Shared by the FastAPI layer and tests."""
+"""The questionnaire: its questions, the follow-ups that an answer opens, the checks on an answer, and
+the file of answers that the pipeline reads.
+
+The web interface sends one answer per question, by question id:
+
+- free_text: {"text": "..."}
+- multiple_choice: {"choice": 0}, the index of the option
+- checkbox: {"choices": [0, 2], "other": "..."}, with "other" absent while "Other" is not ticked
+
+each with its follow-ups by index: "followups": {"0": "..."}. The interface applies the same rules as
+you answer (frontend/web/src/questionnaire/logic.ts): the cases in
+tests/fixtures/questionnaire_cases.json keep the two in step.
+"""
 
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional
 
-from utils import i18n
 from utils.paths import ANSWERS, FILES
+
+Answer = Dict[str, Any]
+Error = Dict[str, Any]
 
 
 def load_questions(lang: str) -> List[Dict]:
@@ -15,120 +29,135 @@ def load_questions(lang: str) -> List[Dict]:
         return json.load(f)["questions"]
 
 
-def should_show_followup(followup: Dict, answer: Any, question_type: str) -> bool:
+def _choices(question: Dict, answer: Answer) -> List[int]:
+    """The options chosen, as indices: one for a multiple choice, any number for a checkbox."""
+    if question["type"] == "multiple_choice":
+        choice = answer.get("choice")
+        return [] if choice is None else [choice]
+    if question["type"] == "checkbox":
+        return sorted(set(answer.get("choices") or []))
+    return []
+
+
+def _other(answer: Answer) -> str:
+    return (answer.get("other") or "").strip()
+
+
+def _shows(followup: Dict, question: Dict, answer: Answer) -> bool:
     condition = followup.get("condition", {})
-    ctype = condition.get("type")
-
-    if ctype == "always":
-        if question_type == "free_text":
-            # From the start: shown once the answer was written, it appeared when the answer lost
-            # focus, that is on the click on Next, and moved the button from under the cursor.
+    kind = condition.get("type")
+    chosen = _choices(question, answer)
+    if kind == "always":
+        if question["type"] == "free_text":
+            # From the start: shown once the answer was written, it appeared on the click on Next,
+            # and moved the button from under the cursor
             return True
-        if question_type == "checkbox":
-            # A checkbox answer is always a (truthy) dict; require a real choice.
-            if isinstance(answer, dict):
-                return bool(answer.get("selected")) or bool(answer.get("other"))
-            return False
-        return bool(answer)
-
-    elif ctype == "option_index":
-        value = condition.get("value")
-        if question_type == "multiple_choice":
-            options = followup.get("_parent_options", [])
-            if options and isinstance(answer, str) and answer in options:
-                return options.index(answer) == value
-
-    elif ctype == "option_index_in":
-        values = condition.get("value", [])
-        if question_type == "checkbox" and isinstance(answer, dict):
-            # Compare the option indices of the selected options (not their
-            # positions in the selection list).
-            options = followup.get("_parent_options", [])
-            selected = answer.get("selected", [])
-            return any(options.index(s) in values for s in selected if s in options)
-        elif question_type == "multiple_choice":
-            options = followup.get("_parent_options", [])
-            if options:
-                if isinstance(answer, str):
-                    idx = options.index(answer) if answer in options else -1
-                    return idx in values
-                elif isinstance(answer, list):
-                    idxs = [options.index(a) for a in answer if a in options]
-                    return any(idx in values for idx in idxs)
-
+        return bool(chosen) or bool(_other(answer))
+    if kind == "option_index":
+        return question["type"] == "multiple_choice" and condition.get("value") in chosen
+    if kind == "option_index_in":
+        return any(index in condition.get("value", []) for index in chosen)
     return False
 
 
-def validate_answer(question: Dict, answer: Any, lang: str = "en") -> Tuple[bool, str]:
-    def t(key: str, **kwargs) -> str:
-        return i18n.t(f"quiz.{key}", lang, **kwargs)
+def visible_followups(question: Dict, answer: Answer) -> List[int]:
+    """The indices of the follow-ups that the answer opens."""
+    return [i for i, followup in enumerate(question.get("follow_ups", [])) if _shows(followup, question, answer)]
 
-    if not question.get("required", False):
-        return True, ""
 
+def answer_errors(question: Dict, answer: Optional[Answer]) -> List[Error]:
+    """What is missing or wrong in the answer to a question, as codes: [] when it is complete."""
+    answer = answer or {}
+    errors: List[Error] = []
+    kind = question["type"]
+    required = question.get("required", False)
+    if kind == "free_text":
+        text = (answer.get("text") or "").strip()
+        limits = question.get("validation", {})
+        if not text:
+            if required:
+                errors.append({"code": "required"})
+        elif len(text) < limits.get("min_length", 0):
+            errors.append({"code": "min_length", "min": limits["min_length"]})
+        elif "max_length" in limits and len(text) > limits["max_length"]:
+            errors.append({"code": "max_length", "max": limits["max_length"]})
+    else:
+        options = question.get("options", [])
+        chosen = _choices(question, answer)
+        if any(not 0 <= index < len(options) for index in chosen):
+            errors.append({"code": "unknown_option"})
+        elif kind == "multiple_choice":
+            if required and not chosen:
+                errors.append({"code": "required"})
+        elif "other" in answer and answer["other"] is not None and not _other(answer):
+            # "Other" ticked: it needs its text, however many options are chosen besides
+            errors.append({"code": "other_required"})
+        else:
+            least = question.get("min_selections", 1) if required else 0
+            if len(chosen) + (1 if _other(answer) else 0) < least:
+                errors.append({"code": "min_selections", "min": least})
+    followups = question.get("follow_ups", [])
+    texts = answer.get("followups") or {}
+    for index in visible_followups(question, answer):
+        if followups[index].get("required") and not (texts.get(str(index)) or "").strip():
+            errors.append({"code": "followup_required", "followup": index})
+    return errors
+
+
+def validate_assessment(questions: List[Dict], answers: Dict[str, Answer]) -> Dict[str, List[Error]]:
+    """The errors of every question that has some, by question id."""
+    errors = {q["id"]: answer_errors(q, answers.get(q["id"])) for q in questions}
+    return {qid: found for qid, found in errors.items() if found}
+
+
+def _in_words(question: Dict, answer: Answer) -> Any:
+    """The answer as the pipeline and the report read it: the text of the options, not their index."""
     if question["type"] == "free_text":
-        if not answer or not str(answer).strip():
-            return False, t("this_question_is_required")
-        min_length = question.get("validation", {}).get("min_length", 0)
-        if len(answer) < min_length:
-            return False, t("min_length_validation", min_length=min_length)
-
-    elif question["type"] == "checkbox":
-        is_dict = isinstance(answer, dict)
-        selected = answer.get("selected", []) if is_dict else []
-        other_text = answer.get("other") if is_dict else None
-        # If "Other" is ticked, specifying its value is mandatory (regardless of
-        # how many standard options are also selected).
-        if is_dict and answer.get("other_checked") and not other_text:
-            return False, t("specify_other_required")
-        min_sel = question.get("min_selections", 1)
-        total = len(selected) + (1 if other_text else 0)
-        if total < min_sel:
-            return False, t("min_selections_validation", min_selections=min_sel)
-
-    elif question["type"] == "multiple_choice":
-        if not answer or not str(answer).strip():
-            return False, t("select_option")
-
-    return True, ""
+        return (answer.get("text") or "").strip()
+    options = question.get("options", [])
+    chosen = [options[i] for i in _choices(question, answer)]
+    if question["type"] == "multiple_choice":
+        return chosen[0] if chosen else ""
+    return {"selected": chosen, "other": _other(answer) or None}
 
 
-def parse_form_answer(question: Dict, form) -> Any:
-    q_type = question["type"]
-    q_id = question["id"]
-
-    if q_type in ("free_text", "multiple_choice"):
-        return form.get(f"q_{q_id}", "")
-    elif q_type == "checkbox":
-        selected = form.getlist(f"q_{q_id}")
-        # The "Other" text counts only when its checkbox is actually ticked, so
-        # a stale value left in a hidden field is ignored once "Other" is off.
-        other_checked = bool(form.get(f"q_{q_id}_other_check"))
-        other_text = (form.get(f"q_{q_id}_other") or "").strip() or None
-        other = other_text if other_checked else None
-        return {"selected": selected, "other": other, "other_checked": other_checked}
-    return None
-
-
-def parse_followup_answers(question: Dict, answer: Any, form) -> Dict[str, str]:
-    result: Dict[str, str] = {}
-    for idx, followup in enumerate(question.get("follow_ups", [])):
-        if question["type"] in ("multiple_choice", "checkbox"):
-            followup["_parent_options"] = question.get("options", [])
-        if should_show_followup(followup, answer, question["type"]):
-            key = f"followup_{question['id']}_{idx}"
-            result[str(idx)] = form.get(key, "")
-    return result
+def responses(questions: List[Dict], answers: Dict[str, Answer]) -> Dict[str, Dict]:
+    """The answers for the file the pipeline reads: by question id, the question, the answer in words,
+    and the follow-ups it opened that have a text."""
+    out = {}
+    for question in questions:
+        answer = answers.get(question["id"])
+        if not answer:
+            continue
+        texts = answer.get("followups") or {}
+        followups = {
+            str(i): texts[str(i)].strip()
+            for i in visible_followups(question, answer)
+            if (texts.get(str(i)) or "").strip()
+        }
+        out[question["id"]] = {
+            "question": question["question"],
+            "answer": _in_words(question, answer),
+            "followups": followups,
+        }
+    return out
 
 
 def save_answers(
-    answers: Dict, lang: str, questions_count: int, run_id: str | None = None
+    answers: Dict,
+    lang: str,
+    questions_count: int,
+    run_id: str | None = None,
+    system_name: str | None = None,
 ) -> Path:
     """Persist answers to disk.
 
     When ``run_id`` is provided it is embedded in both the filename and the
     metadata so the whole pipeline (domain → … → report) shares a single id and
     the generated report is addressable as ``ai_risk_report_<run_id>.html``.
+
+    ``system_name``, the name of the AI system that the user may give, goes to the metadata for the
+    report: no prompt reads the metadata, so the name never reaches the LLM.
     """
     out_dir = ANSWERS
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -142,6 +171,8 @@ def save_answers(
     }
     if run_id:
         metadata["run_id"] = run_id
+    if system_name:
+        metadata["system_name"] = system_name
     payload = {
         "metadata": metadata,
         "responses": answers,

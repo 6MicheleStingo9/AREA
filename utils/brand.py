@@ -1,9 +1,9 @@
 """
-The Kindynos logo (files/img/brand/), embedded in the web pages and in the HTML report.
+The Kindynos logo (files/img/brand/), embedded in the HTML report.
 
-The pages inline the SVG markup instead of linking it: the report is a standalone file that must
-keep its logo offline, and the web interface then needs no copy of the files among its static
-assets. A missing file leaves the pages without the logo.
+The report inlines the SVG markup instead of linking it: it is a standalone file that must keep its
+logo offline. A missing file leaves the report without the logo. The web interface (frontend/)
+imports the same files.
 """
 
 import base64

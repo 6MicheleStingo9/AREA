@@ -1,0 +1,109 @@
+{
+  "domains": {
+    "1": "Discriminazione e tossicità",
+    "2": "Privacy e sicurezza",
+    "3": "Misinformazione",
+    "4": "Attori malintenzionati e usi impropri",
+    "5": "Interazione uomo-computer",
+    "6": "Danni socioeconomici e ambientali",
+    "7": "Sicurezza, guasti e limiti dei sistemi AI"
+  },
+  "subdomains": {
+    "1.1": {
+      "name": "Discriminazione e rappresentazione ingiusta",
+      "short": "Discriminazione ingiusta"
+    },
+    "1.2": {
+      "name": "Esposizione a contenuti tossici",
+      "short": "Contenuti tossici"
+    },
+    "1.3": {
+      "name": "Prestazioni diseguali tra gruppi",
+      "short": "Prestazioni diseguali"
+    },
+    "2.1": {
+      "name": "Violazione della privacy ottenendo, divulgando o inferendo informazioni sensibili",
+      "short": "Privacy"
+    },
+    "2.2": {
+      "name": "Vulnerabilità e attacchi alla sicurezza dei sistemi AI",
+      "short": "Sicurezza e attacchi"
+    },
+    "3.1": {
+      "name": "Informazioni false o fuorvianti",
+      "short": "Informazioni false"
+    },
+    "3.2": {
+      "name": "Inquinamento dell'ecosistema informativo e perdita di una realtà condivisa",
+      "short": "Ecosistema informativo"
+    },
+    "4.1": {
+      "name": "Disinformazione, sorveglianza e influenza su larga scala",
+      "short": "Disinformazione su larga scala"
+    },
+    "4.2": {
+      "name": "Cyberattacchi, sviluppo o uso di armi e danni di massa",
+      "short": "Cyberattacchi e armi"
+    },
+    "4.3": {
+      "name": "Frodi, truffe e manipolazione mirata",
+      "short": "Frodi e manipolazione"
+    },
+    "5.1": {
+      "name": "Eccessiva fiducia e uso non sicuro",
+      "short": "Eccessiva fiducia"
+    },
+    "5.2": {
+      "name": "Perdita di capacità d'azione e di autonomia umana",
+      "short": "Perdita di autonomia"
+    },
+    "6.1": {
+      "name": "Concentrazione del potere e distribuzione ingiusta dei benefici",
+      "short": "Concentrazione del potere"
+    },
+    "6.2": {
+      "name": "Aumento delle disuguaglianze e peggioramento della qualità del lavoro",
+      "short": "Disuguaglianze e lavoro"
+    },
+    "6.3": {
+      "name": "Svalutazione economica e culturale del lavoro umano",
+      "short": "Svalutazione del lavoro umano"
+    },
+    "6.4": {
+      "name": "Dinamiche competitive",
+      "short": "Dinamiche competitive"
+    },
+    "6.5": {
+      "name": "Fallimento della governance",
+      "short": "Fallimento della governance"
+    },
+    "6.6": {
+      "name": "Danni ambientali",
+      "short": "Danni ambientali"
+    },
+    "7.1": {
+      "name": "AI che persegue obiettivi propri in conflitto con gli obiettivi o i valori umani",
+      "short": "Obiettivi non allineati"
+    },
+    "7.2": {
+      "name": "AI con capacità pericolose",
+      "short": "Capacità pericolose"
+    },
+    "7.3": {
+      "name": "Mancanza di capacità o di robustezza",
+      "short": "Capacità e robustezza"
+    },
+    "7.4": {
+      "name": "Mancanza di trasparenza o di interpretabilità",
+      "short": "Trasparenza"
+    },
+    "7.5": {
+      "name": "Benessere e diritti dell'AI",
+      "short": "Benessere e diritti dell'AI"
+    },
+    "7.6": {
+      "name": "Rischi multi-agente",
+      "short": "Rischi multi-agente"
+    }
+  }
+}

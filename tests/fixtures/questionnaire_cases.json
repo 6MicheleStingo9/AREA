@@ -1,0 +1,193 @@
+{
+  "description": "The rules of the questionnaire, as cases that both quiz/logic.py (tests/test_quiz_logic.py) and the web interface (frontend/web/src/questionnaire/logic.test.ts) must satisfy. Answers take the form the web interface sends; options are given by index.",
+  "followups": [
+    {
+      "name": "an always follow-up of a written answer is there from the start",
+      "question": {"type": "free_text", "follow_ups": [{"condition": {"type": "always"}}]},
+      "answer": {},
+      "visible": [0]
+    },
+    {
+      "name": "an always follow-up of a choice waits for the choice",
+      "question": {"type": "multiple_choice", "options": ["A", "B"], "follow_ups": [{"condition": {"type": "always"}}]},
+      "answer": {},
+      "visible": []
+    },
+    {
+      "name": "an always follow-up of a choice opens with any option",
+      "question": {"type": "multiple_choice", "options": ["A", "B"], "follow_ups": [{"condition": {"type": "always"}}]},
+      "answer": {"choice": 1},
+      "visible": [0]
+    },
+    {
+      "name": "an always follow-up of a checkbox waits for an option",
+      "question": {"type": "checkbox", "options": ["A", "B", "C"], "follow_ups": [{"condition": {"type": "always"}}]},
+      "answer": {"choices": []},
+      "visible": []
+    },
+    {
+      "name": "an always follow-up of a checkbox ignores an Other still without text",
+      "question": {"type": "checkbox", "options": ["A", "B", "C"], "follow_ups": [{"condition": {"type": "always"}}]},
+      "answer": {"choices": [], "other": "  "},
+      "visible": []
+    },
+    {
+      "name": "an always follow-up of a checkbox opens with the text of Other",
+      "question": {"type": "checkbox", "options": ["A", "B", "C"], "follow_ups": [{"condition": {"type": "always"}}]},
+      "answer": {"choices": [], "other": "Sensor data"},
+      "visible": [0]
+    },
+    {
+      "name": "an option_index follow-up opens with its option",
+      "question": {"type": "multiple_choice", "options": ["Yes", "No", "I don't know"], "follow_ups": [{"condition": {"type": "option_index", "value": 0}}]},
+      "answer": {"choice": 0},
+      "visible": [0]
+    },
+    {
+      "name": "an option_index follow-up stays closed with another option",
+      "question": {"type": "multiple_choice", "options": ["Yes", "No", "I don't know"], "follow_ups": [{"condition": {"type": "option_index", "value": 0}}]},
+      "answer": {"choice": 2},
+      "visible": []
+    },
+    {
+      "name": "an option_index_in follow-up of a choice opens with any of its options",
+      "question": {"type": "multiple_choice", "options": ["A", "B", "C", "D"], "follow_ups": [{"condition": {"type": "option_index_in", "value": [0, 1]}}]},
+      "answer": {"choice": 1},
+      "visible": [0]
+    },
+    {
+      "name": "an option_index_in follow-up of a checkbox looks at the indices of the options, not at their order",
+      "question": {"type": "checkbox", "options": ["A", "B", "C", "D", "E"], "follow_ups": [{"condition": {"type": "option_index_in", "value": [2, 3]}}]},
+      "answer": {"choices": [2]},
+      "visible": [0]
+    },
+    {
+      "name": "an option_index_in follow-up of a checkbox stays closed without its options, however many others",
+      "question": {"type": "checkbox", "options": ["A", "B", "C", "D", "E"], "follow_ups": [{"condition": {"type": "option_index_in", "value": [2, 3]}}]},
+      "answer": {"choices": [0, 1, 4], "other": "x"},
+      "visible": []
+    },
+    {
+      "name": "each follow-up of a question has its own condition",
+      "question": {"type": "multiple_choice", "options": ["A", "B"], "follow_ups": [{"condition": {"type": "always"}}, {"condition": {"type": "option_index", "value": 0}}]},
+      "answer": {"choice": 0},
+      "visible": [0, 1]
+    },
+    {
+      "name": "a condition of an unknown type never opens",
+      "question": {"type": "multiple_choice", "options": ["A", "B"], "follow_ups": [{"condition": {"type": "sometimes"}}]},
+      "answer": {"choice": 0},
+      "visible": []
+    }
+  ],
+  "validation": [
+    {
+      "name": "a required written answer cannot be empty",
+      "question": {"type": "free_text", "required": true, "validation": {"min_length": 3, "max_length": 8}},
+      "answer": {"text": "   "},
+      "errors": [{"code": "required"}]
+    },
+    {
+      "name": "a missing answer to a required question",
+      "question": {"type": "free_text", "required": true},
+      "answer": null,
+      "errors": [{"code": "required"}]
+    },
+    {
+      "name": "a written answer has a shortest length, spaces aside",
+      "question": {"type": "free_text", "required": true, "validation": {"min_length": 3, "max_length": 8}},
+      "answer": {"text": " ab "},
+      "errors": [{"code": "min_length", "min": 3}]
+    },
+    {
+      "name": "a written answer has a longest length",
+      "question": {"type": "free_text", "required": true, "validation": {"min_length": 3, "max_length": 8}},
+      "answer": {"text": "123456789"},
+      "errors": [{"code": "max_length", "max": 8}]
+    },
+    {
+      "name": "a written answer within its lengths",
+      "question": {"type": "free_text", "required": true, "validation": {"min_length": 3, "max_length": 8}},
+      "answer": {"text": "abcd"},
+      "errors": []
+    },
+    {
+      "name": "an optional question can stay empty",
+      "question": {"type": "free_text", "required": false, "validation": {"min_length": 3}},
+      "answer": {"text": ""},
+      "errors": []
+    },
+    {
+      "name": "a required choice needs an option",
+      "question": {"type": "multiple_choice", "required": true, "options": ["A", "B"]},
+      "answer": {},
+      "errors": [{"code": "required"}]
+    },
+    {
+      "name": "a choice must be one of the options",
+      "question": {"type": "multiple_choice", "required": true, "options": ["A", "B"]},
+      "answer": {"choice": 2},
+      "errors": [{"code": "unknown_option"}]
+    },
+    {
+      "name": "a valid choice",
+      "question": {"type": "multiple_choice", "required": true, "options": ["A", "B"]},
+      "answer": {"choice": 1},
+      "errors": []
+    },
+    {
+      "name": "a required checkbox needs at least one option",
+      "question": {"type": "checkbox", "required": true, "min_selections": 1, "options": ["A", "B", "C"], "allow_other": true},
+      "answer": {"choices": []},
+      "errors": [{"code": "min_selections", "min": 1}]
+    },
+    {
+      "name": "a ticked Other needs its text, even with options chosen",
+      "question": {"type": "checkbox", "required": true, "min_selections": 1, "options": ["A", "B", "C"], "allow_other": true},
+      "answer": {"choices": [0], "other": " "},
+      "errors": [{"code": "other_required"}]
+    },
+    {
+      "name": "the text of Other counts as an option",
+      "question": {"type": "checkbox", "required": true, "min_selections": 1, "options": ["A", "B", "C"], "allow_other": true},
+      "answer": {"choices": [], "other": "Sensor data"},
+      "errors": []
+    },
+    {
+      "name": "a checkbox may ask for more than one option",
+      "question": {"type": "checkbox", "required": true, "min_selections": 2, "options": ["A", "B", "C"]},
+      "answer": {"choices": [1]},
+      "errors": [{"code": "min_selections", "min": 2}]
+    },
+    {
+      "name": "the options of a checkbox must exist",
+      "question": {"type": "checkbox", "required": true, "options": ["A", "B", "C"]},
+      "answer": {"choices": [0, 7]},
+      "errors": [{"code": "unknown_option"}]
+    },
+    {
+      "name": "a required follow-up that the answer opens needs a text",
+      "question": {"type": "multiple_choice", "required": true, "options": ["Yes", "No"], "follow_ups": [{"required": true, "condition": {"type": "option_index", "value": 0}}]},
+      "answer": {"choice": 0, "followups": {"0": "  "}},
+      "errors": [{"code": "followup_required", "followup": 0}]
+    },
+    {
+      "name": "a required follow-up that the answer does not open needs nothing",
+      "question": {"type": "multiple_choice", "required": true, "options": ["Yes", "No"], "follow_ups": [{"required": true, "condition": {"type": "option_index", "value": 0}}]},
+      "answer": {"choice": 1},
+      "errors": []
+    },
+    {
+      "name": "an optional follow-up can stay empty",
+      "question": {"type": "free_text", "required": true, "follow_ups": [{"required": false, "condition": {"type": "always"}}]},
+      "answer": {"text": "An answer"},
+      "errors": []
+    },
+    {
+      "name": "the errors of the answer come before those of its follow-ups",
+      "question": {"type": "free_text", "required": true, "follow_ups": [{"required": true, "condition": {"type": "always"}}]},
+      "answer": {"text": ""},
+      "errors": [{"code": "required"}, {"code": "followup_required", "followup": 0}]
+    }
+  ]
+}

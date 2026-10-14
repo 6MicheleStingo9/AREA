@@ -21,8 +21,13 @@ _jobs: Dict[str, Dict[str, Any]] = {}
 _lock = threading.Lock()  # the pipeline updates its job from a worker thread
 
 
+def is_run_id(run_id: str) -> bool:
+    """Whether a string can be the id of a run: never a path."""
+    return bool(_RUN_ID.fullmatch(run_id))
+
+
 def _file(run_id: str) -> Optional[Path]:
-    return JOBS / f"{run_id}.json" if _RUN_ID.fullmatch(run_id) else None
+    return JOBS / f"{run_id}.json" if is_run_id(run_id) else None
 
 
 def _save(run_id: str, job: Dict[str, Any]) -> None:
@@ -35,9 +40,10 @@ def _save(run_id: str, job: Dict[str, Any]) -> None:
     os.replace(tmp, path)  # readers never see a half-written file
 
 
-def create_job(run_id: str) -> None:
+def create_job(run_id: str, **fields: Any) -> None:
+    """A new run, pending; fields add what the web interface shows of it (language, system name)."""
     with _lock:
-        _jobs[run_id] = {"status": "pending", "html_path": None, "error": None}
+        _jobs[run_id] = {"status": "pending", "html_path": None, "error": None, **fields}
         _save(run_id, _jobs[run_id])
 
 

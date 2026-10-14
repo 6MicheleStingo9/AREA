@@ -1,13 +1,10 @@
-"""The Kindynos logo in the web pages and in the HTML report (utils/brand.py)."""
+"""The Kindynos logo in the HTML report (utils/brand.py)."""
 
 import base64
 import json
 from pathlib import Path
 
-from fastapi.testclient import TestClient
-
 import agents.report_generator.html_generator as html_generator
-from api.main import app
 from utils import brand
 from utils.paths import ANALYSIS
 
@@ -27,16 +24,6 @@ def test_without_the_logo_files_the_pages_have_no_logo(tmp_path, monkeypatch):
         assert brand.svg("kindynos-mark") == "" and brand.favicon() == ""
     finally:
         brand.svg.cache_clear()
-
-
-def test_the_web_pages_show_the_logo_and_the_owl():
-    client = TestClient(app)
-    page = client.get("/").text
-    assert 'rel="icon" href="data:image/svg+xml;base64,' in page
-    assert 'class="logo-mark"' in page and 'aria-label="Kindynos"' in page
-    assert 'src="/brand/kindynos-owl.png"' in page
-    owl = client.get("/brand/kindynos-owl.png")
-    assert owl.status_code == 200 and owl.headers["content-type"] == "image/png"
 
 
 def test_the_report_carries_the_mark_and_the_favicon(tmp_path, monkeypatch):

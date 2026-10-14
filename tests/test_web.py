@@ -1,4 +1,4 @@
-"""The build of the new web interface, served by FastAPI (api/web.py)."""
+"""The build of the web interface, served by FastAPI (api/web.py)."""
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -43,3 +43,11 @@ def test_a_build_made_while_the_server_runs_is_served(tmp_path):
     _build(tmp_path)
     assert client.get("/ui").status_code == 200
     assert client.get("/assets/index-1a2b.js").status_code == 200
+
+
+def test_every_path_but_the_api_gets_the_page_which_draws_the_screen(tmp_path):
+    _build(tmp_path)
+    client = _client(tmp_path)
+    for path in ("/", "/questions/1.3", "/review", "/analysis/abc123", "/ui", "/anything"):
+        assert client.get(path).headers["cache-control"] == "no-cache", path
+    assert client.get("/api/nothing").status_code == 404
