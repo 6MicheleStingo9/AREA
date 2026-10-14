@@ -20,7 +20,9 @@ def should_show_followup(followup: Dict, answer: Any, question_type: str) -> boo
 
     if ctype == "always":
         if question_type == "free_text":
-            return bool(answer) and len(str(answer).strip()) >= 10
+            # From the start: shown once the answer was written, it appeared when the answer lost
+            # focus, that is on the click on Next, and moved the button from under the cursor.
+            return True
         if question_type == "checkbox":
             # A checkbox answer is always a (truthy) dict; require a real choice.
             if isinstance(answer, dict):

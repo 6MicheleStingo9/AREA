@@ -35,6 +35,12 @@ def test_option_index_in_checkbox_uses_option_indices():
     assert not should_show_followup(fu, {"selected": [], "other": "x"}, "checkbox")
 
 
+def test_always_on_free_text_is_shown_from_the_start():
+    fu = followup({"type": "always"})
+    assert should_show_followup(fu, "", "free_text")
+    assert should_show_followup(fu, "A written answer", "free_text")
+
+
 def test_always_on_checkbox_requires_a_real_choice():
     fu = followup({"type": "always"})
     assert not should_show_followup(fu, {"selected": [], "other": None, "other_checked": False}, "checkbox")
