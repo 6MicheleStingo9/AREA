@@ -18,17 +18,24 @@ Every pull request, and every push to `main`, runs the same checks on GitHub Act
 ([`ci.yml`](../.github/workflows/ci.yml)): ruff and pytest; lint, types, tests, build and end-to-end
 tests of the web interface; the build of the Docker image. No job needs a secret or calls Gemini.
 
-## The web interface
+## The web interface and the report
 
-The web interface is in `frontend/`, an npm workspace in React and TypeScript, built by Vite. It draws
-every screen in the browser, and talks to FastAPI through a JSON API; FastAPI serves its build
-([`api/web.py`](../api/web.py)) at every path but the API's.
+The web interface and the report are in `frontend/`, an npm workspace in React and TypeScript, built by
+Vite. The web interface draws every screen in the browser, and talks to FastAPI through a JSON API;
+FastAPI serves its build ([`api/web.py`](../api/web.py)) at every path but the API's.
 
 | Folder | Content |
 |---|---|
 | `frontend/ui/` | the design system: the tokens in CSS custom properties (colours of the brand, type, spacing), the Fraunces and Inter fonts, the components, the language and the theme |
 | `frontend/web/` | the app: the welcome page, the questions, the review, the analysis and its results, and at `/ui` the components of the design system |
+| `frontend/report/` | the report: built into one HTML file with its code, styles, fonts and logo inside, which the report step fills with the data of each run |
 | `frontend/e2e/` | the end-to-end tests, in Chrome with Playwright |
+
+Python prepares the data of a report ([`report_data.py`](../agents/report_generator/report_data.py)) and
+writes them into a copy of the built report ([`html_generator.py`](../agents/report_generator/html_generator.py)).
+`frontend/report/src/data.ts` describes the same data for the app, and
+`frontend/report/src/test/example.json` is the example run as Python prepares it, for the tests and for
+`npm run dev:report`: `tests/test_report_data.py` checks that it is up to date.
 
 The answers stay in the browser (localStorage) until the analysis starts. The rules on them, which
 follow-ups an answer opens and what an answer misses, live twice: in TypeScript for the interface
@@ -48,25 +55,28 @@ It needs Node 22 (`frontend/.node-version`, which fnm and nvm read). From `front
 ```bash
 npm ci              # the packages, at the versions of package-lock.json
 npm run dev         # the app with live reload, at http://localhost:5173 (the API from uvicorn on 8000)
-npm run build       # the build in web/dist/, which FastAPI serves
+npm run dev:report  # the report with live reload, filled with the example run
+npm run build       # the builds: web/dist/, which FastAPI serves, and report/dist/, the report
 npm test            # Vitest, Testing Library and axe-core
-npm run e2e         # Playwright, on the build, in the Chrome installed on the computer
+npm run e2e         # Playwright, on the builds, in the Chrome installed on the computer
 npm run lint        # ESLint, with the accessibility rules, and Prettier
 npm run typecheck   # TypeScript
 ```
 
-Docker builds the interface by itself, in the Node stage of the Dockerfile.
+Docker builds both by itself, in the Node stage of the Dockerfile.
 
-**Strings.** The strings of the whole interface are in `locales/<language>/`, one file per area:
-`common.json` for the components, `app.json` for the pages, `taxonomy.json` for the names of the MIT
-domains and subdomains, `gallery.json` for the page at /ui, `report.json` for the report. Python reads them through [`utils/i18n.py`](../utils/i18n.py), and the
-web interface imports the same files. Both fill the placeholders in braces (`{count}`), and both pick
-the plural form of a string with two (`{"one": ..., "other": ...}`). Every language has the same keys
-and placeholders: `tests/test_i18n.py` checks it.
+**Strings.** The strings of the interface and of the report are in `locales/<language>/`, one file per
+area: `common.json` for the components, `app.json` for the pages, `taxonomy.json` for the names of the MIT
+domains and subdomains, `gallery.json` for the page at /ui, `report.json` for the report. The apps fill
+the placeholders in braces (`{count}`), and pick the plural form of a string with two
+(`{"one": ..., "other": ...}`). Every language has the same keys and placeholders: `tests/test_i18n.py`
+checks it.
 
-**Accessibility.** The interface aims at WCAG 2.2 AA: a test checks the contrast of the colour tokens
-(`frontend/ui/src/styles/tokens.css`) in both themes, and axe-core runs on every screen, in Chrome, in
-the light and the dark theme, on a desktop and on a phone.
+**Accessibility.** The interface and the report aim at WCAG 2.2 AA: a test checks the contrast of the
+colour tokens (`frontend/ui/src/styles/tokens.css`) in both themes, and axe-core runs on every screen and
+on the report, in Chrome, in the light and the dark theme, on a desktop and on a phone. The charts of the
+report have their data in text too, for screen readers, and every part of the report works from the
+keyboard.
 
 ## Architecture
 
@@ -105,10 +115,10 @@ flowchart TB
 |---|---|
 | `agents/` | the pipeline: `orchestrator.py` and one folder per agent (`domain_analyzer/`, `causality_analyzer/`, `heuristic_analyzer/`, `report_generator/`); `questionnaire_generator/` simulates a user who fills in the questionnaire |
 | `api/` | the server of the web interface (FastAPI): the JSON API (`assessments.py`), the reports (`reports.py`), the state of the analyses (`jobs.py`), and the build of `frontend/` (`web.py`) |
-| `frontend/` | the new web interface, in React and TypeScript ([above](#the-web-interface)) |
-| `locales/` | the strings of the interface, in English and Italian |
+| `frontend/` | the web interface and the report, in React and TypeScript ([above](#the-web-interface-and-the-report)) |
+| `locales/` | the strings of the interface and of the report, in English and Italian |
 | `quiz/` | the questionnaire logic (loading, follow-ups, checks, the answers file) |
-| `utils/` | shared code: `paths.py` (where Kindynos keeps its files), `utils.py` (LLM client and logging), `models.py` (the schemas of the analyses), `brand.py` (the logo in the reports), `i18n.py` (the strings of the interface), `progress.py` (the step in course of a run) |
+| `utils/` | shared code: `paths.py` (where Kindynos keeps its files), `utils.py` (LLM client and logging), `models.py` (the schemas of the analyses), `progress.py` (the step in course of a run) |
 | `files/` | the questionnaires (`questions_*.json`), the outputs of each run, the MIT data ([`data/`](../files/data/README.md)) and the logo ([`img/brand/`](../files/img/brand/README.md)) |
 | `data_prep/` | the extraction of the MIT datasets and the generation of Kindynos training risks |
 | `evaluation/` | test sets, evaluation scripts and results ([README](../evaluation/README.md)) |
@@ -135,6 +145,9 @@ python -m agents.domain_analyzer.domain_risk_analyzer_agent --run_id <run_id>   
 python -m agents.causality_analyzer.causality_risk_analyzer_agent domain_analysis_<run_id>.json
 python -m agents.heuristic_analyzer.heuristic_risk_analyzer_agent causality_analysis_<run_id>.json
 python -m agents.report_generator.report_generator_agent heuristic_analysis_<run_id>.json
+
+# The report of a past run again, for a new build of the report app: from its saved files, without Gemini
+python -m agents.report_generator.html_generator <run_id>
 ```
 
 The causality step uses the configured backend (`CAUSALITY_BACKEND`, [configuration](configuration.md)).

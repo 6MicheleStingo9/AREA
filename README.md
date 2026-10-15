@@ -29,8 +29,7 @@ and when, and builds an interactive report you can keep and share.
 - **The risks of your system**, grouped by the domains and subdomains of the MIT Domain Taxonomy, each with
   a severity, an explanation and a mitigation.
 - **Their causes**, along the MIT Causal Taxonomy (entity, intent, timing), labeled by a small model that
-  runs on your computer and says how confident it is: labels below 90% confidence are flagged for you to
-  check.
+  runs on your computer and says how confident it is of each label.
 - **An overall picture**: a global risk score, the main concerns and recommendations, from expert rules
   written in Prolog.
 - **A self-contained HTML report** with interactive charts and filters, light and dark themes, and the
