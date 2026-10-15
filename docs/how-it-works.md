@@ -54,8 +54,8 @@ report: it never reaches the LLM. While the analysis runs, its page shows the st
 end the main results, with the report and an archive of its data.
 
 <p align="center">
-  <img src="img/welcome.png" width="49%" alt="The welcome page of Kindynos">
-  <img src="img/questionnaire.png" width="49%" alt="A question of the Kindynos questionnaire">
+  <img src="img/questionnaire.png" width="49%" alt="A question of the Kindynos questionnaire, with the follow-up question that its answer opens">
+  <img src="img/results.png" width="49%" alt="The end of an analysis in Kindynos: the main results, with the report and its archive">
 </p>
 
 ## 2. Domain analysis (LLM)
@@ -76,7 +76,7 @@ In the report each label carries the MIT definition of its value, the model's co
 likely value. An LLM can label the causes instead ([configuration](configuration.md#the-causal-model)).
 Output: `files/analysis/causality/`.
 
-<p align="center"><img src="img/report-risk.png" width="70%" alt="A risk in the Kindynos report, with its causal labels"></p>
+<p align="center"><img src="img/report-risk.png" width="70%" alt="A risk in the Kindynos report: the answer it comes from, why it is a risk, its mitigation, and its causes with the confidence of the model"></p>
 
 ## 4. Heuristic analysis (Prolog)
 
@@ -116,31 +116,45 @@ the analyses. Output: `files/reports/`.
 From an example analysis. In the report, the charts are interactive.
 
 <p align="center">
-  <img src="img/report-summary.png" alt="The header and the executive summary of a Kindynos report"><br>
-  <em>The header and the executive summary, written by the LLM.</em>
+  <img src="img/report-findings.png" alt="The header and the key findings of a Kindynos report"><br>
+  <em>The key findings: the global risk score and its level, the primary concern, the recommended action,
+  the most critical domains and the alerts of the expert rules.</em>
 </p>
 
 <p align="center">
-  <img src="img/report-metrics.png" alt="The key metrics of a Kindynos report"><br>
-  <em>The key metrics: the risks found, the global risk score and its level, and how the risks divide by
-  severity, entity, timing and intent.</em>
+  <img src="img/report-summary.png" alt="The executive summary of a Kindynos report, beside the risks at a glance"><br>
+  <em>The executive summary, written by the LLM, beside the risks at a glance: by severity, and by who or
+  what causes them.</em>
 </p>
 
 <p align="center">
-  <img src="img/report-charts.png" alt="The Alert and Safety radar and the Risk Distribution chart of a Kindynos report"><br>
-  <em>Left, the criticality and safety profiles: shares of the risks, such as the high-severity or the
-  intentional ones. Right, the risks of each domain by severity.</em>
+  <img src="img/report-domains.png" alt="The risks of each domain by severity, in a Kindynos report"><br>
+  <em>The risks of each domain of the MIT Domain Taxonomy, by severity.</em>
 </p>
 
 <p align="center">
-  <img src="img/report-patterns.png" alt="The Pattern Matrix of a Kindynos report"><br>
+  <img src="img/report-flow.png" alt="How the risks come about, in a Kindynos report: from their entity to their intent and their timing"><br>
+  <em>How the risks come about: who or what causes them, whether the harm is intended, and when it
+  occurs.</em>
+</p>
+
+<p align="center">
+  <img src="img/report-profile.png" alt="The alert and safety profile of a Kindynos report"><br>
+  <em>The alert and safety profile: eight indices on five axes, each a share of the risks, such as the
+  high-severity or the intentional ones.</em>
+</p>
+
+<p align="center">
+  <img src="img/report-patterns.png" alt="The risk patterns of a Kindynos report, by group and by cause"><br>
   <em>The risk patterns found by the Prolog rules, such as unintended AI failures or malicious human risks,
   and how many risks fall in each.</em>
 </p>
 
 <p align="center">
-  <img src="img/report-causality-flow.png" alt="The Causality Flow chart of a Kindynos report"><br>
-  <em>How the risks flow from their entity to their intent and timing.</em>
+  <img src="img/report-phone-light.png" width="30%" alt="A Kindynos report on a phone, in the light theme">
+  &nbsp;
+  <img src="img/report-phone-dark.png" width="30%" alt="The same report on a phone, in the dark theme"><br>
+  <em>On a phone, in the light and the dark theme.</em>
 </p>
 
 ## Where the results go

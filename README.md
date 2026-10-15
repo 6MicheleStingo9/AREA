@@ -18,7 +18,7 @@ and when, and builds an interactive report you can keep and share.
 
 <p align="center">
   <img src="docs/img/questionnaire.png" width="49%" alt="A question of the Kindynos questionnaire">
-  <img src="docs/img/report-risk.png" width="49%" alt="A risk in the Kindynos report, with its causal labels">
+  <img src="docs/img/report-findings.png" width="49%" alt="The key findings of a Kindynos report">
 </p>
 
 ## What you get
