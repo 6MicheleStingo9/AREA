@@ -23,3 +23,26 @@
   align-items: center;
   gap: 0.625rem;
 }
+
+/* With an end control: the logo on the left, the other controls and the end one on the right, as close
+   as the controls among them. On a narrow screen the other controls take a row of their own below, and
+   the end one stays beside the logo. */
+.withEnd {
+  column-gap: 0.625rem;
+}
+
+.withEnd .home {
+  margin-inline-end: auto;
+}
+
+.end {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 40rem) {
+  .withEnd .actions {
+    order: 1;
+    flex-basis: 100%;
+  }
+}

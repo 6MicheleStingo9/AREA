@@ -20,6 +20,7 @@ export function ReportHeader({ data }: { data: ReportData }) {
           ? undefined
           : ({ className, children }) => <span className={className}>{children}</span>
       }
+      end={<ThemeToggle />}
     >
       {served && (
         <ButtonLink href={served.archive} download variant="secondary" icon={<Download />}>
@@ -29,7 +30,6 @@ export function ReportHeader({ data }: { data: ReportData }) {
       <Button variant="secondary" icon={<Braces />} onClick={() => openData(data)}>
         {t('report.actions.data')}
       </Button>
-      <ThemeToggle />
     </AppHeader>
   );
 }
