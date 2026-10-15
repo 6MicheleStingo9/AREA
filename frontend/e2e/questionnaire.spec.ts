@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 import { DONE, fakeApi, questions, RUNNING } from './api';
 
 test('a whole assessment, from the welcome page to the results', async ({ page }) => {
+  // 24 questions: more than the default 30 seconds when the other tests run beside it
+  test.slow();
   const sent = await fakeApi(page, [RUNNING, DONE]);
   await page.goto('/');
   await page.getByRole('textbox', { name: /Name of the AI system/ }).fill('Developer assistant');
