@@ -28,10 +28,17 @@ def test_every_question_of_both_questionnaires_has_follow_ups_the_rules_know():
                 assert followup["condition"]["type"] in ("always", "option_index", "option_index_in")
 
 
-def test_the_two_questionnaires_ask_the_same_questions():
+def test_the_two_questionnaires_ask_the_same_questions_with_the_same_rules():
     english, italian = load_questions("en"), load_questions("it")
-    shape = lambda q: (q["id"], q["type"], len(q.get("options", [])), [f["condition"] for f in q["follow_ups"]])
-    assert [shape(q) for q in english] == [shape(q) for q in italian]
+    rules = lambda q: (
+        q["id"], q["type"], q.get("required"), len(q.get("options", [])), q.get("min_selections"), q.get("validation"),
+        [(f["condition"], f.get("required")) for f in q["follow_ups"]],
+    )
+    assert [rules(q) for q in english] == [rules(q) for q in italian]
+    for question in english:
+        for followup in question["follow_ups"]:
+            value = followup["condition"].get("value", [])
+            assert all(0 <= i < len(question["options"]) for i in (value if isinstance(value, list) else [value]))
 
 
 QUESTIONS = [
