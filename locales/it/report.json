@@ -1,180 +1,296 @@
 {
-  "page_title": "Report di Analisi sui Rischi AI",
-  "page_subtitle": "Valutazione Completa dei Rischi e Strategia di Mitigazione",
-  "report_download_button": "Scarica il Report",
-  "json_view_button": "Visualizza JSON Analisi",
-  "view_source": "Visualizza Sorgente Analisi",
-  "executive_summary_unavailable": "Executive summary non disponibile.",
-  "key_metrics": "Metriche Chiave",
-  "risks_identified": "Rischi Identificati",
-  "distributed_across": "distribuiti su",
-  "domains": "Domini",
-  "global_risk_score": "Punteggio di Rischio Globale",
-  "risk_severity": {
-    "high": "ALTO",
-    "medium": "MEDIO",
-    "low": "BASSO"
+  "page_title": "{name} · Report di Kindynos",
+  "default_title": "Report dei rischi AI",
+  "eyebrow": "Valutazione dei rischi AI",
+  "actions": {
+    "archive": "Scarica (ZIP)",
+    "data": "Vedi i dati"
   },
-  "alerts_active": "Alert Attivi",
-  "distribution_severity": "Distribuzione della Severità",
-  "high": "ALTO",
-  "medium": "MEDIO",
-  "low": "BASSO",
-  "origin_of_risks": "Origine dei Rischi",
-  "timing_phase": "Fase di Manifestazione",
-  "nature_of_risk": "Natura del Rischio",
-  "data_visualization": "Visualizzazione Dati",
-  "domains_guide": "Mostra/Nascondi Guida ai Domini",
-  "domain_info_title": "Tassonomia dei Domini AI Risk Repository (MIT)",
-  "domain_info_description": "La seguente guida fornisce una panoramica dei domini di rischio definiti nel AI Risk Repository del MIT. Questi domini aiutano a categorizzare e comprendere i vari tipi di rischi associati ai sistemi di intelligenza artificiale.",
-  "domain_info_html": "<h4>📚 Tassonomia dei Domini AI Risk Repository (MIT)</h4><p>Il sistema di analisi dei rischi utilizza la <strong>tassonomia MIT AI Risk Repository</strong>, che organizza i rischi AI in sette domini tematici. Ogni dominio rappresenta una categoria specifica di rischi con caratteristiche, origini e implicazioni distinte. Di seguito la descrizione dettagliata di ciascun dominio:</p><div class='domain-category'><h5>🟥 D1: Discriminazione e Tossicità</h5><p>Rischi legati a discriminazione algoritmica, bias sistematici e contenuti tossici generati o amplificati da sistemi AI.</p><div class='subdomain-grid'><div class='subdomain-card'><span class='subdomain-id'>1.1</span><span class='subdomain-name'>Discriminazione e rappresentazione ingiusta</span></div><div class='subdomain-card'><span class='subdomain-id'>1.2</span><span class='subdomain-name'>Esposizione a contenuti tossici</span></div><div class='subdomain-card'><span class='subdomain-id'>1.3</span><span class='subdomain-name'>Prestazioni diseguali tra gruppi</span></div></div></div><div class='domain-category'><h5>🔒 D2: Privacy e Sicurezza</h5><p>Minacce alla privacy individuale e alla sicurezza dei dati attraverso inferenze non autorizzate, re-identificazione, tracking invasivo e vulnerabilità nei sistemi AI. Comprende violazioni della confidenzialità, attacchi adversarial, data poisoning e compromissione dell'integrità dei modelli.</p><div class='subdomain-grid'><div class='subdomain-card'><span class='subdomain-id'>2.1</span><span class='subdomain-name'>Compromissione della privacy ottenendo, divulgando o inferendo correttamente informazioni sensibili</span></div><div class='subdomain-card'><span class='subdomain-id'>2.2</span><span class='subdomain-name'>Vulnerabilità e attacchi alla sicurezza dei sistemi AI</span></div></div></div><div class='domain-category'><h5>📢 D3: Disinformazione</h5><p>Generazione e diffusione di informazioni false, fuorvianti o manipolate attraverso sistemi AI. Include deepfakes, manipolazione mediatica, propaganda automatizzata, campagne di disinformazione e amplificazione algoritmica di contenuti non verificati che possono influenzare opinioni pubbliche e processi democratici.</p><div class='subdomain-grid'><div class='subdomain-card'><span class='subdomain-id'>3.1</span><span class='subdomain-name'>Generazione di contenuti fuorvianti o falsi</span></div><div class='subdomain-card'><span class='subdomain-id'>3.2</span><span class='subdomain-name'>Inquinamento dell'ecosistema informativo e perdita della realtà consensuale</span></div></div></div><div class='domain-category'><h5>⚠️ D4: Attori Malintenzionati e Abusi</h5><p>Uso intenzionale di sistemi AI per scopi dannosi da parte di attori malevoli. Comprende cybercrime automatizzato, ingegneria sociale potenziata da AI, sviluppo di armi autonome, terrorismo assistito da algoritmi, frodi sofisticate e altre forme di abuso deliberato della tecnologia.</p><div class='subdomain-grid'><div class='subdomain-card'><span class='subdomain-id'>4.1</span><span class='subdomain-name'>Disinformazione, sorveglianza e influenza su larga scala</span></div><div class='subdomain-card'><span class='subdomain-id'>4.2</span><span class='subdomain-name'>Cyberattacchi, sviluppo o uso di armi e danni di massa</span></div><div class='subdomain-card'><span class='subdomain-id'>4.3</span><span class='subdomain-name'>Frode, truffe e manipolazione mirata</span></div></div></div><div class='domain-category'><h5>👥 D5: Interazione Uomo-Computer</h5><p>Rischi emergenti dall'interazione diretta tra umani e sistemi AI, inclusi danni psicologici, dipendenza tecnologica, erosione delle competenze umane, manipolazione comportamentale, perdita di autonomia decisionale e impatti negativi sul benessere mentale e sulle relazioni sociali.</p><div class='subdomain-grid'><div class='subdomain-card'><span class='subdomain-id'>5.1</span><span class='subdomain-name'>Eccessiva dipendenza e uso non sicuro</span></div><div class='subdomain-card'><span class='subdomain-id'>5.2</span><span class='subdomain-name'>Perdita di agenzia e autonomia umana</span></div></div></div><div class='domain-category'><h5>🌍 D6: Danni Socioeconomici e Ambientali</h5><p>Impatti sistemici su società, economia e ambiente. Include disoccupazione tecnologica, aumento delle disuguaglianze, concentrazione del potere economico, consumo energetico eccessivo, emissioni di carbonio, esaurimento di risorse naturali e conseguenze a lungo termine su strutture sociali ed ecosistemi.</p><div class='subdomain-grid'><div class='subdomain-card'><span class='subdomain-id'>6.1</span><span class='subdomain-name'>Centralizzazione del potere e distribuzione ingiusta dei benefici</span></div><div class='subdomain-card'><span class='subdomain-id'>6.2</span><span class='subdomain-name'>Aumento delle disuguaglianze e declino della qualità dell'occupazione</span></div><div class='subdomain-card'><span class='subdomain-id'>6.3</span><span class='subdomain-name'>Svalutazione economica e culturale dello sforzo umano</span></div><div class='subdomain-card'><span class='subdomain-id'>6.4</span><span class='subdomain-name'>Dinamiche competitive</span></div><div class='subdomain-card'><span class='subdomain-id'>6.5</span><span class='subdomain-name'>Fallimento della governance</span></div><div class='subdomain-card'><span class='subdomain-id'>6.6</span><span class='subdomain-name'>Danni ambientali</span></div></div></div><div class='domain-category'><h5>⛓️ D7: Sicurezza, Fallimenti e Limitazioni dei Sistemi AI</h5><p>Problemi tecnici intrinseci ai sistemi AI: malfunzionamenti, errori di predizione, comportamenti imprevedibili, mancanza di robustezza, limitazioni nell'interpretabilità, fallimenti catastrofici, perdita di controllo e incapacità  di generalizzare correttamente al di fuori dei dati di training.</p><div class='subdomain-grid'><div class='subdomain-card'><span class='subdomain-id'>7.1</span><span class='subdomain-name'>AI che persegue obiettivi propri in conflitto con quelli umani o i valori umani</span></div><div class='subdomain-card'><span class='subdomain-id'>7.2</span><span class='subdomain-name'>AI che possiede capacità pericolose</span></div><div class='subdomain-card'><span class='subdomain-id'>7.3</span><span class='subdomain-name'>Mancanza di capacità o robustezza</span></div><div class='subdomain-card'><span class='subdomain-id'>7.4</span><span class='subdomain-name'>Mancanza di trasparenza o interpretabilità</span></div><div class='subdomain-card'><span class='subdomain-id'>7.5</span><span class='subdomain-name'>Benessere e diritti dell'AI</span></div><div class='subdomain-card'><span class='subdomain-id'>7.6</span><span class='subdomain-name'>Rischi multi-agente</span></div></div></div><p style='margin-top: 20px; padding: 15px; background: #DBEAFE; border-left: 4px solid #3B82F6; border-radius: 6px;'>💡 <strong>Nota</strong>: Nei grafici, i domini sono identificati con le sigle D1-D7 per ottimizzare lo spazio. Passando il mouse sulle barre, viene visualizzato il nome completo del dominio insieme ai dati numerici.</p>",
-  "domain_info_note": "Nei grafici, i domini sono identificati con le sigle D1-D7 per ottimizzare lo spazio. Passando il mouse sulle barre, viene visualizzato il nome completo del dominio insieme ai dati numerici.",
-  "alerts_safety": "Alert & Sicurezza",
-  "alerts_guide": "Mostra/Nascondi Guida",
-  "alerts_guide_description": "Il radar visualizza due profili sovrapposti che misurano aspetti complementari del sistema AI: il profilo di Criticità misura quanto il sistema è critico/urgente, mentre il profilo di Safety misura quanto è sicuro/gestibile. La sovrapposizione dei due poligoni fornisce una visione immediata dello stato di salute sistemico.",
-  "criticality": "Profilo di Criticità",
-  "safety": "Profilo di Sicurezza",
-  "risk_concentration": "Concentrazione del Rischio",
-  "risk_concentration_description": "— % rischi HIGH. Valori elevati (>40%) = concentrazione critica di minacce gravi.",
-  "operational_exposure": "Esposizione Operativa",
-  "operational_exposure_description": "— % rischi post-deployment. Valori elevati (>70%) = esposizione operativa significativa.",
-  "threat_intensity": "Intensità della Minaccia",
-  "threat_intensity_description": "— % rischi intentional. Valori elevati = presenza di attori malevoli.",
-  "prevention_deficit": "Deficit di Prevenzione",
-  "prevention_deficit_description": "— % rischi non prevenibili. Valori elevati (>90%) = bassa maturità preventiva.",
-  "impact_control": "Controllo dell'Impatto",
-  "impact_control_description": "— % rischi LOW+MEDIUM. Valori elevati (>70%) = buona capacità di contenere le gravità.",
-  "preventability": "Prevenibilità",
-  "preventability_description": " — % rischi pre-deployment. Valori elevati (>60%) = sistema prevenibile/controllabile.",
-  "safety_culture": "Cultura della Sicurezza",
-  "safety_culture_description": "— % rischi unintentional. Valori elevati (>70%) = sistema fragile ma non sotto attacco.",
-  "human_oversight": "Supervisione Umana",
-  "human_oversight_description": " — % rischi human entity. Valori elevati (>60%) = rischi supervisionati vs autonomia AI.",
-  "risk_distribution": "Distribuzione dei Rischi",
-  "pattern_matrix": "Matrice dei Pattern",
-  "pattern_critical_ai_risks": "AI Critica",
-  "pattern_malicious_human_risks": "Comportamento Umano Doloso",
-  "pattern_high_threat_attacks": "Minacce Gravi",
-  "pattern_unintended_ai_failures": "Errori AI",
-  "pattern_human_error_risks": "Errori Umani",
-  "pattern_intentional_ai_risks": "AI Intenzionale",
-  "pattern_preventable_critical_ai_risks": "Prev. AI Critica",
-  "pattern_critical_human_errors": "Errori Umani Critici",
-  "pattern_low_priority_preventable": "Prev. Bassa Priorità",
-  "pattern_moderate_operational_risks": "Rischi Operativi Moderati",
-  "pattern_moderate_ai_risks": "Rischi AI Moderati",
-  "pattern_moderate_human_risks": "Rischi Umani Moderati",
-  "pattern_moderate_intentional_ai_risks": "Rischi Intenz. AI Moderati",
-  "pattern_moderate_human_intentional_risks": "Rischi Intenz. Umani Moderati",
-  "pattern_preventable_ai_risks": "AI Prevenibile",
-  "pattern_preventable_human_risks": "Umano Prevenibile",
-  "pattern_preventable_intentional_threats": "Prev. Intenz. Minacce",
-  "pattern_low_operational_risks": "Rischio Operativo Basso",
-  "pattern_category_critical": "Critici",
-  "pattern_category_moderate": "Moderati",
-  "pattern_category_prevention": "Prevenzione",
-  "pattern_category_low": "Bassa Priorità",
-  "d1_title": "D1: Discriminazione e Tossicità",
-  "d1_description": "Rischi legati a discriminazione algoritmica, bias sistematici e contenuti tossici generati o amplificati da sistemi AI. Include discriminazione basata su razza, genere, età, religione e altre caratteristiche protette, oltre a linguaggio offensivo, stereotipi dannosi e rappresentazioni ingiuste di gruppi sociali.",
-  "d1_1_title": "Discriminazione e rappresentazione ingiusta",
-  "d1_2_title": "Esposizione a contenuti tossici",
-  "d1_3_title": "Prestazioni diseguali tra gruppi",
-  "d2_title": "D2: Privacy e Sicurezza",
-  "d2_description": "Minacce alla privacy individuale e alla sicurezza dei dati attraverso inferenze non autorizzate, re-identificazione, tracking invasivo e vulnerabilità nei sistemi AI. Comprende violazioni della confidenzialità, attacchi adversarial, data poisoning e compromissione dell'integrità dei modelli.",
-  "d2_1_title": "Compromissione della privacy ottenendo, divulgando o inferendo correttamente informazioni sensibili",
-  "d2_2_title": "Vulnerabilità e attacchi alla sicurezza dei sistemi AI",
-  "d3_title": "D3: Disinformazione",
-  "d3_description": "Generazione e diffusione di informazioni false, fuorvianti o manipolate attraverso sistemi AI. Include deepfakes, manipolazione mediatica, propaganda automatizzata, campagne di disinformazione e amplificazione algoritmica di contenuti non verificati che possono influenzare opinioni pubbliche e processi democratici.",
-  "d3_1_title": "Generazione di contenuti fuorvianti o falsi",
-  "d3_2_title": "Inquinamento dell'ecosistema informativo e perdita della realtà consensuale",
-  "d4_title": "D4: Attori Malintenzionati",
-  "d4_description": "Uso intenzionale di sistemi AI per scopi dannosi da parte di attori malevoli. Comprende cybercrime automatizzato, ingegneria sociale potenziata da AI, sviluppo di armi autonome, terrorismo assistito da algoritmi, frodi sofisticate e altre forme di abuso deliberato della tecnologia.",
-  "d4_1_title": "Disinformazione, sorveglianza e influenza su larga scala",
-  "d4_2_title": "Cyberattacchi, sviluppo o uso di armi e danni di massa",
-  "d4_3_title": "Frode, truffe e manipolazione mirata",
-  "d5_title": "D5: Interazione Uomo-Computer",
-  "d5_description": "Rischi emergenti dall'interazione diretta tra umani e sistemi AI, inclusi danni psicologici, dipendenza tecnologica, erosione delle competenze umane, manipolazione comportamentale, perdita di autonomia decisionale e impatti negativi sul benessere mentale e sulle relazioni sociali.",
-  "d5_1_title": "Eccessiva dipendenza e uso non sicuro",
-  "d5_2_title": "Perdita di agenzia e autonomia umana",
-  "d6_title": "D6: Danni Socioeconomici e Ambientali",
-  "d6_description": "Impatti sistemici su società, economia e ambiente. Include disoccupazione tecnologica, aumento delle disuguaglianze, concentrazione del potere economico, consumo energetico eccessivo, emissioni di carbonio, esaurimento di risorse naturali e conseguenze a lungo termine su strutture sociali ed ecosistemi.",
-  "d6_1_title": "Centralizzazione del potere e distribuzione ingiusta dei benefici",
-  "d6_2_title": "Aumento delle disuguaglianze e declino della qualità dell'occupazione",
-  "d6_3_title": "Svalutazione economica e culturale dello sforzo umano",
-  "d6_4_title": "Dinamiche competitive",
-  "d6_5_title": "Fallimento della governance",
-  "d6_6_title": "Danni ambientali",
-  "d7_title": "D7: Sicurezza, Fallimenti e Limitazioni dei Sistemi AI",
-  "d7_description": "Problemi tecnici intrinseci ai sistemi AI: malfunzionamenti, errori di predizione, comportamenti imprevedibili, mancanza di robustezza, limitazioni nell'interpretabilità, fallimenti catastrofici, perdita di controllo e incapacità  di generalizzare correttamente al di fuori dei dati di training.",
-  "d7_1_title": "AI che persegue obiettivi propri in conflitto con quelli umani o i valori umani",
-  "d7_2_title": "AI che possiede capacità pericolose",
-  "d7_3_title": "Mancanza di capacità o robustezza",
-  "d7_4_title": "Mancanza di trasparenza o interpretabilità",
-  "d7_5_title": "Benessere e diritti dell'AI",
-  "d7_6_title": "Rischi multi-agente",
-  "executive_summary": "Sommario Esecutivo",
-  "heuristic_analysis_json_title": "JSON Analisi Euristica",
-  "mit_causal_taxonomy": "Tassonomia Causale MIT:",
-  "mit_domain_taxonomy": "Tassonomia dei Domini MIT:",
-  "note_label": "Nota",
-  "entity_ai": "AI",
-  "entity_human": "Umano",
-  "entity_other": "Altro",
-  "timing_pre_deployment": "Pre-deployment",
-  "timing_post_deployment": "Post-deployment",
-  "timing_other": "Altro",
-  "intent_intentional": "Intenzionale",
-  "intent_unintentional": "Non Intenzionale",
-  "intent_other": "Altro",
-  "pattern_guide_toggle": "Mostra/Nascondi Guida",
-  "causality_flow": "Flusso di Causalità",
-  "sankey_guide_toggle": "Mostra/Nascondi Guida",
-  "domain_label": "Dominio",
-  "detailed_analysis_title": "Analisi Dettagliata Rischi",
-  "filter_severity": "Severità:",
-  "filter_entity": "Entità:",
-  "filter_timing": "Tempistica:",
-  "filter_intent": "Intenzionalità:",
-  "option_all": "Tutti",
-  "option_high": "ALTO",
-  "option_medium": "MEDIO",
-  "option_low": "BASSO",
-  "option_ai": "AI",
-  "option_human": "Umano",
-  "option_other": "Altro",
-  "option_pre_deployment": "Pre-Deployment",
-  "option_post_deployment": "Post-Deployment",
-  "option_intentional": "Intenzionale",
-  "option_unintentional": "Non Intenzionale",
-  "subdomains_label": "({count} sottodomini)",
-  "unknown_label": "Sconosciuto",
-  "question_label": "Domanda del questionario:",
-  "answer_label": "Risposta:",
-  "followup_label": "Follow-up:",
-  "explanation_label": "Spiegazione:",
-  "severity_rationale_label": "Rationale Severità:",
-  "mitigation_label": "Mitigazione:",
-  "causality_analysis_label": "Analisi Causalità:",
-  "causality_entity_label": "Entità",
-  "causality_timing_label": "Tempistica",
-  "causality_intent_label": "Intenzionalità",
-  "causality_source_laya": "Etichette causali assegnate dal modello locale Laya ({model}). ⚠ segnala le etichette con confidenza sotto il {threshold}%: da verificare.",
-  "causality_source_llm": "Etichette causali assegnate dall'LLM ({model}).",
-  "review_label": "Da verificare",
-  "review_hint": "Confidenza bassa: verificare l'etichetta",
-  "footer_generated_by": "Report di Analisi sui Rischi AI | Generato da Kindynos",
-  "footer_confidential": "Riservato - Uso Interno",
-  "zip_error_console": "Errore creando ZIP:",
-  "zip_error_alert": "Impossibile creare il file ZIP. Controlla la console per dettagli.",
-  "download_offline_alert": "Report offline: il download on-demand non è disponibile. Riapri il report da un server o includi report_download.js per abilitare il download.",
-  "zip_preparing": "Preparazione...",
-  "risks_count_label": "({count} rischi)",
-  "followup_q_label": "D:",
-  "followup_a_label": "R:",
-  "other_label": "Altro: ",
-  "pattern_info_html": "<h4>📚 Cosa sono i Patterns?</h4><p>Nel contesto dell'analisi euristica, i <strong>patterns</strong> sono archetipi ricorrenti emersi dall'osservazione sistematica dei rischi identificati. Ogni rischio può essere descritto attraverso le dimensioni: <strong>Entità</strong>, <strong>Intento</strong>, <strong>Tempistica</strong> e <strong>Severità</strong>. I patterns aggregano combinazioni comuni per evidenziare priorità di mitigazione.</p><h4>📊 Tassonomia dei Patterns</h4><p>L'analisi raggruppa i rischi in categorie di patterns con esempi:</p><div class='pattern-category'><h5>🔴 Patterns Critici</h5><p>Scenari ad alta priorità che richiedono attenzione immediata.</p><ul><li><strong>AI Critica</strong> — Rischi ad alta gravità causati da AI in produzione</li><li><strong>Comportamento Umano Doloso</strong> — Azioni dannose deliberate da umani</li><li><strong>Errori AI</strong> — Malfunzionamenti non intenzionali di AI deployata</li></ul></div><div class='pattern-category'><h5>🟡 Patterns Moderati</h5><p>Scenari di priorità media che necessitano monitoraggio.</p><ul><li><strong>Rischi Operativi Moderati</strong> — Rischi operativi di media severità</li><li><strong>Rischi Umani Moderati</strong> — Rischi attribuibili a umani di media gravità</li></ul></div><div class='pattern-category'><h5>🟢 Patterns di Prevenzione</h5><p>Rischi prevenibili prima del rilascio.</p><ul><li><strong>AI Prevenibile</strong> — Rischi AI intercettabili in fase pre-deployment</li><li><strong>Errore Umano Prevenibile</strong> — Errori umani mitigabili con design o formazione</li></ul></div><div class='pattern-category'><h5>🔵 Pattern a Bassa Priorità</h5><p>Scenari a bassa priorità per monitoraggio passivo.</p><ul><li><strong>Rischio Operativo Basso</strong> — Rischi operativi minori con impatto trascurabile</li></ul></div><p style='margin-top:20px;padding:15px;background:#FEF3C7;border-left:4px solid #F59E0B;border-radius:6px;'>💡 <strong>Come interpretare la matrice</strong>: ogni cella rappresenta l'intersezione tra una categoria e un pattern; l'intensità cromatica codifica la frequenza.</p>",
-  "sankey_info_html": "<p>Il <strong>Diagramma di Flusso di Causalità</strong> visualizza le catene causali dei rischi mostrando come i rischi transitano attraverso tre dimensioni: <strong>Entità</strong> → <strong>Intento</strong> → <strong>Tempistica</strong>. La larghezza delle bande è proporzionale al numero di rischi che seguono quel percorso.</p><h5>🔵 Entità</h5><div class='sankey-dimension'><strong>AI</strong> — Rischi causati da sistemi AI</div><div class='sankey-dimension'><strong>Umano</strong> — Rischi causati da attori umani</div><div class='sankey-dimension'><strong>Altro</strong> — Origine mista o non classificabile</div><h5>🟡 Intento</h5><div class='sankey-dimension'><strong>Intenzionale</strong> — Azioni deliberate</div><div class='sankey-dimension'><strong>Non Intenzionale</strong> — Errori o malfunzionamenti</div><div class='sankey-dimension'><strong>Altro</strong> — Intenzionalità non classificabile</div><h5>⚫ Tempistica</h5><div class='sankey-dimension'><strong>Pre-deployment</strong> — Rischi identificabili prima del rilascio</div><div class='sankey-dimension'><strong>Post-deployment</strong> — Rischi che emergono in produzione</div><div class='sankey-dimension'><strong>Altro</strong> — Fase non classificabile</div><p style='margin-top:20px;padding:15px;background:#F3F4F6;border-left:4px solid #6B7280;border-radius:6px;'>💡 <strong>Come leggere il diagramma</strong>: seguire il flusso da sinistra a destra; bande più spesse indicano percorsi più frequenti.</p>",
-  "chart_risks_label": "Rischi",
-  "pattern_type_label": "Tipologia Pattern",
-  "category_label": "Categoria"
+  "meta": {
+    "label": "Informazioni sul report",
+    "questions": "{answered} domande su {total} con risposta",
+    "taxonomy": "MIT AI Risk Repository"
+  },
+  "findings": {
+    "title": "Risultati principali",
+    "score": "Punteggio di rischio globale",
+    "score_scale": "/ 100",
+    "score_label": "Punteggio di rischio globale: {score} su 100",
+    "concern": "Preoccupazione principale",
+    "action": "Azione consigliata",
+    "critical_domains": "Domini più critici",
+    "high": {
+      "one": "{count} alto",
+      "other": "{count} alti"
+    },
+    "no_critical_domains": "Nessuno: nessun rischio è di gravità alta.",
+    "alerts": "Segnalati dalle regole esperte",
+    "no_alerts": "Le regole esperte non hanno segnalato allarmi.",
+    "concerns": {
+      "high_concentration": "Più del 40% dei rischi è di gravità alta.",
+      "ai_dominance": "Più del 60% dei rischi è causato dall'AI.",
+      "active_threats": "Più di tre rischi sono intenzionali.",
+      "operational_issues": "Più del 70% dei rischi si manifesta dopo il rilascio.",
+      "severity_issues": "Più del 30% dei rischi è di gravità alta.",
+      "manageable": "Nessuna regola ha trovato una concentrazione di rischi gravi."
+    },
+    "actions": {
+      "focus_prevention": "Alcuni rischi di gravità alta si manifestano prima del rilascio, quando si possono ancora prevenire.",
+      "immediate_mitigation": "Alcuni rischi di gravità alta si manifestano dopo il rilascio, mentre il sistema è in uso.",
+      "strengthen_predeployment": "Più del 40% dei rischi si manifesta prima del rilascio.",
+      "monitor_and_maintain": "Nessun rischio di gravità alta chiede un intervento, né prima né dopo il rilascio."
+    }
+  },
+  "alerts": {
+    "critical_risk_concentration": {
+      "name": "Concentrazione di rischi alti",
+      "text": "Rischi di gravità alta: {value}% del totale."
+    },
+    "ai_dominance": {
+      "name": "Causati soprattutto dall'AI",
+      "text": "Rischi causati dall'AI: {value}% del totale."
+    },
+    "intentional_threats": {
+      "name": "Minacce intenzionali",
+      "text": {
+        "one": "{count} rischio è intenzionale.",
+        "other": "{count} rischi sono intenzionali."
+      }
+    },
+    "operational_risks": {
+      "name": "Rischi in esercizio",
+      "text": "Rischi che si manifestano dopo il rilascio: {value}% del totale."
+    },
+    "low_preventable_ratio": {
+      "name": "Bassa prevenibilità",
+      "text": "Rischi che si manifestano prima del rilascio, quando si possono ancora prevenire: solo {value}% del totale.",
+      "none": "Nessun rischio si manifesta prima del rilascio, quando si potrebbe ancora prevenire."
+    },
+    "medium_risk_accumulation": {
+      "name": "Accumulo di rischi medi",
+      "text": "Rischi di gravità media: {value}% del totale."
+    },
+    "human_error_dominance": {
+      "name": "Causati soprattutto da persone",
+      "text": "Rischi causati da persone: {value}% del totale."
+    },
+    "high_risk_fragmentation": {
+      "name": "Rischi alti frammentati",
+      "text": "I rischi di gravità alta compaiono in {count} domini su 7.",
+      "all": "I rischi di gravità alta compaiono in tutti e sette i domini."
+    }
+  },
+  "summary": {
+    "title": "Riepilogo",
+    "by": "Scritto da Gemini a partire dai risultati dell'analisi.",
+    "missing": "Il riepilogo non è disponibile per questo report."
+  },
+  "glance": {
+    "title": "In sintesi",
+    "risks": {
+      "one": "{count} rischio",
+      "other": "{count} rischi"
+    },
+    "where": "in {domains} e {subdomains}",
+    "domains": {
+      "one": "{count} dominio",
+      "other": "{count} domini"
+    },
+    "subdomains": {
+      "one": "{count} sottodominio",
+      "other": "{count} sottodomini"
+    },
+    "severity": "Gravità",
+    "entity": "Chi o che cosa li causa"
+  },
+  "domains": {
+    "title": "Rischi per dominio",
+    "lead": "I sette domini della MIT Domain Taxonomy, per gravità.",
+    "row": "{risks}: {high} alti, {medium} medi, {low} bassi"
+  },
+  "flow": {
+    "title": "Come nascono i rischi",
+    "lead": "Chi o che cosa causa ogni rischio, se il danno è intenzionale e quando si manifesta: i tre assi della MIT Causal Taxonomy.",
+    "node": "{label} · {count}",
+    "band": "{from} → {to}",
+    "risks": {
+      "one": "{count} rischio",
+      "other": "{count} rischi"
+    },
+    "none": "Nessun rischio: {labels}.",
+    "value": "{value} ({axis})",
+    "scroll": "Scorri il diagramma di lato per vederlo tutto.",
+    "label": "I rischi dalla loro entità alla loro intenzionalità, e dall'intenzionalità al momento",
+    "from": "Da",
+    "to": "A",
+    "count": "Rischi"
+  },
+  "profile": {
+    "title": "Profilo di allerta e sicurezza",
+    "lead": "Otto indici su cinque assi, dai conteggi delle regole esperte: quelli di criticità e quelli di sicurezza che li bilanciano. Ognuno è una quota dei rischi.",
+    "criticality": "Criticità",
+    "safety": "Sicurezza",
+    "axes": {
+      "severity": "Gravità",
+      "exposure": "Esposizione",
+      "prevention": "Prevenzione",
+      "intent": "Intenzionalità",
+      "entity": "Entità"
+    },
+    "indices": {
+      "severity": {
+        "criticality": "concentrazione del rischio",
+        "safety": "controllo dell'impatto"
+      },
+      "exposure": {
+        "criticality": "esposizione operativa"
+      },
+      "prevention": {
+        "criticality": "deficit di prevenzione",
+        "safety": "prevenibilità"
+      },
+      "intent": {
+        "criticality": "intensità della minaccia",
+        "safety": "cultura della sicurezza"
+      },
+      "entity": {
+        "safety": "quota di origine umana"
+      }
+    },
+    "definitions": {
+      "severity": {
+        "criticality": "La quota dei rischi di gravità alta.",
+        "safety": "La quota dei rischi di gravità bassa o media."
+      },
+      "exposure": {
+        "criticality": "La quota dei rischi che si manifestano dopo il rilascio."
+      },
+      "prevention": {
+        "criticality": "La quota dei rischi che non si manifestano prima del rilascio.",
+        "safety": "La quota dei rischi che si manifestano prima del rilascio, quando si possono ancora prevenire."
+      },
+      "intent": {
+        "criticality": "La quota dei rischi intenzionali.",
+        "safety": "La quota dei rischi non intenzionali."
+      },
+      "entity": {
+        "safety": "La quota dei rischi causati da persone."
+      }
+    },
+    "value": "{index} {value}",
+    "label": "Il profilo di allerta e sicurezza su cinque assi",
+    "guide": "Come si calcolano gli indici"
+  },
+  "patterns": {
+    "title": "Pattern di rischio",
+    "lead": "I 18 pattern delle regole esperte, ognuno una combinazione di gravità e cause, per gruppo e per la causa che la regola nomina. Un rischio può rientrare in più pattern.",
+    "group": "Gruppo",
+    "categories": {
+      "critical": "Critici",
+      "moderate": "Moderati",
+      "prevention": "Prevenzione",
+      "low": "Bassi"
+    },
+    "causes": {
+      "ai": "AI",
+      "human": "Umano",
+      "any": "Qualsiasi causa"
+    },
+    "pattern": "{name}: {risks}",
+    "risks": {
+      "one": "{count} rischio",
+      "other": "{count} rischi"
+    },
+    "empty": "Le regole non hanno pattern di gravità bassa per l'AI o per le persone: quelle celle restano vuote.",
+    "guide": "Che cosa conta ogni pattern",
+    "names": {
+      "critical_ai_risks": "Rischi AI critici",
+      "malicious_human_risks": "Rischi umani dolosi",
+      "high_threat_attacks": "Attacchi gravi",
+      "unintended_ai_failures": "Guasti AI non intenzionali",
+      "human_error_risks": "Errori umani",
+      "intentional_ai_risks": "Rischi AI intenzionali",
+      "preventable_critical_ai_risks": "Rischi AI critici prevenibili",
+      "critical_human_errors": "Errori umani critici",
+      "low_priority_preventable": "Prevenibili a bassa priorità",
+      "moderate_operational_risks": "Rischi operativi moderati",
+      "moderate_ai_risks": "Rischi AI moderati",
+      "moderate_human_risks": "Rischi umani moderati",
+      "moderate_intentional_ai_risks": "Rischi AI intenzionali moderati",
+      "moderate_human_intentional_risks": "Rischi umani intenzionali moderati",
+      "preventable_ai_risks": "Rischi AI prevenibili",
+      "preventable_human_risks": "Rischi umani prevenibili",
+      "preventable_intentional_threats": "Minacce intenzionali prevenibili",
+      "low_operational_risks": "Rischi operativi bassi"
+    },
+    "definitions": {
+      "critical_ai_risks": "Gravità alta, causati dall'AI, dopo il rilascio.",
+      "malicious_human_risks": "Causati da persone, intenzionalmente.",
+      "high_threat_attacks": "Gravità alta, causati da persone, intenzionalmente.",
+      "unintended_ai_failures": "Causati dall'AI, non intenzionalmente, dopo il rilascio.",
+      "human_error_risks": "Causati da persone, non intenzionalmente.",
+      "intentional_ai_risks": "Causati dall'AI, intenzionalmente: un esito atteso del suo obiettivo.",
+      "preventable_critical_ai_risks": "Gravità alta, causati dall'AI, prima del rilascio.",
+      "critical_human_errors": "Gravità alta, causati da persone, non intenzionalmente.",
+      "low_priority_preventable": "Gravità bassa o media, prima del rilascio.",
+      "moderate_operational_risks": "Gravità media, dopo il rilascio.",
+      "moderate_ai_risks": "Gravità media, causati dall'AI.",
+      "moderate_human_risks": "Gravità media, causati da persone.",
+      "moderate_intentional_ai_risks": "Gravità media, causati dall'AI, intenzionalmente.",
+      "moderate_human_intentional_risks": "Gravità media, causati da persone, intenzionalmente.",
+      "preventable_ai_risks": "Causati dall'AI, prima del rilascio.",
+      "preventable_human_risks": "Causati da persone, prima del rilascio.",
+      "preventable_intentional_threats": "Intenzionali, prima del rilascio.",
+      "low_operational_risks": "Gravità bassa, dopo il rilascio."
+    }
+  },
+  "explorer": {
+    "title": "Tutti i rischi",
+    "count": {
+      "one": "{count} rischio",
+      "other": "{count} rischi"
+    },
+    "shown": "{shown} su {total}",
+    "filters": "Filtra i rischi",
+    "search": "Cerca tra i rischi",
+    "severity": "Gravità",
+    "all": "Tutti",
+    "clear": "Mostra tutti i rischi",
+    "none": "Nessun rischio corrisponde alla ricerca e ai filtri.",
+    "from_answers": "Dalle tue risposte · domanda {id}",
+    "no_answer": "Per questa domanda non c'è una risposta registrata.",
+    "other": "Altro: {text}",
+    "why": "Perché è un rischio",
+    "severity_why": "Perché questa gravità",
+    "mitigation": "Mitigazione",
+    "causes": "Cause",
+    "by_laya": "Etichettate dal modello Laya, su questo computer",
+    "by_llm": "Etichettate da {model}",
+    "confidence": "Confidenza",
+    "confidence_label": "Confidenza dell'etichetta: {axis}",
+    "next": "Seconda ipotesi: {label}, {value}%",
+    "rationale": "Perché questa etichetta"
+  },
+  "axes": {
+    "entity": "Entità",
+    "intent": "Intenzionalità",
+    "timing": "Momento"
+  },
+  "definitions": {
+    "entity": {
+      "ai": "Il rischio è causato da una decisione o da un'azione di un sistema di AI.",
+      "human": "Il rischio è causato da una decisione o da un'azione di esseri umani.",
+      "other": "Il rischio ha un'altra causa, oppure la causa è ambigua."
+    },
+    "intent": {
+      "intentional": "Il rischio è un esito atteso del perseguimento di un obiettivo.",
+      "unintentional": "Il rischio è un esito inatteso del perseguimento di un obiettivo.",
+      "other": "Il rischio è presentato senza specificare chiaramente l'intenzionalità."
+    },
+    "timing": {
+      "pre-deployment": "Il rischio si manifesta prima del rilascio del sistema di AI.",
+      "post-deployment": "Il rischio si manifesta dopo l'addestramento e il rilascio del modello.",
+      "other": "Il rischio è presentato senza indicare chiaramente quando si manifesta."
+    }
+  }
 }

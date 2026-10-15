@@ -10,7 +10,7 @@ export default defineConfig({
         test: {
           name: 'dom',
           environment: 'jsdom',
-          include: ['{ui,web}/src/**/*.test.{ts,tsx}'],
+          include: ['{ui,web,report}/src/**/*.test.{ts,tsx}'],
           exclude: ['**/*.node.test.ts'],
           setupFiles: ['./vitest.setup.ts'],
         },
@@ -18,7 +18,11 @@ export default defineConfig({
       {
         // The tests that read files from the disk
         extends: true,
-        test: { name: 'node', environment: 'node', include: ['{ui,web}/src/**/*.node.test.ts'] },
+        test: {
+          name: 'node',
+          environment: 'node',
+          include: ['{ui,web,report}/src/**/*.node.test.ts'],
+        },
       },
     ],
   },

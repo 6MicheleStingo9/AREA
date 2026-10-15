@@ -20,6 +20,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["ui/src", "web/src", "vitest.setup.ts"],
+  "include": ["ui/src", "web/src", "report/src", "vitest.setup.ts"],
   "exclude": ["**/*.node.test.ts"]
 }

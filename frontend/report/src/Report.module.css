@@ -1,0 +1,39 @@
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-12);
+  width: 100%;
+  max-width: var(--width-page);
+  margin: 0 auto;
+  padding: clamp(var(--space-8), 4vw, 3.5rem) var(--gutter) var(--space-16);
+}
+
+/* The target of the skip link: focused by it, never by the user */
+.main:focus {
+  outline: none;
+}
+
+.footer {
+  width: 100%;
+  max-width: var(--width-page);
+  margin: 0 auto;
+  padding: 0 var(--gutter) var(--space-12);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: var(--width-content);
+  margin: 0 auto;
+  padding: var(--space-16) var(--gutter);
+  color: var(--color-ink-muted);
+}
+
+/* The header on top, the report filling the rest of the window */
+:global(#root) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}

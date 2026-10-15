@@ -53,7 +53,8 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
-      # The questionnaire end to end, in the Chrome of the runner, with the API answered in the page
+      # The questionnaire and the report end to end, in the Chrome of the runner, with the API
+      # answered in the page and the report filled with the example run
       - run: npm run e2e
 
   docker:

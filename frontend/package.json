@@ -4,14 +4,16 @@
   "type": "module",
   "workspaces": [
     "ui",
-    "web"
+    "web",
+    "report"
   ],
   "engines": {
     "node": ">=22.12"
   },
   "scripts": {
     "dev": "npm run dev --workspace web",
-    "build": "npm run build --workspace web",
+    "dev:report": "npm run dev --workspace report",
+    "build": "npm run build --workspace web && npm run build --workspace report",
     "lint": "eslint --max-warnings 0 . && prettier --check .",
     "format": "prettier --write . && eslint --fix .",
     "typecheck": "tsc --build",

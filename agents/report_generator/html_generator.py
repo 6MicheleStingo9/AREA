@@ -1,161 +1,163 @@
 """
-HTML Report Generator
-Creates interactive dashboard using Jinja2 templates with Plotly visualizations
+The HTML report of a run: the report app (frontend/report), built once by `npm run build` in
+frontend/, with the data of the run (report_data.py) written into a copy of it.
+
+The build is a single HTML file with its code, styles, fonts and logo inside: the report opens
+offline, from any folder. The report of a past run can be made again, for a new version of the app,
+from its saved files and without asking Gemini again:
+
+    python -m agents.report_generator.html_generator <run_id> [--answers <answers file>]
 """
 
+import argparse
 import json
+import sys
+from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any
-from jinja2 import Environment, FileSystemLoader
+from typing import Any, Dict, List, Optional
 
-from .chart_data_builder import prepare_chart_data, build_risk_table_data
-from utils import brand, i18n
-from utils.paths import FILES, REPORTS
-
+from agents.report_generator.report_data import language_of, report_data
+from quiz.logic import load_questions
+from utils.paths import ANALYSIS, ANSWERS, REPORT_BUILD, REPORTS
 
 REPORT_DIR = REPORTS
-TEMPLATE_DIR = Path(__file__).parent / "templates"
-STYLES_DIR = Path(__file__).parent / "styles"
-SCRIPTS_DIR = Path(__file__).parent / "scripts"
-STATIC_DIR = Path(__file__).parent / "static"
+TEMPLATE = REPORT_BUILD / "index.html"
+# The text of <script id="report-data"> in frontend/report/index.html: where the data go
+PLACEHOLDER = "__KINDYNOS_REPORT_DATA__"
+BUILD_COMMAND = "cd frontend && npm ci && npm run build"
 
 
-def load_css() -> str:
-    """
-    Load and concatenate all CSS files.
-
-    Returns:
-        str: The combined CSS content.
-    """
-    css_files = ["base.css", "components.css", "charts.css"]
-    css_content = []
-    for css_file in css_files:
-        css_path = STYLES_DIR / css_file
-        if css_path.exists():
-            css_content.append(css_path.read_text(encoding="utf-8"))
-    return "\n".join(css_content)
+class ReportTemplateMissing(RuntimeError):
+    """The report app is not built, or its build has no place for the data."""
 
 
-def load_js() -> str:
-    js_files = ["charts.js", "navigation.js", "filters.js", "report_download.js"]
-    js_content = []
-    for js_file in js_files:
-        js_path = SCRIPTS_DIR / js_file
-        if js_path.exists():
-            js_content.append(js_path.read_text(encoding="utf-8"))
-    return "\n".join(js_content)
+def template() -> str:
+    """The built report app, with its place for the data."""
+    try:
+        html = TEMPLATE.read_text(encoding="utf-8")
+    except OSError:
+        raise ReportTemplateMissing(f"The report app is not built ({TEMPLATE} is missing): run `{BUILD_COMMAND}`") from None
+    if html.count(PLACEHOLDER) != 1:
+        raise ReportTemplateMissing(f"{TEMPLATE} has no place for the data of the report: build it again with `{BUILD_COMMAND}`")
+    return html
 
 
-def load_vendor(filename: str) -> str:
-    """Return the content of a vendored JS file, or empty string if not found."""
-    path = STATIC_DIR / filename
-    return path.read_text(encoding="utf-8") if path.exists() else ""
+def script_json(data: Any) -> str:
+    """The data as JSON that can sit in <script type="application/json">: without "<", no "</script>"
+    or "<!--" in a text ends the element early. JSON.parse reads the escapes back as they were."""
+    text = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    return text.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+
+
+def render(data: Dict[str, Any]) -> str:
+    """The report app with the data in it."""
+    return template().replace(PLACEHOLDER, script_json(data), 1)
+
+
+def _questions(metadata: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """The questions of the run, for the text of the follow-ups; none if they cannot be read."""
+    try:
+        return load_questions(language_of(metadata))
+    except (OSError, ValueError, KeyError):
+        return []
 
 
 def generate_html_report(
     metadata: Dict[str, Any],
     heuristic: Dict[str, Any],
     analysis: Dict[str, Any],
-    questionnaire: Dict[str, Any] = None,
+    questionnaire: Optional[Dict[str, Any]] = None,
+    created: Optional[str] = None,
 ) -> Path:
     """
-    Generate interactive HTML report with Plotly visualizations.
+    Write the HTML report of a run in files/reports/.
 
     Args:
-        metadata (Dict[str, Any]): Metadata about the analysis run.
-        heuristic (Dict[str, Any]): Heuristic data used in the analysis.
-        analysis (Dict[str, Any]): The analysis results data.
-        questionnaire (Dict[str, Any], optional): User questionnaire answers. Defaults to None.
+        metadata: The metadata of the run, with its run_id.
+        heuristic: The output of the expert rules.
+        analysis: The risks by subdomain, with their causality.
+        questionnaire: The answers of the run, shown next to the risks.
+        created: When the report was made (ISO 8601); now, by default.
 
     Returns:
-        Path: The path to the generated HTML report.
+        The path of the report: files/reports/ai_risk_report_<run_id>.html.
     """
-    REPORT_DIR.mkdir(parents=True, exist_ok=True)
-
     run_id = metadata.get("run_id")
     if not run_id:
-        raise RuntimeError(
-            "Missing run_id in metadata; report generation requires run_id produced by domain analyzer"
-        )
-    filename = f"ai_risk_report_{run_id}.html"
-    html_path = REPORT_DIR / filename
+        raise RuntimeError("Missing run_id in metadata; report generation requires run_id produced by domain analyzer")
+    data = report_data(metadata, heuristic, analysis, questionnaire, _questions(metadata), created)
+    html = render(data)
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+    path = REPORT_DIR / f"ai_risk_report_{run_id}.html"
+    path.write_text(html, encoding="utf-8")
+    return path
 
-    # Load template using Jinja2 Environment
-    env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)))
-    template = env.get_template("report_template.html")
 
-    # Prepare chart data
-    chart_data = prepare_chart_data(heuristic, analysis)
+def _read(path: Path) -> Dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
 
-    # Prefer `questionnaire` parameter when the caller provided answers (state passes it).
-    # Fallback to metadata 'answers' if questionnaire is not provided.
-    answers = questionnaire or {}
 
-    # Load questions dynamically based on language
-    language = metadata.get("language", "en")
-    translations = i18n.strings("report", language)  # locales/<language>/report.json
-    questions_path = FILES / f"questions_{language}.json"
-    questions = {}
-    if questions_path.exists():
-        with open(questions_path, "r", encoding="utf-8") as f:
-            questions = json.load(f)
-
-    risk_table_data = build_risk_table_data(analysis, answers, questions)
-
-    # Localize patterns heatmap labels (server-side): map pattern ids and category ids
+def _when(timestamp: Any) -> Optional[str]:
+    """A timestamp of the pipeline (20251227_160656) in ISO 8601."""
     try:
-        ph = chart_data.get("patterns_heatmap", {})
-        # Patterns
-        pattern_ids = ph.get("pattern_ids") or []
-        pattern_labels = ph.get("patterns") or []
-        if pattern_ids:
-            localized_patterns = [
-                translations.get(
-                    "pattern_" + pid,
-                    pattern_labels[i] if i < len(pattern_labels) else pid,
-                )
-                for i, pid in enumerate(pattern_ids)
-            ]
-            ph["patterns"] = localized_patterns
+        return datetime.strptime(str(timestamp), "%Y%m%d_%H%M%S").isoformat()
+    except ValueError:
+        return None
 
-        # Categories
-        category_ids = ph.get("category_ids") or []
-        category_labels = ph.get("categories") or []
-        if category_ids:
-            localized_cats = [
-                translations.get(
-                    "pattern_category_" + cid.lower(),
-                    category_labels[i] if i < len(category_labels) else cid,
-                )
-                for i, cid in enumerate(category_ids)
-            ]
-            ph["categories"] = localized_cats
-    except Exception:
-        pass
 
-    # Render template with inline CSS and JS
-    html_content = template.render(
-        metadata=metadata,
-        heuristic=heuristic,
-        analysis=analysis,
-        translations=translations,
-        chart_data=chart_data,
-        domain_names=risk_table_data["domain_names"],
-        subdomain_names=risk_table_data["subdomain_names"],
-        domains_structure=risk_table_data["domains_structure"],
-        css_content=load_css(),
-        js_content=load_js(),
-        plotly_content=load_vendor("plotly-2.27.0.min.js"),
-        jszip_content=load_vendor("jszip-3.10.1.min.js"),
-        language=language,
-        brand_mark=brand.svg("kindynos-mark"),
-        favicon=brand.favicon(),
-    )
+def saved_run(run_id: str, answers: Optional[Path] = None) -> Dict[str, Any]:
+    """
+    What the report of a past run is made of, from its saved files: the analyses, the answers, and
+    the summary that Gemini wrote for it.
 
+    Args:
+        run_id: The run.
+        answers: Its answers file, if not files/answers/answers_<run_id>.json.
+
+    Returns:
+        The arguments of generate_html_report.
+    """
+    saved = _read(ANALYSIS / "heuristic" / f"heuristic_analysis_{run_id}.json")
+    metadata = dict(saved.get("metadata") or {})
+    created = None
+    report_metadata = REPORTS / f"report_metadata_{run_id}.json"
+    if report_metadata.exists():
+        written = _read(report_metadata)
+        metadata.update(written)
+        created = _when(written.get("timestamp"))
+    answers = answers or ANSWERS / f"answers_{run_id}.json"
+    questionnaire = _read(answers) if answers.exists() else {}
+    metadata.setdefault("system_name", (questionnaire.get("metadata") or {}).get("system_name"))
+    metadata["run_id"] = run_id
+    return {
+        "metadata": metadata,
+        "heuristic": saved.get("heuristic") or {},
+        "analysis": saved.get("analysis") or {},
+        "questionnaire": questionnaire,
+        "created": created,
+    }
+
+
+def rebuild(run_id: str, answers: Optional[Path] = None) -> Path:
+    """The report of a past run, made again from its saved files: nothing is sent to Gemini."""
+    return generate_html_report(**saved_run(run_id, answers))
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Make the HTML report of a past run again, from its saved files.")
+    parser.add_argument("run_id", help="the id of the run, as in files/analysis/heuristic/heuristic_analysis_<run_id>.json")
+    parser.add_argument("--answers", type=Path, help="its answers file, if not files/answers/answers_<run_id>.json")
+    parser.add_argument("--data", action="store_true", help="print the data of the report instead, as JSON")
+    args = parser.parse_args()
     try:
-        with open(html_path, "w", encoding="utf-8") as f:
-            f.write(html_content)
-    except Exception as e:
-        # Log or handle the error as needed
-        raise RuntimeError(f"HTML report generation failed: {str(e)}")
-    return html_path
+        if args.data:
+            run = saved_run(args.run_id, args.answers)
+            data = report_data(
+                run["metadata"], run["heuristic"], run["analysis"], run["questionnaire"],
+                _questions(run["metadata"]), run["created"],
+            )
+            print(json.dumps(data, ensure_ascii=False, indent=2))
+        else:
+            print(rebuild(args.run_id, args.answers))
+    except (OSError, ReportTemplateMissing) as e:
+        sys.exit(str(e))

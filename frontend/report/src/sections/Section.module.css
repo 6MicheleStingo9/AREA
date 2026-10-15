@@ -1,0 +1,118 @@
+/* What the sections of the report share: the card of a chart, its title, its legend */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.card {
+  padding: clamp(var(--space-5), 3vw, var(--space-8));
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.lead {
+  max-width: 62em;
+  color: var(--color-ink-muted);
+}
+
+.note {
+  color: var(--color-ink-subtle);
+  font-size: var(--text-sm);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding: 0;
+  font-size: var(--text-sm);
+  list-style: none;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.4375rem;
+}
+
+/* A square of the colour of a series; .dot makes it round, for the causes */
+.swatch {
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 3px;
+  background: var(--swatch);
+}
+
+.dot {
+  border-radius: var(--radius-pill);
+}
+
+.high {
+  --swatch: var(--color-severity-high);
+}
+
+.medium {
+  --swatch: var(--color-severity-medium);
+}
+
+.low {
+  --swatch: var(--color-severity-low);
+}
+
+.ai,
+.safety {
+  --swatch: var(--color-ai);
+}
+
+.human {
+  --swatch: var(--color-human);
+}
+
+.other,
+.any {
+  --swatch: var(--color-other);
+}
+
+.criticality {
+  --swatch: var(--color-severity-high);
+}
+
+/* The data of a chart for screen readers, in a table out of sight */
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* A diagram wider than a phone: it scrolls inside its card, and the keyboard can scroll it */
+.scroll {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+}
+
+.scroll:focus-visible {
+  outline-offset: 4px;
+}

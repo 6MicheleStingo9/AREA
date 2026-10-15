@@ -13,7 +13,7 @@ def test_report_error_is_recorded_once(tmp_path, monkeypatch):
     # Nodes return the whole state: with an `add` reducer on `errors` every
     # entry used to be appended again at each node (4 copies of one error).
     monkeypatch.setattr(report_agent, "generate_executive_summary_text", lambda *a, **k: "Summary.")
-    monkeypatch.setattr(html_generator, "TEMPLATE_DIR", tmp_path)  # no report template here
+    monkeypatch.setattr(html_generator, "TEMPLATE", tmp_path / "index.html")  # the report app, not built
     monkeypatch.setattr(html_generator, "REPORT_DIR", tmp_path)
     monkeypatch.setattr(report_agent, "REPORT_DIR", tmp_path)
 

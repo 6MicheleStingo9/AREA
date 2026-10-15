@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content="Kindynos" />
+    <title>Kindynos</title>
+    <script>
+      // Before the first paint, the theme chosen in Kindynos or in a report (ui/src/theme/system.ts)
+      try {
+        const theme = localStorage.getItem('kindynos:theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {
+        // Storage blocked: the page follows the system
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>This report needs JavaScript. · Questo report richiede JavaScript.</noscript>
+    <div id="root"></div>
+    <!-- The data of the run, which agents/report_generator/html_generator.py writes in each report -->
+    <script id="report-data" type="application/json">
+      __KINDYNOS_REPORT_DATA__
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -72,9 +72,9 @@ whether the harm is intended (intent) and when it occurs (timing). The labels co
 on the CPU, in about 2 seconds per risk on a laptop. It reads the subdomain, the title and the explanation
 of the risk, and gives a calibrated probability for each value.
 
-In the report each label carries the MIT definition of its value and the model's confidence. Labels below
-90% confidence are flagged ⚠, with the next most likely value. An LLM can label the causes instead
-([configuration](configuration.md#the-causal-model)). Output: `files/analysis/causality/`.
+In the report each label carries the MIT definition of its value, the model's confidence and the next most
+likely value. An LLM can label the causes instead ([configuration](configuration.md#the-causal-model)).
+Output: `files/analysis/causality/`.
 
 <p align="center"><img src="img/report-risk.png" width="70%" alt="A risk in the Kindynos report, with its causal labels"></p>
 
@@ -93,20 +93,23 @@ The rules encode knowledge that the taxonomies alone do not capture, and they ca
 
 ## 5. Report (LLM and HTML)
 
-The LLM writes an executive summary from the heuristic results, then Kindynos builds an HTML report in the
-language of the questionnaire:
+The LLM writes an executive summary from the heuristic results, then Kindynos builds the HTML report in the
+language of the questionnaire, titled with the name of the system when you gave one:
 
-- **header**: download and view buttons, the versions of the MIT taxonomies;
-- **executive summary** and **key metrics**: the number of risks, the global score and risk level, how the
-  risks divide by severity and by cause;
-- **charts**: the risks by domain, the flows between causes, the risk patterns, the alerts;
-- **detailed analysis**: the risks by domain and subdomain, each with the question and answer it comes
-  from, its explanation, mitigation and causal labels, with filters by severity and cause;
-- **appendix**: the data of the analysis, as JSON.
+- **key findings**: the global score and risk level, the primary concern and the recommended action, the
+  domains with the most high-severity risks, and the alerts of the rules, each said in words;
+- **summary**: the executive summary, beside the risks at a glance, by severity and by cause;
+- **charts**: the risks of each domain by severity; how the risks come about, from their entity to their
+  intent and timing; the alert and safety profile, eight indices on five axes; the risk patterns of the
+  rules, by group and by cause;
+- **all the risks**: by domain and subdomain, with a search and filters by severity and cause; each with
+  the question and answer it comes from, why it is a risk, its mitigation, and its causes with their MIT
+  definitions.
 
-The report embeds its scripts, styles and charting library: it opens offline, from the disk or from the web
-interface, and follows the light or dark theme of the system. *Download Report* saves it with its metadata
-as a ZIP. Output: `files/reports/`.
+The report is one HTML file, under 1 MB, with its code, fonts and logo inside: it opens offline, from the
+disk or from the web interface, works from the keyboard and on a phone, and has a light and a dark theme.
+*View data* opens its data as JSON; from the web interface, *Download (ZIP)* saves it with the answers and
+the analyses. Output: `files/reports/`.
 
 ### What a report looks like
 

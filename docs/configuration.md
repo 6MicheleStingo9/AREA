@@ -10,7 +10,7 @@ which `.env.example` is a template. Only `GOOGLE_API_KEY` is required.
 | `CAUSALITY_BACKEND` | `laya` | who labels the causes: `laya`, the local model, or `llm`, Gemini |
 | `LAYA_MODEL` | see [below](#the-causal-model) | the directory or Hugging Face id of the Laya model |
 | `LAYA_REVISION` | `v1.0` for the published model | the revision of a model on Hugging Face |
-| `LAYA_REVIEW_THRESHOLD` | `0.9` | labels below this confidence are flagged for review |
+| `LAYA_REVIEW_THRESHOLD` | `0.9` | labels below this confidence are marked for review in the analysis data |
 | `LOG_LEVEL` | `INFO` | how much Kindynos logs: `DEBUG`, `INFO`, `WARNING`, `ERROR` or `CRITICAL` |
 | `UID`, `GID` | `1000` | with Docker, the user the container runs as |
 
@@ -33,13 +33,11 @@ The causal analysis uses laya-kindynos-causal, on the CPU and without API calls
   downloaded from Hugging Face on first use (615 MB) and cached.
 - **Speed.** The model loads once per process (6–9 s) and labels a risk in about 2 s on a laptop CPU
   (i7-1255U, 1.4–2.6 s): under a minute for an assessment of 20 risks, in Docker too.
-- **Review flag.** Laya writes no text: in the report each label comes with the MIT definition of its
-  value and Laya's confidence, the calibrated probability of that value. Labels below 90% confidence are
-  marked ⚠, with the next most likely value. The threshold was chosen on Kindynos runs held out from
-  training (the test set was not used): there, the labels below it were 59% correct, the others 94%. On
-  the test set, measured once afterwards, 4.6% of the labels are flagged and half of them are wrong,
-  against 11% of the others. Most errors are confident ones, so the flag points out doubtful labels but
-  does not catch every mistake.
+- **Confidence.** Laya writes no text: in the report each label comes with the MIT definition of its
+  value, Laya's confidence (the calibrated probability of that value) and the next most likely value.
+  In the analysis data (`files/analysis/causality/`), labels below 90% confidence also carry
+  `"review": true`. The threshold was chosen on Kindynos runs held out from training (the test set was not
+  used): there, the labels below it were 59% correct, the others 94%.
 - **Same labels as evaluated.** On the 145 test risks, the causality step gives all 435 labels scored in
   `evaluation/results/` (computed on a GPU), with probabilities within 0.01.
 - **Without the model.** If the model or its packages are missing, the default backend stops the run with

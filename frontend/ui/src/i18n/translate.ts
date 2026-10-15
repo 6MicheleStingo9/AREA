@@ -48,7 +48,7 @@ export function fill(text: string, params: Params = {}): string {
 
 /**
  * The string at a dotted key in a language, with its placeholders filled. A key missing in the
- * language falls back to English, then to the key itself: the same rules as utils/i18n.py.
+ * language falls back to English, then to the key itself.
  */
 export function translate(
   catalogs: Partial<Record<Language, Messages>>,

@@ -1,0 +1,118 @@
+.table {
+  width: 100%;
+  min-width: 46rem;
+  border-collapse: separate;
+  border-spacing: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.corner,
+.cause,
+.category {
+  font-weight: 600;
+  text-align: left;
+  vertical-align: top;
+}
+
+.corner {
+  width: 7rem;
+  color: var(--color-ink-subtle);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.cause > span {
+  display: inline-block;
+  margin-right: var(--space-2);
+  vertical-align: -0.0625rem;
+}
+
+.category {
+  padding-top: 0.625rem;
+}
+
+.cell {
+  min-height: var(--target-min);
+  padding: 0.375rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  vertical-align: top;
+}
+
+.chips {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0;
+  list-style: none;
+}
+
+/* A pattern: darker for more risks, in four steps (heat in Patterns.tsx) */
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.625rem;
+  min-height: 2.125rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--color-primary) var(--heat), var(--color-surface));
+  color: var(--color-ink);
+}
+
+.heat0 {
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 1px var(--color-line);
+  color: var(--color-ink-subtle);
+}
+
+.heat1 {
+  --heat: 14%;
+}
+
+.heat2 {
+  --heat: 30%;
+}
+
+.heat3,
+.heat4 {
+  color: var(--color-on-primary);
+}
+
+.heat3 {
+  --heat: 72%;
+}
+
+.heat4 {
+  --heat: 100%;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.count {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.guide {
+  border-radius: var(--radius-panel);
+}
+
+.definitions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  gap: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+}
+
+.definitions dt {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.definitions dd {
+  margin: 0;
+}

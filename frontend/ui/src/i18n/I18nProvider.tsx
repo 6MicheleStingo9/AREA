@@ -6,12 +6,14 @@ import { translate, type Language, type Messages } from './translate';
 interface I18nProviderProps {
   /** The strings of the app in every language, one group per file of locales/<language>/ */
   messages: Record<Language, Messages>;
+  /** The language of a document written in one, as a report: without it, the reader's is detected */
+  language?: Language;
   children: ReactNode;
 }
 
 /** The language of the interface: detected, kept for the next visit, set on <html lang>. */
-export function I18nProvider({ messages, children }: I18nProviderProps) {
-  const [lang, setLang] = useState<Language>(detectLanguage);
+export function I18nProvider({ messages, language, children }: I18nProviderProps) {
+  const [lang, setLang] = useState<Language>(() => language ?? detectLanguage());
 
   useEffect(() => {
     document.documentElement.lang = lang;
