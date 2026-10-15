@@ -16,10 +16,7 @@ questions about the system; Kindynos finds its risks, classifies them with the t
 [MIT AI Risk Repository](https://airisk.mit.edu/), says who or what causes each one, whether on purpose
 and when, and builds an interactive report you can keep and share.
 
-<p align="center">
-  <img src="docs/img/questionnaire.png" width="49%" alt="A question of the Kindynos questionnaire">
-  <img src="docs/img/report-findings.png" width="49%" alt="The key findings of a Kindynos report">
-</p>
+https://github.com/user-attachments/assets/350ff43d-87cf-4668-9cd5-b7e422967920
 
 ## What you get
 
