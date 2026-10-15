@@ -12,10 +12,9 @@ The wordmark is *kindÿnos*. Its y transliterates the Greek upsilon of κίνδ�
 with a diaeresis. The two dots stand for the two main values of the causal entity axis: AI, in blue,
 and human, in gold. The mark is the same ÿ on a navy tile.
 
-The web interface and the HTML report embed `kindynos-mark.svg` (also as the favicon) and
-`kindynos-wordmark-light.svg` through [`utils/brand.py`](../../../utils/brand.py), and the welcome
-page shows `kindynos-owl.png`. The new interface in `frontend/` imports the mark and both wordmarks.
-Keep these names when regenerating the files.
+The HTML report embeds `kindynos-mark.svg`, also as the favicon, through
+[`utils/brand.py`](../../../utils/brand.py). The web interface in `frontend/` imports the mark, both
+wordmarks and `kindynos-owl.png`. Keep these names when regenerating the files.
 
 ## Palette
 

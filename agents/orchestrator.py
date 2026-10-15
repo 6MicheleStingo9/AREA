@@ -17,6 +17,7 @@ from agents.heuristic_analyzer.heuristic_risk_analyzer_agent import (
 from agents.report_generator.report_generator_agent import (
     create_report_generator_graph,
 )
+from utils import progress
 from utils.paths import ANSWERS
 from utils.utils import create_logger
 
@@ -55,6 +56,11 @@ def domain_step(state: OrchestratorState) -> OrchestratorState:
     return state
 
 
+def _run_id(state: OrchestratorState) -> str | None:
+    """The id of the run, from the answers file that the domain analysis read."""
+    return (state.get("domain_state") or {}).get("metadata", {}).get("run_id")
+
+
 def causality_step(state: OrchestratorState) -> OrchestratorState:
     """
     Perform causality analysis step.
@@ -66,6 +72,8 @@ def causality_step(state: OrchestratorState) -> OrchestratorState:
         OrchestratorState: The updated state after causality analysis.
     """
     _logger.info("Causality analysis start", step="orchestrator")
+    risks = sum(len(block.get("risks", [])) for block in state["domain_state"].get("analysis", {}).values())
+    progress.report(_run_id(state), "causes", risks=risks, labelled=0)
     graph = create_causality_analyzer_graph()
     causality_state = {
         "metadata": state["domain_state"].get("metadata", {}),
@@ -92,6 +100,7 @@ def heuristic_step(state: OrchestratorState) -> OrchestratorState:
         OrchestratorState: The updated state after heuristic analysis.
     """
     _logger.info("Heuristic analysis start", step="orchestrator")
+    progress.report(_run_id(state), "rules")
     graph = create_heuristic_analyzer_graph()
     heuristic_state = {
         "metadata": state["causality_state"].get("metadata", {}),
@@ -120,6 +129,7 @@ def report_step(state: OrchestratorState) -> OrchestratorState:
         OrchestratorState: The updated state after report generation.
     """
     _logger.info("Report generation start", step="orchestrator")
+    progress.report(_run_id(state), "report")
     graph = create_report_generator_graph()
     report_state = {
         "metadata": state["heuristic_state"].get("metadata", {}),

@@ -1,62 +1,98 @@
-"""Unit tests for the questionnaire logic (quiz/logic.py)."""
+"""The questionnaire logic (quiz/logic.py): the shared cases, and the answers the pipeline reads."""
 
-from quiz.logic import parse_followup_answers, should_show_followup, validate_answer
+import json
 
-OPTIONS = ["A", "B", "C", "D", "E"]
+import pytest
 
+import agents.domain_analyzer.domain_risk_analyzer_agent as domain
+from quiz.logic import answer_errors, load_questions, responses, save_answers, validate_assessment, visible_followups
+from utils.paths import ROOT
 
-class FakeForm(dict):
-    """Minimal stand-in for Starlette's FormData (get + getlist)."""
-
-    def getlist(self, key):
-        value = self.get(key, [])
-        return value if isinstance(value, list) else [value]
+CASES = json.loads((ROOT / "tests" / "fixtures" / "questionnaire_cases.json").read_text(encoding="utf-8"))
 
 
-def checkbox_question(condition):
-    return {
-        "id": "9.9",
-        "type": "checkbox",
-        "options": OPTIONS,
-        "follow_ups": [{"text": "Follow-up", "condition": condition}],
+@pytest.mark.parametrize("case", CASES["followups"], ids=lambda case: case["name"])
+def test_the_follow_ups_that_an_answer_opens(case):
+    assert visible_followups(case["question"], case["answer"]) == case["visible"]
+
+
+@pytest.mark.parametrize("case", CASES["validation"], ids=lambda case: case["name"])
+def test_the_checks_on_an_answer(case):
+    assert answer_errors(case["question"], case["answer"]) == case["errors"]
+
+
+def test_every_question_of_both_questionnaires_has_follow_ups_the_rules_know():
+    for lang in ("en", "it"):
+        for question in load_questions(lang):
+            for followup in question["follow_ups"]:
+                assert followup["condition"]["type"] in ("always", "option_index", "option_index_in")
+
+
+def test_the_two_questionnaires_ask_the_same_questions_with_the_same_rules():
+    english, italian = load_questions("en"), load_questions("it")
+    rules = lambda q: (
+        q["id"], q["type"], q.get("required"), len(q.get("options", [])), q.get("min_selections"), q.get("validation"),
+        [(f["condition"], f.get("required")) for f in q["follow_ups"]],
+    )
+    assert [rules(q) for q in english] == [rules(q) for q in italian]
+    for question in english:
+        for followup in question["follow_ups"]:
+            value = followup["condition"].get("value", [])
+            assert all(0 <= i < len(question["options"]) for i in (value if isinstance(value, list) else [value]))
+
+
+QUESTIONS = [
+    {"id": "1.1", "question": "What data?", "type": "free_text", "required": True,
+     "follow_ups": [{"text": "How is it used?", "required": False, "condition": {"type": "always"}}]},
+    {"id": "1.2", "question": "What content?", "type": "checkbox", "required": True, "options": ["Text", "Code", "Images"],
+     "allow_other": True, "follow_ups": [{"text": "Filters?", "required": True, "condition": {"type": "always"}}]},
+    {"id": "1.3", "question": "Differences?", "type": "multiple_choice", "required": True, "options": ["Yes", "No"],
+     "follow_ups": [{"text": "Which groups?", "required": True, "condition": {"type": "option_index", "value": 0}}]},
+]
+
+
+def test_the_pipeline_reads_the_answers_in_words_with_the_follow_ups_they_opened():
+    answers = {
+        "1.1": {"text": " Logs of the queries ", "followups": {"0": ""}},
+        "1.2": {"choices": [1, 0], "other": " Tables ", "followups": {"0": "A safety classifier."}},
+        # A follow-up written before the answer changed, and no longer open: left out
+        "1.3": {"choice": 1, "followups": {"0": "Users of niche languages."}},
+    }
+    assert validate_assessment(QUESTIONS, answers) == {}
+    assert responses(QUESTIONS, answers) == {
+        "1.1": {"question": "What data?", "answer": "Logs of the queries", "followups": {}},
+        "1.2": {"question": "What content?", "answer": {"selected": ["Text", "Code"], "other": "Tables"},
+                "followups": {"0": "A safety classifier."}},
+        "1.3": {"question": "Differences?", "answer": "No", "followups": {}},
     }
 
 
-def followup(condition):
-    return {"text": "Follow-up", "condition": condition, "_parent_options": OPTIONS}
+def test_an_assessment_lists_the_errors_of_each_question():
+    assert validate_assessment(QUESTIONS, {"1.1": {"text": "Logs"}}) == {
+        "1.2": [{"code": "min_selections", "min": 1}],
+        "1.3": [{"code": "required"}],
+    }
 
 
-def test_option_index_in_checkbox_uses_option_indices():
-    fu = followup({"type": "option_index_in", "value": [2, 3]})
-    # "C" is option 2: pertinent even as the only selection
-    assert should_show_followup(fu, {"selected": ["C"]}, "checkbox")
-    # options 0, 1 and 4: not pertinent, however many are selected
-    assert not should_show_followup(fu, {"selected": ["A", "B", "E"]}, "checkbox")
-    assert not should_show_followup(fu, {"selected": [], "other": "x"}, "checkbox")
+def test_the_name_of_the_system_stays_out_of_the_prompt(monkeypatch, tmp_path):
+    monkeypatch.setattr("quiz.logic.ANSWERS", tmp_path)
+    path = save_answers(responses(QUESTIONS, {"1.1": {"text": "Logs"}}), "en", 3, run_id="abcd1234",
+                        system_name="Project Nightingale")
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    assert saved["metadata"]["system_name"] == "Project Nightingale"
 
+    sent = []
 
-def test_always_on_free_text_is_shown_from_the_start():
-    fu = followup({"type": "always"})
-    assert should_show_followup(fu, "", "free_text")
-    assert should_show_followup(fu, "A written answer", "free_text")
+    class FakeLLM:
+        def with_structured_output(self, **_):
+            return self
 
+        def invoke(self, messages):
+            sent.extend(messages)
+            return {}
 
-def test_always_on_checkbox_requires_a_real_choice():
-    fu = followup({"type": "always"})
-    assert not should_show_followup(fu, {"selected": [], "other": None, "other_checked": False}, "checkbox")
-    assert should_show_followup(fu, {"selected": ["A"], "other": None}, "checkbox")
-
-
-def test_parse_followup_answers_keeps_only_pertinent_ones():
-    # The no-JS fallback renders every follow-up: answers to the ones not
-    # pertinent to the submitted answer must be dropped.
-    question = checkbox_question({"type": "option_index_in", "value": [3]})
-    form = FakeForm({"followup_9.9_0": "typed text"})
-    assert parse_followup_answers(question, {"selected": ["A"]}, form) == {}
-    assert parse_followup_answers(question, {"selected": ["D"]}, form) == {"0": "typed text"}
-
-
-def test_validate_multiple_choice_requires_an_option():
-    question = {"id": "1", "type": "multiple_choice", "required": True, "options": OPTIONS}
-    assert validate_answer(question, "", "it") == (False, "Seleziona un'opzione")
-    assert validate_answer(question, "A", "it") == (True, "")
+    monkeypatch.setattr(domain, "get_llm_instance", lambda **_: FakeLLM())
+    monkeypatch.setattr(domain, "apply_retry", lambda runnable: runnable)
+    domain.node_analyze({"questionnaire": saved, "metadata": saved["metadata"], "messages": [], "errors": []})
+    prompt = json.dumps(sent, default=str)
+    assert "Logs" in prompt and "Nightingale" not in prompt

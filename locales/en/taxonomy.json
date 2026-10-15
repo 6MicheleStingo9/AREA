@@ -1,0 +1,109 @@
+{
+  "domains": {
+    "1": "Discrimination & Toxicity",
+    "2": "Privacy & Security",
+    "3": "Misinformation",
+    "4": "Malicious Actors & Misuse",
+    "5": "Human-Computer Interaction",
+    "6": "Socioeconomic & Environmental",
+    "7": "AI System Safety, Failures, & Limitations"
+  },
+  "subdomains": {
+    "1.1": {
+      "name": "Unfair discrimination and misrepresentation",
+      "short": "Unfair discrimination"
+    },
+    "1.2": {
+      "name": "Exposure to toxic content",
+      "short": "Toxic content"
+    },
+    "1.3": {
+      "name": "Unequal performance across groups",
+      "short": "Unequal performance"
+    },
+    "2.1": {
+      "name": "Compromise of privacy by obtaining, leaking or correctly inferring sensitive information",
+      "short": "Privacy"
+    },
+    "2.2": {
+      "name": "AI system security vulnerabilities and attacks",
+      "short": "Security and attacks"
+    },
+    "3.1": {
+      "name": "False or misleading information",
+      "short": "False information"
+    },
+    "3.2": {
+      "name": "Pollution of information ecosystem and loss of consensus reality",
+      "short": "Information ecosystem"
+    },
+    "4.1": {
+      "name": "Disinformation, surveillance, and influence at scale",
+      "short": "Disinformation at scale"
+    },
+    "4.2": {
+      "name": "Cyberattacks, weapon development or use, and mass harm",
+      "short": "Cyberattacks and weapons"
+    },
+    "4.3": {
+      "name": "Fraud, scams, and targeted manipulation",
+      "short": "Fraud and manipulation"
+    },
+    "5.1": {
+      "name": "Overreliance and unsafe use",
+      "short": "Overreliance"
+    },
+    "5.2": {
+      "name": "Loss of human agency and autonomy",
+      "short": "Loss of autonomy"
+    },
+    "6.1": {
+      "name": "Power centralization and unfair distribution of benefits",
+      "short": "Power centralization"
+    },
+    "6.2": {
+      "name": "Increased inequality and decline in employment quality",
+      "short": "Inequality and work"
+    },
+    "6.3": {
+      "name": "Economic and cultural devaluation of human effort",
+      "short": "Devaluation of human effort"
+    },
+    "6.4": {
+      "name": "Competitive dynamics",
+      "short": "Competitive dynamics"
+    },
+    "6.5": {
+      "name": "Governance failure",
+      "short": "Governance failure"
+    },
+    "6.6": {
+      "name": "Environmental harm",
+      "short": "Environmental harm"
+    },
+    "7.1": {
+      "name": "AI pursuing its own goals in conflict with human goals or values",
+      "short": "Misaligned goals"
+    },
+    "7.2": {
+      "name": "AI possessing dangerous capabilities",
+      "short": "Dangerous capabilities"
+    },
+    "7.3": {
+      "name": "Lack of capability or robustness",
+      "short": "Capability and robustness"
+    },
+    "7.4": {
+      "name": "Lack of transparency or interpretability",
+      "short": "Transparency"
+    },
+    "7.5": {
+      "name": "AI welfare and rights",
+      "short": "AI welfare and rights"
+    },
+    "7.6": {
+      "name": "Multi-agent risks",
+      "short": "Multi-agent risks"
+    }
+  }
+}

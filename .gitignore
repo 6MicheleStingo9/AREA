@@ -45,3 +45,5 @@ publish/build/
 # Web interface (frontend/): the npm packages and the builds, made by `npm ci` and `npm run build`
 frontend/node_modules/
 frontend/*/dist/
+frontend/test-results/
+frontend/playwright-report/

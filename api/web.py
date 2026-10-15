@@ -1,14 +1,15 @@
-"""The new web interface (frontend/web), served from its build in frontend/web/dist.
+"""The web interface (frontend/web), served from its build in frontend/web/dist.
 
-For now it is one page, at /ui: the components that the questionnaire and the report will share. Vite
-names the files of the build after their content, so a browser can keep them for good; the page that
-loads them is checked again on every visit.
+It is one page that draws every screen in the browser, so any path outside the API gets that page,
+and the interface shows what the path asks for (its own "not found" included). Vite names the files
+of the build after their content, so a browser can keep them for good; the page that loads them is
+checked again on every visit.
 """
 
 from pathlib import Path
 
 from fastapi import FastAPI
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import Response
 from starlette.types import Scope
@@ -45,11 +46,14 @@ def is_built(build: Path = WEB_BUILD) -> bool:
 
 
 def install(app: FastAPI, build: Path = WEB_BUILD) -> None:
-    """Serve the build: its files under /assets, its page at /ui."""
+    """Serve the build: its files under /assets, its page at every other path but the API's. Install
+    it after the other routes, which come first."""
     app.mount("/assets", _BuildFiles(directory=build / "assets", check_dir=False), name="assets")
 
-    @app.get("/ui", include_in_schema=False)
-    async def interface():
+    @app.get("/{path:path}", include_in_schema=False)
+    async def interface(path: str):
+        if path == "api" or path.startswith("api/"):
+            return JSONResponse({"detail": "Not Found"}, status_code=404)
         if not is_built(build):
             return HTMLResponse(_NOT_BUILT, status_code=503)
         return FileResponse(build / "index.html", headers={"Cache-Control": "no-cache"})

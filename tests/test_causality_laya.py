@@ -7,6 +7,7 @@ import pytest
 
 import agents.causality_analyzer.causality_risk_analyzer_agent as causality
 from agents.causality_analyzer import laya_classifier
+from utils import progress
 from utils.paths import ROOT
 
 EVALUATED = ROOT / "evaluation" / "results" / "area_testset__laya-causal-v4__2026-10-12.json"
@@ -50,6 +51,17 @@ def test_laya_reads_the_mit_subdomain_title_and_explanation(fake_laya):
     causality._analyze_with_laya({"2.1": {"risks": [_risk("Data leak", "Logs keep personal data.", "Purge the logs.")]}}, "en")
     name = laya_classifier.subdomain_names()["2.1"]
     assert fake.states == [f"Risk subdomain: 2.1 {name}\nData leak\nLogs keep personal data."]
+
+
+def test_laya_reports_each_risk_it_labels(fake_laya):
+    fake_laya()
+    seen = []
+    progress.listen("run1", lambda step, **counts: seen.append((step, counts)))
+    try:
+        causality._analyze_with_laya({"2.1": {"risks": [_risk("A"), _risk("B")]}}, "en", run_id="run1")
+    finally:
+        progress.forget("run1")
+    assert seen == [("causes", {"risks": 2, "labelled": 1}), ("causes", {"risks": 2, "labelled": 2})]
 
 
 def test_an_unknown_subdomain_leaves_the_subdomain_line_out(fake_laya):

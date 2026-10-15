@@ -24,7 +24,8 @@ and when, and builds an interactive report you can keep and share.
 ## What you get
 
 - **A guided questionnaire** in English or Italian: 24 questions over the seven domains of AI risk, with
-  follow-up questions where an answer calls for them.
+  follow-up questions where an answer calls for them. Your answers stay in your browser until you start
+  the analysis.
 - **The risks of your system**, grouped by the domains and subdomains of the MIT Domain Taxonomy, each with
   a severity, an explanation and a mitigation.
 - **Their causes**, along the MIT Causal Taxonomy (entity, intent, timing), labeled by a small model that
@@ -48,20 +49,21 @@ docker compose up --build
 ```
 
 Open http://localhost:8000 and start the questionnaire. When the analysis ends, after a few minutes, the
-page links the report, which is also saved in `files/reports/`. On the first run Kindynos downloads its
+page shows the main results and the link to the report, which is also saved in `files/reports/`. On the first run Kindynos downloads its
 causal model (615 MB) from Hugging Face.
 
 Each assessment makes 2 requests to Gemini: its free tier allows about ten assessments a day.
 
 ### Without Docker
 
-You need Python 3.11 or 3.12 and [SWI-Prolog](https://www.swi-prolog.org/) (on Debian and Ubuntu,
-`sudo apt install swi-prolog`).
+You need Python 3.11 or 3.12, [SWI-Prolog](https://www.swi-prolog.org/) (on Debian and Ubuntu,
+`sudo apt install swi-prolog`) and [Node.js](https://nodejs.org/) 22, which builds the web interface.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1   # CPU-only PyTorch, first
 pip install -r requirements.txt -r requirements-laya.txt
+(cd frontend && npm ci && npm run build)   # the web interface
 uvicorn api.main:app
 ```
 

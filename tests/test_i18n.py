@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-from quiz.logic import validate_answer
+from quiz.logic import load_questions
 from utils import i18n
 from utils.paths import LOCALES
 
@@ -27,7 +27,7 @@ def _placeholders(entry):
 
 
 def test_every_language_has_the_same_files():
-    assert NAMESPACES == ["common", "gallery", "quiz", "report"]
+    assert NAMESPACES == ["app", "common", "gallery", "report", "taxonomy"]
     for lang in i18n.LANGUAGES:
         assert sorted(p.stem for p in (LOCALES / lang).glob("*.json")) == NAMESPACES
 
@@ -45,12 +45,12 @@ def test_every_language_has_the_same_strings_with_the_same_placeholders(namespac
 
 
 def test_t_reads_a_dotted_key_in_the_language():
-    assert i18n.t("quiz.next_button", "it") == "Avanti →"
+    assert i18n.t("app.question.back", "it") == "Indietro"
     assert i18n.t("common.theme.to_dark", "en") == "Switch to the dark theme"
 
 
 def test_t_fills_the_placeholders():
-    assert i18n.t("quiz.min_length_validation", "en", min_length=10) == "The answer must contain at least 10 characters"
+    assert i18n.t("app.question.errors.min_length", "en", min=10) == "Write at least 10 characters."
     # A placeholder without a value stays visible, and braces that are not placeholders stay as they are
     assert i18n.fill("{count} of {total}", count=3) == "3 of {total}"
     assert i18n.fill("a {b c}", b=1) == "a {b c}"
@@ -82,7 +82,9 @@ def test_a_key_that_stops_at_a_group_is_not_a_string():
     assert i18n.t("common.theme", "en") == "common.theme"
 
 
-def test_the_questionnaire_validation_speaks_the_language_of_the_questionnaire():
-    question = {"type": "free_text", "required": True, "validation": {"min_length": 10}}
-    assert validate_answer(question, "", "it") == (False, "Questa domanda è obbligatoria")
-    assert validate_answer(question, "short", "en") == (False, "The answer must contain at least 10 characters")
+def test_the_taxonomy_names_every_domain_and_subdomain_of_the_questionnaire():
+    ids = [q["id"] for q in load_questions("en")]
+    for lang in i18n.LANGUAGES:
+        taxonomy = i18n.strings("taxonomy", lang)
+        assert list(taxonomy["subdomains"]) == ids
+        assert list(taxonomy["domains"]) == sorted({qid.split(".")[0] for qid in ids})

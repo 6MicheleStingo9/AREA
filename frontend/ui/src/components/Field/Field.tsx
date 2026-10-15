@@ -46,18 +46,23 @@ export function Field({ label, hint, error, optional, children }: FieldProps) {
       >
         {children}
       </FieldContext>
-      {error && (
-        <p id={errorId} className={styles.error}>
-          <CircleAlert aria-hidden="true" className={styles.errorIcon} />
-          {error}
-        </p>
-      )}
+      {error && <FieldError id={errorId}>{error}</FieldError>}
       {hint && (
         <p id={hintId} className={styles.hint}>
           {hint}
         </p>
       )}
     </div>
+  );
+}
+
+/** What is wrong with a value, under its control: tie it to the control with aria-describedby */
+export function FieldError({ id, children }: { id?: string; children: ReactNode }) {
+  return (
+    <p id={id} className={styles.error}>
+      <CircleAlert aria-hidden="true" className={styles.errorIcon} />
+      {children}
+    </p>
   );
 }
 

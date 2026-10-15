@@ -24,7 +24,7 @@ import os
 import threading
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 from utils.paths import DATA, ROOT
 
@@ -178,11 +178,15 @@ def load() -> Any:
     return _agent
 
 
-def classify(risks: Sequence[Tuple[Optional[str], str, str]]) -> List[Dict[str, Dict[str, Any]]]:
+def classify(
+    risks: Sequence[Tuple[Optional[str], str, str]],
+    on_progress: Optional[Callable[[int], None]] = None,
+) -> List[Dict[str, Dict[str, Any]]]:
     """For each (subdomain code, title, explanation): {axis: {"value", "probabilities", "confidence"}}.
 
     One call per risk: on CPU, `predict_batch` was slower per risk than single calls. A subdomain
-    code missing from the MIT database leaves the subdomain line out of the state.
+    code missing from the MIT database leaves the subdomain line out of the state. on_progress, if
+    given, receives the number of risks labelled after each one.
     """
     agent = load()
     names = subdomain_names()
@@ -195,4 +199,6 @@ def classify(risks: Sequence[Tuple[Optional[str], str, str]]) -> List[Dict[str, 
                 probs = res["answers"][ax]["probabilities"]
                 answers[ax] = {"value": res["answers"][ax]["choice"], "probabilities": probs, "confidence": max(probs.values())}
             out.append(answers)
+            if on_progress:
+                on_progress(len(out))
     return out
