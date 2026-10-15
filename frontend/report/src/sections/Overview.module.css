@@ -1,0 +1,26 @@
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: clamp(2.125rem, 1.5rem + 2.2vw, 3.125rem);
+  line-height: 1.06;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) 1.125rem;
+  padding: 0;
+  color: var(--color-ink-muted);
+  font-size: 0.9375rem;
+  list-style: none;
+}
+
+.link {
+  color: var(--color-ink);
+  font-weight: 600;
+}

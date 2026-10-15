@@ -1,0 +1,147 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.count {
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: var(--control-height);
+  padding: 0 0.875rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-ground);
+}
+
+.search:focus-within {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.searchIcon {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-ink-subtle);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 2.875rem;
+  border: 0;
+  background: transparent;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--color-ink-subtle);
+}
+
+.groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-7);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: 1px dashed var(--color-line-strong);
+  border-radius: var(--radius-card);
+  color: var(--color-ink-muted);
+}
+
+.clear {
+  align-self: flex-start;
+}
+
+/* A domain: its number, its name and its risks, in the button that opens it */
+.domainTrigger {
+  min-height: 4rem;
+}
+
+.domainHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.domainId {
+  flex: none;
+  width: 1.375rem;
+  color: var(--color-ink-subtle);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.domainName {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-lg);
+}
+
+.domainCount {
+  flex: none;
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The risks fill the width of their domain: their rows have their own padding */
+.domainContent > div {
+  padding: 0;
+}
+
+.subdomain {
+  padding: var(--space-4) var(--space-5) var(--space-1);
+  color: var(--color-ink-muted);
+  font-family: var(--font-text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.code {
+  font-variant-numeric: tabular-nums;
+}
+
+.riskRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+
+.riskTitle {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}

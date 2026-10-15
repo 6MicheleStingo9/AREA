@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from agents.causality_analyzer import laya_classifier
 from agents.causality_analyzer.causality_risk_analyzer_agent import causality_backend
+from agents.report_generator import html_generator
 from api import jobs, web
 from api.assessments import router as assessments_router
 from api.reports import router as reports_router
@@ -31,6 +32,8 @@ async def lifespan(app: FastAPI):
     check_causality_backend()
     if not web.is_built():
         _logger.warning(f"The web interface is not built: {web.BUILD_COMMAND}")
+    if not html_generator.TEMPLATE.exists():
+        _logger.warning(f"The report app is not built, so no analysis can make its report: {web.BUILD_COMMAND}")
     interrupted = jobs.mark_interrupted()
     if interrupted:
         _logger.warning("Analyses interrupted by the last stop of the server", count=interrupted)

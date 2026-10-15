@@ -2,7 +2,7 @@ import json
 import os
 import sys
 import time
-from typing import Any, Dict, List, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 
 from langchain.messages import AnyMessage
 from langgraph.graph import StateGraph
@@ -45,7 +45,7 @@ def _build_messages(heuristic, analysis, language):
     return [system_msg, usr_msg]
 
 
-def generate_executive_summary_text(heuristic, analysis, language) -> str:
+def generate_executive_summary_text(heuristic, analysis, language) -> Optional[str]:
     """Generate the executive summary text using the LLM.
 
     Args:
@@ -54,16 +54,17 @@ def generate_executive_summary_text(heuristic, analysis, language) -> str:
         language (str): The language for the summary.
 
     Returns:
-        str: The generated executive summary text.
+        Optional[str]: The generated executive summary text, or None when the LLM could not write it:
+        the report is made all the same, and says that it has no summary.
     """
     llm = apply_retry(get_llm_instance(t=0.2))
     messages = _build_messages(heuristic, analysis, language)
     try:
         response = llm.invoke(messages)
-        return str(response.content).strip()
+        return str(response.content).strip() or None
     except Exception as e:
         _logger.error("Error generating executive summary", exc_info=e)
-        return "Executive summary not available due to generation error."
+        return None
 
 
 _logger = create_logger("report_generator")

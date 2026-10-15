@@ -3,3 +3,5 @@ node_modules
 package-lock.json
 test-results
 playwright-report
+# Written by Python (agents/report_generator/html_generator.py --data)
+report/src/test/example.json

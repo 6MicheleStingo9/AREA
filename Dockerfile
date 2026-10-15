@@ -1,4 +1,5 @@
-# The web interface (frontend/), built with Node: only the build reaches the final image
+# The web interface and the report app (frontend/), built with Node: only their builds reach the
+# final image
 FROM node:22-slim AS web
 
 WORKDIR /src/frontend
@@ -6,6 +7,7 @@ WORKDIR /src/frontend
 COPY frontend/package.json frontend/package-lock.json frontend/.npmrc ./
 COPY frontend/ui/package.json ui/
 COPY frontend/web/package.json web/
+COPY frontend/report/package.json report/
 RUN npm ci
 COPY frontend/ ./
 # The strings and the logo, which the build reads from outside frontend/
@@ -30,6 +32,7 @@ RUN pip install --no-cache-dir -r requirements.txt -r requirements-laya.txt
 
 COPY . .
 COPY --from=web /src/frontend/web/dist frontend/web/dist
+COPY --from=web /src/frontend/report/dist frontend/report/dist
 
 # Smoke test: verify pyswip can load libswipl at build time
 RUN python -c "from pyswip import Prolog; Prolog()"
