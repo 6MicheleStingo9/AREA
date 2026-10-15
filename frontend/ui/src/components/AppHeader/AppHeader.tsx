@@ -17,9 +17,14 @@ interface AppHeaderProps {
   renderHome?: (props: HomeLinkProps) => ReactNode;
   /** The controls on the right: language, theme */
   children?: ReactNode;
+  /**
+   * A control after the others that stays beside the logo on a narrow screen, where the others go to
+   * a row of their own: the theme, when there are more controls than fit beside the logo
+   */
+  end?: ReactNode;
 }
 
-export function AppHeader({ homeHref = '/', renderHome, children }: AppHeaderProps) {
+export function AppHeader({ homeHref = '/', renderHome, children, end }: AppHeaderProps) {
   const { t } = useI18n<CommonMessages>();
   const home: HomeLinkProps = {
     className: styles.home ?? '',
@@ -27,7 +32,7 @@ export function AppHeader({ homeHref = '/', renderHome, children }: AppHeaderPro
     children: <Brand />,
   };
   return (
-    <header className={styles.header}>
+    <header className={[styles.header, end && styles.withEnd].filter(Boolean).join(' ')}>
       {renderHome ? (
         renderHome(home)
       ) : (
@@ -36,6 +41,7 @@ export function AppHeader({ homeHref = '/', renderHome, children }: AppHeaderPro
         </a>
       )}
       {children && <div className={styles.actions}>{children}</div>}
+      {end && <div className={styles.end}>{end}</div>}
     </header>
   );
 }
